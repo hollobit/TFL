@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S01 TFL 개요 및 표준 체계 — ISO/IEC 42117-X TFL 가이드</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .tfl-type-diagram { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 16px 0; }
+    .tfl-type-box { border-radius: 8px; padding: 18px; border: 1.5px solid; }
+    .tfl-type-box.t1 { background:#f5f0ff; border-color:#7c3aed; }
+    .tfl-type-box.t2 { background:#f0f9ff; border-color:#1d4ed8; }
+    .tfl-type-box.t3 { background:#fff0f5; border-color:#be185d; }
+    .tfl-type-box.t4 { background:#f0fdf4; border-color:#15803d; }
+    .tfl-type-box h4 { font-size:14px; font-weight:700; margin-bottom:6px; }
+    .tfl-type-box .iso-name { font-size:11px; font-style:italic; opacity:0.7; }
+    .tfl-type-box p { font-size:13px; margin-top:6px; }
+    .pipeline-flow { display:flex; gap:10px; align-items:flex-start; flex-wrap:wrap; margin:16px 0; }
+    .phase-box { background:#eef2f7; border:1px solid #c5d5f8; border-radius:8px; padding:12px 14px; min-width:140px; flex:1; }
+    .phase-box h5 { font-size:12px; color:#1a4480; text-transform:uppercase; letter-spacing:0.5px; font-weight:700; }
+    .phase-box ul { font-size:12px; padding-left:14px; margin-top:4px; }
+    .arrow { font-size:20px; color:#999; align-self:center; padding-top:12px; }
+    @media(max-width:700px){.tfl-type-diagram{grid-template-columns:1fr}.pipeline-flow{flex-direction:column}.arrow{transform:rotate(90deg)}}
+  </style>
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">ISO/IEC 42117-X</div>
+      <div class="title">TFL 운영 가이드</div>
+      <div class="version">v1.0 · 2026-02-19</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-label">메인</div>
+        <a href="index.html" class="nav-item">📋 가이드 홈</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">섹션</div>
+        <a href="s01-overview.html" class="nav-item active"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
+        <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>15개 TCM 신뢰성 특성</a>
+        <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
+        <a href="s04-tc-mapping.html" class="nav-item"><span class="section-id">S04</span>TCM-TC 요구사항 매핑</a>
+        <a href="s05-ca-guide.html" class="nav-item"><span class="section-id">S05</span>CA 이행 가이드</a>
+        <a href="s06-gaps.html" class="nav-item"><span class="section-id">S06</span>커버리지 갭 및 권고사항</a>
+        <a href="s07-references.html" class="nav-item"><span class="section-id">S07</span>참조 표준 및 용어 사전</a>
+      </div>
+    </div>
+  </nav>
+
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div class="page-header">
+      <div>
+        <h1>S01 — TFL 개요 및 표준 체계</h1>
+        <div class="breadcrumb"><a href="index.html">홈</a> › S01</div>
+      </div>
+    </div>
+
+    <div class="main-content">
+
+      <!-- L1: Level 시스템 임시성 경고 -->
+      <div class="note-box warning">
+        <span class="icon">⚠️</span>
+        <div>
+          <strong>임시 운영 분류 고지 (L1)</strong>
+          본 Level 1/2/3 분류 체계는 ISO/IEC 42117-X Part 1에 정의되지 않은 임시 운영 체계이며, Part 2~4 발행(시기 미정) 시 변경 가능합니다.
+          현행 분류는 ISO/IEC DIS 17067:2025 CA 복잡도 계층(자기선언 → 검증/확인 → 제3자 인증)을 기준으로 도출된 운영 분류입니다.
+        </div>
+      </div>
+
+      <!-- L5: 표준 개발 단계 -->
+      <div class="note-box info">
+        <span class="icon">ℹ️</span>
+        <div>
+          <strong>표준 개발 단계 고지 (L5)</strong>
+          ISO/IEC 42117-X는 PWI(예비 작업 항목) 단계의 개발 중 표준입니다. 본 가이드는 ISO/IEC TS 42117-1:202X (2025-10-02 PWI draft) 기준이며 최종 발행 시 내용이 변경될 수 있습니다.
+        </div>
+      </div>
+
+      <!-- S01.1 -->
+      <div class="content-section">
+        <h2>S01.1 — ISO/IEC 42117-X 소개 및 개발 현황</h2>
+        <p>
+          <strong>ISO/IEC 42117-X</strong>는 AI 시스템 및 AI 모델의 신뢰성(Trustworthiness) 사실 선언을 위한 국제표준으로,
+          AI 시스템이 다양한 신뢰성 특성을 얼마나 충족하는지를 사용자·이해관계자에게 명확히 알리기 위한 라벨링 체계를 제공합니다.
+        </p>
+        <table>
+          <thead><tr><th>구분</th><th>내용</th></tr></thead>
+          <tbody>
+            <tr><td>표준명</td><td>ISO/IEC TS 42117-1: AI Trustworthiness Fact Label — Part 1: Principles and general requirements</td></tr>
+            <tr><td>현행 상태</td><td><span class="badge badge-draft">PWI (예비 작업 항목) 단계</span> · 초안 날짜: 2025-10-02</td></tr>
+            <tr><td>담당 기술위원회</td><td>ISO/IEC JTC 1/SC 42 (Artificial Intelligence)</td></tr>
+            <tr><td>관련 Part 현황</td><td>Part 1 (원칙·일반요건): PWI · Part 2~4: 미발행 (TBD)</td></tr>
+            <tr><td>핵심 목적</td><td>AI 시스템/모델의 신뢰성 사실을 다양한 유형(자기선언·제3자 인증·정량 사실 시트)으로 표현하는 공통 체계 제공</td></tr>
+            <tr><td>주요 참조 표준</td><td>ISO/IEC 22989 (AI 개념·용어), ISO/IEC 42001 (AIMS), ISO/IEC TR 24028 (AI 신뢰성), ISO/IEC DTS 5338 (AI 수명주기)</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note-box info">
+          <span class="icon">📌</span>
+          <div>
+            <strong>SC42 표준 Linkage 고지 (L6)</strong>
+            ISO/IEC 22989와 ISO/IEC 25058/25059 간 공식 매핑이 현재 SC42 표준 체계 내에 부재합니다. 본 가이드의 TCM 특성과 품질 특성 간 연계는 비공식 대응에 기반합니다.
+          </div>
+        </div>
+      </div>
+
+      <!-- S01.2 -->
+      <div class="content-section">
+        <h2>S01.2 — TFL 유형 체계 (Type I~IV 개요)</h2>
+        <p>ISO/IEC 42117-X는 AI 신뢰성 정보를 전달하는 4가지 유형을 정의합니다:</p>
+        <div class="tfl-type-diagram">
+          <div class="tfl-type-box t1">
+            <h4>🏆 Type I — AI Trustworthiness Fact Label (TFL)</h4>
+            <div class="iso-name">ISO/IEC 42117-1 §3.2.3, §5.3</div>
+            <p>AI 시스템/모델이 신뢰성 라벨링 <strong>프로그램의 기준을 충족</strong>함을 나타내는 진술. 제3자 인증기관(CAB)에 의한 독립 검증이 전제됩니다.</p>
+            <p><strong>CA 기반 표준:</strong> ISO/IEC 17065 (Product Certification Body)</p>
+            <p><strong>특징:</strong> 가장 높은 신뢰성 수준, 인정된 CAB 필수, AI 전문 CAB 인프라 구축 필요</p>
+          </div>
+          <div class="tfl-type-box t2">
+            <h4>📋 Type II — Self-declared Trustworthiness Fact Claim</h4>
+            <div class="iso-name">ISO/IEC 42117-1 §3.2.2, §5.2</div>
+            <p>책임 당사자(AI 개발자/공급자)가 <strong>자기선언</strong>하는 신뢰성 사실 진술. 입증 가능한 증거 기반이어야 합니다.</p>
+            <p><strong>CA 기반 표준:</strong> ISO/IEC 17050-1/2 (Supplier's Declaration of Conformity)</p>
+            <p><strong>특징:</strong> 가장 빠른 이행 가능, Level 1 전체 즉시 적용 가능</p>
+          </div>
+          <div class="tfl-type-box t3">
+            <h4>📊 Type III — AI Trustworthiness Fact Sheet (ATFS/QFD)</h4>
+            <div class="iso-name">ISO/IEC 42117-1 §3.2.4, Scope</div>
+            <p>LCA 기반 사전 결정 파라미터를 사용한 <strong>정량적 신뢰성 데이터</strong> 진술. V&V(검증/확인) 기관에 의한 독립 확인이 필요합니다.</p>
+            <p><strong>CA 기반 표준:</strong> ISO/IEC 17029 (Validation/Verification)</p>
+            <p><strong>특징:</strong> 정량적 측정값 기반, V&V 기관 가용성이 현재 제한적</p>
+          </div>
+          <div class="tfl-type-box t4">
+            <h4>🔧 Type IV — AI Developer Technical Card (DTC)</h4>
+            <div class="iso-name">ISO/IEC 42117-1 Scope (Section 1)</div>
+            <p>AI 개발자가 제공하는 <strong>기술 카드</strong> 형식의 신뢰성 정보. 기술적 세부사항 중심의 전문가 대상 문서.</p>
+            <p><strong>특징:</strong> 자유 형식 기술 문서, 개발자 대상, 공식 CA 절차 불필요</p>
+            <p><em>본 가이드에서 주로 다루는 유형: Type I, II, III (Type IV는 참조 용도)</em></p>
+          </div>
+        </div>
+
+        <h3>단일 속성 보고서</h3>
+        <p>ISO/IEC 42117-1 §5.4는 <strong>Single-attribute Trustworthiness Fact Report</strong>를 별도로 규정합니다. 특정 신뢰성 특성 하나에 집중하는 단일 속성 보고서로, 완전한 TFL 대비 범위를 한정합니다.</p>
+      </div>
+
+      <!-- S01.3 -->
+      <div class="content-section">
+        <h2>S01.3 — 15개 TCM 신뢰성 특성 개관</h2>
+        <p>TFL 파이프라인은 SC42 TCM(Trustworthiness Characteristics Matrix)에서 도출한 <strong>15개 신뢰성 특성</strong>을 기반으로 합니다:</p>
+        <table>
+          <thead>
+            <tr><th>#</th><th>특성명</th><th>TC 수</th><th>커버리지</th><th>주요 출처 표준</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td><strong>Trustworthiness</strong></td><td>22</td><td><span class="coverage-full">✅ 완전</span></td><td>TR 24028, TS 5723</td></tr>
+            <tr><td>2</td><td><strong>Robustness</strong></td><td>20</td><td><span class="coverage-full">✅ 완전</span></td><td>TR 24029-1/2</td></tr>
+            <tr><td>3</td><td><strong>Reliability</strong></td><td>17</td><td><span class="coverage-full">✅ 완전</span></td><td>DTS 25058, 5338</td></tr>
+            <tr><td>4</td><td><strong>Transparency</strong></td><td>24</td><td><span class="coverage-full">✅ 완전</span></td><td>DTS 6254, TR 24028</td></tr>
+            <tr><td>5</td><td><strong>Bias/Fairness</strong></td><td>27</td><td><span class="coverage-full">✅ 완전</span></td><td>DTS 12791</td></tr>
+            <tr><td>6</td><td><strong>Accountability</strong></td><td>36</td><td><span class="coverage-full">✅ 완전</span></td><td>TR 24368, FDIS 42006</td></tr>
+            <tr><td>7</td><td><strong>Safety</strong></td><td>28</td><td><span class="coverage-full">✅ 완전</span></td><td>DTR 5469, 23894</td></tr>
+            <tr><td>8</td><td><strong>Security</strong></td><td>10</td><td><span class="coverage-partial">⚠️ 부분</span></td><td>DTS 8200, TR 24028</td></tr>
+            <tr><td>9</td><td><strong>Explainability</strong></td><td>12</td><td><span class="coverage-partial">⚠️ 부분</span></td><td>DTS 6254</td></tr>
+            <tr><td>10</td><td><strong>Controllability</strong></td><td>16</td><td><span class="coverage-full">✅ 완전</span></td><td>DTS 8200</td></tr>
+            <tr><td>11</td><td><strong>Intervenability</strong></td><td>4</td><td><span class="coverage-insuf">❌ 미흡</span></td><td>DTS 8200, TR 24368</td></tr>
+            <tr><td>12</td><td><strong>Functional Correctness</strong></td><td>21</td><td><span class="coverage-full">✅ 완전</span></td><td>TR 29119-11, DTS 25058</td></tr>
+            <tr><td>13</td><td><strong>Efficiency</strong></td><td>4</td><td><span class="coverage-insuf">❌ 미흡</span></td><td>DTS 25058, 5338</td></tr>
+            <tr><td>14</td><td><strong>Availability</strong></td><td>2</td><td><span class="coverage-insuf">❌ 미흡</span></td><td>5338, DTS 25058</td></tr>
+            <tr><td>15</td><td><strong>Resilience</strong></td><td>27</td><td><span class="coverage-full">✅ 완전</span></td><td>TR 24028 (RES 7개 포함), DTR 5469</td></tr>
+          </tbody>
+        </table>
+        <p><strong>합계: 148개 요구사항</strong> (TC-REQ 형식 128개 + TC-XXXXX-RES 형식 20개), 19개 SC42 표준 문서로부터 추출</p>
+
+        <div class="note-box warning">
+          <span class="icon">⚠️</span>
+          <div>
+            <strong>미흡 특성 커버리지 한계 고지 (L3)</strong>
+            Intervenability, Efficiency, Availability 3개 특성은 전담 국제표준 미발행으로 인해 현재 TC 커버리지가 미흡(❌)합니다. 해당 특성 CA 수행 시 추가 도메인 전문가 자문을 권장합니다. 상세 내용은 <a href="s06-gaps.html">S06 갭 분석 섹션</a>을 참조하십시오.
+          </div>
+        </div>
+      </div>
+
+      <!-- S01.4 -->
+      <div class="content-section">
+        <h2>S01.4 — Level 1/2/3 분류 체계 및 임시성 고지</h2>
+        <div class="note-box warning">
+          <span class="icon">⚠️</span>
+          <div>
+            <strong>임시 운영 분류 고지 (L1)</strong>
+            본 Level 분류는 ISO/IEC 42117-X Part 1에 공식 정의되지 않았습니다. ISO/IEC DIS 17067:2025 CA 복잡도 계층을 기준으로 운영 목적상 도출한 임시 체계입니다. Part 2~4 발행 시 변경될 수 있습니다.
+          </div>
+        </div>
+
+        <table>
+          <thead><tr><th>Level</th><th>CA 복잡도</th><th>대응 CA 유형</th><th>주요 특징</th><th>이행 난이도</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-level1">Level 1</span></td>
+              <td>기초 (자기선언)</td>
+              <td>Type II (Self-declared)</td>
+              <td>문서화 및 절차 수립 수준. 측정 가능성=qualitative 중심. 즉시 이행 가능</td>
+              <td><span class="badge badge-high">낮음</span></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-level2">Level 2</span></td>
+              <td>중급 (검증/확인)</td>
+              <td>Type II 또는 III</td>
+              <td>정량적 측정값 또는 독립 V&V. 중간 수준 증거 기반 필요</td>
+              <td><span class="badge badge-medium">중간</span></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-level3">Level 3</span></td>
+              <td>고급 (제3자 인증)</td>
+              <td>Type I (TFL) 또는 고급 Type III</td>
+              <td>인정된 CAB에 의한 독립 인증. 높은 증거 요구. AI 전문 CAB 필요</td>
+              <td><span class="badge badge-low-warn">높음</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>분류 근거 (ISO/IEC DIS 17067:2025 CA 복잡도 계층)</h3>
+        <p>ISO/IEC DIS 17067:2025는 적합성 평가 스킴의 복잡도를 자기선언 → V&V → 제3자 인증 계층으로 구분합니다. 본 Level 체계는 이 계층 구조를 AI 신뢰성 선언에 적용한 임시 운영 분류입니다.</p>
+
+        <div class="note-box info">
+          <span class="icon">ℹ️</span>
+          <div>
+            <strong>SC-Trustworthiness-001 예외 사항</strong>
+            SC-Trustworthiness-001은 <code>ca_type = "Type I or Type II"</code>로 이중 분류됩니다. 저위험 시스템 = Type II(자기선언), 고위험 시스템 = Type I(제3자 인증)을 적용합니다. 위험 등급 기반 선택이 필요합니다. (ISS-005 참조)
+          </div>
+        </div>
+      </div>
+
+      <!-- S01.5 -->
+      <div class="content-section">
+        <h2>S01.5 — 파이프라인 구성 및 산출물 간 관계</h2>
+        <div class="pipeline-flow">
+          <div class="phase-box">
+            <h5>Phase 1A</h5>
+            <strong>TC 추출</strong>
+            <ul><li>19개 SC42 표준</li><li>148개 요구사항 추출</li><li>→ tc_structured.json</li></ul>
+          </div>
+          <div class="arrow">→</div>
+          <div class="phase-box">
+            <h5>Phase 1B</h5>
+            <strong>Claim 규칙 도출</strong>
+            <ul><li>42117-1 PWI 분석</li><li>변환 규칙 정의</li><li>→ claim_rules.md</li></ul>
+          </div>
+          <div class="arrow">→</div>
+          <div class="phase-box">
+            <h5>Phase 1C</h5>
+            <strong>SC42 교차 참조</strong>
+            <ul><li>필수 교차 참조</li><li>Linkage 누락 탐지</li><li>→ sc42_reference_list.md</li></ul>
+          </div>
+          <div class="arrow">→</div>
+          <div class="phase-box">
+            <h5>Phase 2A</h5>
+            <strong>Simple Claim 생성</strong>
+            <ul><li>45개 Claim 자동 생성</li><li>15특성 × 3 Level</li><li>→ simple_claim_db.json</li></ul>
+          </div>
+          <div class="arrow">→</div>
+          <div class="phase-box">
+            <h5>Phase 2B</h5>
+            <strong>TCM 매핑</strong>
+            <ul><li>커버리지 평가</li><li>→ tcm_updated.json</li></ul>
+          </div>
+          <div class="arrow">→</div>
+          <div class="phase-box">
+            <h5>Phase 3</h5>
+            <strong>CA 정합성</strong>
+            <ul><li>CA 유형 매핑</li><li>AIMS 연계</li><li>→ claim_ca_mapping.json</li><li>→ ca_roadmap.md</li></ul>
+          </div>
+          <div class="arrow">→</div>
+          <div class="phase-box">
+            <h5>Phase 4~5</h5>
+            <strong>품질 검토·합의</strong>
+            <ul><li>13개 이슈 탐지</li><li>5개 토론 해소</li><li>→ review_report.md</li><li>→ consensus_actions.md</li></ul>
+          </div>
+          <div class="arrow">→</div>
+          <div class="phase-box" style="border-color:#1a4480;background:#e8f0fe;">
+            <h5>Phase 6</h5>
+            <strong>HTML 가이드 생성</strong>
+            <ul><li>7개 섹션 HTML</li><li>→ tfl-guide/</li></ul>
+          </div>
+        </div>
+
+        <h3>산출물 파일 관계 다이어그램</h3>
+        <table>
+          <thead><tr><th>파일명</th><th>단계</th><th>역할</th><th>주요 소비 섹션</th></tr></thead>
+          <tbody>
+            <tr><td><code>tc_structured.json</code></td><td>Phase 1A</td><td>148개 TC 요구사항 원본</td><td>S04</td></tr>
+            <tr><td><code>tc_taxonomy.json</code></td><td>Phase 2B</td><td>특성별 req_id 목록</td><td>S02, S04</td></tr>
+            <tr><td><code>tcm_updated.json</code></td><td>Phase 2B</td><td>커버리지 평가 결과</td><td>S02</td></tr>
+            <tr><td><code>simple_claim_db.json</code></td><td>Phase 2A</td><td>45개 Simple Claim 정의</td><td>S03</td></tr>
+            <tr><td><code>claim_ca_mapping.json</code></td><td>Phase 3</td><td>CA 유형 매핑 (ISS-010 교정)</td><td>S05</td></tr>
+            <tr><td><code>ca_roadmap.md</code></td><td>Phase 3</td><td>CA 이행 로드맵</td><td>S05</td></tr>
+            <tr><td><code>tcm_discrepancy_report.md</code></td><td>Phase 4 교정</td><td>갭 분석 보고서 (v2.0)</td><td>S06</td></tr>
+            <tr><td><code>mapping_supplement.json</code></td><td>Phase 6 PRE-01</td><td>source_tc_ids 브릿지 매핑</td><td>S03, S04</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <div class="page-footer">
+      <span>S01 — TFL 개요 및 표준 체계</span>
+      <span><a href="s02-characteristics.html">다음: S02 TCM 신뢰성 특성 →</a></span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S07 참조 표준 및 용어 사전 — ISO/IEC 42117-X TFL 가이드</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .std-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 14px; margin: 16px 0; }
+    .std-card { border: 1px solid #dee2e6; border-radius: 6px; padding: 14px 16px; background: #fff; }
+    .std-card .std-id { font-family: monospace; font-size: 12px; font-weight: 700; color: #1a4480; margin-bottom: 4px; }
+    .std-card .std-title { font-size: 13px; margin-bottom: 6px; }
+    .std-card .std-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+    .std-card.dis { border-left: 4px solid #f39c12; }
+    .std-card.fdis { border-left: 4px solid #2ecc71; }
+    .std-card.tr { border-left: 4px solid #9b59b6; }
+    .std-card.ts { border-left: 4px solid #3498db; }
+    .std-card.is { border-left: 4px solid #1a4480; }
+    .std-card.awi { border-left: 4px solid #e74c3c; }
+    .dis-index { background: #fff8e1; border: 1px solid #ffe082; border-radius: 6px; padding: 14px 16px; }
+    .dis-index h4 { color: #b86e00; margin-bottom: 10px; }
+    .dis-index ul { font-size: 13px; }
+    .dis-index li { margin-bottom: 4px; }
+    .ver-compare { }
+    .ver-compare table td { font-size: 13px; }
+    .acronym-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; margin: 12px 0; }
+    .acronym-item { background: #f8f9fa; border-radius: 4px; padding: 8px 12px; }
+    .acronym-item .acronym { font-weight: 700; font-size: 13px; color: #1a4480; font-family: monospace; }
+    .acronym-item .definition { font-size: 12px; color: #555; margin-top: 2px; }
+    .id-scheme-box { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; padding: 14px; margin: 10px 0; }
+    .id-scheme-box code { font-size: 13px; }
+    .id-example { background: #eef2f7; padding: 6px 10px; border-radius: 4px; margin: 4px 0; font-family: monospace; font-size: 13px; }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">ISO/IEC 42117-X</div>
+      <div class="title">TFL 운영 가이드</div>
+      <div class="version">v1.0 · 2026-02-19</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-label">메인</div>
+        <a href="index.html" class="nav-item">📋 가이드 홈</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">섹션</div>
+        <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
+        <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>15개 TCM 신뢰성 특성</a>
+        <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
+        <a href="s04-tc-mapping.html" class="nav-item"><span class="section-id">S04</span>TCM-TC 요구사항 매핑</a>
+        <a href="s05-ca-guide.html" class="nav-item"><span class="section-id">S05</span>CA 이행 가이드</a>
+        <a href="s06-gaps.html" class="nav-item"><span class="section-id">S06</span>커버리지 갭 및 권고사항</a>
+        <a href="s07-references.html" class="nav-item active"><span class="section-id">S07</span>참조 표준 및 용어 사전</a>
+      </div>
+    </div>
+  </nav>
+
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div class="page-header">
+      <div>
+        <h1>S07 — 참조 표준 및 용어 사전</h1>
+        <div class="breadcrumb"><a href="index.html">홈</a> › S07</div>
+      </div>
+    </div>
+
+    <div class="main-content">
+
+      <!-- ISS-012 CA 용어 통합 사전 주의 -->
+      <div class="note-box info">
+        <span class="icon">ℹ️</span>
+        <div>
+          <strong>CA 용어 통합 기준 (ISS-012)</strong>
+          본 섹션의 용어 사전을 이 가이드 전체의 용어 기준으로 사용합니다. 파이프라인 각 파일에서 Type I/II/III 명칭이 혼용될 수 있으나 HTML 가이드에서는 아래 통합 용어 사전으로 통일합니다.
+        </div>
+      </div>
+
+      <!-- S07.3 CA 유형 통합 용어 사전 -->
+      <div class="content-section">
+        <h2>S07.3 — CA 유형 통합 용어 사전</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>TFL 내부 명칭</th>
+              <th>ISO/IEC 42117-1 공식 명칭</th>
+              <th>CA 기반 표준</th>
+              <th>기타 참조 명칭</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-typeI">Type I (TFL)</span></td>
+              <td>AI Trustworthiness Fact Label<br><em>§3.2.3, §5.3</em></td>
+              <td>ISO/IEC 17065:2012 + DIS 17067:2025 <span class="dis-note">(DIS)</span></td>
+              <td>third-party certification, 제3자 인증, CAB 인증</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-typeII">Type II (Self-declared)</span></td>
+              <td>Self-declared Trustworthiness Fact Claim<br><em>§3.2.2, §5.2</em></td>
+              <td>ISO/IEC 17050-1:2004 / 17050-2:2004</td>
+              <td>자기선언, SDoC (Supplier's Declaration of Conformity)</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-typeIII">Type III (ATFS/QFD)</span></td>
+              <td>AI Trustworthiness Fact Sheet<br><em>§3.2.4, Scope</em></td>
+              <td>ISO/IEC 17029:2019</td>
+              <td>ATFS, QFD, validation/verification, V&amp;V, 검증/확인</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-level3">Type IV (DTC)</span></td>
+              <td>AI Developer Technical Card<br><em>Scope (Section 1)</em></td>
+              <td>해당 없음 (자유 형식)</td>
+              <td>기술 카드, DTC, 개발자 기술 문서</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- S07.5 TFL 핵심 용어 사전 -->
+      <div class="content-section">
+        <h2>S07.5 — TFL 핵심 용어 정의 (ISO/IEC 42117-1 기준)</h2>
+        <dl>
+          <div class="glossary-entry">
+            <dt>Trustworthiness Fact Statement <span class="term-id">§3.2.1</span></dt>
+            <dd>AI 시스템/모델의 하나 이상의 신뢰성 특성 또는 영향에 대한 정보로, 의도된 대상에게 알리고 시장에 영향을 미치려는 목적을 가지는 진술.</dd>
+          </div>
+          <div class="glossary-entry">
+            <dt>Self-declared Trustworthiness Fact Claim <span class="term-id">§3.2.2</span></dt>
+            <dd>책임 당사자가 자기선언하는 신뢰성 사실 진술. Type II에 해당. 입증 가능하고 검증 가능한 증거에 기반해야 함.</dd>
+          </div>
+          <div class="glossary-entry">
+            <dt>AI Trustworthiness Fact Label (TFL) <span class="term-id">§3.2.3</span></dt>
+            <dd>AI 시스템/모델이 신뢰성 라벨링 프로그램의 기준을 충족함을 나타내는 진술. Type I에 해당. 인정된 CAB에 의한 독립 검증이 전제.</dd>
+          </div>
+          <div class="glossary-entry">
+            <dt>AI Trustworthiness Fact Sheet (ATFS) <span class="term-id">§3.2.4</span></dt>
+            <dd>LCA(수명주기 평가) 기반 사전 결정 파라미터를 사용한 정량적 신뢰성 데이터 진술. Type III에 해당. V&V 기관에 의한 독립 확인 필요.</dd>
+          </div>
+          <div class="glossary-entry">
+            <dt>Trustworthiness Characteristic <span class="term-id">§3.1.2</span></dt>
+            <dd>AI 시스템/모델의 운영 환경과 상호작용하는 활동 요소. 예: robustness, fairness, transparency, data handling. TCM의 15개 특성이 해당.</dd>
+          </div>
+          <div class="glossary-entry">
+            <dt>Area of Trustworthiness Concern <span class="term-id">§3.1.1</span></dt>
+            <dd>사회적 관심의 기술/사회/규제 환경 측면. 예: algorithmic bias, privacy violations, safety failures.</dd>
+          </div>
+          <div class="glossary-entry">
+            <dt>Conformity Assessment Body (CAB)</dt>
+            <dd>제품/프로세스/시스템의 적합성 여부를 평가하는 기관. TFL Type I의 경우 국가 인정기구(예: KAB)로부터 인정을 받은 CAB이어야 함.</dd>
+          </div>
+          <div class="glossary-entry">
+            <dt>AI Management System (AIMS)</dt>
+            <dd>ISO/IEC 42001:2023 기반 AI 위험·기회·영향을 관리하기 위한 체계. TFL Level 1~2 Claim 이행 시 증거 기반 제공. AIMS 인증 조직은 Level 1~2 증거 70% 이상 재활용 가능.</dd>
+          </div>
+          <div class="glossary-entry">
+            <dt>TCM (Trustworthiness Characteristics Matrix)</dt>
+            <dd>ISO/IEC JTC 1/SC 42가 관리하는 AI 신뢰성 특성 매트릭스. 15개 특성과 각 특성에 연계된 표준 및 TC 요구사항의 매핑 체계. 본 파이프라인의 핵심 입력 자료.</dd>
+          </div>
+          <div class="glossary-entry">
+            <dt>Level 1 / Level 2 / Level 3 <span class="term-id">임시 운영 분류</span></dt>
+            <dd>ISO/IEC 42117-X Part 1에 공식 정의되지 않은 임시 운영 체계. ISO/IEC DIS 17067:2025 CA 복잡도 계층(자기선언 → V&V → 제3자 인증)을 기준으로 도출. Part 2~4 발행 시 변경 가능.</dd>
+          </div>
+          <div class="glossary-entry">
+            <dt>Validation (확인) vs Verification (검증)</dt>
+            <dd><strong>Validation(확인)</strong>: AI 시스템이 의도된 사용 목적을 충족하는지 확인 (설계 단계 기준). <strong>Verification(검증)</strong>: AI 시스템이 명세화된 요건을 충족하는지 확인 (측정값 기준). ISO/IEC 17029 기반 Type III CA의 핵심 개념.</dd>
+          </div>
+          <div class="glossary-entry">
+            <dt>Normative vs Informative</dt>
+            <dd><strong>Normative(shall)</strong>: 적합성 판정을 위해 반드시 준수해야 하는 요구사항. <strong>Informative(should)</strong>: 권장 사항으로 적합성 판정의 직접 근거가 아닌 참고 정보. TC 요구사항 추출 시 normative 요구사항을 우선하여 추출.</dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- S07.2 ISO/IEC 17067 버전 비교 -->
+      <div class="content-section ver-compare">
+        <h2>S07.2 — ISO/IEC 17067 버전 비교 (2013 vs DIS 2025)</h2>
+
+        <div class="note-box warning">
+          <span class="icon">⚠️</span>
+          <div>
+            <strong>본 가이드 참조 버전: ISO/IEC DIS 17067:2025 (초안)</strong>
+            최종 발행(2026~2027년 예상) 시 조항 번호 및 내용이 변경될 수 있습니다. 아래 비교 표의 DIS 2025 내용은 초안 기준이며 최종본과 상이할 수 있습니다.
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>비교 항목</th><th>ISO/IEC 17067:2013</th><th>ISO/IEC DIS 17067:2025 <span class="badge badge-draft">(DIS)</span></th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>적용 범위</td>
+              <td>일반 제품 인증 스킴 설계 원칙</td>
+              <td>AI/자동화 기술 CA 조항 신설. AI 시스템 인증을 위한 특화 지침 포함</td>
+            </tr>
+            <tr>
+              <td>CAB 역량 요건</td>
+              <td>일반적 기술 역량 요건</td>
+              <td>AI 시스템 평가를 위한 기술 역량 요건 강화. ML/AI 전문 인력 요건 명시</td>
+            </tr>
+            <tr>
+              <td>스킴 설계 원칙</td>
+              <td>기본 스킴 설계 원칙 (6.1~6.8)</td>
+              <td>스킴 설계 원칙 개정. 리스크 기반 접근법 강화. 디지털/AI 특화 조항 추가</td>
+            </tr>
+            <tr>
+              <td>자기선언 체계</td>
+              <td>참조 없음 (별도 17050 적용)</td>
+              <td>자기선언 → V&V → 제3자 인증 복잡도 계층 명시. Level 체계 근거 제공</td>
+            </tr>
+            <tr>
+              <td>감사 체계</td>
+              <td>일반적 심사 프로세스</td>
+              <td>지속적 모니터링 체계 강화. AI 시스템 모니터링 조항 포함</td>
+            </tr>
+            <tr>
+              <td>현행 인정 기관 기준</td>
+              <td>현재 인정 기관들이 채택 중 (2013년 기준)</td>
+              <td>과도기 공존: DIS 2025 기반 스킴은 최종 발행 후 인정 기관 업데이트 필요</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- DIS 인용 색인 -->
+        <div class="dis-index" style="margin-top:16px;">
+          <h4>📑 DIS 17067:2025 인용 항목 색인 (최종 발행 시 업데이트 대상)</h4>
+          <ul>
+            <li>S01.4 — Level 1/2/3 분류의 CA 복잡도 계층 근거</li>
+            <li>S05.1 — CA 유형 체계 (Type I/II/III) 스킴 참조</li>
+            <li>S05.2 — Level별 CA 방법 복잡도 분류</li>
+            <li>S05.7 — CAB 선정 기준 (DIS 2025 역량 요건)</li>
+            <li>S07.2 — 버전 비교 표 (현재 섹션)</li>
+            <li><em>— ISO/IEC DIS 17067:2025 최종 발행 시 조항 번호를 갱신하십시오 —</em></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- S07.4 내부 ID 체계 -->
+      <div class="content-section">
+        <h2>S07.4 — 내부 ID 체계 설명</h2>
+
+        <div class="id-scheme-box">
+          <h4>TC 요구사항 정규 형식 (tc_structured.json)</h4>
+          <div class="id-example">TC-REQ-001 ~ TC-REQ-128</div>
+          <p style="font-size:13px;margin-top:6px;">공식 ID 형식. 19개 SC42 표준에서 추출된 128개 TC 요구사항. <code>tc_structured.json</code>에서 <code>req_id</code> 필드로 사용.</p>
+        </div>
+
+        <div class="id-scheme-box">
+          <h4>TC Resilience 보조 형식 (tc_structured.json)</h4>
+          <div class="id-example">TC-[표준번호]-RES-[순번]<br>예: TC-24028-RES-01, TC-5469-RES-03</div>
+          <p style="font-size:13px;margin-top:6px;">Resilience 관련 보조 요구사항. 표준 번호(24028, 5469 등)와 RES 순번 조합. 총 20개. <strong>ISO/IEC 42117-X 공식 표기 형식이 아닌 파이프라인 내부 형식.</strong></p>
+        </div>
+
+        <div class="id-scheme-box" style="border-color:#f39c12;background:#fff8e1;">
+          <h4>Simple Claim 내부 참조 코드 (simple_claim_db.json) — ISS-003</h4>
+          <div class="id-example">req_XXXXX_NNN<br>예: req_24028_001, req_5723_001, req_25058_002</div>
+          <p style="font-size:13px;margin-top:6px;">simple_claim_db.json의 <code>source_tc_ids</code> 필드에 사용되는 내부 참조 코드. <strong>TC-REQ-XXX 형식과 다르므로 직접 매핑 불가 (ISS-003).</strong> <code>mapping_supplement.json</code>을 통해 브릿지 매핑 제공.</p>
+        </div>
+
+        <div class="id-scheme-box">
+          <h4>Simple Claim 공식 ID</h4>
+          <div class="id-example">SC-[Characteristic]-[NNN]<br>예: SC-Trustworthiness-001, SC-Bias-Fairness-003</div>
+          <p style="font-size:13px;margin-top:6px;">45개 Simple Claim의 고유 식별자. <code>[Characteristic]</code>은 15개 TCM 특성명, <code>[NNN]</code>은 001~003.</p>
+        </div>
+
+        <div class="id-scheme-box">
+          <h4>mapping_supplement.json 브릿지 매핑</h4>
+          <p style="font-size:13px;">ISS-003 해소를 위한 브릿지 파일. <code>req_XXXXX_NNN</code> → <code>TC-REQ-XXX</code> 변환 제공. 38/45 high confidence, 7/45 medium confidence.</p>
+          <table style="margin-top:6px;font-size:12px;"><thead><tr><th>신뢰도</th><th>매핑 방법</th><th>건수</th></tr></thead><tbody>
+            <tr><td><span class="badge badge-high">high</span></td><td>표준명 매칭 + 특성 교집합</td><td>38개</td></tr>
+            <tr><td><span class="badge badge-medium">medium</span></td><td>표준명 부분 매칭 또는 특성 기반 추정</td><td>7개</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+
+      <!-- S07.1 핵심 참조 표준 목록 -->
+      <div class="content-section">
+        <h2>S07.1 — 파이프라인 핵심 참조 표준 목록</h2>
+        <p><span class="badge badge-draft">DIS</span> = 초안 (Draft International Standard), <span class="badge badge-level2">FDIS</span> = 최종 국제표준 초안, <span class="badge badge-level3">IS</span> = 국제표준, <span class="badge badge-normative">TR</span> = 기술 보고서, <span class="badge badge-informative">TS</span> = 기술 규격</p>
+
+        <div class="std-grid">
+          <div class="std-card dis">
+            <div class="std-id">ISO/IEC TS 42117-1:202X <span class="badge badge-draft">PWI Draft</span></div>
+            <div class="std-title">AI Trustworthiness Fact Label — Part 1: Principles and general requirements</div>
+            <div class="std-meta"><span class="badge badge-low-warn">PWI 단계</span><span class="badge badge-draft">2025-10-02 초안</span></div>
+          </div>
+          <div class="std-card is">
+            <div class="std-id">ISO/IEC TR 24028:2020 <span class="badge badge-normative">TR</span></div>
+            <div class="std-title">Overview of trustworthiness in artificial intelligence</div>
+            <div class="std-meta"><span class="badge badge-high">핵심 참조</span></div>
+          </div>
+          <div class="std-card is">
+            <div class="std-id">ISO/IEC TS 5723:2022 <span class="badge badge-informative">TS</span></div>
+            <div class="std-title">Trustworthiness — Vocabulary</div>
+            <div class="std-meta"><span class="badge badge-high">핵심 참조</span></div>
+          </div>
+          <div class="std-card is">
+            <div class="std-id">ISO/IEC 5338:2024 <span class="badge badge-level3">IS</span></div>
+            <div class="std-title">AI system life cycle processes</div>
+            <div class="std-meta"><span class="badge badge-high">핵심 참조</span></div>
+          </div>
+          <div class="std-card is">
+            <div class="std-id">ISO/IEC 23894:2023 <span class="badge badge-level3">IS</span></div>
+            <div class="std-title">Guidance on risk management</div>
+            <div class="std-meta"><span class="badge badge-high">핵심 참조</span></div>
+          </div>
+          <div class="std-card fdis">
+            <div class="std-id">ISO/IEC FDIS 42001:2023 <span class="badge badge-level2">FDIS</span></div>
+            <div class="std-title">Artificial intelligence — Management system (AIMS)</div>
+            <div class="std-meta"><span class="badge badge-high">핵심 참조</span><span class="badge badge-high">AIMS</span></div>
+          </div>
+          <div class="std-card dis">
+            <div class="std-id">ISO/IEC DTS 8200 <span class="badge badge-draft">DTS</span></div>
+            <div class="std-title">Controllability of AI systems</div>
+            <div class="std-meta"><span class="badge badge-high">핵심 참조</span></div>
+          </div>
+          <div class="std-card dis">
+            <div class="std-id">ISO/IEC DTS 6254 <span class="badge badge-draft">DTS</span></div>
+            <div class="std-title">Explainability — Objectives and approaches</div>
+            <div class="std-meta"></div>
+          </div>
+          <div class="std-card dis">
+            <div class="std-id">ISO/IEC DTS 12791:2024 <span class="badge badge-draft">DTS</span></div>
+            <div class="std-title">Testing of bias in AI systems (신규 발행)</div>
+            <div class="std-meta"><span class="badge badge-high">신규</span></div>
+          </div>
+          <div class="std-card fdis">
+            <div class="std-id">ISO/IEC FDIS 42006:2025 <span class="badge badge-level2">FDIS</span></div>
+            <div class="std-title">Requirements for bodies providing audit and certification of AI management systems (신규 발행)</div>
+            <div class="std-meta"><span class="badge badge-high">신규</span></div>
+          </div>
+          <div class="std-card dis">
+            <div class="std-id">ISO/IEC DTR 5469 <span class="badge badge-draft">DTR</span></div>
+            <div class="std-title">Artificial intelligence — Functional safety and AI systems</div>
+            <div class="std-meta"></div>
+          </div>
+          <div class="std-card dis">
+            <div class="std-id">ISO/IEC DTS 25058 <span class="badge badge-draft">DTS</span></div>
+            <div class="std-title">Systems and software quality requirements and evaluation — AI quality evaluation</div>
+            <div class="std-meta"></div>
+          </div>
+          <div class="std-card tr">
+            <div class="std-id">ISO/IEC TR 24029-1:2021 <span class="badge badge-normative">TR</span></div>
+            <div class="std-title">Assessment of the robustness of neural networks — Part 1: Overview</div>
+            <div class="std-meta"></div>
+          </div>
+          <div class="std-card tr">
+            <div class="std-id">ISO/IEC TR 24029-2:2023 <span class="badge badge-normative">TR</span></div>
+            <div class="std-title">Assessment of the robustness of neural networks — Part 2: Methodology for the use of formal methods</div>
+            <div class="std-meta"></div>
+          </div>
+          <div class="std-card tr">
+            <div class="std-id">ISO/IEC TR 24368:2022 <span class="badge badge-normative">TR</span></div>
+            <div class="std-title">Overview of ethical and societal concerns</div>
+            <div class="std-meta"></div>
+          </div>
+          <div class="std-card tr">
+            <div class="std-id">ISO/IEC TR 29119-11:2020 <span class="badge badge-normative">TR</span></div>
+            <div class="std-title">Software and systems engineering — Software testing — Part 11: Testing of AI systems</div>
+            <div class="std-meta"></div>
+          </div>
+          <div class="std-card is">
+            <div class="std-id">ISO/IEC 22989:2022 <span class="badge badge-level3">IS</span></div>
+            <div class="std-title">Artificial intelligence concepts and terminology</div>
+            <div class="std-meta"><span class="badge badge-low-warn">22989↔25058 Linkage 부재</span></div>
+          </div>
+          <div class="std-card dis">
+            <div class="std-id">ISO/IEC DIS 17067:2025 <span class="badge badge-draft">DIS</span></div>
+            <div class="std-title">Conformity assessment — Fundamentals of product certification and guidelines for product certification schemes</div>
+            <div class="std-meta"><span class="badge badge-draft">초안 — 최종 발행 2026-2027 예상</span></div>
+          </div>
+          <div class="std-card is">
+            <div class="std-id">ISO/IEC 17065:2012 <span class="badge badge-level3">IS</span></div>
+            <div class="std-title">Conformity assessment — Requirements for bodies certifying products, processes and services</div>
+            <div class="std-meta"><span class="badge badge-high">Type I TFL CA 기반</span></div>
+          </div>
+          <div class="std-card is">
+            <div class="std-id">ISO/IEC 17050-1:2004 + 17050-2:2004 <span class="badge badge-level3">IS</span></div>
+            <div class="std-title">Conformity assessment — Supplier's declaration of conformity</div>
+            <div class="std-meta"><span class="badge badge-high">Type II SDoC 기반</span></div>
+          </div>
+          <div class="std-card is">
+            <div class="std-id">ISO/IEC 17029:2019 <span class="badge badge-level3">IS</span></div>
+            <div class="std-title">Conformity assessment — General principles and requirements for validation and verification bodies</div>
+            <div class="std-meta"><span class="badge badge-high">Type III V&V 기반</span></div>
+          </div>
+          <div class="std-card awi">
+            <div class="std-id">ISO/IEC AWI 42007 <span class="badge badge-low-warn">AWI</span></div>
+            <div class="std-title">Artificial intelligence — Conformity assessment framework (개발 중)</div>
+            <div class="std-meta"><span class="badge badge-low-warn">미발행 — 2026~2027 예상</span></div>
+          </div>
+          <div class="std-card fdis">
+            <div class="std-id">ISO/IEC FDIS 42005:2025 <span class="badge badge-level2">FDIS</span></div>
+            <div class="std-title">AI system impact assessment (신규 발행)</div>
+            <div class="std-meta"><span class="badge badge-high">신규</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S07.6 약어 목록 -->
+      <div class="content-section">
+        <h2>S07.6 — 약어 목록</h2>
+        <div class="acronym-grid">
+          <div class="acronym-item"><div class="acronym">AIMS</div><div class="definition">AI Management System (AI 관리 시스템, ISO/IEC 42001)</div></div>
+          <div class="acronym-item"><div class="acronym">ATFS</div><div class="definition">AI Trustworthiness Fact Sheet (정량 신뢰성 사실 시트, Type III)</div></div>
+          <div class="acronym-item"><div class="acronym">AWI</div><div class="definition">Approved Work Item (승인된 작업 항목)</div></div>
+          <div class="acronym-item"><div class="acronym">CA</div><div class="definition">Conformity Assessment (적합성 평가)</div></div>
+          <div class="acronym-item"><div class="acronym">CAB</div><div class="definition">Conformity Assessment Body (적합성 평가 기관)</div></div>
+          <div class="acronym-item"><div class="acronym">DIS</div><div class="definition">Draft International Standard (국제표준 초안)</div></div>
+          <div class="acronym-item"><div class="acronym">DTS</div><div class="definition">Draft Technical Specification (기술 규격 초안)</div></div>
+          <div class="acronym-item"><div class="acronym">DTR</div><div class="definition">Draft Technical Report (기술 보고서 초안)</div></div>
+          <div class="acronym-item"><div class="acronym">DTC</div><div class="definition">Developer Technical Card (개발자 기술 카드, Type IV)</div></div>
+          <div class="acronym-item"><div class="acronym">FDIS</div><div class="definition">Final Draft International Standard (최종 국제표준 초안)</div></div>
+          <div class="acronym-item"><div class="acronym">HARA</div><div class="definition">Hazard Analysis and Risk Assessment (위험 분석 및 위험 평가)</div></div>
+          <div class="acronym-item"><div class="acronym">HITS</div><div class="definition">Human-in-the-loop System (인간 참여 루프 시스템)</div></div>
+          <div class="acronym-item"><div class="acronym">IS</div><div class="definition">International Standard (국제표준)</div></div>
+          <div class="acronym-item"><div class="acronym">MTTR</div><div class="definition">Mean Time To Recovery (평균 복구 시간)</div></div>
+          <div class="acronym-item"><div class="acronym">PWI</div><div class="definition">Preliminary Work Item (예비 작업 항목)</div></div>
+          <div class="acronym-item"><div class="acronym">QFD</div><div class="definition">Quantitative Fact Declaration (정량적 사실 선언)</div></div>
+          <div class="acronym-item"><div class="acronym">RACI</div><div class="definition">Responsible, Accountable, Consulted, Informed (역할 책임 매트릭스)</div></div>
+          <div class="acronym-item"><div class="acronym">SC42</div><div class="definition">ISO/IEC JTC 1/SC 42 (AI 기술 위원회)</div></div>
+          <div class="acronym-item"><div class="acronym">SDoC</div><div class="definition">Supplier's Declaration of Conformity (공급자 적합성 선언)</div></div>
+          <div class="acronym-item"><div class="acronym">SIL</div><div class="definition">Safety Integrity Level (안전 무결성 수준, IEC 61508)</div></div>
+          <div class="acronym-item"><div class="acronym">SLA</div><div class="definition">Service Level Agreement (서비스 수준 계약)</div></div>
+          <div class="acronym-item"><div class="acronym">TC</div><div class="definition">Trustworthiness Characteristic (신뢰성 특성, 본 가이드 문맥에서의 약칭)</div></div>
+          <div class="acronym-item"><div class="acronym">TCM</div><div class="definition">Trustworthiness Characteristics Matrix (신뢰성 특성 매트릭스)</div></div>
+          <div class="acronym-item"><div class="acronym">TFL</div><div class="definition">Trustworthiness Fact Label (신뢰성 사실 라벨)</div></div>
+          <div class="acronym-item"><div class="acronym">TR</div><div class="definition">Technical Report (기술 보고서)</div></div>
+          <div class="acronym-item"><div class="acronym">TS</div><div class="definition">Technical Specification (기술 규격)</div></div>
+          <div class="acronym-item"><div class="acronym">V&V</div><div class="definition">Validation and Verification (검증 및 확인)</div></div>
+          <div class="acronym-item"><div class="acronym">XAI</div><div class="definition">Explainable Artificial Intelligence (설명 가능한 AI)</div></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="page-footer">
+      <span><a href="s06-gaps.html">← S06 커버리지 갭</a></span>
+      <span>ISO/IEC 42117-X TFL 운영 가이드 v1.0 완료 | 생성: 2026-02-19</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

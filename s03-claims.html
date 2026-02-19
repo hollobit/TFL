@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S03 Simple Claim 카탈로그 — ISO/IEC 42117-X TFL 가이드</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .claim-card { display: none; }
+    .claim-card.show { display: block; }
+    .claim-section-title { font-size: 16px; font-weight: 700; color: #1a4480; margin: 24px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #e8edf4; display: flex; align-items: center; gap: 10px; }
+    .char-group { margin-bottom: 24px; }
+    .cross-ref-table { font-size: 12px; }
+    .cross-ref-table td { padding: 6px 10px; }
+    .prohibited-list { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0; }
+    .prohibited-item { background: #fdecea; border: 1px solid #f5c6cb; border-radius: 4px; padding: 4px 12px; font-size: 13px; color: #c0392b; text-decoration: line-through; }
+    .prohibited-ok { background: #e8f5e9; border: 1px solid #a5d6a7; border-radius: 4px; padding: 4px 12px; font-size: 12px; color: #2d6a4f; }
+  </style>
+  <script>
+    function filterClaims(filter) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      document.querySelectorAll('.claim-card').forEach(card => {
+        if (filter === 'all' || card.dataset.level === filter || card.dataset.type === filter || card.dataset.char === filter) {
+          card.classList.add('show');
+        } else {
+          card.classList.remove('show');
+        }
+      });
+      // Update count
+      const visible = document.querySelectorAll('.claim-card.show').length;
+      document.getElementById('claim-count').textContent = visible + '개 표시 중';
+    }
+    window.onload = function() {
+      document.querySelectorAll('.claim-card').forEach(c => c.classList.add('show'));
+    }
+  </script>
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">ISO/IEC 42117-X</div>
+      <div class="title">TFL 운영 가이드</div>
+      <div class="version">v1.0 · 2026-02-19</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-label">메인</div>
+        <a href="index.html" class="nav-item">📋 가이드 홈</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">섹션</div>
+        <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
+        <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>15개 TCM 신뢰성 특성</a>
+        <a href="s03-claims.html" class="nav-item active"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
+        <a href="s04-tc-mapping.html" class="nav-item"><span class="section-id">S04</span>TCM-TC 요구사항 매핑</a>
+        <a href="s05-ca-guide.html" class="nav-item"><span class="section-id">S05</span>CA 이행 가이드</a>
+        <a href="s06-gaps.html" class="nav-item"><span class="section-id">S06</span>커버리지 갭 및 권고사항</a>
+        <a href="s07-references.html" class="nav-item"><span class="section-id">S07</span>참조 표준 및 용어 사전</a>
+      </div>
+    </div>
+  </nav>
+
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div class="page-header">
+      <div>
+        <h1>S03 — Simple Claim 카탈로그 (45개)</h1>
+        <div class="breadcrumb"><a href="index.html">홈</a> › S03</div>
+      </div>
+      <div class="badge-group">
+        <span class="badge badge-level1">Level 1: 15개</span>
+        <span class="badge badge-level2">Level 2: 15개</span>
+        <span class="badge badge-level3">Level 3: 15개</span>
+      </div>
+    </div>
+
+    <div class="main-content">
+
+      <!-- L1 임시 분류 경고 -->
+      <div class="note-box warning">
+        <span class="icon">⚠️</span>
+        <div>
+          <strong>임시 운영 분류 고지 (L1)</strong>
+          본 Level 1/2/3 분류 체계는 ISO/IEC 42117-X Part 1에 정의되지 않은 임시 운영 체계입니다. Part 2~4 발행(시기 미정) 시 변경 가능합니다.
+        </div>
+      </div>
+
+      <!-- L4 source_tc_ids 추적 제한 -->
+      <div class="note-box info">
+        <span class="icon">ℹ️</span>
+        <div>
+          <strong>TC 참조 추적 제한 고지 (L4 — ISS-003)</strong>
+          Simple Claim의 <code>source_tc_ids</code>(<code>req_XXXXX_NNN</code> 형식)와 TC 요구사항(<code>TC-REQ-XXX</code> 형식) 간 직접 ID 추적이 제한됩니다.
+          추적 참조는 <code>mapping_supplement.json</code>을 통해 제공됩니다. 아래 카드의 "TC 참조" 항목은 브릿지 매핑 기반입니다.
+        </div>
+      </div>
+
+      <!-- S03.1 Claim 구조 -->
+      <div class="content-section">
+        <h2>S03.1 — Claim 구조 및 작성 원칙</h2>
+        <p>Simple Claim은 ISO/IEC 42117-X Part 1의 <strong>Type II Self-declared Trustworthiness Fact Claim</strong> 형식을 따르며 다음 구성요소를 포함합니다:</p>
+        <table>
+          <thead><tr><th>필드</th><th>설명</th><th>필수 여부</th></tr></thead>
+          <tbody>
+            <tr><td><code>claim_id</code></td><td>SC-[Characteristic]-[NNN] 형식의 고유 식별자</td><td>필수</td></tr>
+            <tr><td><code>claim_template</code></td><td>[System], [metric], [standard] 플레이스홀더 포함 Claim 템플릿 문장</td><td>필수</td></tr>
+            <tr><td><code>claim_example</code></td><td>구체적 AI 시스템명 및 수치를 적용한 예시 Claim</td><td>권고</td></tr>
+            <tr><td><code>metric_type</code></td><td>quantitative (정량) / qualitative (정성) 구분</td><td>필수</td></tr>
+            <tr><td><code>measurability</code></td><td>high / medium / low — 측정 가능성 수준</td><td>필수</td></tr>
+            <tr><td><code>ca_type</code></td><td>Type I / Type II / Type III / Type II or III 등 CA 유형</td><td>필수</td></tr>
+            <tr><td><code>audit_evidence</code></td><td>CA 수행을 위한 필요 증거 목록</td><td>필수</td></tr>
+            <tr><td><code>source_standards</code></td><td>Claim의 근거가 되는 ISO/IEC 표준 목록</td><td>필수</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Claim 작성 4단계 프로세스</h3>
+        <ol>
+          <li><strong>Step 1: TC 식별 및 범위 확정</strong> — 대상 AI 시스템 식별, 관련 특성 선택 (§6.4.a, §6.4.c)</li>
+          <li><strong>Step 2: 프로그램 기반 요건 정의</strong> — 성능 기반 선호, 정량화 방법론·데이터 품질 정의 (§6.5, §6.6)</li>
+          <li><strong>Step 3: Claim 작성</strong> — 구체적 특성·범위·방법론 명시, 라이프사이클 단계 고려 (§7.1.2)</li>
+          <li><strong>Step 4: 검증 및 지원 정보</strong> — 입증 가능하고 검증 가능하도록 구성, 지원 정보 첨부 (§7.5)</li>
+        </ol>
+      </div>
+
+      <!-- S03.3 금지 표현 -->
+      <div class="content-section">
+        <h2>S03.3 — 금지 표현 목록 및 준수 현황</h2>
+        <p>ISO/IEC 42117-X는 다음 5종 표현을 Claim에 사용하는 것을 금지합니다:</p>
+        <div class="prohibited-list">
+          <span class="prohibited-item">ethical AI</span>
+          <span class="prohibited-item">trustworthy AI</span>
+          <span class="prohibited-item">responsible AI</span>
+          <span class="prohibited-item">human-centric</span>
+          <span class="prohibited-item">safe AI</span>
+        </div>
+        <div class="note-box success">
+          <span class="icon">✅</span>
+          <div><strong>금지 표현 준수 확인</strong> — 본 가이드의 45개 Simple Claim 전체에서 금지 표현 5종이 사용되지 않음을 확인하였습니다.</div>
+        </div>
+      </div>
+
+      <!-- S03.5 Level Cross-Reference Index (ISS-006 해소) -->
+      <div class="content-section">
+        <h2>S03.5 — Level-Claim ID 크로스레퍼런스 인덱스</h2>
+        <div class="note-box info">
+          <span class="icon">ℹ️</span>
+          <div><strong>SC-Bias-Fairness Level 역전 고지 (ISS-006)</strong> — SC-Bias-Fairness 시리즈는 001=Level 3, 002=Level 2, 003=Level 1으로 다른 특성과 반대 순서를 가집니다. 아래 인덱스로 확인하십시오.</div>
+        </div>
+        <table class="cross-ref-table">
+          <thead><tr><th>특성</th><th>Level 1 Claim ID</th><th>Level 2 Claim ID</th><th>Level 3 Claim ID</th></tr></thead>
+          <tbody>
+            <tr><td>Trustworthiness</td><td>SC-Trustworthiness-001</td><td>SC-Trustworthiness-002</td><td>SC-Trustworthiness-003</td></tr>
+            <tr><td>Robustness</td><td>SC-Robustness-003</td><td>SC-Robustness-001</td><td>SC-Robustness-002</td></tr>
+            <tr><td>Reliability</td><td>SC-Reliability-002</td><td>SC-Reliability-001</td><td>SC-Reliability-003</td></tr>
+            <tr><td>Transparency</td><td>SC-Transparency-001</td><td>SC-Transparency-002</td><td>SC-Transparency-003</td></tr>
+            <tr><td>Bias/Fairness</td><td><strong style="color:#c0392b">SC-Bias-Fairness-003 ⚠️</strong></td><td>SC-Bias-Fairness-002</td><td><strong style="color:#c0392b">SC-Bias-Fairness-001 ⚠️</strong></td></tr>
+            <tr><td>Accountability</td><td>SC-Accountability-001</td><td>SC-Accountability-002</td><td>SC-Accountability-003</td></tr>
+            <tr><td>Safety</td><td>SC-Safety-003</td><td>SC-Safety-001</td><td>SC-Safety-002</td></tr>
+            <tr><td>Security</td><td>SC-Security-003</td><td>SC-Security-001</td><td>SC-Security-002</td></tr>
+            <tr><td>Explainability</td><td>SC-Explainability-002</td><td>SC-Explainability-001</td><td>SC-Explainability-003</td></tr>
+            <tr><td>Controllability</td><td>SC-Controllability-003 ⚠️</td><td>SC-Controllability-001</td><td>SC-Controllability-002</td></tr>
+            <tr><td>Intervenability</td><td>SC-Intervenability-002</td><td>SC-Intervenability-001</td><td>SC-Intervenability-003</td></tr>
+            <tr><td>Functional Correctness</td><td>SC-Functional_Correctness-003</td><td>SC-Functional_Correctness-002</td><td>SC-Functional_Correctness-001</td></tr>
+            <tr><td>Efficiency</td><td>SC-Efficiency-003 ⚠️</td><td>SC-Efficiency-002</td><td>SC-Efficiency-001</td></tr>
+            <tr><td>Availability</td><td>SC-Availability-003 ⚠️</td><td>SC-Availability-002</td><td>SC-Availability-001</td></tr>
+            <tr><td>Resilience</td><td>SC-Resilience-003</td><td>SC-Resilience-001</td><td>SC-Resilience-002</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:12px;color:#888;margin-top:6px;">⚠️ = <code>measurability=low</code>로 검증 기준 보완이 필요한 Claim (ISS-004)</p>
+      </div>
+
+      <!-- S03.2 Claim 카탈로그 -->
+      <div class="content-section">
+        <h2>S03.2 — 45개 Claim 전체 목록</h2>
+
+        <!-- 필터 바 -->
+        <div class="filter-bar">
+          <span class="filter-label">Level:</span>
+          <button class="filter-btn" onclick="filterClaims('level1')">Level 1</button>
+          <button class="filter-btn" onclick="filterClaims('level2')">Level 2</button>
+          <button class="filter-btn" onclick="filterClaims('level3')">Level 3</button>
+          <span class="filter-label" style="margin-left:12px;">CA 유형:</span>
+          <button class="filter-btn" onclick="filterClaims('typeII')">Type II (자기선언)</button>
+          <button class="filter-btn" onclick="filterClaims('typeI')">Type I (3자 인증)</button>
+          <button class="filter-btn" onclick="filterClaims('typeIII')">Type III (V&V)</button>
+          <button class="filter-btn active" onclick="filterClaims('all')">전체 보기</button>
+          <span id="claim-count" class="filter-label">45개 표시 중</span>
+        </div>
+
+        <!-- TRUSTWORTHINESS -->
+        <div class="char-group">
+          <div class="claim-section-title">🏅 Trustworthiness</div>
+          <div class="claim-grid">
+
+            <div class="claim-card level1 typeI typeII" data-level="level1" data-type="typeII" data-char="trustworthiness">
+              <div class="card-header">
+                <span class="card-id">SC-Trustworthiness-001</span>
+                <div class="badge-row">
+                  <span class="badge badge-level1">Level 1</span>
+                  <span class="badge badge-typeII">Type I or II</span>
+                </div>
+              </div>
+              <div class="claim-template">[System] demonstrates trustworthiness through documented risk management and stakeholder engagement per [standard]</div>
+              <div class="claim-example">📌 MedDiag-AI demonstrates trustworthiness through documented risk management processes per ISO/IEC TR 24028:2020 clause 5</div>
+              <div class="card-meta">
+                <div class="meta-item"><div class="meta-label">측정 유형</div><div class="meta-value">정성 (qualitative)</div></div>
+                <div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-medium">medium</span></div></div>
+                <div class="meta-item"><div class="meta-label">감사 증거</div><div class="meta-value">위험 관리 문서, 이해관계자 기록</div></div>
+                <div class="meta-item"><div class="meta-label">AIMS 조항</div><div class="meta-value">6.1, A.5.2</div></div>
+              </div>
+              <div class="note-box warning" style="padding:8px 10px;font-size:12px;margin-top:8px;">⚠️ 이중 분류: 저위험=Type II 자기선언, 고위험=Type I 제3자 인증 (ISS-005)</div>
+              <div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC TR 24028, ISO/IEC TS 5723</div>
+            </div>
+
+            <div class="claim-card level2 typeI" data-level="level2" data-type="typeI" data-char="trustworthiness">
+              <div class="card-header">
+                <span class="card-id">SC-Trustworthiness-002</span>
+                <div class="badge-row"><span class="badge badge-level2">Level 2</span><span class="badge badge-typeI">Type I</span></div>
+              </div>
+              <div class="claim-template">[System] achieves trustworthiness score ≥ [threshold] across [N] evaluated characteristics per [standard]</div>
+              <div class="claim-example">📌 AutoLoan-AI achieves trustworthiness assessment score ≥ 80% across 5 evaluated characteristics per ISO/IEC TS 5723:2022</div>
+              <div class="card-meta">
+                <div class="meta-item"><div class="meta-label">측정 유형</div><div class="meta-value">정량 (quantitative)</div></div>
+                <div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-high">high</span></div></div>
+                <div class="meta-item"><div class="meta-label">감사 증거</div><div class="meta-value">제3자 평가 보고서, 특성 평가 매트릭스</div></div>
+                <div class="meta-item"><div class="meta-label">AIMS 조항</div><div class="meta-value">9.1, A.6.2.4</div></div>
+              </div>
+              <div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC TS 5723, ISO/IEC TR 24028</div>
+            </div>
+
+            <div class="claim-card level3 typeI" data-level="level3" data-type="typeI" data-char="trustworthiness">
+              <div class="card-header">
+                <span class="card-id">SC-Trustworthiness-003</span>
+                <div class="badge-row"><span class="badge badge-level3">Level 3</span><span class="badge badge-typeI">Type I</span></div>
+              </div>
+              <div class="claim-template">[System] satisfies all normative trustworthiness requirements of [standard] as verified by accredited third party</div>
+              <div class="claim-example">📌 FinanceBot satisfies all normative trustworthiness requirements of ISO/IEC TS 42117-1 as verified by accredited CAB</div>
+              <div class="card-meta">
+                <div class="meta-item"><div class="meta-label">측정 유형</div><div class="meta-value">정성 (qualitative)</div></div>
+                <div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-medium">medium</span></div></div>
+                <div class="meta-item"><div class="meta-label">감사 증거</div><div class="meta-value">인증 마크, CAB 감사 보고서</div></div>
+                <div class="meta-item"><div class="meta-label">실현 가능성</div><div class="meta-value"><span class="badge badge-low-warn">낮음</span></div></div>
+              </div>
+              <div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC TR 24028, ISO/IEC TS 42117</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ROBUSTNESS -->
+        <div class="char-group">
+          <div class="claim-section-title">💪 Robustness</div>
+          <div class="claim-grid">
+            <div class="claim-card level1 typeII" data-level="level1" data-type="typeII"><div class="card-header"><span class="card-id">SC-Robustness-003</span><div class="badge-row"><span class="badge badge-level1">Level 1</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] has documented robustness evaluation methodology covering [perturbation types] per [standard]</div><div class="claim-example">📌 FraudDetect-AI has documented robustness evaluation methodology covering distribution shift and input perturbations per ISO/IEC TR 24029-1</div><div class="card-meta"><div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-medium">medium</span></div></div><div class="meta-item"><div class="meta-label">감사 증거</div><div class="meta-value">강건성 방법론 문서</div></div></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC TR 24029-1</div></div>
+            <div class="claim-card level2 typeIII" data-level="level2" data-type="typeIII"><div class="card-header"><span class="card-id">SC-Robustness-001</span><div class="badge-row"><span class="badge badge-level2">Level 2</span><span class="badge badge-typeIII">Type II or III</span></div></div><div class="claim-template">[System] maintains performance degradation &lt; [X]% under [perturbation type] per [standard]</div><div class="claim-example">📌 ImageClassifier-v2 maintains accuracy degradation &lt; 5% under Gaussian noise perturbation per ISO/IEC TR 24029-1:2021</div><div class="card-meta"><div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-high">high</span></div></div><div class="meta-item"><div class="meta-label">감사 증거</div><div class="meta-value">강건성 테스트 보고서, 적대적 테스트 데이터셋</div></div></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC TR 24029-1, ISO/IEC 24029-2</div></div>
+            <div class="claim-card level3 typeI" data-level="level3" data-type="typeI"><div class="card-header"><span class="card-id">SC-Robustness-002</span><div class="badge-row"><span class="badge badge-level3">Level 3</span><span class="badge badge-typeI">Type I</span></div></div><div class="claim-template">[System] passes formal robustness verification for [domain] with confidence interval [CI] per [standard]</div><div class="claim-example">📌 AutonomousVehicle-AI passes formal robustness verification for highway domain with 95% CI per ISO/IEC 24029-2:2023</div><div class="card-meta"><div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-high">high</span></div></div><div class="meta-item"><div class="meta-label">실현 가능성</div><div class="meta-value"><span class="badge badge-low-warn">낮음</span></div></div></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC 24029-2</div></div>
+          </div>
+        </div>
+
+        <!-- RELIABILITY -->
+        <div class="char-group">
+          <div class="claim-section-title">🔄 Reliability</div>
+          <div class="claim-grid">
+            <div class="claim-card level1 typeII" data-level="level1" data-type="typeII"><div class="card-header"><span class="card-id">SC-Reliability-002</span><div class="badge-row"><span class="badge badge-level1">Level 1</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] implements reliability monitoring and rollback mechanism per [standard]</div><div class="claim-example">📌 RecruitAI implements reliability monitoring and model rollback mechanism per ISO/IEC 5338:2024 clause 6.4</div><div class="card-meta"><div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-medium">medium</span></div></div><div class="meta-item"><div class="meta-label">감사 증거</div><div class="meta-value">모니터링 대시보드, 롤백 절차 문서</div></div></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC 5338</div></div>
+            <div class="claim-card level2 typeIII" data-level="level2" data-type="typeIII"><div class="card-header"><span class="card-id">SC-Reliability-001</span><div class="badge-row"><span class="badge badge-level2">Level 2</span><span class="badge badge-typeIII">Type II or III</span></div></div><div class="claim-template">[System] achieves reliability score ≥ [X]% measured by [metric] over [period] per [standard]</div><div class="claim-example">📌 CreditScore-AI achieves reliability score ≥ 98% measured by output consistency over 30-day production period per ISO/IEC DTS 25058</div><div class="card-meta"><div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-high">high</span></div></div><div class="meta-item"><div class="meta-label">감사 증거</div><div class="meta-value">생산 모니터링 로그, 일관성 테스트 보고서</div></div></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC 25059, ISO/IEC DTS 25058</div></div>
+            <div class="claim-card level3 typeIII" data-level="level3" data-type="typeIII"><div class="card-header"><span class="card-id">SC-Reliability-003</span><div class="badge-row"><span class="badge badge-level3">Level 3</span><span class="badge badge-typeIII">Type III</span></div></div><div class="claim-template">[System] demonstrates mean output deviation &lt; [threshold] under [condition] with statistical significance p &lt; [value] per [standard]</div><div class="claim-example">📌 LoanApproval-AI demonstrates mean output deviation &lt; 0.02 under production load with statistical significance p &lt; 0.05 per ISO/IEC DTS 25058</div><div class="card-meta"><div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-high">high</span></div></div><div class="meta-item"><div class="meta-label">CA 표준</div><div class="meta-value">ISO/IEC 17029 (V&V) ✅ ISS-010 교정</div></div></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 25058</div></div>
+          </div>
+        </div>
+
+        <!-- TRANSPARENCY -->
+        <div class="char-group">
+          <div class="claim-section-title">🔍 Transparency</div>
+          <div class="claim-grid">
+            <div class="claim-card level1 typeII" data-level="level1" data-type="typeII"><div class="card-header"><span class="card-id">SC-Transparency-001</span><div class="badge-row"><span class="badge badge-level1">Level 1</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] provides transparency documentation covering [aspects] per [standard]</div><div class="claim-example">📌 HireBot provides transparency documentation covering training data sources, model architecture, and known limitations per ISO/IEC DTS 6254</div><div class="card-meta"><div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-medium">medium</span></div></div><div class="meta-item"><div class="meta-label">감사 증거</div><div class="meta-value">투명성 문서, 모델 카드</div></div></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 6254, ISO/IEC TR 24028</div></div>
+            <div class="claim-card level2 typeII" data-level="level2" data-type="typeII"><div class="card-header"><span class="card-id">SC-Transparency-002</span><div class="badge-row"><span class="badge badge-level2">Level 2</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] achieves Transparency Level [N] as defined in [standard] with [N] of [M] criteria satisfied</div><div class="claim-example">📌 CreditDecision-AI achieves Transparency Level 3 as defined in ISO/IEC DTS 6254 with 8 of 10 criteria satisfied</div><div class="card-meta"><div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-high">high</span></div></div><div class="meta-item"><div class="meta-label">증거 평가</div><div class="meta-value"><span class="badge badge-needs-supplement">보완 필요</span></div></div></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 6254, ISO/IEC 25059</div></div>
+            <div class="claim-card level3 typeI" data-level="level3" data-type="typeI"><div class="card-header"><span class="card-id">SC-Transparency-003</span><div class="badge-row"><span class="badge badge-level3">Level 3</span><span class="badge badge-typeI">Type I</span></div></div><div class="claim-template">[System] provides real-time explainability logging with audit trail per [standard] verified by [party]</div><div class="claim-example">📌 MedAdvice-AI provides real-time explainability logging with complete audit trail per ISO/IEC DTS 25058 verified by independent auditor</div><div class="card-meta"><div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-high">high</span></div></div><div class="meta-item"><div class="meta-label">감사 증거</div><div class="meta-value">감사 로그 기록, 제3자 감사 인증서</div></div></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 25058, ISO/IEC DTS 6254</div></div>
+          </div>
+        </div>
+
+        <!-- BIAS/FAIRNESS -->
+        <div class="char-group">
+          <div class="claim-section-title">⚖️ Bias/Fairness <span class="badge badge-insuf" style="font-size:11px;">Level 순서 역전 주의</span></div>
+          <div class="claim-grid">
+            <div class="claim-card level1 typeII" data-level="level1" data-type="typeII"><div class="card-header"><span class="card-id">SC-Bias-Fairness-003</span><div class="badge-row"><span class="badge badge-level1">Level 1</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] has documented bias identification process with stakeholder identification per [standard]</div><div class="claim-example">📌 AutoInsure-AI has documented bias identification process with at-risk group identification per ISO/IEC DTS 12791:2024 clause 5.1.3</div><div class="card-meta"><div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-medium">medium</span></div></div><div class="meta-item"><div class="meta-label">감사 증거</div><div class="meta-value">편향 프로세스 문서, 이해관계자 등록부</div></div></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 12791:2024</div></div>
+            <div class="claim-card level2 typeII" data-level="level2" data-type="typeII"><div class="card-header"><span class="card-id">SC-Bias-Fairness-002</span><div class="badge-row"><span class="badge badge-level2">Level 2</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] implements bias risk management covering [protected groups] with documented acceptance criteria per [standard]</div><div class="claim-example">📌 LoanDecision-AI implements bias risk management covering 6 protected groups with documented quantitative acceptance criteria per ISO/IEC DTS 12791:2024</div><div class="card-meta"><div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-medium">medium</span></div></div><div class="meta-item"><div class="meta-label">감사 증거</div><div class="meta-value">위험 관리 문서, 허용 기준 명세</div></div></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 12791:2024</div></div>
+            <div class="claim-card level3 typeIII" data-level="level3" data-type="typeIII"><div class="card-header"><span class="card-id">SC-Bias-Fairness-001</span><div class="badge-row"><span class="badge badge-level3">Level 3</span><span class="badge badge-typeIII">Type II or III</span></div></div><div class="claim-template">[System] achieves demographic parity gap &lt; [X]% across [protected attributes] per [standard]</div><div class="claim-example">📌 HireBot achieves demographic parity gap &lt; 1% across gender and ethnicity attributes per ISO/IEC DTS 12791:2024 clause 5.1.7</div><div class="card-meta"><div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-high">high</span></div></div><div class="meta-item"><div class="meta-label">감사 증거</div><div class="meta-value">편향 테스트 보고서, 공정성 지표 대시보드</div></div></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 12791:2024, ISO/IEC TR 24027</div></div>
+          </div>
+        </div>
+
+        <!-- ACCOUNTABILITY -->
+        <div class="char-group">
+          <div class="claim-section-title">📜 Accountability</div>
+          <div class="claim-grid">
+            <div class="claim-card level1 typeII" data-level="level1" data-type="typeII"><div class="card-header"><span class="card-id">SC-Accountability-001</span><div class="badge-row"><span class="badge badge-level1">Level 1</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] has defined accountability structure with assigned roles and governance documentation per [standard]</div><div class="claim-example">📌 FinanceDecision-AI has defined accountability structure with assigned roles per ISO/IEC TR 24368:2022 clause 6.2.1</div><div class="card-meta"><div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-medium">medium</span></div></div><div class="meta-item"><div class="meta-label">감사 증거</div><div class="meta-value">거버넌스 문서, RACI 매트릭스</div></div></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC TR 24368, ISO/IEC 23894</div></div>
+            <div class="claim-card level2 typeI" data-level="level2" data-type="typeI"><div class="card-header"><span class="card-id">SC-Accountability-002</span><div class="badge-row"><span class="badge badge-level2">Level 2</span><span class="badge badge-typeI">Type I</span></div></div><div class="claim-template">[System] maintains complete audit trail for [decisions/actions] with [retention period] per [standard]</div><div class="claim-example">📌 MedDiagnosis-AI maintains complete audit trail for all diagnostic decisions with 7-year retention per ISO/IEC FDIS 42006:2025</div><div class="card-meta"><div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-high">high</span></div></div><div class="meta-item"><div class="meta-label">감사 증거</div><div class="meta-value">감사 로그, 보존 정책 문서</div></div></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC FDIS 42006:2025, ISO/IEC TR 24368</div></div>
+            <div class="claim-card level3 typeI" data-level="level3" data-type="typeI"><div class="card-header"><span class="card-id">SC-Accountability-003</span><div class="badge-row"><span class="badge badge-level3">Level 3</span><span class="badge badge-typeI">Type I</span></div></div><div class="claim-template">[System] undergoes annual independent accountability audit covering governance, traceability, and risk management per [standard]</div><div class="claim-example">📌 CreditScoring-AI undergoes annual independent accountability audit per ISO/IEC FDIS 42006:2025 covering all accountability dimensions</div><div class="card-meta"><div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-high">high</span></div></div><div class="meta-item"><div class="meta-label">감사 증거</div><div class="meta-value">연간 감사 인증서, 감사 보고서</div></div></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC FDIS 42006:2025</div></div>
+          </div>
+        </div>
+
+        <!-- SAFETY, SECURITY, EXPLAINABILITY (요약 형태) -->
+        <div class="char-group">
+          <div class="claim-section-title">🛡️ Safety / Security / Explainability / Controllability</div>
+          <div class="claim-grid">
+            <div class="claim-card level1 typeII" data-level="level1" data-type="typeII"><div class="card-header"><span class="card-id">SC-Safety-003</span><div class="badge-row"><span class="badge badge-level1">Level 1</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] has documented safety risk management covering identified hazards per [standard]</div><div class="claim-example">📌 IndustrialArm-AI has documented safety risk management covering 15 identified hazard scenarios per ISO/IEC 23894:2023</div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC 23894:2023</div></div>
+            <div class="claim-card level2 typeI" data-level="level2" data-type="typeI"><div class="card-header"><span class="card-id">SC-Safety-001</span><div class="badge-row"><span class="badge badge-level2">Level 2</span><span class="badge badge-typeI">Type I</span></div></div><div class="claim-template">[System] implements safety architecture Class [I/II/III] with [mechanism] per [standard]</div><div class="claim-example">📌 AutonomousDrone-AI implements safety architecture Class II with backup non-AI system and monitoring per ISO/IEC DTR 5469</div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTR 5469, ISO/IEC 23894</div></div>
+            <div class="claim-card level3 typeI" data-level="level3" data-type="typeI"><div class="card-header"><span class="card-id">SC-Safety-002</span><div class="badge-row"><span class="badge badge-level3">Level 3</span><span class="badge badge-typeI">Type I</span></div></div><div class="claim-template">[System] achieves safety integrity level [SIL/ASIL] with residual risk &lt; [threshold] per [standard]</div><div class="claim-example">📌 MedicalRobot-AI achieves ASIL-B with residual risk &lt; 10^-7 per hour per ISO/IEC DTR 5469 and IEC 61508</div><div class="card-meta"><div class="meta-item"><div class="meta-label">실현 가능성</div><div class="meta-value"><span class="badge badge-low-warn">낮음</span></div></div></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTR 5469, IEC 61508</div></div>
+
+            <div class="claim-card level1 typeII" data-level="level1" data-type="typeII"><div class="card-header"><span class="card-id">SC-Security-003</span><div class="badge-row"><span class="badge badge-level1">Level 1</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] implements access control with authentication for all control interfaces per [standard]</div><div class="claim-example">📌 ProductionAI implements role-based access control with multi-factor authentication for all control interfaces per ISO/IEC DTS 8200</div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 8200</div></div>
+            <div class="claim-card level2 typeII" data-level="level2" data-type="typeII"><div class="card-header"><span class="card-id">SC-Security-001</span><div class="badge-row"><span class="badge badge-level2">Level 2</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] implements security controls against [attack types] with documented threat model per [standard]</div><div class="claim-example">📌 FaceRecog-AI implements security controls against adversarial attacks and data poisoning with documented threat model per ISO/IEC TR 24028:2020</div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC TR 24028, ISO/IEC 23894</div></div>
+            <div class="claim-card level3 typeI" data-level="level3" data-type="typeI"><div class="card-header"><span class="card-id">SC-Security-002</span><div class="badge-row"><span class="badge badge-level3">Level 3</span><span class="badge badge-typeI">Type I</span></div></div><div class="claim-template">[System] passes independent security audit with zero critical vulnerabilities per [standard]</div><div class="claim-example">📌 FinanceAI passes independent security audit with zero critical and high vulnerabilities per ISO/IEC FDIS 42006:2025</div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC FDIS 42006:2025</div></div>
+
+            <div class="claim-card level1 typeII" data-level="level1" data-type="typeII"><div class="card-header"><span class="card-id">SC-Explainability-002</span><div class="badge-row"><span class="badge badge-level1">Level 1</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] provides stakeholder-appropriate explanations covering [scope] per [standard]</div><div class="claim-example">📌 LoanApproval-AI provides user-appropriate explanations covering decision factors and appeal process per ISO/IEC DTS 6254</div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 6254</div></div>
+            <div class="claim-card level2 typeII" data-level="level2" data-type="typeII"><div class="card-header"><span class="card-id">SC-Explainability-001</span><div class="badge-row"><span class="badge badge-level2">Level 2</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] provides [explanation type] explanations achieving faithfulness score ≥ [X]% per [standard]</div><div class="claim-example">📌 CreditDecision-AI provides post-hoc feature importance explanations achieving faithfulness score ≥ 85% per ISO/IEC DTS 6254</div><div class="card-meta"><div class="meta-item"><div class="meta-label">증거 평가</div><div class="meta-value"><span class="badge badge-needs-supplement">보완 필요</span></div></div></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 6254, ISO/IEC TR 24028</div></div>
+            <div class="claim-card level3 typeI" data-level="level3" data-type="typeI"><div class="card-header"><span class="card-id">SC-Explainability-003</span><div class="badge-row"><span class="badge badge-level3">Level 3</span><span class="badge badge-typeI">Type I</span></div></div><div class="claim-template">[System] achieves Explainability Level [N] with [metric] ≥ [value] across [user groups] verified per [standard]</div><div class="claim-example">📌 MedAdvice-AI achieves Explainability Level 3 with user comprehension rate ≥ 80% across clinician and patient groups per ISO/IEC DTS 6254</div><div class="card-meta"><div class="meta-item"><div class="meta-label">실현 가능성</div><div class="meta-value"><span class="badge badge-low-warn">낮음</span></div></div></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 6254</div></div>
+
+            <div class="claim-card level1 typeII needs-attention" data-level="level1" data-type="typeII">
+              <div class="card-header"><span class="card-id">SC-Controllability-003</span><div class="badge-row"><span class="badge badge-level1">Level 1</span><span class="badge badge-typeII">Type II</span><span class="badge badge-needs-supplement">검증 보완 필요</span></div></div>
+              <div class="claim-template">[System] provides user documentation of all controllability mechanisms per [standard]</div>
+              <div class="claim-example">📌 ContentFilter-AI provides complete user documentation of all controllability and adjustment mechanisms per ISO/IEC DTS 8200:2023</div>
+              <div class="card-meta"><div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-low-warn">low ⚠️</span></div></div></div>
+              <div class="note-box warning" style="padding:8px;font-size:12px;margin-top:8px;">ISS-004: measurability=low — 검증 기준 보완 필요</div>
+              <div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 8200</div>
+            </div>
+            <div class="claim-card level2 typeII" data-level="level2" data-type="typeII"><div class="card-header"><span class="card-id">SC-Controllability-001</span><div class="badge-row"><span class="badge badge-level2">Level 2</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] implements Controllability Level [N] with documented stop/override mechanisms per [standard]</div><div class="claim-example">📌 AutonomousSystem-AI implements Controllability Level 3 with emergency stop, override, and human takeover mechanisms per ISO/IEC DTS 8200:2023</div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 8200</div></div>
+            <div class="claim-card level3 typeI" data-level="level3" data-type="typeI"><div class="card-header"><span class="card-id">SC-Controllability-002</span><div class="badge-row"><span class="badge badge-level3">Level 3</span><span class="badge badge-typeI">Type I</span></div></div><div class="claim-template">[System] achieves verified controllability with human takeover time &lt; [X] seconds under [conditions] per [standard]</div><div class="claim-example">📌 IndustrialRobot-AI achieves verified controllability with human takeover time &lt; 2 seconds under all operating conditions per ISO/IEC DTS 8200:2023</div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 8200</div></div>
+          </div>
+        </div>
+
+        <!-- INTERVENABILITY, FC, EFFICIENCY, AVAILABILITY, RESILIENCE -->
+        <div class="char-group">
+          <div class="claim-section-title">🚨 Intervenability / Functional Correctness / Efficiency / Availability / Resilience</div>
+          <div class="claim-grid">
+            <div class="claim-card level1 typeII" data-level="level1" data-type="typeII"><div class="card-header"><span class="card-id">SC-Intervenability-002</span><div class="badge-row"><span class="badge badge-level1">Level 1</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] provides appeal/redress mechanism for affected individuals per [standard]</div><div class="claim-example">📌 AutoLoan-AI provides documented appeal mechanism for all individuals affected by automated decisions per ISO/IEC TR 24368:2022</div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC TR 24368</div></div>
+            <div class="claim-card level2 typeII" data-level="level2" data-type="typeII"><div class="card-header"><span class="card-id">SC-Intervenability-001</span><div class="badge-row"><span class="badge badge-level2">Level 2</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] implements human-in-the-loop review for [decision types] with documented intervention procedure per [standard]</div><div class="claim-example">📌 HireBot implements human-in-the-loop review for all rejection decisions with documented 5-step intervention procedure per ISO/IEC TR 24368:2022</div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC TR 24368, ISO/IEC DTS 8200</div></div>
+            <div class="claim-card level3 typeI" data-level="level3" data-type="typeI"><div class="card-header"><span class="card-id">SC-Intervenability-003</span><div class="badge-row"><span class="badge badge-level3">Level 3</span><span class="badge badge-typeI">Type I</span></div></div><div class="claim-template">[System] achieves intervention success rate ≥ [X]% with average intervention time &lt; [Y] minutes per [standard]</div><div class="claim-example">📌 CreditDecision-AI achieves human intervention success rate ≥ 99% with average intervention time &lt; 5 minutes per ISO/IEC DTS 8200</div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 8200</div></div>
+
+            <div class="claim-card level1 typeII" data-level="level1" data-type="typeII"><div class="card-header"><span class="card-id">SC-Functional_Correctness-003</span><div class="badge-row"><span class="badge badge-level1">Level 1</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] has documented functional correctness evaluation methodology with defined metrics per [standard]</div><div class="claim-example">📌 TextClassifier-AI has documented evaluation methodology with precision/recall/F1 metrics per ISO/IEC 23053:2022</div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC 23053</div></div>
+            <div class="claim-card level2 typeII" data-level="level2" data-type="typeII"><div class="card-header"><span class="card-id">SC-Functional_Correctness-002</span><div class="badge-row"><span class="badge badge-level2">Level 2</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] satisfies functional correctness KPIs: [metric1] ≥ [X], [metric2] ≥ [Y] per [standard]</div><div class="claim-example">📌 FraudDetect-AI satisfies KPIs: precision ≥ 0.95, recall ≥ 0.90, false positive rate ≤ 0.02 per ISO/IEC DTS 25058</div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 25058</div></div>
+            <div class="claim-card level3 typeIII" data-level="level3" data-type="typeIII"><div class="card-header"><span class="card-id">SC-Functional_Correctness-001</span><div class="badge-row"><span class="badge badge-level3">Level 3</span><span class="badge badge-typeIII">Type II or III</span></div></div><div class="claim-template">[System] achieves [metric] ≥ [X]% on [benchmark] with acceptance criteria documented per [standard]</div><div class="claim-example">📌 MedDiagnosis-AI achieves F1-score ≥ 0.92 on clinical validation dataset per ISO/IEC TR 29119-11:2020</div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC TR 29119-11, ISO/IEC DTS 25058</div></div>
+
+            <div class="claim-card level1 typeII needs-attention" data-level="level1" data-type="typeII">
+              <div class="card-header"><span class="card-id">SC-Efficiency-003</span><div class="badge-row"><span class="badge badge-level1">Level 1</span><span class="badge badge-typeII">Type II</span><span class="badge badge-needs-supplement">검증 보완 필요</span></div></div>
+              <div class="claim-template">[System] documents resource utilization tradeoffs and optimization strategy per [standard]</div>
+              <div class="claim-example">📌 LargeLanguageModel documents computational resource utilization tradeoffs and quantization strategy per ISO/IEC 5338:2024</div>
+              <div class="card-meta"><div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-low-warn">low ⚠️</span></div></div></div>
+              <div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC 5338</div>
+            </div>
+            <div class="claim-card level2 typeII" data-level="level2" data-type="typeII"><div class="card-header"><span class="card-id">SC-Efficiency-002</span><div class="badge-row"><span class="badge badge-level2">Level 2</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] meets efficiency requirements: throughput ≥ [X] req/s with compute cost ≤ [Y] per inference per [standard]</div><div class="claim-example">📌 BatchProcess-AI meets efficiency requirements: throughput ≥ 1000 req/s with compute cost ≤ $0.001 per inference per ISO/IEC DTS 25058</div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 25058</div></div>
+            <div class="claim-card level3 typeIII" data-level="level3" data-type="typeIII"><div class="card-header"><span class="card-id">SC-Efficiency-001</span><div class="badge-row"><span class="badge badge-level3">Level 3</span><span class="badge badge-typeIII">Type III</span></div></div><div class="claim-template">[System] achieves inference latency ≤ [X]ms (p99) with resource utilization ≤ [Y]% per [standard]</div><div class="claim-example">📌 RealTimeRec-AI achieves inference latency ≤ 100ms (p99) with CPU utilization ≤ 60% in production per ISO/IEC DTS 25058</div><div class="card-meta"><div class="meta-item"><div class="meta-label">CA 표준</div><div class="meta-value">ISO/IEC 17029 (V&V) ✅ ISS-010 교정</div></div></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 25058</div></div>
+
+            <div class="claim-card level1 typeII needs-attention" data-level="level1" data-type="typeII">
+              <div class="card-header"><span class="card-id">SC-Availability-003</span><div class="badge-row"><span class="badge badge-level1">Level 1</span><span class="badge badge-typeII">Type II</span><span class="badge badge-needs-supplement">검증 보완 필요</span></div></div>
+              <div class="claim-template">[System] has documented maintenance and availability monitoring plan per [standard]</div>
+              <div class="claim-example">📌 AnalyticsAI has documented preventive maintenance plan and 24/7 availability monitoring per ISO/IEC 5338:2024</div>
+              <div class="card-meta"><div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-low-warn">low ⚠️</span></div></div></div>
+              <div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC 5338</div>
+            </div>
+            <div class="claim-card level2 typeII" data-level="level2" data-type="typeII"><div class="card-header"><span class="card-id">SC-Availability-002</span><div class="badge-row"><span class="badge badge-level2">Level 2</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] implements fault-tolerant architecture with documented backup/recovery procedure per [standard]</div><div class="claim-example">📌 CriticalInfra-AI implements fault-tolerant architecture with non-AI backup system and &lt; 30s recovery per ISO/IEC DTR 5469</div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTR 5469, ISO/IEC TR 24028</div></div>
+            <div class="claim-card level3 typeIII" data-level="level3" data-type="typeIII"><div class="card-header"><span class="card-id">SC-Availability-001</span><div class="badge-row"><span class="badge badge-level3">Level 3</span><span class="badge badge-typeIII">Type III</span></div></div><div class="claim-template">[System] achieves availability ≥ [X]% (SLA) with MTTR ≤ [Y] hours per [standard]</div><div class="claim-example">📌 ProductionAI achieves availability ≥ 99.9% (SLA) with MTTR ≤ 1 hour per ISO/IEC DTS 25058</div><div class="card-meta"><div class="meta-item"><div class="meta-label">CA 표준</div><div class="meta-value">ISO/IEC 17029 (V&V) ✅ ISS-010 교정</div></div></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 25058, ISO/IEC DTR 5469</div></div>
+
+            <div class="claim-card level1 typeII" data-level="level1" data-type="typeII"><div class="card-header"><span class="card-id">SC-Resilience-003</span><div class="badge-row"><span class="badge badge-level1">Level 1</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] implements continuous drift monitoring with documented response procedure per [standard]</div><div class="claim-example">📌 MLPipeline-AI implements continuous concept drift monitoring with &lt; 24h detection and documented retraining procedure per ISO/IEC TR 29119-11:2020</div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC TR 29119-11</div></div>
+            <div class="claim-card level2 typeII" data-level="level2" data-type="typeII"><div class="card-header"><span class="card-id">SC-Resilience-001</span><div class="badge-row"><span class="badge badge-level2">Level 2</span><span class="badge badge-typeII">Type II</span></div></div><div class="claim-template">[System] demonstrates graceful degradation with performance ≥ [X]% under [failure condition] per [standard]</div><div class="claim-example">📌 AutonomousDrone-AI demonstrates graceful degradation with core functions retained ≥ 80% under sensor failure per ISO/IEC TR 24028:2020</div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC TR 24028, ISO/IEC DTR 5469</div></div>
+            <div class="claim-card level3 typeI" data-level="level3" data-type="typeI"><div class="card-header"><span class="card-id">SC-Resilience-002</span><div class="badge-row"><span class="badge badge-level3">Level 3</span><span class="badge badge-typeI">Type I</span></div></div><div class="claim-template">[System] achieves recovery time ≤ [X] seconds from [failure type] with data integrity maintained per [standard]</div><div class="claim-example">📌 ProductionAI achieves recovery time ≤ 30 seconds from model drift event with prediction accuracy maintained per ISO/IEC DTS 8200</div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 8200, ISO/IEC DTS 25058</div></div>
+          </div>
+        </div>
+
+      </div><!-- end S03.2 -->
+
+    </div>
+    <div class="page-footer">
+      <span><a href="s02-characteristics.html">← S02 TCM 특성</a></span>
+      <span><a href="s04-tc-mapping.html">다음: S04 TC 매핑 →</a></span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

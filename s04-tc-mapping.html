@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S04 TCM-TC 요구사항 매핑 — ISO/IEC 42117-X TFL 가이드</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">ISO/IEC 42117-X</div>
+      <div class="title">TFL 운영 가이드</div>
+      <div class="version">v1.0 · 2026-02-19</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-label">메인</div>
+        <a href="index.html" class="nav-item">📋 가이드 홈</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">섹션</div>
+        <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
+        <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>15개 TCM 신뢰성 특성</a>
+        <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
+        <a href="s04-tc-mapping.html" class="nav-item active"><span class="section-id">S04</span>TCM-TC 요구사항 매핑</a>
+        <a href="s05-ca-guide.html" class="nav-item"><span class="section-id">S05</span>CA 이행 가이드</a>
+        <a href="s06-gaps.html" class="nav-item"><span class="section-id">S06</span>커버리지 갭 및 권고사항</a>
+        <a href="s07-references.html" class="nav-item"><span class="section-id">S07</span>참조 표준 및 용어 사전</a>
+      </div>
+    </div>
+  </nav>
+
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div class="page-header">
+      <div>
+        <h1>S04 — TCM-TC 요구사항 매핑</h1>
+        <div class="breadcrumb"><a href="index.html">홈</a> › S04</div>
+      </div>
+      <div class="badge-group">
+        <span class="badge badge-level3">TC-REQ 128개</span>
+        <span class="badge badge-level2">RES 형식 20개</span>
+        <span class="badge badge-level1">총 148개</span>
+      </div>
+    </div>
+
+    <div class="main-content">
+
+      <!-- ISS-003 추적 제한 고지 -->
+      <div class="note-box warning">
+        <span class="icon">⚠️</span>
+        <div>
+          <strong>source_tc_ids 추적 제한 고지 (L4 — ISS-003)</strong>
+          <code>simple_claim_db.json</code>의 <code>source_tc_ids</code>(<code>req_XXXXX_NNN</code> 형식)와 <code>tc_structured.json</code>의 <code>TC-REQ-XXX</code> 형식 간 직접 ID 추적이 제한됩니다. 추적 참조는 <code>mapping_supplement.json</code>(38/45 high confidence, 7/45 medium confidence)을 통해 제공됩니다.
+        </div>
+      </div>
+
+      <!-- ISS-001 표준 ID 표기 고지 -->
+      <div class="note-box info">
+        <span class="icon">ℹ️</span>
+        <div>
+          <strong>표준 ID 표기 기준 (ISS-001)</strong>
+          본 섹션에서는 연도 포함 형식(<code>ISO/IEC 23894:2023</code> 등)을 일관되게 사용합니다. 일부 소스 파일에서 연도 포함/미포함 혼용이 발견되었으나 HTML에서는 연도 포함 형식으로 통일합니다.
+        </div>
+      </div>
+
+      <!-- S04.1 TC 요구사항 체계 개요 -->
+      <div class="content-section">
+        <h2>S04.1 — TC 요구사항 체계 개요 (148개)</h2>
+        <div class="stats-grid">
+          <div class="stat-card green"><div class="num">148</div><div class="label">TC 요구사항 총계</div></div>
+          <div class="stat-card"><div class="num">128</div><div class="label">TC-REQ-XXX 형식</div></div>
+          <div class="stat-card orange"><div class="num">20</div><div class="label">TC-XXXXX-RES 형식</div></div>
+          <div class="stat-card"><div class="num">19</div><div class="label">참조 SC42 표준</div></div>
+        </div>
+
+        <h3>TC 요구사항 추출 프로세스</h3>
+        <p>TC 요구사항은 19개 SC42 표준 문서에서 다음 기준에 따라 추출되었습니다:</p>
+        <ol>
+          <li>normative(shall) 요구사항 우선 추출 — informative(should) 요구사항은 보완 근거로 활용</li>
+          <li>AI 시스템/모델의 신뢰성 특성에 직접 연관된 조항 한정</li>
+          <li>15개 TCM 특성 중 하나 이상에 명확히 귀속 가능한 요구사항</li>
+          <li>복수 특성에 연관되는 경우 다중 매핑 허용</li>
+        </ol>
+
+        <div class="note-box info">
+          <span class="icon">ℹ️</span>
+          <div>
+            <strong>normative/informative 구분 (ISS-002)</strong>
+            일부 informative 요구사항(TC-REQ-017, 032, 033, 034, 051 등)이 normative 요구사항과 동일 구조로 처리되었습니다. 아래 표에서 <span class="badge badge-normative">N</span> = normative, <span class="badge badge-informative">I</span> = informative로 구분합니다.
+          </div>
+        </div>
+      </div>
+
+      <!-- S04.3 형식 설명 -->
+      <div class="content-section">
+        <h2>S04.3 — TC-REQ vs TC-XXXXX-RES 형식 설명</h2>
+        <table>
+          <thead><tr><th>형식</th><th>예시</th><th>구조</th><th>개수</th><th>주요 특성</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>TC-REQ-XXX</code></td>
+              <td><code>TC-REQ-001</code><br><code>TC-REQ-128</code></td>
+              <td><code>TC-REQ-</code>[001~128]</td>
+              <td>128개</td>
+              <td>전 15개 특성에 분포</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="tooltip-wrap">
+                  <code>TC-XXXXX-RES-NNN</code>
+                  <div class="tooltip-text">XXXXX = 표준 번호, NNN = 순번. 복원력(Resilience) 관련 보조 요구사항.</div>
+                </div>
+              </td>
+              <td><code>TC-24028-RES-01</code><br><code>TC-5469-RES-03</code></td>
+              <td><code>TC-</code>[표준번호]<code>-RES-</code>[순번]</td>
+              <td>20개</td>
+              <td>Resilience (20개), Robustness (2개 공유)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>TC-XXXXX-RES 형식 출처 표준별 분포</h3>
+        <table>
+          <thead><tr><th>출처 표준</th><th>RES ID 범위</th><th>개수</th></tr></thead>
+          <tbody>
+            <tr><td>ISO/IEC TR 24028:2020</td><td>TC-24028-RES-01 ~ 07</td><td>7개</td></tr>
+            <tr><td>ISO/IEC DTR 5469</td><td>TC-5469-RES-01 ~ 05</td><td>5개</td></tr>
+            <tr><td>ISO/IEC DTS 8200</td><td>TC-8200-RES-01 ~ 03</td><td>3개</td></tr>
+            <tr><td>ISO/IEC 23894:2023</td><td>TC-23894-RES-01</td><td>1개</td></tr>
+            <tr><td>ISO/IEC 5338:2024</td><td>TC-5338-RES-01</td><td>1개</td></tr>
+            <tr><td>ISO/IEC TR 29119-11:2020</td><td>TC-29119-RES-01 ~ 02</td><td>2개</td></tr>
+            <tr><td>ISO/IEC DTS 25058</td><td>TC-25058-RES-01</td><td>1개</td></tr>
+            <tr><td><strong>합계</strong></td><td></td><td><strong>20개</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- S04.2 특성별 요구사항 매핑 표 (Accordion) -->
+      <div class="content-section">
+        <h2>S04.2 — 특성별 요구사항 매핑 표</h2>
+        <p>각 특성을 클릭하여 매핑된 TC 요구사항 목록을 확인하십시오.</p>
+
+        <!-- Trustworthiness -->
+        <details open>
+          <summary><span class="coverage-full">✅</span> Trustworthiness — 22개 요구사항 <span class="badge badge-full" style="margin-left:8px;">완전</span></summary>
+          <div class="details-content">
+            <table><thead><tr><th>TC ID</th><th>구분</th><th>연계 특성 (다중 매핑)</th><th>주요 출처 표준</th></tr></thead><tbody>
+              <tr><td><code>TC-REQ-001</code></td><td><span class="badge badge-normative">N</span></td><td>Trustworthiness, Reliability, Functional Correctness, Security, Efficiency</td><td>ISO/IEC TR 24028:2020</td></tr>
+              <tr><td><code>TC-REQ-007</code></td><td><span class="badge badge-normative">N</span></td><td>Trustworthiness, Accountability, Safety, Efficiency</td><td>ISO/IEC TR 24028:2020</td></tr>
+              <tr><td><code>TC-REQ-008</code></td><td><span class="badge badge-normative">N</span></td><td>Trustworthiness, Bias/Fairness, Accountability</td><td>ISO/IEC TS 5723:2022</td></tr>
+              <tr><td><code>TC-REQ-011</code></td><td><span class="badge badge-normative">N</span></td><td>Trustworthiness, Functional Correctness</td><td>ISO/IEC TR 24028:2020</td></tr>
+              <tr><td><code>TC-REQ-018</code></td><td><span class="badge badge-normative">N</span></td><td>Trustworthiness, Functional Correctness</td><td>ISO/IEC TR 24028:2020</td></tr>
+              <tr><td><code>TC-REQ-027</code></td><td><span class="badge badge-normative">N</span></td><td>Trustworthiness, Accountability, Safety</td><td>ISO/IEC TR 24028:2020</td></tr>
+              <tr><td><code>TC-REQ-032</code></td><td><span class="badge badge-informative">I</span></td><td>Trustworthiness, Transparency, Bias/Fairness, Explainability, Controllability, Security</td><td>ISO/IEC TR 24028:2020</td></tr>
+              <tr><td><code>TC-REQ-062</code></td><td><span class="badge badge-normative">N</span></td><td>Trustworthiness, Accountability</td><td>ISO/IEC TR 24368:2022</td></tr>
+              <tr><td><code>TC-REQ-068~069</code></td><td><span class="badge badge-normative">N</span></td><td>Trustworthiness, Accountability</td><td>ISO/IEC TR 24368:2022</td></tr>
+              <tr><td><code>TC-REQ-072~073</code></td><td><span class="badge badge-normative">N</span></td><td>Trustworthiness, Accountability</td><td>ISO/IEC FDIS 42006:2025</td></tr>
+              <tr><td><code>TC-REQ-075~076</code></td><td><span class="badge badge-normative">N</span></td><td>Trustworthiness, Accountability, Safety</td><td>ISO/IEC TR 24368:2022</td></tr>
+              <tr><td><code>TC-REQ-085</code></td><td><span class="badge badge-normative">N</span></td><td>Trustworthiness</td><td>ISO/IEC TS 5723:2022</td></tr>
+              <tr><td><code>TC-REQ-087~088</code></td><td><span class="badge badge-normative">N</span></td><td>Trustworthiness, Reliability, Safety</td><td>ISO/IEC TS 5723:2022</td></tr>
+              <tr><td><code>TC-REQ-092</code></td><td><span class="badge badge-normative">N</span></td><td>Trustworthiness, Transparency, Bias/Fairness, Accountability, Safety, Security, Controllability (<strong>7개 특성 연계</strong>)</td><td>ISO/IEC 23894:2023</td></tr>
+              <tr><td><code>TC-REQ-098</code></td><td><span class="badge badge-normative">N</span></td><td>Trustworthiness</td><td>ISO/IEC TS 5723:2022</td></tr>
+              <tr><td><code>TC-REQ-106~107</code></td><td><span class="badge badge-normative">N</span></td><td>Trustworthiness, Accountability</td><td>ISO/IEC TR 24368:2022</td></tr>
+              <tr><td><code>TC-REQ-118</code></td><td><span class="badge badge-normative">N</span></td><td>Trustworthiness, Safety</td><td>ISO/IEC DTR 5469</td></tr>
+            </tbody></table>
+          </div>
+        </details>
+
+        <!-- Robustness -->
+        <details>
+          <summary><span class="coverage-full">✅</span> Robustness — 20개 요구사항 <span class="badge badge-full" style="margin-left:8px;">완전</span></summary>
+          <div class="details-content">
+            <table><thead><tr><th>TC ID</th><th>구분</th><th>주요 출처 표준</th></tr></thead><tbody>
+              <tr><td><code>TC-REQ-005</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC TR 24029-1:2021</td></tr>
+              <tr><td><code>TC-REQ-013</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC TR 24029-1:2021</td></tr>
+              <tr><td><code>TC-REQ-020</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC TR 24029-1:2021</td></tr>
+              <tr><td><code>TC-REQ-047</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC TR 24029-2:2023</td></tr>
+              <tr><td><code>TC-REQ-077~081</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC TR 24029-1/2</td></tr>
+              <tr><td><code>TC-REQ-086</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC DTS 8200</td></tr>
+              <tr><td><code>TC-REQ-089~091</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC TR 24029-2:2023</td></tr>
+              <tr><td><code>TC-REQ-097</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC TR 24029-1:2021</td></tr>
+              <tr><td><code>TC-REQ-104~105</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC DTR 5469</td></tr>
+              <tr><td><code>TC-REQ-107</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC TR 24028:2020</td></tr>
+              <tr><td><code>TC-REQ-125</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC TR 24029-2:2023</td></tr>
+              <tr><td><code>TC-24028-RES-02</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC TR 24028:2020 (RES, Robustness+Resilience 공유)</td></tr>
+              <tr><td><code>TC-24028-RES-03</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC TR 24028:2020 (RES, Robustness+Resilience 공유)</td></tr>
+            </tbody></table>
+          </div>
+        </details>
+
+        <!-- Reliability -->
+        <details>
+          <summary><span class="coverage-full">✅</span> Reliability — 17개 요구사항 <span class="badge badge-full" style="margin-left:8px;">완전</span></summary>
+          <div class="details-content">
+            <table><thead><tr><th>TC ID 목록</th><th>주요 출처 표준</th></tr></thead><tbody>
+              <tr><td>TC-REQ-001, 005, 019, 030, 031, 036, 048</td><td>ISO/IEC DTS 25058, ISO/IEC 5338:2024</td></tr>
+              <tr><td>TC-REQ-060, 061, 076, 078, 087, 090</td><td>ISO/IEC DTS 25058, ISO/IEC TS 5723:2022</td></tr>
+              <tr><td>TC-REQ-095, 096, 108, 123</td><td>ISO/IEC DTS 25058, ISO/IEC 25059</td></tr>
+            </tbody></table>
+          </div>
+        </details>
+
+        <!-- Transparency -->
+        <details>
+          <summary><span class="coverage-full">✅</span> Transparency — 24개 요구사항 <span class="badge badge-full" style="margin-left:8px;">완전</span></summary>
+          <div class="details-content">
+            <table><thead><tr><th>TC ID 목록</th><th>주요 출처 표준</th></tr></thead><tbody>
+              <tr><td>TC-REQ-009, 015, 022, 025, 028, 029, 032</td><td>ISO/IEC DTS 6254, ISO/IEC TR 24028:2020</td></tr>
+              <tr><td>TC-REQ-035, 041, 045, 049, 051, 053, 055</td><td>ISO/IEC DTS 6254, ISO/IEC TR 24028:2020</td></tr>
+              <tr><td>TC-REQ-066, 067, 071, 076, 088, 092, 103, 107, 109, 128</td><td>ISO/IEC TR 24368:2022, ISO/IEC DTS 6254</td></tr>
+            </tbody></table>
+          </div>
+        </details>
+
+        <!-- Bias/Fairness -->
+        <details>
+          <summary><span class="coverage-full">✅</span> Bias/Fairness — 27개 요구사항 <span class="badge badge-full" style="margin-left:8px;">완전</span></summary>
+          <div class="details-content">
+            <table><thead><tr><th>TC ID 목록</th><th>주요 출처 표준</th></tr></thead><tbody>
+              <tr><td>TC-REQ-008, 016, 021, 032, 034, 037~049</td><td>ISO/IEC DTS 12791:2024, ISO/IEC TR 24027</td></tr>
+              <tr><td>TC-REQ-065, 067, 076, 082~084, 092, 107, 112</td><td>ISO/IEC DTS 12791:2024, ISO/IEC 23894:2023</td></tr>
+            </tbody></table>
+          </div>
+        </details>
+
+        <!-- Accountability -->
+        <details>
+          <summary><span class="coverage-full">✅</span> Accountability — 36개 요구사항 <span class="badge badge-full" style="margin-left:8px;">완전 (최다)</span></summary>
+          <div class="details-content">
+            <table><thead><tr><th>TC ID 목록</th><th>주요 출처 표준</th></tr></thead><tbody>
+              <tr><td>TC-REQ-007, 008, 016, 025, 027~030, 035, 038, 040, 045, 049</td><td>ISO/IEC TR 24368:2022, ISO/IEC 23894:2023</td></tr>
+              <tr><td>TC-REQ-062~075, 092, 093, 106, 107, 109~112, 120</td><td>ISO/IEC FDIS 42006:2025, ISO/IEC TR 24368:2022</td></tr>
+            </tbody></table>
+          </div>
+        </details>
+
+        <!-- Safety -->
+        <details>
+          <summary><span class="coverage-full">✅</span> Safety — 28개 요구사항 <span class="badge badge-full" style="margin-left:8px;">완전</span></summary>
+          <div class="details-content">
+            <table><thead><tr><th>TC ID 목록</th><th>주요 출처 표준</th></tr></thead><tbody>
+              <tr><td>TC-REQ-007, 016, 024, 027, 028, 039, 056, 063~065, 073~075, 081</td><td>ISO/IEC DTR 5469, ISO/IEC 23894:2023</td></tr>
+              <tr><td>TC-REQ-087, 092, 094, 099~104, 111~113, 118, 126</td><td>ISO/IEC DTR 5469, ISO/IEC 23894:2023</td></tr>
+            </tbody></table>
+          </div>
+        </details>
+
+        <!-- Security (부분) -->
+        <details>
+          <summary><span class="coverage-partial">⚠️</span> Security — 10개 요구사항 <span class="badge badge-partial" style="margin-left:8px;">부분</span></summary>
+          <div class="details-content">
+            <div class="note-box warning"><span class="icon">⚠️</span><div>Security 특성은 현재 부분 커버리지입니다. 적대적 공격(adversarial), 모델 오염(poisoning), 공급망 보안 관련 전담 조항이 부족합니다. 보강 권고 사항은 <a href="s06-gaps.html">S06</a>을 참조하십시오.</div></div>
+            <table><thead><tr><th>TC ID</th><th>구분</th><th>주요 출처 표준</th></tr></thead><tbody>
+              <tr><td><code>TC-REQ-001</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC TR 24028:2020</td></tr>
+              <tr><td><code>TC-REQ-023</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC TR 24028:2020</td></tr>
+              <tr><td><code>TC-REQ-032</code></td><td><span class="badge badge-informative">I</span></td><td>ISO/IEC TR 24028:2020</td></tr>
+              <tr><td><code>TC-REQ-033</code></td><td><span class="badge badge-informative">I</span></td><td>ISO/IEC TR 24028:2020</td></tr>
+              <tr><td><code>TC-REQ-059</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC DTS 8200</td></tr>
+              <tr><td><code>TC-REQ-086</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC DTS 8200</td></tr>
+              <tr><td><code>TC-REQ-092</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC 23894:2023</td></tr>
+              <tr><td><code>TC-REQ-094</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC 23894:2023</td></tr>
+              <tr><td><code>TC-REQ-105</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC DTR 5469</td></tr>
+              <tr><td><code>TC-REQ-127</code></td><td><span class="badge badge-normative">N</span></td><td>ISO/IEC DTS 8200</td></tr>
+            </tbody></table>
+          </div>
+        </details>
+
+        <!-- Explainability (부분) -->
+        <details>
+          <summary><span class="coverage-partial">⚠️</span> Explainability — 12개 요구사항 <span class="badge badge-partial" style="margin-left:8px;">부분</span></summary>
+          <div class="details-content">
+            <div class="note-box warning"><span class="icon">⚠️</span><div>Explainability 특성은 부분 커버리지입니다. 청중별 차등 요구사항(AI 전문가/도메인 전문가/일반인)과 post-hoc vs ante-hoc 구분 요구사항이 부족합니다.</div></div>
+            <table><thead><tr><th>TC ID 목록</th><th>주요 출처 표준</th></tr></thead><tbody>
+              <tr><td>TC-REQ-022, 032, 050~053, 079, 080</td><td>ISO/IEC DTS 6254</td></tr>
+              <tr><td>TC-REQ-103, 115, 116, 117</td><td>ISO/IEC DTS 6254, ISO/IEC DTS 8200</td></tr>
+            </tbody></table>
+          </div>
+        </details>
+
+        <!-- Controllability -->
+        <details>
+          <summary><span class="coverage-full">✅</span> Controllability — 16개 요구사항 <span class="badge badge-full" style="margin-left:8px;">완전</span></summary>
+          <div class="details-content">
+            <table><thead><tr><th>TC ID 목록</th><th>주요 출처 표준</th></tr></thead><tbody>
+              <tr><td>TC-REQ-004, 010, 014, 032, 046, 054~059</td><td>ISO/IEC DTS 8200</td></tr>
+              <tr><td>TC-REQ-102, 113, 114, 117, 122</td><td>ISO/IEC DTS 8200, ISO/IEC DTR 5469</td></tr>
+            </tbody></table>
+          </div>
+        </details>
+
+        <!-- Intervenability (미흡) -->
+        <details>
+          <summary><span class="coverage-insuf">❌</span> Intervenability — 4개 요구사항 <span class="badge badge-insuf" style="margin-left:8px;">미흡</span></summary>
+          <div class="details-content">
+            <div class="note-box danger"><span class="icon">❌</span><div><strong>미흡 특성 (L3)</strong> — 전담 국제표준 미발행으로 인한 구조적 한계. 향후 보강 표준: ISO/IEC AWI 42007, EU AI Act Article 14, ISO/IEC 42001 A.9.2-A.9.4. 목표: 8~10개.</div></div>
+            <table><thead><tr><th>TC ID</th><th>주요 출처 표준</th></tr></thead><tbody>
+              <tr><td><code>TC-REQ-010</code></td><td>ISO/IEC DTS 8200 (간접)</td></tr>
+              <tr><td><code>TC-REQ-058</code></td><td>ISO/IEC DTS 8200</td></tr>
+              <tr><td><code>TC-REQ-102</code></td><td>ISO/IEC DTR 5469 (간접)</td></tr>
+              <tr><td><code>TC-REQ-117</code></td><td>ISO/IEC DTS 8200</td></tr>
+            </tbody></table>
+          </div>
+        </details>
+
+        <!-- Functional Correctness -->
+        <details>
+          <summary><span class="coverage-full">✅</span> Functional Correctness — 21개 요구사항 <span class="badge badge-full" style="margin-left:8px;">완전</span></summary>
+          <div class="details-content">
+            <table><thead><tr><th>TC ID 목록</th><th>주요 출처 표준</th></tr></thead><tbody>
+              <tr><td>TC-REQ-001~003, 011, 012, 017~019, 031, 036</td><td>ISO/IEC TR 29119-11:2020, ISO/IEC DTS 25058</td></tr>
+              <tr><td>TC-REQ-042, 044, 060, 061, 080, 095~097, 101, 116, 119</td><td>ISO/IEC DTS 25058, ISO/IEC 23053:2022</td></tr>
+            </tbody></table>
+          </div>
+        </details>
+
+        <!-- Efficiency (미흡) -->
+        <details>
+          <summary><span class="coverage-insuf">❌</span> Efficiency — 4개 요구사항 <span class="badge badge-insuf" style="margin-left:8px;">미흡</span></summary>
+          <div class="details-content">
+            <div class="note-box danger"><span class="icon">❌</span><div><strong>미흡 특성 (L3)</strong> — Green AI 전담 표준 부재. 향후 보강 표준: ISO/IEC 21823 시리즈, Green AI 지침, ISO/IEC 5338:2024 에너지 조항. 목표: 8~10개.</div></div>
+            <table><thead><tr><th>TC ID</th><th>주요 출처 표준</th></tr></thead><tbody>
+              <tr><td><code>TC-REQ-001</code></td><td>ISO/IEC TR 24028:2020 (간접)</td></tr>
+              <tr><td><code>TC-REQ-007</code></td><td>ISO/IEC TR 24028:2020 (간접)</td></tr>
+              <tr><td><code>TC-REQ-017</code></td><td>ISO/IEC DTS 25058 (간접)</td></tr>
+              <tr><td><code>TC-REQ-026</code></td><td>ISO/IEC 5338:2024 (간접)</td></tr>
+            </tbody></table>
+          </div>
+        </details>
+
+        <!-- Availability (미흡) -->
+        <details>
+          <summary><span class="coverage-insuf">❌</span> Availability — 2개 요구사항 <span class="badge badge-insuf" style="margin-left:8px;">미흡</span></summary>
+          <div class="details-content">
+            <div class="note-box danger"><span class="icon">❌</span><div><strong>미흡 특성 (L3)</strong> — AI SLA·MTTR 전담 표준 부재. 향후 보강 표준: ISO 22301, ISO/IEC DTR 5469 가용성 조항. 목표: 6~8개.</div></div>
+            <table><thead><tr><th>TC ID</th><th>주요 출처 표준</th></tr></thead><tbody>
+              <tr><td><code>TC-REQ-006</code></td><td>ISO/IEC 5338:2024 (간접)</td></tr>
+              <tr><td><code>TC-REQ-121</code></td><td>ISO/IEC DTS 25058 (간접)</td></tr>
+            </tbody></table>
+          </div>
+        </details>
+
+        <!-- Resilience -->
+        <details>
+          <summary><span class="coverage-full">✅</span> Resilience — 27개 요구사항 <span class="badge badge-full" style="margin-left:8px;">완전</span></summary>
+          <div class="details-content">
+            <table><thead><tr><th>TC ID 목록</th><th>형식</th><th>주요 출처 표준</th></tr></thead><tbody>
+              <tr><td>TC-REQ-003, 006, 036, 104, 105, 108, 124</td><td><span class="badge badge-normative">REQ</span></td><td>ISO/IEC TR 24028:2020, ISO/IEC DTR 5469</td></tr>
+              <tr><td>TC-24028-RES-01 ~ 07</td><td><span class="badge badge-level3">RES</span></td><td>ISO/IEC TR 24028:2020</td></tr>
+              <tr><td>TC-5469-RES-01 ~ 05</td><td><span class="badge badge-level3">RES</span></td><td>ISO/IEC DTR 5469</td></tr>
+              <tr><td>TC-8200-RES-01 ~ 03</td><td><span class="badge badge-level3">RES</span></td><td>ISO/IEC DTS 8200</td></tr>
+              <tr><td>TC-23894-RES-01</td><td><span class="badge badge-level3">RES</span></td><td>ISO/IEC 23894:2023</td></tr>
+              <tr><td>TC-5338-RES-01</td><td><span class="badge badge-level3">RES</span></td><td>ISO/IEC 5338:2024</td></tr>
+              <tr><td>TC-29119-RES-01 ~ 02</td><td><span class="badge badge-level3">RES</span></td><td>ISO/IEC TR 29119-11:2020</td></tr>
+              <tr><td>TC-25058-RES-01</td><td><span class="badge badge-level3">RES</span></td><td>ISO/IEC DTS 25058</td></tr>
+            </tbody></table>
+          </div>
+        </details>
+
+      </div>
+
+      <!-- S04.5 참조 표준별 분포 -->
+      <div class="content-section">
+        <h2>S04.5 — 참조 표준별 요구사항 분포</h2>
+        <table>
+          <thead><tr><th>표준 번호</th><th>표준명 (약칭)</th><th>TC 요구사항 수</th><th>주요 연계 특성</th></tr></thead>
+          <tbody>
+            <tr><td><code>ISO/IEC TR 24028:2020</code></td><td>AI 신뢰성 개요</td><td>28개+</td><td>Trustworthiness, Robustness, Resilience</td></tr>
+            <tr><td><code>ISO/IEC TS 5723:2022</code></td><td>AI 신뢰성 분류 체계</td><td>8개+</td><td>Trustworthiness</td></tr>
+            <tr><td><code>ISO/IEC 5338:2024</code></td><td>AI 수명주기 프로세스</td><td>10개+</td><td>Reliability, Availability, Efficiency</td></tr>
+            <tr><td><code>ISO/IEC 23894:2023</code></td><td>AI 위험 관리</td><td>15개+</td><td>Safety, Accountability, Security</td></tr>
+            <tr><td><code>ISO/IEC FDIS 42001:2023</code></td><td>AI 관리 시스템 (AIMS)</td><td>20개+</td><td>Accountability, 전반</td></tr>
+            <tr><td><code>ISO/IEC DTS 8200</code></td><td>AI 제어 가능성</td><td>20개+</td><td>Controllability, Intervenability, Security</td></tr>
+            <tr><td><code>ISO/IEC DTS 6254</code></td><td>AI 설명 가능성</td><td>15개+</td><td>Explainability, Transparency</td></tr>
+            <tr><td><code>ISO/IEC DTS 12791:2024</code></td><td>AI 편향 테스팅 (신규)</td><td>20개+</td><td>Bias/Fairness</td></tr>
+            <tr><td><code>ISO/IEC FDIS 42006:2025</code></td><td>AI 감사 (신규)</td><td>15개+</td><td>Accountability, Security</td></tr>
+            <tr><td><code>ISO/IEC DTR 5469</code></td><td>AI 기능 안전성</td><td>15개+</td><td>Safety, Resilience, Availability</td></tr>
+            <tr><td><code>ISO/IEC DTS 25058</code></td><td>AI 품질 평가</td><td>20개+</td><td>Reliability, Functional Correctness, Efficiency</td></tr>
+            <tr><td><code>ISO/IEC TR 24029-1/2:2021/2023</code></td><td>AI 강건성 (신경망)</td><td>15개+</td><td>Robustness</td></tr>
+            <tr><td><code>ISO/IEC TR 24368:2022</code></td><td>AI 거버넌스</td><td>20개+</td><td>Accountability, Intervenability</td></tr>
+            <tr><td><code>ISO/IEC TR 29119-11:2020</code></td><td>AI 테스팅</td><td>8개+</td><td>Functional Correctness, Resilience</td></tr>
+            <tr><td><code>ISO/IEC TR 24027</code></td><td>AI 편향 (분류 시스템)</td><td>5개+</td><td>Bias/Fairness</td></tr>
+            <tr><td><code>ISO/IEC 25059</code></td><td>SQuaRE AI 품질</td><td>5개+</td><td>Reliability, Transparency</td></tr>
+            <tr><td><code>ISO/IEC 23053:2022</code></td><td>AI ML 프레임워크</td><td>3개+</td><td>Functional Correctness</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- S04.4 Claim-TC 매핑 경로 -->
+      <div class="content-section">
+        <h2>S04.4 — Claim-TC 매핑 경로 (mapping_supplement.json)</h2>
+        <p>ISS-003 해소를 위해 생성된 <code>mapping_supplement.json</code>은 <code>simple_claim_db.json</code>의 내부 참조 코드와 <code>tc_structured.json</code>의 공식 TC-REQ ID를 브릿지합니다.</p>
+        <table>
+          <thead><tr><th>신뢰도</th><th>매핑 방법</th><th>건수</th><th>예시</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-high">high</span></td><td>표준명 매칭 + 특성 교집합</td><td>38개 Claim</td><td>SC-Trustworthiness-001: req_24028_001 → TC-REQ-085, 087, 088, 098</td></tr>
+            <tr><td><span class="badge badge-medium">medium</span></td><td>표준명 부분 매칭 또는 특성 기반 추정</td><td>7개 Claim</td><td>SC-Efficiency-001~003: DTS 25058 간접 참조 경유</td></tr>
+          </tbody>
+        </table>
+        <div class="note-box info">
+          <span class="icon">ℹ️</span>
+          <div>v2.0 파이프라인에서는 <code>simple_claim_db.json</code>의 <code>source_tc_ids</code>를 <code>TC-REQ-XXX</code> 형식으로 전면 교정할 예정입니다. 현재는 <code>mapping_supplement.json</code>을 통한 간접 추적을 제공합니다.</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="page-footer">
+      <span><a href="s03-claims.html">← S03 Claim 카탈로그</a></span>
+      <span><a href="s05-ca-guide.html">다음: S05 CA 이행 가이드 →</a></span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

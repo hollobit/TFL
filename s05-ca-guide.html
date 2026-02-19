@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S05 CA 이행 가이드 — ISO/IEC 42117-X TFL 가이드</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .gantt-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .gantt-label { width: 200px; font-size: 13px; flex-shrink: 0; }
+    .gantt-bar-container { flex: 1; background: #eee; border-radius: 4px; height: 28px; position: relative; overflow: hidden; }
+    .gantt-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 11px; font-weight: 600; color: #fff; white-space: nowrap; }
+    .gantt-bar.short { background: linear-gradient(90deg, #27ae60, #52b788); }
+    .gantt-bar.mid   { background: linear-gradient(90deg, #f39c12, #f4a261); }
+    .gantt-bar.long  { background: linear-gradient(90deg, #2e6da4, #4895ef); }
+    .gantt-period { font-size: 11px; color: #888; width: 120px; text-align: right; }
+    .aims-mapping { background: #f8f9fa; border-radius: 6px; padding: 14px; border-left: 4px solid #1a4480; margin: 10px 0; }
+    .aims-mapping h5 { color: #1a4480; margin-bottom: 6px; font-size: 13px; }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">ISO/IEC 42117-X</div>
+      <div class="title">TFL 운영 가이드</div>
+      <div class="version">v1.0 · 2026-02-19</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-label">메인</div>
+        <a href="index.html" class="nav-item">📋 가이드 홈</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">섹션</div>
+        <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
+        <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>15개 TCM 신뢰성 특성</a>
+        <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
+        <a href="s04-tc-mapping.html" class="nav-item"><span class="section-id">S04</span>TCM-TC 요구사항 매핑</a>
+        <a href="s05-ca-guide.html" class="nav-item active"><span class="section-id">S05</span>CA 이행 가이드</a>
+        <a href="s06-gaps.html" class="nav-item"><span class="section-id">S06</span>커버리지 갭 및 권고사항</a>
+        <a href="s07-references.html" class="nav-item"><span class="section-id">S07</span>참조 표준 및 용어 사전</a>
+      </div>
+    </div>
+  </nav>
+
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div class="page-header">
+      <div>
+        <h1>S05 — CA 이행 가이드</h1>
+        <div class="breadcrumb"><a href="index.html">홈</a> › S05</div>
+      </div>
+    </div>
+
+    <div class="main-content">
+
+      <!-- L2 DIS 17067:2025 초안 고지 -->
+      <div class="note-box warning">
+        <span class="icon">⚠️</span>
+        <div>
+          <strong>ISO/IEC DIS 17067:2025 초안 참조 고지 (L2)</strong>
+          본 가이드는 <span class="dis-ref">ISO/IEC DIS 17067:2025 (초안)</span>를 참조합니다. 최종 발행(2026~2027년 예상) 시 조항 번호 및 내용이 변경될 수 있습니다. 최종 CA 이행 전 발행된 버전으로 재확인을 권장합니다.
+        </div>
+      </div>
+
+      <!-- S05.1 CA 유형 체계 -->
+      <div class="content-section">
+        <h2>S05.1 — CA 유형 체계 (Type I/II/III와 ISO 표준 대응)</h2>
+
+        <div class="type-cards">
+          <div class="type-card type-ii">
+            <div class="type-label">Type II</div>
+            <h4>자기선언 (Self-declared)</h4>
+            <p>ISO/IEC 42117-1 기준 <strong>Self-declared Trustworthiness Fact Claim</strong></p>
+            <ul>
+              <li>CA 기반 표준: ISO/IEC 17050-1/2</li>
+              <li>대상 Level: Level 1 (전체), Level 2 (일부)</li>
+              <li>Claim 수: <strong>24개 (53.3%)</strong></li>
+              <li>즉시 이행 가능 — 가장 낮은 진입 장벽</li>
+              <li>ISO/IEC 42001 AIMS 인증 조직: Level 1-2 증거 70% 재활용 가능</li>
+            </ul>
+            <div class="standard">ISO/IEC 17050-1:2004 / 17050-2:2004</div>
+          </div>
+          <div class="type-card type-iii">
+            <div class="type-label">Type III</div>
+            <h4>V&V (검증/확인)</h4>
+            <p>ISO/IEC 42117-1 기준 <strong>AI Trustworthiness Fact Sheet (ATFS)</strong></p>
+            <ul>
+              <li>CA 기반 표준: ISO/IEC 17029:2019</li>
+              <li>대상 Level: Level 2~3 (정량 Claim)</li>
+              <li>Claim 수: <strong>7개</strong> (ISS-010 교정 확정)</li>
+              <li>정량적 측정값 독립 V&V 기관 확인 필요</li>
+              <li>현재 AI 영역 V&V 기관 가용성 극히 제한적</li>
+            </ul>
+            <div class="standard">ISO/IEC 17029:2019 (V&V)</div>
+            <div class="note-box info" style="padding:8px;font-size:12px;margin-top:10px;">
+              <strong>해당 Claim:</strong> SC-Reliability-003, SC-Efficiency-001, SC-Availability-001 (ISS-010 교정)
+            </div>
+          </div>
+          <div class="type-card type-i">
+            <div class="type-label">Type I</div>
+            <h4>제3자 인증 (Third-party Certification)</h4>
+            <p>ISO/IEC 42117-1 기준 <strong>AI Trustworthiness Fact Label (TFL)</strong></p>
+            <ul>
+              <li>CA 기반 표준: ISO/IEC 17065:2012</li>
+              <li>스킴 설계: ISO/IEC DIS 17067:2025 <span class="dis-note">(DIS)</span></li>
+              <li>Claim 수: <strong>14개</strong></li>
+              <li>인정된 CAB(적합성평가기관) 독립 인증 필수</li>
+              <li>AI 전문 CAB 인프라 구축이 선행 조건</li>
+            </ul>
+            <div class="standard">ISO/IEC 17065:2012 + DIS 17067:2025 <span class="dis-note">(DIS)</span></div>
+          </div>
+        </div>
+
+        <h3>45개 Claim CA 유형 분포</h3>
+        <table>
+          <thead><tr><th>CA 유형</th><th>Claim 수</th><th>비율</th><th>주요 대상 Level</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-typeII">Type II 자기선언</span></td><td>24개</td><td>53.3%</td><td>Level 1 (15개) + Level 2 일부</td></tr>
+            <tr><td><span class="badge badge-typeIII">Type III V&amp;V</span></td><td>7개</td><td>15.6%</td><td>Level 3 (3개 ISS-010 교정) + Level 2 정량 일부</td></tr>
+            <tr><td><span class="badge badge-typeI">Type I 제3자 인증</span></td><td>14개</td><td>31.1%</td><td>Level 2~3 고위험 Claim</td></tr>
+            <tr><td><strong>합계</strong></td><td><strong>45개</strong></td><td>100%</td><td></td></tr>
+          </tbody>
+        </table>
+
+        <div class="note-box warning">
+          <span class="icon">⚠️</span>
+          <div>
+            <strong>SC-Trustworthiness-001 이중 분류 (ISS-005)</strong>
+            SC-Trustworthiness-001은 <code>ca_type = "Type I or Type II"</code>로 이중 분류됩니다.<br>
+            <strong>저위험 시스템</strong> → Type II 자기선언 (ISO/IEC 17050)<br>
+            <strong>고위험 시스템</strong> → Type I 제3자 인증 (ISO/IEC 17065)<br>
+            조직의 AI 위험 등급 평가(ISO/IEC 42001 A.5.2 기반) 후 선택하십시오.
+          </div>
+        </div>
+      </div>
+
+      <!-- S05.2 Level별 CA 방법 -->
+      <div class="content-section">
+        <h2>S05.2 — Level별 CA 방법 및 실현 가능성</h2>
+        <table>
+          <thead>
+            <tr><th>Level</th><th>CA 방법</th><th>주요 증거</th><th>이행 기간</th><th>전제 조건</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-level1">Level 1</span></td>
+              <td>Type II 자기선언 (전체 15개)</td>
+              <td>방법론 문서, 정책, 절차서, 모니터링 대시보드</td>
+              <td>즉시~3개월</td>
+              <td>내부 문서화 체계</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-level2">Level 2</span></td>
+              <td>Type II 자기선언 또는 Type III V&amp;V</td>
+              <td>정량적 측정 보고서, 제3자 평가 보고서, 테스트 데이터셋</td>
+              <td>3~12개월</td>
+              <td>측정 프로그램 구축, V&amp;V 기관 접근</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-level3">Level 3</span></td>
+              <td>Type I 제3자 인증 또는 Type III 고급 V&amp;V</td>
+              <td>인증 마크, CAB 감사 보고서, 안전 케이스, 연간 감사 보고서</td>
+              <td>12~36개월</td>
+              <td>AI 전문 CAB 인프라, 인정 기관 참여</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>실현 가능성 낮음 Claim (4개)</h3>
+        <div class="note-box warning">
+          <span class="icon">⚠️</span>
+          <div>다음 4개 Claim은 현재 AI 전문 CAB 인프라 부족으로 실현 가능성이 낮습니다. AI 관련 인정 체계가 성숙되는 2026-2027년 이후 이행을 권장합니다:
+            <ul style="margin-top:6px;">
+              <li><strong>SC-Trustworthiness-003</strong>: 모든 normative 요구사항 충족 인증 — 42117-X Part 1~4 완전 발행 후 가능</li>
+              <li><strong>SC-Robustness-002</strong>: 도메인 formal verification — AI 전문 검증 CAB 필요</li>
+              <li><strong>SC-Safety-002</strong>: SIL/ASIL 달성 — AI 특화 기능 안전 CAB 필요</li>
+              <li><strong>SC-Explainability-003</strong>: 사용자 그룹별 이해도 측정 — 청중별 측정 프로토콜 미성숙</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- S05.3 Type III V&V 가이드 -->
+      <div class="content-section">
+        <h2>S05.3 — Type III(ATFS) V&V 이행 가이드 — ISO/IEC 17029</h2>
+
+        <div class="note-box info">
+          <span class="icon">ℹ️</span>
+          <div>
+            <strong>ISS-010 교정 반영</strong>
+            Type III Claims(SC-Reliability-003, SC-Efficiency-001, SC-Availability-001)의 CA 방법이 <code>third-party certification → validation/verification</code>, CA 표준이 <code>ISO/IEC 17065 → ISO/IEC 17029</code>로 교정 완료되었습니다.
+          </div>
+        </div>
+
+        <h3>ISO/IEC 17029:2019 V&V 프로세스</h3>
+        <ol>
+          <li><strong>검증(Validation)</strong>: AI 시스템이 의도된 사용 목적을 충족하는지 확인 — 설계 단계 요건 기반</li>
+          <li><strong>확인(Verification)</strong>: AI 시스템이 명세화된 요건을 충족하는지 확인 — 측정값·성능 지표 기반</li>
+        </ol>
+
+        <h3>Type III Claim별 V&V 요건</h3>
+        <table>
+          <thead><tr><th>Claim ID</th><th>특성</th><th>정량 지표</th><th>V&V 증거</th><th>V&V 기관 요건</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>SC-Reliability-003</code></td><td>Reliability</td>
+              <td>평균 출력 편차 &lt; [임계값], 통계적 유의성 p &lt; 0.05</td>
+              <td>통계적 검정 보고서, 생산 성능 데이터</td>
+              <td>통계 방법론 V&amp;V 역량 (ML 전문 인력 포함)</td>
+            </tr>
+            <tr>
+              <td><code>SC-Efficiency-001</code></td><td>Efficiency</td>
+              <td>추론 지연 ≤ [X]ms (p99), CPU 활용 ≤ [Y]%</td>
+              <td>성능 벤치마크 보고서, 생산 모니터링 데이터</td>
+              <td>AI 시스템 성능 측정 역량</td>
+            </tr>
+            <tr>
+              <td><code>SC-Availability-001</code></td><td>Availability</td>
+              <td>가용성 ≥ [X]% (SLA), MTTR ≤ [Y] 시간</td>
+              <td>SLA 문서, 가용성 모니터링 보고서, MTTR 측정</td>
+              <td>운영 SLA 측정 및 검증 역량</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note-box info">
+          <span class="icon">🔵</span>
+          <div>
+            <strong>과도기 대안 경로 (V&V 기관 부재 시)</strong>
+            ISO/IEC 17029 인정 V&V 기관의 AI 영역 가용성이 현재 극히 제한적입니다. 과도기 대안:
+            <ul style="margin-top:6px;">
+              <li>ISO/IEC 17065 인정 기관 중 V&amp;V 역량 보유 기관 활용 (임시 적용)</li>
+              <li>ISO/IEC 42001 인증 기관의 AIMS 감사 범위 내 V&amp;V 수행 (범위 확장 필요)</li>
+              <li>조직 내부 독립 팀에 의한 자기 V&amp;V (증거 강도 제한됨)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- S05.4 AIMS 연계 전략 -->
+      <div class="content-section">
+        <h2>S05.4 — AIMS(ISO/IEC 42001) 연계 전략</h2>
+        <p>ISO/IEC 42001:2023 AI 관리 시스템(AIMS) 인증 조직은 Simple Claim 이행에 필요한 증거의 상당 부분을 재활용할 수 있습니다:</p>
+
+        <div class="aims-mapping">
+          <h5>Level 1 Claim 증거와 AIMS 조항 대응</h5>
+          <table><thead><tr><th>Level 1 Claim 증거 유형</th><th>AIMS 조항 (ISO/IEC 42001)</th></tr></thead><tbody>
+            <tr><td>위험 관리 문서 (Risk Register)</td><td>6.1 위험 및 기회 조치, 6.1.2 AI 위험 평가</td></tr>
+            <tr><td>역할 및 책임 정의 (RACI)</td><td>5.3 역할, 책임 및 권한, A.3.2 AI 역할 및 책임</td></tr>
+            <tr><td>모니터링 대시보드</td><td>9.1 모니터링, 측정, 분석 및 평가, A.6.2.6 AI 시스템 운영 및 모니터링</td></tr>
+            <tr><td>투명성 문서 (모델 카드)</td><td>7.4 커뮤니케이션, A.8.2 사용자를 위한 시스템 문서</td></tr>
+            <tr><td>편향 식별 프로세스 문서</td><td>6.1.4 AI 시스템 영향 평가, A.5.4 개인/그룹에 대한 영향 평가</td></tr>
+            <tr><td>안전 위험 관리 문서</td><td>6.1.1 일반 위험 관리, A.5.2 AI 시스템 영향 평가 프로세스</td></tr>
+          </tbody></table>
+        </div>
+
+        <p><strong>AIMS 인증 조직의 이점:</strong> Level 1-2 Claim 이행에 필요한 증거의 <strong>70% 이상</strong>을 기존 AIMS 관리 시스템 문서로 재활용 가능. Level 1 전체(15개)는 AIMS 인증 완료 시 즉시 자기선언 가능.</p>
+      </div>
+
+      <!-- S05.5 CA 이행 로드맵 -->
+      <div class="content-section">
+        <h2>S05.5 — 단기/중기/장기 CA 이행 로드맵</h2>
+
+        <div style="margin-bottom:16px;">
+          <div class="gantt-row"><div class="gantt-label"><strong>단기 (0~12개월)</strong></div><div class="gantt-bar-container" style="background:#e8f5e9;"><div class="gantt-bar short" style="width:33%;">Level 1 자기선언 24개</div></div><div class="gantt-period">0~12개월</div></div>
+          <div class="gantt-row"><div class="gantt-label">· Level 1 전체 자기선언</div><div class="gantt-bar-container"><div class="gantt-bar short" style="width:28%;">15개 Claim (즉시)</div></div><div class="gantt-period">0~3개월</div></div>
+          <div class="gantt-row"><div class="gantt-label">· AIMS 42001 인증 획득</div><div class="gantt-bar-container"><div class="gantt-bar short" style="width:33%;">증거 재활용 기반 마련</div></div><div class="gantt-period">3~9개월</div></div>
+          <div class="gantt-row"><div class="gantt-label">· Level 2 Type II 착수</div><div class="gantt-bar-container"><div class="gantt-bar short" style="width:25%;">9개 Claim (측정 프로그램)</div></div><div class="gantt-period">6~12개월</div></div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <div class="gantt-row"><div class="gantt-label"><strong>중기 (12~24개월)</strong></div><div class="gantt-bar-container" style="background:#fff3e0;"><div class="gantt-bar mid" style="width:66%;margin-left:33%;">V&V + 제3자 파일럿</div></div><div class="gantt-period">12~24개월</div></div>
+          <div class="gantt-row"><div class="gantt-label">· Level 2 V&V 파일럿</div><div class="gantt-bar-container"><div class="gantt-bar mid" style="width:33%;margin-left:33%;">SC-Bias/FC/Reliability (V&V)</div></div><div class="gantt-period">12~18개월</div></div>
+          <div class="gantt-row"><div class="gantt-label">· Level 3 제3자 파일럿</div><div class="gantt-bar-container"><div class="gantt-bar mid" style="width:33%;margin-left:42%;">SC-Accountability-003 우선</div></div><div class="gantt-period">15~24개월</div></div>
+          <div class="gantt-row"><div class="gantt-label">· CAB 파트너십 구축</div><div class="gantt-bar-container"><div class="gantt-bar mid" style="width:50%;margin-left:33%;">AI 전문 CAB 식별 및 계약</div></div><div class="gantt-period">12~24개월</div></div>
+        </div>
+
+        <div>
+          <div class="gantt-row"><div class="gantt-label"><strong>장기 (24~36개월)</strong></div><div class="gantt-bar-container" style="background:#e3f2fd;"><div class="gantt-bar long" style="width:33%;margin-left:66%;">Level 3 전체 완성</div></div><div class="gantt-period">24~36개월</div></div>
+          <div class="gantt-row"><div class="gantt-label">· Level 3 제3자 인증 완성</div><div class="gantt-bar-container"><div class="gantt-bar long" style="width:33%;margin-left:66%;">14개 Type I Claim 인증</div></div><div class="gantt-period">24~36개월</div></div>
+          <div class="gantt-row"><div class="gantt-label">· AWI 42007 반영 업데이트</div><div class="gantt-bar-container"><div class="gantt-bar long" style="width:30%;margin-left:70%;">2026-2027 발행 후</div></div><div class="gantt-period">2026~2027</div></div>
+        </div>
+      </div>
+
+      <!-- S05.6 리스크 매트릭스 -->
+      <div class="content-section">
+        <h2>S05.6 — 리스크 및 완화 방안</h2>
+        <h3>CA 이행 리스크 매트릭스</h3>
+        <div class="risk-matrix-wrap">
+          <table class="risk-matrix">
+            <thead>
+              <tr>
+                <th class="label-cell">가능성 ↓ / 영향 →</th>
+                <th class="label-cell">낮음</th><th class="label-cell">중간</th><th class="label-cell">높음</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="label-cell">높음</td>
+                <td class="risk-yellow">AI CAB 부재<br><small>(17065 AI 전문)</small></td>
+                <td class="risk-red">V&amp;V 기관 부재<br><small>(17029 AI 영역)</small></td>
+                <td class="risk-red">DIS 17067 조항 변경<br><small>(2026~2027 최종 발행)</small></td>
+              </tr>
+              <tr>
+                <td class="label-cell">중간</td>
+                <td class="risk-green">측정 방법론 미성숙<br><small>(Explainability 지표)</small></td>
+                <td class="risk-yellow">Level 3 비용 과다<br><small>(중소기업 이행 어려움)</small></td>
+                <td class="risk-orange">AWI 42007 미발행<br><small>(CA 체계 불완전)</small></td>
+              </tr>
+              <tr>
+                <td class="label-cell">낮음</td>
+                <td class="risk-green">내부 역량 부족<br><small>(교육으로 해소 가능)</small></td>
+                <td class="risk-green">증거 품질 문제<br><small>(AIMS 재활용으로 경감)</small></td>
+                <td class="risk-yellow">표준 해석 불일치<br><small>(다국가 간 해석 차이)</small></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>주요 리스크 완화 방안</h3>
+        <table>
+          <thead><tr><th>리스크</th><th>완화 방안</th><th>책임 주체</th></tr></thead>
+          <tbody>
+            <tr><td>AI 전문 CAB 부재</td><td>기존 ISO/IEC 17065 인정 기관 중 AI 역량 보유 기관 선별 활용. AI 특화 CAB 인정 신청 지원</td><td>인정기구(KAB 등)</td></tr>
+            <tr><td>DIS 17067:2025 변경</td><td>최종 발행 시 신속 업데이트를 위해 DIS 인용 항목 색인 유지 (S07 참조). 과도기 DIS 기반 스킴을 명시적으로 "임시" 표기</td><td>TFL 운영 조직</td></tr>
+            <tr><td>AWI 42007 미발행</td><td>42007 발행 전까지 DIS 17067:2025 + 42001 AIMS 결합 스킴으로 운영. 발행 후 전면 업데이트</td><td>TFL 운영 조직</td></tr>
+            <tr><td>V&V 기관 부재</td><td>과도기 대안: 17065 기관 중 V&V 역량 보유 기관 활용 또는 AIMS 인증 기관 범위 확장</td><td>CA 실행 조직</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- S05.7 CAB 선정 기준 -->
+      <div class="content-section">
+        <h2>S05.7 — CAB 선정 기준 및 인정 체계</h2>
+        <h3>Type I TFL을 위한 CAB 선정 기준</h3>
+        <table>
+          <thead><tr><th>기준 항목</th><th>최소 요건</th><th>권고 사항</th></tr></thead>
+          <tbody>
+            <tr><td>인정 범위</td><td>ISO/IEC 17065 인정 (국가 인정기구 인정)</td><td>AI 시스템 도메인 명시적 인정 범위 포함</td></tr>
+            <tr><td>기술 역량</td><td>ML/AI 시스템 평가 전문 인력 보유</td><td>해당 도메인(의료/금융/자율주행 등) 전문가 포함</td></tr>
+            <tr><td>독립성</td><td>평가 대상 조직과의 이해충돌 없음</td><td>동일 그룹사 CAB 배제</td></tr>
+            <tr><td>스킴 참조</td><td>ISO/IEC DIS 17067:2025 기반 스킴 운영</td><td>ISO/IEC AWI 42007 반영 계획 보유</td></tr>
+            <tr><td>이전 실적</td><td>AI 관련 CA 수행 이력</td><td>ISO/IEC 42001 감사 이력 포함</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note-box info">
+          <span class="icon">ℹ️</span>
+          <div>
+            <strong>인정 체계 현황 (DIS 17067:2025 기준)</strong>
+            현행 인정 기관들의 CAB 인정 기준은 ISO/IEC 17067:2013 기반입니다. DIS 2025 기반 스킴과 과도기 공존 관계에서 운영됩니다. DIS 2025가 최종 발행되면 인정 스킴 업데이트가 필요합니다. 현재 계약 시 이 과도기 조건을 CAB와 명시적으로 확인하십시오.
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="page-footer">
+      <span><a href="s04-tc-mapping.html">← S04 TC 매핑</a></span>
+      <span><a href="s06-gaps.html">다음: S06 커버리지 갭 →</a></span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S06 커버리지 갭 및 권고사항 — ISO/IEC 42117-X TFL 가이드</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .gap-card { border: 2px solid #e74c3c; border-radius: 8px; padding: 20px; margin-bottom: 16px; background: #fef9f9; }
+    .gap-card h3 { color: #c0392b; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+    .gap-card .current { background: #fdecea; border-radius: 4px; padding: 8px 12px; margin: 10px 0; font-size: 13px; }
+    .gap-card .future { background: #e8f5e9; border-radius: 4px; padding: 8px 12px; margin: 10px 0; font-size: 13px; }
+    .partial-card { border: 2px solid #f39c12; border-radius: 8px; padding: 20px; margin-bottom: 16px; background: #fffdf5; }
+    .partial-card h3 { color: #b86e00; margin-bottom: 8px; }
+    .new-std-timeline { position: relative; }
+    .new-std-item { display: flex; gap: 16px; margin-bottom: 16px; align-items: flex-start; }
+    .new-std-year { background: #1a4480; color: #fff; border-radius: 4px; padding: 4px 10px; font-size: 12px; font-weight: 700; min-width: 60px; text-align: center; flex-shrink: 0; }
+    .new-std-content { flex: 1; }
+    .new-std-content h5 { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    .new-std-content p { font-size: 12.5px; color: #555; }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">ISO/IEC 42117-X</div>
+      <div class="title">TFL 운영 가이드</div>
+      <div class="version">v1.0 · 2026-02-19</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-label">메인</div>
+        <a href="index.html" class="nav-item">📋 가이드 홈</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">섹션</div>
+        <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
+        <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>15개 TCM 신뢰성 특성</a>
+        <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
+        <a href="s04-tc-mapping.html" class="nav-item"><span class="section-id">S04</span>TCM-TC 요구사항 매핑</a>
+        <a href="s05-ca-guide.html" class="nav-item"><span class="section-id">S05</span>CA 이행 가이드</a>
+        <a href="s06-gaps.html" class="nav-item active"><span class="section-id">S06</span>커버리지 갭 및 권고사항</a>
+        <a href="s07-references.html" class="nav-item"><span class="section-id">S07</span>참조 표준 및 용어 사전</a>
+      </div>
+    </div>
+  </nav>
+
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div class="page-header">
+      <div>
+        <h1>S06 — 커버리지 갭 및 권고사항</h1>
+        <div class="breadcrumb"><a href="index.html">홈</a> › S06</div>
+      </div>
+    </div>
+
+    <div class="main-content">
+
+      <!-- L6 SC42 Linkage 고지 -->
+      <div class="note-box warning">
+        <span class="icon">⚠️</span>
+        <div>
+          <strong>SC42 표준 Linkage 누락 고지 (L6)</strong>
+          ISO/IEC 22989와 ISO/IEC 25058/25059 간 공식 매핑이 현재 SC42 표준 체계 내에 부재합니다. 본 가이드의 TCM 특성과 품질 특성 간 연계는 비공식 대응에 기반합니다.
+        </div>
+      </div>
+
+      <!-- S06.1 미흡 특성 -->
+      <div class="content-section">
+        <h2>S06.1 — 미흡 특성 현황 (Intervenability, Efficiency, Availability)</h2>
+
+        <div class="note-box danger">
+          <span class="icon">❌</span>
+          <div>
+            <strong>미흡 특성 커버리지 한계 고지 (L3)</strong>
+            Intervenability, Efficiency, Availability 3개 특성은 전담 국제표준 미발행으로 인해 현재 TC 커버리지가 미흡(❌)합니다. 해당 특성 CA 수행 시 추가 도메인 전문가 자문을 권장합니다.
+          </div>
+        </div>
+
+        <!-- Intervenability -->
+        <div class="gap-card">
+          <h3>❌ Intervenability (개입 가능성)</h3>
+          <div class="current">
+            <strong>현황</strong>: TC 요구사항 <strong>4개</strong> (TC-REQ-010, 058, 102, 117) — 목표 8~10개 대비 40~50% 수준<br>
+            <strong>근본 원인</strong>: 독립적 인간 감시(human oversight) 전담 국제표준 미발행<br>
+            <strong>현행 참조</strong>: ISO/IEC DTS 8200, ISO/IEC TR 24368 (간접 참조만 가능)
+          </div>
+          <div class="future">
+            <strong>보강 표준 후보 (향후)</strong>:
+            <ul style="margin-top:6px;">
+              <li><strong>ISO/IEC AWI 42007</strong> (AI CA 체계): 2026~2027 발행 예상 — human oversight 조항 신설 예정</li>
+              <li><strong>EU AI Act Article 14</strong>: High-risk AI 시스템 인간 감시 의무 조항 — 규정 기반 요구사항으로 활용 가능</li>
+              <li><strong>ISO/IEC 42001 A.9.2~A.9.4</strong>: 책임 있는 AI 시스템 사용 프로세스 조항</li>
+              <li><strong>ISO/IEC FDIS 42005:2025</strong>: AI 영향 평가 — 개입 관련 조항 간접 추출 가능</li>
+            </ul>
+            <strong>목표 TC 수</strong>: 8~10개 (현재 4개에서 2~2.5배 보강 필요)
+          </div>
+          <h4>권고 조치</h4>
+          <ol>
+            <li>ISO/IEC AWI 42007 최종 발행(2026~2027) 후 해당 표준의 human oversight 조항에서 4~6개 요구사항 추가 추출</li>
+            <li>EU AI Act Article 14 조항을 규정 기반 요구사항(non-ISO)으로 별도 분류하여 TC 체계에 보완 입력</li>
+            <li>ISO/IEC 42001 A.9.2~A.9.4의 기존 조항에서 Intervenability 특성 연계 가능 요구사항 재추출</li>
+          </ol>
+        </div>
+
+        <!-- Efficiency -->
+        <div class="gap-card">
+          <h3>❌ Efficiency (효율성)</h3>
+          <div class="current">
+            <strong>현황</strong>: TC 요구사항 <strong>4개</strong> (TC-REQ-001, 007, 017, 026) — 모두 간접 참조, 전담 조항 부재<br>
+            <strong>근본 원인</strong>: AI 추론 효율성, 에너지 효율, 탄소 발자국 전담 국제표준 부재 (Green AI 지침 미발행)<br>
+            <strong>현행 참조</strong>: ISO/IEC DTS 25058, ISO/IEC 5338:2024 (효율성 관련 간접 조항만 존재)
+          </div>
+          <div class="future">
+            <strong>보강 표준 후보 (향후)</strong>:
+            <ul style="margin-top:6px;">
+              <li><strong>ISO/IEC 21823 시리즈</strong> (IoT 상호운용성): 에너지 효율 관련 조항 추출 가능</li>
+              <li><strong>Green AI 지침</strong>: AI 탄소 발자국·에너지 효율 전담 표준 (개발 중)</li>
+              <li><strong>ISO/IEC 5338:2024 에너지 관련 조항</strong>: AI 수명주기 에너지 소비 관련 조항 추가 추출</li>
+              <li><strong>ISO/IEC DTS 25058 성능 효율성 조항</strong>: AI 시스템 성능 효율성 측정 요구사항</li>
+            </ul>
+            <strong>목표 TC 수</strong>: 8~10개
+          </div>
+          <h4>권고 조치</h4>
+          <ol>
+            <li>ISO/IEC DTS 25058의 성능 효율성(Performance Efficiency) 관련 조항에서 추론 지연·처리량 요구사항 추가 추출 (3~4개 가능)</li>
+            <li>Green AI 국제표준 발행 동향 모니터링 (ITU-T AI 에너지 효율 표준 포함)</li>
+            <li>ISO/IEC 5338:2024의 에너지 소비 관련 수명주기 조항 재검토 후 추가 추출 (2~3개 가능)</li>
+          </ol>
+        </div>
+
+        <!-- Availability -->
+        <div class="gap-card">
+          <h3>❌ Availability (가용성)</h3>
+          <div class="current">
+            <strong>현황</strong>: TC 요구사항 <strong>2개</strong> (TC-REQ-006, 121) — 현재 TC 체계에서 가장 미흡한 특성<br>
+            <strong>근본 원인</strong>: AI 시스템 SLA(서비스 수준 계약), MTTR(평균 복구 시간), 가용성 측정 전담 조항 극히 제한<br>
+            <strong>현행 참조</strong>: ISO/IEC 5338:2024, ISO/IEC DTS 25058 (간접 참조만 가능)
+          </div>
+          <div class="future">
+            <strong>보강 표준 후보 (향후)</strong>:
+            <ul style="margin-top:6px;">
+              <li><strong>ISO 22301:2019</strong> (비즈니스 연속성 관리): AI 시스템 가용성·복구 전략 적용 가능</li>
+              <li><strong>ISO/IEC DTR 5469 가용성 조항</strong>: AI 기능 안전성 맥락에서 가용성 관련 조항 추가 추출 가능</li>
+              <li><strong>ISO/IEC DTS 25058 가용성 측정 조항</strong>: AI 시스템 가용성 KPI 정의 조항 추가 추출</li>
+            </ul>
+            <strong>목표 TC 수</strong>: 6~8개 (현재 2개에서 3~4배 보강 필요)
+          </div>
+          <h4>권고 조치 (최우선)</h4>
+          <ol>
+            <li>ISO 22301:2019의 AI 시스템 연속성 관련 조항을 TFL 특성 체계와 연계하여 4~5개 요구사항 도입</li>
+            <li>ISO/IEC DTR 5469의 AI 시스템 가용성·결함 허용 조항에서 2~3개 추가 추출</li>
+            <li>AI 시스템 SLA 체계 표준화를 위한 SC42 WG 제안 검토</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- S06.2 부분 특성 -->
+      <div class="content-section">
+        <h2>S06.2 — 부분 특성 보강 방안 (Security, Explainability)</h2>
+
+        <div class="partial-card">
+          <h3>⚠️ Security (보안성) — 10개 → 목표 15개 이상</h3>
+          <p><strong>갭 분석</strong>: 적대적 공격(adversarial attack), 모델 오염(model poisoning), 공급망 보안(supply chain security) 관련 전담 조항 부족. 현재 TC는 일반적 보안 요구사항 중심.</p>
+          <h4>보강 방안</h4>
+          <ul>
+            <li><strong>적대적 공격 대응</strong>: ISO/IEC TR 24028:2020의 적대적 공격 관련 추가 조항 추출. MITRE ATLAS 프레임워크 연계 검토</li>
+            <li><strong>공급망 보안</strong>: ISO/IEC 27001:2022 공급자 관계 조항 + ISO/IEC 27017 클라우드 보안 조항 연계</li>
+            <li><strong>ISO/IEC DTS 8200 보안 조항</strong>: 기존 8200 표준의 보안 관련 추가 조항 추출 (5개 이상 가능)</li>
+            <li><strong>신규 표준</strong>: ISO/IEC AWI 42007(AI CA 체계) 보안 스킴 설계 조항 포함 예상</li>
+          </ul>
+          <div class="note-box info" style="margin-top:10px;"><span class="icon">ℹ️</span><div>보강 목표: 5개 추가 추출 → 총 15개 이상 달성 후 커버리지 "완전" 재평가</div></div>
+        </div>
+
+        <div class="partial-card">
+          <h3>⚠️ Explainability (설명 가능성) — 12개 → 목표 16개 이상</h3>
+          <p><strong>갭 분석</strong>: 청중별 차등 요구사항(AI 전문가/도메인 전문가/일반인) 및 post-hoc vs ante-hoc 설명 유형별 요구사항이 부족. 현재 TC는 일반적 설명 가능성 요구사항 중심.</p>
+          <h4>보강 방안</h4>
+          <ul>
+            <li><strong>DTS 6254 추가 조항</strong>: ISO/IEC DTS 6254의 청중별 설명 유형(technical, non-technical) 조항에서 4개 이상 추가 추출 가능</li>
+            <li><strong>IEEE XAI 표준</strong>: IEEE P7001(AI 시스템 투명성) 등 IEEE 표준 참조 조항 검토</li>
+            <li><strong>post-hoc vs ante-hoc 구분</strong>: 설명 생성 시점 기반 분류 체계 요구사항 추가 정의</li>
+          </ul>
+          <div class="note-box info" style="margin-top:10px;"><span class="icon">ℹ️</span><div>보강 목표: 4개 추가 추출 → 총 16개 달성 후 커버리지 "완전" 재평가</div></div>
+        </div>
+      </div>
+
+      <!-- S06.3 CSV-TFL 매핑 불일치 -->
+      <div class="content-section">
+        <h2>S06.3 — CSV-TFL 매핑 불일치 항목</h2>
+        <p>TCM-Endorsed-2025-10-14-update-r2.csv와 TFL 15개 특성 체계 간 다음 불일치 항목이 식별되었습니다:</p>
+
+        <details>
+          <summary>CSV에 있으나 TFL 15개 특성과 직접 매핑 안 되는 항목</summary>
+          <div class="details-content">
+            <table>
+              <thead><tr><th>CSV 항목</th><th>상태</th><th>TFL 매핑 현황</th></tr></thead>
+              <tbody>
+                <tr><td>validation</td><td>Discuss</td><td>TFL '검증'과 ISO 17029 '확인' 구별 필요 — 미결</td></tr>
+                <tr><td>value</td><td>Discuss</td><td>가치 기반 AI 개념의 TFL 특성 매핑 미결</td></tr>
+                <tr><td>verification</td><td>verifiability로 논의</td><td>Controllability/Reliability 연계 — 부분 해소</td></tr>
+                <tr><td>vulnerability</td><td>No change</td><td>Security 특성으로 흡수 — 해소 가능</td></tr>
+                <tr><td>Controls (C/c/S/E)</td><td>분류 체계</td><td>TFL Level 체계와 별개 — 교차 참조 불가</td></tr>
+                <tr><td>Normativity (N/I)</td><td>분류 체계</td><td>TC normative/informative 구분과 대응</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details>
+          <summary>TFL 특성 중 CSV 매핑 불명확 항목</summary>
+          <div class="details-content">
+            <table>
+              <thead><tr><th>TFL 특성</th><th>CSV 관련 항목</th><th>불명확 사유</th><th>권고</th></tr></thead>
+              <tbody>
+                <tr><td>Intervenability</td><td>oversight/human oversight</td><td>독립 특성 대 Controllability 하위 속성 논의 미결</td><td>AWI 42007 발행 후 재검토</td></tr>
+                <tr><td>Functional Correctness</td><td>functional safety</td><td>기능 안전(IEC 61508)과 기능 정확성(ISO 25059) 혼동</td><td>25059 기반 명확한 재정의 필요</td></tr>
+                <tr><td>Availability</td><td>(독립 항목 없음)</td><td>Reliability 하위 개념으로 처리 또는 독립화 논의 필요</td><td>공식 TCM 갱신 회의에서 결정</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <div class="note-box info">
+          <span class="icon">ℹ️</span>
+          <div>CSV-TFL 매핑 불일치 해소를 위한 공식 TCM 갱신 회의를 권장합니다. 2025년 이후 신규 표준(FDIS 42005, FDIS 42006, DTS 12791 등)을 포함하여 TCM 전면 업데이트가 필요합니다.</div>
+        </div>
+      </div>
+
+      <!-- S06.4 신규 표준 반영 현황 -->
+      <div class="content-section">
+        <h2>S06.4 — 신규 표준 반영 현황 (2025년 이후)</h2>
+
+        <div class="new-std-timeline">
+          <div class="new-std-item">
+            <div class="new-std-year">2024</div>
+            <div class="new-std-content">
+              <h5>ISO/IEC DTS 12791:2024 — AI 편향 테스팅</h5>
+              <p><span class="badge badge-high">완전 반영</span> Bias/Fairness 특성에 27개 요구사항으로 반영. DTS 12791은 가장 충실한 커버리지를 제공하는 신규 표준.</p>
+            </div>
+          </div>
+          <div class="new-std-item">
+            <div class="new-std-year">2025</div>
+            <div class="new-std-content">
+              <h5>ISO/IEC FDIS 42005:2025 — AI 영향 평가</h5>
+              <p><span class="badge badge-medium">일부 반영</span> Accountability, Safety 특성에 일부 반영. 본격적인 영향 평가 요구사항 추가 추출 필요.</p>
+            </div>
+          </div>
+          <div class="new-std-item">
+            <div class="new-std-year">2025</div>
+            <div class="new-std-content">
+              <h5>ISO/IEC FDIS 42006:2025 — AI 감사</h5>
+              <p><span class="badge badge-high">반영</span> Accountability(감사 이력·연간 독립 감사)와 Security(보안 감사) 특성에 반영. SC-Accountability-002/003, SC-Security-002의 핵심 출처 표준.</p>
+            </div>
+          </div>
+          <div class="new-std-item">
+            <div class="new-std-year">2025</div>
+            <div class="new-std-content">
+              <h5>ISO/IEC TS 42119-2:2025 — AI 테스팅 (개정)</h5>
+              <p><span class="badge badge-high">반영</span> Functional Correctness 특성에 반영. 테스팅 요구사항 각 특성별 추가 매핑 검토 필요 (중기 조치).</p>
+            </div>
+          </div>
+          <div class="new-std-item">
+            <div class="new-std-year" style="background:#888;">TBD</div>
+            <div class="new-std-content">
+              <h5>ISO/IEC AWI 42007 — AI CA 프레임워크</h5>
+              <p><span class="badge badge-low-warn">미반영 (미발행)</span> AWI 단계로 아직 발행 전. 최종 발행(2026~2027 예상) 후 CA 체계 전면 업데이트 필요. TFL 파이프라인 v2.0에서 반영 예정.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S06.5 향후 보강 로드맵 -->
+      <div class="content-section">
+        <h2>S06.5 — 향후 보강 로드맵 및 우선순위</h2>
+        <table>
+          <thead><tr><th>우선순위</th><th>구분</th><th>대상 특성</th><th>조치 내용</th><th>시기</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-low-warn">P1 Critical</span></td>
+              <td>즉시 조치</td>
+              <td>Intervenability</td>
+              <td>ISO/IEC 42001 A.9.2~A.9.4 기존 조항 재추출 (2~3개 즉시 가능)</td>
+              <td>3개월 내</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-low-warn">P1 Critical</span></td>
+              <td>즉시 조치</td>
+              <td>Availability</td>
+              <td>ISO 22301:2019 + ISO/IEC DTR 5469 가용성 조항 추출 (4~6개)</td>
+              <td>3~6개월</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-medium">P2 Major</span></td>
+              <td>단기 조치</td>
+              <td>Security</td>
+              <td>ISO/IEC DTS 8200 추가 조항 + ISO/IEC 27001:2022 공급자 관계 조항 (5개 목표)</td>
+              <td>6~12개월</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-medium">P2 Major</span></td>
+              <td>단기 조치</td>
+              <td>Explainability</td>
+              <td>ISO/IEC DTS 6254 청중별 추가 조항 추출 (4개 목표)</td>
+              <td>6~12개월</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-medium">P2 Major</span></td>
+              <td>단기 조치</td>
+              <td>Efficiency</td>
+              <td>ISO/IEC DTS 25058 성능 효율성 조항 + 5338:2024 에너지 조항 재추출 (4~5개)</td>
+              <td>6~12개월</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-high">P3 계획</span></td>
+              <td>중기 조치</td>
+              <td>Intervenability</td>
+              <td>ISO/IEC AWI 42007 발행 후 human oversight 조항 전면 추출 (5~6개 추가)</td>
+              <td>2026~2027</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-high">P3 계획</span></td>
+              <td>중기 조치</td>
+              <td>전체</td>
+              <td>ISO/IEC TS 42119-2:2025 개정 테스팅 요구사항 각 특성별 추가 매핑</td>
+              <td>2026</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-high">P4 장기</span></td>
+              <td>장기 조치</td>
+              <td>전체</td>
+              <td>CSV TCM과의 공식 갱신 회의 개최. 2025년 신규 표준 반영</td>
+              <td>2026~2027</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- S06.6 SC42 Linkage 누락 -->
+      <div class="content-section">
+        <h2>S06.6 — SC42 표준 간 Linkage 누락 현황</h2>
+        <div class="note-box danger">
+          <span class="icon">❌</span>
+          <div><strong>본 가이드의 제한 사항</strong> — 아래 Linkage 누락은 TFL 파이프라인의 한계이며, 해당 연계 비공식 대응으로 처리된 항목이 있습니다.</div>
+        </div>
+        <table class="linkage-table">
+          <thead><tr><th>출처 표준</th><th>대상 표준</th><th>누락 Linkage</th><th>심각도</th><th>영향</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>ISO/IEC 22989:2022<br>(AI 개념·용어)</td>
+              <td>ISO/IEC 25058/25059<br>(AI 품질 평가)</td>
+              <td class="missing">공식 매핑 부재</td>
+              <td><span class="badge badge-low-warn">높음</span></td>
+              <td>TCM 특성 ↔ 품질 특성 연계가 비공식 대응에 기반. TFL Claim의 표준 근거 체계에 영향.</td>
+            </tr>
+            <tr>
+              <td>ISO/IEC 22989:2022</td>
+              <td>ISO/IEC TS 4213<br>(ML 시스템 분류)</td>
+              <td class="missing">공식 연결 누락</td>
+              <td><span class="badge badge-medium">중간</span></td>
+              <td>ML 시스템 유형 분류와 신뢰성 특성 연계 체계 부재</td>
+            </tr>
+            <tr>
+              <td>ISO/IEC DTS 8200</td>
+              <td>ISO/IEC 42001:2023<br>(AIMS)</td>
+              <td class="present">부분 연계 존재</td>
+              <td><span class="badge badge-high">낮음</span></td>
+              <td>제어 가능성 요구사항과 AIMS 운영 제어 조항 간 대응은 파이프라인에서 비공식으로 정의</td>
+            </tr>
+            <tr>
+              <td>ISO/IEC TR 24368:2022<br>(AI 거버넌스)</td>
+              <td>ISO/IEC FDIS 42006:2025<br>(AI 감사)</td>
+              <td class="missing">공식 연계 부재</td>
+              <td><span class="badge badge-medium">중간</span></td>
+              <td>거버넌스 요건과 감사 요건 간 공식 교차 참조 부재 — Accountability 특성 TC 구성에 영향</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note-box info">
+          <span class="icon">ℹ️</span>
+          <div>
+            SC42 내 표준 간 Linkage 공식화는 SC42 전체 회의 차원의 의제로 권고합니다. ISO/IEC 22989:2022 개정(예상) 시 25058/25059와의 공식 매핑 포함을 ISO/IEC JTC 1/SC 42에 제안할 것을 권장합니다.
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="page-footer">
+      <span><a href="s05-ca-guide.html">← S05 CA 이행 가이드</a></span>
+      <span><a href="s07-references.html">다음: S07 참조 표준 및 용어 사전 →</a></span>
+    </div>
+  </div>
+</div>
+</body>
+</html>
