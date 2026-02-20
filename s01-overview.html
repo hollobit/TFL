@@ -84,12 +84,63 @@
         </div>
       </div>
 
+      <!-- S01.0 TFL 적용 대상 -->
+      <div class="content-section">
+        <h2>S01.0 — TFL 적용 대상: AI 제품의 세 가지 유형</h2>
+        <p>ISO/IEC 42117-X TFL은 <strong>제품(product) 수준으로 제공 가능한 모든 AI 대상</strong>에 적용됩니다.
+           적용 대상은 다음 세 가지 유형으로 구분됩니다:</p>
+
+        <!-- 3열 카드 그리드 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:16px 0">
+          <div style="border:2px solid #1a4480;border-radius:8px;padding:16px;background:#f0f4ff">
+            <h4 style="color:#1a4480;margin:0 0 8px">🖥️ AI 시스템 (AI System)</h4>
+            <p style="font-size:0.85em">AI 기능을 포함한 소프트웨어·하드웨어 시스템</p>
+            <div style="font-size:0.8em;color:#555"><strong>예시:</strong><br>• 자율주행 AI<br>• 의료 진단 시스템<br>• 스마트 팩토리 AI</div>
+            <div style="font-size:0.8em;margin-top:8px"><strong>참조:</strong> ISO/IEC 22989 §3.1.4</div>
+          </div>
+          <div style="border:2px solid #27ae60;border-radius:8px;padding:16px;background:#f0fff4">
+            <h4 style="color:#27ae60;margin:0 0 8px">🧠 AI 모델 (AI Model)</h4>
+            <p style="font-size:0.85em">독립적으로 배포·출시되는 학습된 추론 엔진</p>
+            <div style="font-size:0.8em;color:#555"><strong>예시:</strong><br>• GPT-4, Llama 3<br>• BERT, Stable Diffusion<br>• ResNet, YOLO</div>
+            <div style="font-size:0.8em;margin-top:8px"><strong>참조:</strong> ISO/IEC 22989 §3.1.x</div>
+          </div>
+          <div style="border:2px solid #e67e22;border-radius:8px;padding:16px;background:#fff8f0">
+            <h4 style="color:#e67e22;margin:0 0 8px">☁️ AI 서비스 (AI Service)</h4>
+            <p style="font-size:0.85em">AI 기능을 API·플랫폼 형태로 제공하는 서비스</p>
+            <div style="font-size:0.8em;color:#555"><strong>예시:</strong><br>• 번역 API, 챗봇 서비스<br>• 추천 엔진, 이상탐지 API<br>• AI 기반 SaaS</div>
+            <div style="font-size:0.8em;margin-top:8px"><strong>참조:</strong> ISO/IEC 22989 §3.1.x</div>
+          </div>
+        </div>
+
+        <!-- 비교 표 -->
+        <table>
+          <thead><tr><th>구분</th><th>AI 시스템</th><th>AI 모델</th><th>AI 서비스</th></tr></thead>
+          <tbody>
+            <tr><td>정의</td><td>AI 기능 포함 시스템</td><td>독립 배포 학습 모델</td><td>AI 기반 서비스·API</td></tr>
+            <tr><td>배포 주체</td><td>시스템 통합업체·제조사</td><td>AI 연구소·기업</td><td>클라우드·SaaS 사업자</td></tr>
+            <tr><td>TFL 적용 유형</td><td>Type I~IV 모두</td><td>Type II~IV 주로</td><td>Type II~IV 주로</td></tr>
+            <tr><td>DTC 형식</td><td>System DTC</td><td>Model DTC</td><td>Service DTC</td></tr>
+            <tr><td>본 가이드 [System]</td><td>✅ 직접 대응</td><td>✅ 포함</td><td>✅ 포함</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note-box info">
+          <span class="icon">📌</span>
+          <div>
+            <strong>[System] 플레이스홀더 안내</strong><br>
+            본 가이드의 모든 Simple Claim 템플릿에서 <code>[System]</code>은 AI 시스템·AI 모델·AI 서비스를
+            포괄하는 총칭입니다. 실제 작성 시에는 해당 AI 제품의 명칭·버전으로 대체합니다.<br>
+            예: <em>MedDiag-AI v2.1 (시스템), Llama-3.1-70B (모델), TranslateNow API v3 (서비스)</em>
+          </div>
+        </div>
+      </div>
+
       <!-- S01.1 -->
       <div class="content-section">
         <h2>S01.1 — ISO/IEC 42117-X 소개 및 개발 현황</h2>
         <p>
-          <strong>ISO/IEC 42117-X</strong>는 AI 시스템 및 AI 모델의 신뢰성(Trustworthiness) 사실 선언을 위한 국제표준으로,
-          AI 시스템이 다양한 신뢰성 특성을 얼마나 충족하는지를 사용자·이해관계자에게 명확히 알리기 위한 라벨링 체계를 제공합니다.
+          <strong>ISO/IEC 42117-X</strong>는 AI 시스템, AI 모델, AI 서비스의 신뢰성(Trustworthiness) 사실 선언을 위한 국제표준으로,
+          AI 제품(시스템·모델·서비스)이 다양한 신뢰성 특성을 얼마나 충족하는지를 사용자·이해관계자에게 명확히 알리기 위한 라벨링 체계를 제공합니다.
         </p>
         <table>
           <thead><tr><th>구분</th><th>내용</th></tr></thead>
@@ -98,7 +149,7 @@
             <tr><td>현행 상태</td><td><span class="badge badge-draft">PWI (예비 작업 항목) 단계</span> · 초안 날짜: 2025-10-02</td></tr>
             <tr><td>담당 기술위원회</td><td>ISO/IEC JTC 1/SC 42 (Artificial Intelligence)</td></tr>
             <tr><td>관련 Part 현황</td><td>Part 1 (원칙·일반요건): PWI · Part 2~4: 미발행 (TBD)</td></tr>
-            <tr><td>핵심 목적</td><td>AI 시스템/모델의 신뢰성 사실을 다양한 유형(자기선언·제3자 인증·정량 사실 시트)으로 표현하는 공통 체계 제공</td></tr>
+            <tr><td>핵심 목적</td><td>AI 시스템·모델·서비스의 신뢰성 사실을 다양한 유형(자기선언·제3자 인증·정량 사실 시트)으로 표현하는 공통 체계 제공</td></tr>
             <tr><td>주요 참조 표준</td><td>ISO/IEC 22989 (AI 개념·용어), ISO/IEC 42001 (AIMS), ISO/IEC TR 24028 (AI 신뢰성), ISO/IEC DTS 5338 (AI 수명주기)</td></tr>
           </tbody>
         </table>
@@ -120,7 +171,7 @@
           <div class="tfl-type-box t1">
             <h4>🏆 Type I — AI Trustworthiness Fact Label (TFL)</h4>
             <div class="iso-name">ISO/IEC 42117-1 §3.2.3, §5.3</div>
-            <p>AI 시스템/모델이 신뢰성 라벨링 <strong>프로그램의 기준을 충족</strong>함을 나타내는 진술. 제3자 인증기관(CAB)에 의한 독립 검증이 전제됩니다.</p>
+            <p>AI 제품(시스템·모델·서비스)이 신뢰성 라벨링 <strong>프로그램의 기준을 충족</strong>함을 나타내는 진술. 제3자 인증기관(CAB)에 의한 독립 검증이 전제됩니다.</p>
             <p><strong>CA 기반 표준:</strong> ISO/IEC 17065 (Product Certification Body)</p>
             <p><strong>특징:</strong> 가장 높은 신뢰성 수준, 인정된 CAB 필수, AI 전문 CAB 인프라 구축 필요</p>
           </div>
