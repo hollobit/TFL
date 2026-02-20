@@ -78,6 +78,7 @@
         <a href="s11-tc-claim-mapping.html" class="nav-item"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
         <a href="s12-standards-tracker.html" class="nav-item"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
         <a href="s13-dtc-card.html" class="nav-item"><span class="section-id">S13</span>AI Developer Technical Card</a>
+        <a href="s14-atfs-qfd.html" class="nav-item"><span class="section-id">S14</span>ATFS / QFD (Type III)</a>
       </div>
     </div>
   </nav>
@@ -231,6 +232,7 @@
           <button class="filter-btn" onclick="filterClaims('typeII')">Type II (자기선언)</button>
           <button class="filter-btn" onclick="filterClaims('typeI')">Type I (3자 인증)</button>
           <button class="filter-btn" onclick="filterClaims('typeIII')">Type III (V&V)</button>
+          <a href="s14-atfs-qfd.html" style="font-size:11px;color:#be185d;font-weight:700;text-decoration:none;border:1px solid #f9a8d4;border-radius:4px;padding:3px 8px;background:#fff0f5">📊 S14 ATFS/QFD 가이드</a>
           <button class="filter-btn active" onclick="filterClaims('all')">전체 보기</button>
           <span class="filter-label" style="margin-left:12px;">V&V 필터:</span>
           <button class="filter-btn" onclick="filterClaims('vvany')" style="background:#e8f5e9;color:#1a6b3c;border-color:#a5d6a7">V&amp;V 가능 (전체)</button>
@@ -554,6 +556,7 @@
               <div class="claim-example">📌 AutoLoan-AI demonstrates planned goal achievement rate ≥ 95% with acceptance criteria verified per ISO/IEC DTS 25058 §14</div>
               <div class="card-meta"><div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-high">high</span></div></div><div class="meta-item"><div class="meta-label">CA 표준</div><div class="meta-value">ISO/IEC 17029 (V&amp;V)</div></div></div>
               <div class="vv-row"><span class="vv-label">V&amp;V:</span><span class="badge-vv" title="모델 성능 테스트 §7.3.4.3; 요구사항 기반 테스트">42119-2</span><span class="badge-vv-ts" title="Cl.7.3 수용 기준 목표 달성률">29119-11</span></div><div class="tc-refs-tcreq"><div class="label" style="font-size:10px;color:#1a4480">TC 요구사항</div><span class="tc-req-badge medium">TC-EFFE-001</span><span class="tc-req-badge medium">TC-EFFE-002</span><span class="tc-req-badge medium">TC-EFFE-003</span></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 25058, ISO/IEC TR 24028</div>
+              <div style="margin-top:6px;font-size:11px"><a href="s14-atfs-qfd.html" style="color:#be185d;font-weight:700;text-decoration:none">📊 S14 ATFS/QFD</a> — 측정 방법론 및 V&amp;V 프로세스 상세 가이드</div>
             </div>
           </div>
         </div>
@@ -697,6 +700,7 @@
               <div class="claim-example">📌 MedDecision-AI achieves verified usability score ≥ 80/100 per ISO/IEC DTS 25058 §9.6 with cognitive load within acceptable limits for all user categories</div>
               <div class="card-meta"><div class="meta-item"><div class="meta-label">측정 가능성</div><div class="meta-value"><span class="badge badge-high">high</span></div></div><div class="meta-item"><div class="meta-label">CA 표준</div><div class="meta-value">ISO/IEC 17029 (V&amp;V)</div></div></div>
               <div class="vv-row"><span class="vv-label">V&amp;V:</span><span class="badge-vv" title="사용성 테스트 §7.3.2; 인지 부하 측정">42119-2</span><span class="badge-vv-ts" title="Cl.6.2.4 사용성 테스트">29119-11</span></div><div class="tc-refs-tcreq"><div class="label" style="font-size:10px;color:#1a4480">TC 요구사항</div><span class="tc-req-badge medium">TC-USEAB-001</span><span class="tc-req-badge medium">TC-USEAB-002</span><span class="tc-req-badge medium">TC-USEAB-003</span><span class="tc-req-badge medium">TC-USEAB-004</span></div><div class="tc-refs"><div class="label">출처 표준</div>ISO/IEC DTS 25058 §9.6, ISO/IEC TS 5723</div>
+              <div style="margin-top:6px;font-size:11px"><a href="s14-atfs-qfd.html" style="color:#be185d;font-weight:700;text-decoration:none">📊 S14 ATFS/QFD</a> — 측정 방법론 및 V&amp;V 프로세스 상세 가이드</div>
             </div>
           </div>
         </div>
@@ -802,7 +806,7 @@
             <tr style="background:#e8f5e9"><td><code>SC-Robustness-002</code></td><td>L3</td><td>Type I</td><td>🟢 적대적 테스트 §7.3.4.4 + 신경망 커버리지 §7.4.4.2</td><td>🔵 Cl.9 화이트박스</td><td><strong>V&V 가능</strong></td></tr>
             <tr><td><code>SC-Reliability-002</code></td><td>L1</td><td>Type II</td><td>⬜ 모니터링 문서</td><td>⬜</td><td style="color:#888">문서 기반</td></tr>
             <tr style="background:#e8f5e9"><td><code>SC-Reliability-001</code></td><td>L2</td><td><span style="color:#27ae60;font-weight:700">Type II/III ✅</span></td><td>🟢 드리프트 테스트 §7.3.4.5</td><td>🔵 Cl.7.7</td><td><strong>V&V 가능 (기존)</strong></td></tr>
-            <tr style="background:#e8f5e9"><td><code>SC-Reliability-003</code></td><td>L3</td><td><span style="color:#27ae60;font-weight:700">Type III ✅</span></td><td>🟢 통계적 모델 성능 §7.3.4.3</td><td>🔵 Cl.6.2.2</td><td><strong>V&V 가능 (기존)</strong></td></tr>
+            <tr style="background:#e8f5e9"><td><code>SC-Reliability-003</code></td><td>L3</td><td><span style="color:#27ae60;font-weight:700">Type III ✅</span> <a href="s14-atfs-qfd.html" style="color:#be185d;font-weight:700;font-size:10px;text-decoration:none">→ S14</a></td><td>🟢 통계적 모델 성능 §7.3.4.3</td><td>🔵 Cl.6.2.2</td><td><strong>V&V 가능 (기존)</strong></td></tr>
             <tr><td><code>SC-Transparency-001</code></td><td>L1</td><td>Type II</td><td>⬜ 문서 리뷰 §7.3.4.6</td><td>⬜</td><td style="color:#888">문서 리뷰</td></tr>
             <tr style="background:#e8f5e9"><td><code>SC-Transparency-002</code></td><td>L2</td><td>Type II → <strong>Type II/III</strong></td><td>🟢 모델 문서 리뷰 §7.3.4.6</td><td>🔵 Cl.5.1.7</td><td><strong>V&V 가능 (신규)</strong></td></tr>
             <tr style="background:#e8f5e9"><td><code>SC-Transparency-003</code></td><td>L3</td><td>Type I → <strong>+V&V</strong></td><td>🟢 설명가능성 테스트 §7.3.4.7</td><td>🔵 Cl.5.1.7, 6.2.4</td><td><strong>V&V 가능 (신규)</strong></td></tr>
@@ -832,10 +836,10 @@
             <tr style="background:#e8f5e9"><td><code>SC-Functional_Correctness-001</code></td><td>L3</td><td><span style="color:#27ae60;font-weight:700">Type II/III ✅</span></td><td>🟢 모델 성능 §7.3.4.3; 동치분할 §7.4.2</td><td>🔵 Cl.6.1.3; 벤치마크 §7.9</td><td><strong>V&V 가능 (기존)</strong></td></tr>
             <tr><td><code>SC-Efficiency-003</code></td><td>L1</td><td>Type II</td><td>⬜</td><td>⬜</td><td style="color:#888">문서 (보완 필요)</td></tr>
             <tr style="background:#e8f5e9"><td><code>SC-Efficiency-002</code></td><td>L2</td><td>Type II → <strong>Type II/III</strong></td><td>🟢 성능 효율성 테스트 §7.3.2 (부하·스트레스·응답시간)</td><td>🔵 Cl.6.2.4</td><td><strong>V&V 가능 (신규)</strong></td></tr>
-            <tr style="background:#e8f5e9"><td><code>SC-Efficiency-001</code></td><td>L3</td><td><span style="color:#27ae60;font-weight:700">Type III ✅</span></td><td>🟢 응답시간·내구성 테스트 §7.3.2</td><td>🔵 Cl.6.2.4</td><td><strong>V&V 가능 (기존)</strong></td></tr>
+            <tr style="background:#e8f5e9"><td><code>SC-Efficiency-001</code></td><td>L3</td><td><span style="color:#27ae60;font-weight:700">Type III ✅</span> <a href="s14-atfs-qfd.html" style="color:#be185d;font-weight:700;font-size:10px;text-decoration:none">→ S14</a></td><td>🟢 응답시간·내구성 테스트 §7.3.2</td><td>🔵 Cl.6.2.4</td><td><strong>V&V 가능 (기존)</strong></td></tr>
             <tr><td><code>SC-Availability-003</code></td><td>L1</td><td>Type II</td><td>⬜</td><td>⬜</td><td style="color:#888">문서 (보완 필요)</td></tr>
             <tr style="background:#e8f5e9"><td><code>SC-Availability-002</code></td><td>L2</td><td>Type II → <strong>Type II/III</strong></td><td>🟢 가용성 테스트 §7.3.2; 재해복구 테스트</td><td>🔵 Cl.6.2.7</td><td><strong>V&V 가능 (신규)</strong></td></tr>
-            <tr style="background:#e8f5e9"><td><code>SC-Availability-001</code></td><td>L3</td><td><span style="color:#27ae60;font-weight:700">Type III ✅</span></td><td>🟢 가용성 테스트 §7.3.2</td><td>🔵 Cl.6.2.7</td><td><strong>V&V 가능 (기존)</strong></td></tr>
+            <tr style="background:#e8f5e9"><td><code>SC-Availability-001</code></td><td>L3</td><td><span style="color:#27ae60;font-weight:700">Type III ✅</span> <a href="s14-atfs-qfd.html" style="color:#be185d;font-weight:700;font-size:10px;text-decoration:none">→ S14</a></td><td>🟢 가용성 테스트 §7.3.2</td><td>🔵 Cl.6.2.7</td><td><strong>V&V 가능 (기존)</strong></td></tr>
             <tr style="background:#e8f5e9"><td><code>SC-Resilience-003</code></td><td>L1</td><td>Type II → <strong>+부분 V&V</strong></td><td>🟢 드리프트 테스트 §7.3.4.5</td><td>🔵 Cl.5.1.4, 6.2.7</td><td><strong>V&V 부분 가능</strong></td></tr>
             <tr style="background:#e8f5e9"><td><code>SC-Resilience-001</code></td><td>L2</td><td>Type II → <strong>Type II/III</strong></td><td>🟢 강건성 테스트 §7.3.2; 드리프트 테스트 §7.3.4.5</td><td>🔵 Cl.5.1.4, 7.7</td><td><strong>V&V 가능 (신규)</strong></td></tr>
             <tr style="background:#e8f5e9"><td><code>SC-Resilience-002</code></td><td>L3</td><td>Type I → <strong>+V&V</strong></td><td>🟢 드리프트 테스트 §7.3.4.5; 회귀 테스트</td><td>🔵 Cl.7.7 백투백 테스트</td><td><strong>V&V 가능 (신규)</strong></td></tr>

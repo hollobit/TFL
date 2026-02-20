@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S14 TYPE III AI Trustworthiness Fact Sheet (ATFS/QFD) — ISO/IEC 42117-X TFL 가이드</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* ATFS Type III Color Theme: pink/rose */
+    .atfs-accent { color: #be185d; }
+    .atfs-badge {
+      display: inline-block; background: #be185d; color: #fff;
+      border-radius: 6px; padding: 4px 14px; font-size: 12px;
+      font-weight: 700; letter-spacing: 0.5px; font-family: monospace;
+    }
+    .atfs-header-bar {
+      background: #be185d; color: #fff; padding: 14px 20px;
+      font-size: 14px; font-weight: 700; border-radius: 8px 8px 0 0;
+    }
+    .atfs-structure {
+      border: 2px solid #be185d; border-radius: 10px; overflow: hidden;
+    }
+    /* 4-type TFL diagram */
+    .tfl-type-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 16px 0;
+    }
+    .tfl-type-box {
+      border: 2px solid #dee2e6; border-radius: 8px; padding: 16px; text-align: center;
+    }
+    .tfl-type-box.t1 { background:#f5f0ff; border-color:#7c3aed; }
+    .tfl-type-box.t2 { background:#f0f9ff; border-color:#1d4ed8; }
+    .tfl-type-box.t3 { background:#fff0f5; border-color:#be185d; }
+    .tfl-type-box.t3.active { box-shadow: 0 0 0 3px #be185d; }
+    .tfl-type-box.t4 { background:#f0fdf4; border-color:#15803d; }
+    .tfl-type-box .type-num { font-size: 24px; font-weight: 800; display: block; margin-bottom: 4px; }
+    .tfl-type-box.t1 .type-num { color: #7c3aed; }
+    .tfl-type-box.t2 .type-num { color: #1d4ed8; }
+    .tfl-type-box.t3 .type-num { color: #be185d; }
+    .tfl-type-box.t4 .type-num { color: #15803d; }
+    .tfl-type-box .type-name { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+    .tfl-type-box .type-desc { font-size: 11px; color: #666; line-height: 1.4; }
+    .tfl-type-box .type-iso { font-size: 10px; font-style: italic; color: #888; margin-top: 4px; }
+    /* Stat grid */
+    .stat-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 16px 0;
+    }
+    .stat-card {
+      background: #fff; border: 1px solid #dee2e6; border-radius: 8px;
+      padding: 14px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .stat-card .stat-num { font-size: 28px; font-weight: 800; color: #be185d; font-family: monospace; display: block; }
+    .stat-card .stat-label { font-size: 11px; color: #666; margin-top: 4px; }
+    /* Process flow */
+    .process-flow {
+      display: flex; gap: 0; align-items: stretch; margin: 16px 0; overflow-x: auto;
+    }
+    .proc-step {
+      flex: 1; min-width: 130px; background: #fff0f5; border: 1.5px solid #f9a8d4;
+      border-radius: 0; padding: 14px 12px; text-align: center; position: relative;
+    }
+    .proc-step:first-child { border-radius: 8px 0 0 8px; }
+    .proc-step:last-child { border-radius: 0 8px 8px 0; }
+    .proc-step .step-num { font-size: 11px; font-weight: 700; color: #be185d; text-transform: uppercase; }
+    .proc-step .step-name { font-size: 13px; font-weight: 700; color: #9d174d; margin: 4px 0; }
+    .proc-step .step-desc { font-size: 11px; color: #666; line-height: 1.4; }
+    .proc-arrow { display: flex; align-items: center; color: #be185d; font-size: 18px; padding: 0 2px; }
+    /* Claim table */
+    .claim-table { width: 100%; border-collapse: collapse; font-size: 0.82em; }
+    .claim-table th { background: #9d174d; color: #fff; padding: 9px 10px; text-align: left; font-size: 0.8em; }
+    .claim-table td { padding: 7px 10px; border-bottom: 1px solid #e8edf4; vertical-align: top; }
+    .claim-table tr:nth-child(even) { background: #fdf2f8; }
+    .claim-table tr:hover { background: #fce7f3; }
+    .m-high { background: #d1fae5; color: #065f46; border-radius: 4px; padding: 1px 6px; font-size: 11px; font-weight: 700; }
+    .m-medium { background: #fef9c3; color: #713f12; border-radius: 4px; padding: 1px 6px; font-size: 11px; font-weight: 700; }
+    .m-low { background: #fee2e2; color: #991b1b; border-radius: 4px; padding: 1px 6px; font-size: 11px; font-weight: 700; }
+    .q-quant { background: #ede9fe; color: #5b21b6; border-radius: 4px; padding: 1px 6px; font-size: 11px; font-weight: 700; }
+    .q-qual { background: #e0f2fe; color: #075985; border-radius: 4px; padding: 1px 6px; font-size: 11px; font-weight: 700; }
+    .vv-badge { background: #1a6b3c; color: white; border-radius: 10px; padding: 2px 7px; font-size: 10px; font-weight: 600; white-space: nowrap; margin: 1px; }
+    .vv-badge-ts { background: #0e4d7a; color: white; border-radius: 10px; padding: 2px 7px; font-size: 10px; font-weight: 600; white-space: nowrap; margin: 1px; }
+    .new-char { background: #e8f5e9; color: #1a5e20; border: 1px solid #a5d6a7; border-radius: 3px; font-size: 10px; padding: 1px 5px; }
+    /* Measurement method cards */
+    .measure-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 16px 0;
+    }
+    .measure-card {
+      border: 1px solid #f9a8d4; border-radius: 8px; overflow: hidden;
+    }
+    .measure-card-header {
+      background: #fdf2f8; border-bottom: 1px solid #f9a8d4;
+      padding: 10px 14px; display: flex; align-items: center; gap: 8px;
+    }
+    .measure-card-header .char-name { font-size: 13px; font-weight: 700; color: #9d174d; flex: 1; }
+    .measure-card-body { padding: 12px 14px; font-size: 12px; }
+    .measure-card-body table { width: 100%; border-collapse: collapse; }
+    .measure-card-body td { padding: 4px 6px; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
+    .measure-card-body td:first-child { font-weight: 600; color: #666; width: 90px; font-size: 11px; }
+    /* V&V process sections */
+    .vv-phase {
+      border: 1.5px solid #e8edf4; border-radius: 8px; overflow: hidden; margin-bottom: 14px;
+    }
+    .vv-phase-header {
+      background: #f1f5f9; border-bottom: 1px solid #e8edf4;
+      padding: 10px 16px; display: flex; align-items: center; gap: 10px;
+    }
+    .vv-phase-num {
+      background: #be185d; color: #fff; border-radius: 4px;
+      padding: 2px 8px; font-size: 11px; font-weight: 700; font-family: monospace;
+    }
+    .vv-phase-title { font-size: 13px; font-weight: 700; color: #2c3e50; flex: 1; }
+    .vv-phase-iso { font-size: 11px; color: #888; font-style: italic; }
+    .vv-phase-body { padding: 12px 16px; font-size: 13px; }
+    /* YAML template */
+    .yaml-block {
+      background: #1e1e2e; color: #cdd6f4; border-radius: 8px;
+      padding: 20px; font-family: 'Courier New', monospace; font-size: 12px;
+      line-height: 1.65; white-space: pre; overflow-x: auto;
+    }
+    .yaml-key { color: #89b4fa; }
+    .yaml-val { color: #a6e3a1; }
+    .yaml-str { color: #f38ba8; }
+    .yaml-comment { color: #585b70; font-style: italic; }
+    .yaml-section { color: #fab387; font-weight: 700; }
+    @media (max-width: 700px) {
+      .tfl-type-grid { grid-template-columns: 1fr 1fr; }
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+      .measure-grid { grid-template-columns: 1fr; }
+      .process-flow { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">ISO/IEC 42117-X</div>
+      <div class="title">TFL 운영 가이드</div>
+      <div class="version">v1.0 · 2026-02-20</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-label">메인</div>
+        <a href="index.html" class="nav-item">📋 가이드 홈</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">섹션</div>
+        <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
+        <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>28개 TCM 신뢰성 특성</a>
+        <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
+        <a href="s04-tc-mapping.html" class="nav-item"><span class="section-id">S04</span>TCM-TC 요구사항 매핑</a>
+        <a href="s05-ca-guide.html" class="nav-item"><span class="section-id">S05</span>CA 이행 가이드</a>
+        <a href="s06-gaps.html" class="nav-item"><span class="section-id">S06</span>커버리지 갭 및 권고사항</a>
+        <a href="s07-references.html" class="nav-item"><span class="section-id">S07</span>참조 표준 및 용어 사전</a>
+        <a href="s08-standards-diagram.html" class="nav-item"><span class="section-id">S08</span>표준 연관도</a>
+        <a href="s09-vocabulary.html" class="nav-item"><span class="section-id">S09</span>특성 Vocabulary 비교</a>
+        <a href="s10-requirements-list.html" class="nav-item"><span class="section-id">S10</span>요구사항 전체 목록</a>
+        <a href="s11-tc-claim-mapping.html" class="nav-item"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
+        <a href="s12-standards-tracker.html" class="nav-item"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
+        <a href="s13-dtc-card.html" class="nav-item"><span class="section-id">S13</span>AI Developer Technical Card</a>
+        <a href="s14-atfs-qfd.html" class="nav-item active"><span class="section-id">S14</span>ATFS / QFD (Type III)</a>
+      </div>
+    </div>
+  </nav>
+
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div class="page-header">
+      <div>
+        <h1>S14 — AI Trustworthiness Fact Sheet (ATFS/QFD) · Type III</h1>
+        <div class="breadcrumb"><a href="index.html">홈</a> › S14</div>
+      </div>
+      <div class="badge-group">
+        <span class="atfs-badge">TYPE III</span>
+        <span class="badge" style="background:#1a6b3c;color:#fff">V&amp;V 기반</span>
+        <span class="badge" style="background:#0e4d7a;color:#fff">ISO/IEC 17029</span>
+      </div>
+    </div>
+
+    <div class="main-content">
+
+      <!-- 임시 고지 -->
+      <div class="note-box warning">
+        <span class="icon">⚠️</span>
+        <div>
+          <strong>초안 고지 (Draft)</strong>
+          본 S14는 ISO/IEC 42117-X Part 3 (ATFS/QFD) 발행 전 운영 초안입니다.
+          Part 3 최종 발행 시 구조·요건이 변경될 수 있습니다. 현재 제시된 측정 방법론 및 임계값은
+          운영 참고용이며, 공식 인증 기준으로 사용 시 발행된 Part 3를 따르시기 바랍니다.
+        </div>
+      </div>
+
+      <!-- S14.0: TFL 유형 내 위치 -->
+      <div class="content-section">
+        <h2>S14.0 — TFL 4-Type 체계에서 Type III의 위치</h2>
+
+        <div class="tfl-type-grid">
+          <div class="tfl-type-box t1">
+            <span class="type-num">I</span>
+            <div class="type-name">제3자 인증</div>
+            <div class="type-desc">인가된 CAB가 수행하는 공식 인증</div>
+            <div class="type-iso">ISO/IEC 17065</div>
+          </div>
+          <div class="tfl-type-box t2">
+            <span class="type-num">II</span>
+            <div class="type-name">자기선언 (Self-declared)</div>
+            <div class="type-desc">공급자·개발자가 작성하는 자기선언 Claim</div>
+            <div class="type-iso">ISO/IEC 17050</div>
+          </div>
+          <div class="tfl-type-box t3 active">
+            <span class="type-num">III</span>
+            <div class="type-name">🎯 ATFS/QFD</div>
+            <div class="type-desc"><strong>정량 V&amp;V 검증 기반 사실 선언서</strong> — 측정된 수치를 독립 검증자가 확인</div>
+            <div class="type-iso">ISO/IEC 17029 · 42119-2 · 29119-11</div>
+          </div>
+          <div class="tfl-type-box t4">
+            <span class="type-num">IV</span>
+            <div class="type-name">DTC 개발자 기술 카드</div>
+            <div class="type-desc">개발자가 작성하는 구조화된 신뢰성 기술 문서</div>
+            <div class="type-iso">자유 형식 (→ S13)</div>
+          </div>
+        </div>
+
+        <!-- 통계 -->
+        <div class="stat-grid">
+          <div class="stat-card">
+            <span class="stat-num">52</span>
+            <div class="stat-label">Type III 적용 가능 Claim<br>(Level 2·3, 정량·검증 가능)</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">24</span>
+            <div class="stat-label">measurability=high<br>우선 적용 Claim</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">46</span>
+            <div class="stat-label">V&amp;V 연계 Claim<br>(42119-2 또는 29119-11)</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">26</span>
+            <div class="stat-label">대상 신뢰성 특성<br>(TCM #1~#15 + #16~#28)</div>
+          </div>
+        </div>
+
+        <table>
+          <thead><tr><th>구분</th><th>Type II (자기선언)</th><th>Type III (ATFS/QFD)</th><th>Type I (3자 인증)</th></tr></thead>
+          <tbody>
+            <tr><td>수행 주체</td><td>AI 제품 공급자·개발자</td><td>공급자 + 독립 V&amp;V 기관</td><td>인가된 CAB</td></tr>
+            <tr><td>핵심 기준</td><td>자기 평가·선언</td><td>측정 + V&amp;V 검증</td><td>전면 인증 심사</td></tr>
+            <tr><td>ISO 참조</td><td>ISO/IEC 17050</td><td><strong>ISO/IEC 17029 + 42119-2 + 29119-11</strong></td><td>ISO/IEC 17065</td></tr>
+            <tr><td>정량 메트릭</td><td>선택</td><td><strong>필수 (QFD 핵심)</strong></td><td>필요 (인증 기준)</td></tr>
+            <tr><td>외부 검증</td><td>없음</td><td><strong>독립 V&amp;V 검증자</strong></td><td>제3자 심사원</td></tr>
+            <tr><td>적합 상황</td><td>낮은 위험·빠른 출시</td><td><strong>중간 위험·신뢰 요구 높음</strong></td><td>높은 위험·규제 대응</td></tr>
+            <tr><td>유효 기간</td><td>별도 명시</td><td>V&amp;V 주기에 따라 (보통 1년)</td><td>인증 유효 기간 (1~3년)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- S14.1: ATFS/QFD 개요 -->
+      <div class="content-section">
+        <h2>S14.1 — ATFS/QFD 개요 및 문서 정의</h2>
+
+        <p><strong>ATFS (AI Trustworthiness Fact Sheet)</strong>는 AI 제품(시스템·모델·서비스)의 신뢰성 특성을
+          정량적으로 측정하고, 독립된 V&amp;V(Validation &amp; Verification) 기관이 그 수치의 정확성을 검증한
+          사실 기반 선언 문서입니다. <strong>QFD (Quantitative Fact Declaration)</strong>는 ATFS 내 정량
+          수치 선언 파트를 지칭하는 부속 명칭입니다.</p>
+
+        <div class="note-box info">
+          <span class="icon">📌</span>
+          <div>
+            <strong>Type III의 핵심 가치</strong><br>
+            • <strong>신뢰성</strong>: 독립 검증자가 수치를 확인 → "내가 95% 달성"보다 "검증된 95%"<br>
+            • <strong>투명성</strong>: 측정 방법론, 데이터셋, 조건을 공개 명시<br>
+            • <strong>비교가능성</strong>: 표준화된 메트릭 → AI 제품 간 객관적 비교 가능<br>
+            • <strong>반복가능성</strong>: ISO/IEC 17029 기반 절차 → 재검증 시 동일 결과 확인 가능
+          </div>
+        </div>
+
+        <h3>ATFS/QFD를 구성하는 3계층 구조</h3>
+        <div class="atfs-structure">
+          <div class="atfs-header-bar">
+            📊 ATFS — AI Trustworthiness Fact Sheet 구조
+          </div>
+          <div style="padding:16px;">
+            <div style="display:grid;grid-template-columns:1fr;gap:10px;">
+              <div style="border:1.5px solid #f9a8d4;border-radius:6px;padding:12px;background:#fff0f5;">
+                <div style="font-weight:700;color:#be185d;font-size:13px;margin-bottom:4px;">▶ Layer 1: 식별 및 범위 (Identification &amp; Scope)</div>
+                <div style="font-size:12px;color:#555">AI 제품 식별 정보, 평가 버전·조건, 평가 범위 경계(in/out-scope) 정의</div>
+              </div>
+              <div style="border:1.5px solid #f9a8d4;border-radius:6px;padding:12px;background:#fff0f5;">
+                <div style="font-weight:700;color:#be185d;font-size:13px;margin-bottom:4px;">▶ Layer 2: QFD — 정량 사실 선언 (Quantitative Fact Declaration)</div>
+                <div style="font-size:12px;color:#555">특성별 측정 메트릭, 수치, 임계값, 테스트 방법론, 데이터셋 정보</div>
+              </div>
+              <div style="border:1.5px solid #f9a8d4;border-radius:6px;padding:12px;background:#fff0f5;">
+                <div style="font-weight:700;color:#be185d;font-size:13px;margin-bottom:4px;">▶ Layer 3: V&amp;V 검증 확인서 (Verification Statement)</div>
+                <div style="font-size:12px;color:#555">독립 V&amp;V 기관 서명, 검증 날짜, 적용 표준(ISO/IEC 17029), 검증 의견</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3>ATFS/QFD 작성 프로세스 (5단계)</h3>
+        <div class="process-flow">
+          <div class="proc-step">
+            <div class="step-num">Phase 1</div>
+            <div class="step-name">범위 정의</div>
+            <div class="step-desc">AI 제품 식별<br>특성 선택<br>측정 조건 설정</div>
+          </div>
+          <div class="proc-arrow">→</div>
+          <div class="proc-step">
+            <div class="step-num">Phase 2</div>
+            <div class="step-name">측정 설계</div>
+            <div class="step-desc">메트릭 선정<br>임계값 설정<br>테스트 계획 수립</div>
+          </div>
+          <div class="proc-arrow">→</div>
+          <div class="proc-step">
+            <div class="step-num">Phase 3</div>
+            <div class="step-name">측정 실행</div>
+            <div class="step-desc">표준 기반 테스트<br>수치 수집·분석<br>결과 문서화</div>
+          </div>
+          <div class="proc-arrow">→</div>
+          <div class="proc-step">
+            <div class="step-num">Phase 4</div>
+            <div class="step-name">독립 V&amp;V</div>
+            <div class="step-desc">검증자 측정 재현<br>방법론 적합성 확인<br>V&amp;V 진술서 발행</div>
+          </div>
+          <div class="proc-arrow">→</div>
+          <div class="proc-step">
+            <div class="step-num">Phase 5</div>
+            <div class="step-name">ATFS 발행</div>
+            <div class="step-desc">문서 최종화<br>공개 또는 배포<br>유효 기간 관리</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S14.2: 정량 측정 가능 Claim 카탈로그 -->
+      <div class="content-section">
+        <h2>S14.2 — Type III 적용 가능 Claim 카탈로그</h2>
+        <p>아래 목록은 78개 Simple Claim 중 <strong>Level 2 또는 Level 3</strong>으로 분류되어
+          정량 측정 또는 V&amp;V 검증이 가능한 Claim입니다. Type III ATFS/QFD 작성 시 해당 Claim을
+          측정 임계값으로 치환하여 사용합니다.</p>
+
+        <div class="note-box info">
+          <span class="icon">ℹ️</span>
+          <div>
+            <strong>필터 가이드</strong>:
+            <span class="m-high">High</span> = 수치 직접 측정 가능 (ATFS 최우선 적용) &nbsp;|&nbsp;
+            <span class="m-medium">Med</span> = 설계·문서 기반 측정 (ATFS 적용 가능) &nbsp;|&nbsp;
+            <span class="q-quant">정량</span> = metric_type=quantitative &nbsp;|&nbsp;
+            <span class="vv-badge">42119-2</span> = ISO/IEC 42119-2 기반 AI 테스팅 &nbsp;|&nbsp;
+            <span class="vv-badge-ts">29119-11</span> = ISO/IEC TR 29119-11 AI 테스팅
+          </div>
+        </div>
+
+        <h3>S14.2.1 — 원본 15개 특성 Level 2/3 Claim (30개)</h3>
+        <table class="claim-table">
+          <thead>
+            <tr>
+              <th>Claim ID</th><th>Level</th><th>특성</th><th>측정 메트릭 요약</th>
+              <th>측정가능성</th><th>V&amp;V 표준</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Trustworthiness -->
+            <tr>
+              <td><code>SC-Trustworthiness-002</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Trustworthiness</td>
+              <td>신뢰성 점수 ≥ [임계값] / [N]개 특성 평가 기준</td>
+              <td><span class="m-high">High</span> <span class="q-quant">정량</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Trustworthiness-003</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Trustworthiness</td>
+              <td>모든 normative 요구사항 충족 — 인가 제3자 검증</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Robustness -->
+            <tr>
+              <td><code>SC-Robustness-001</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Robustness</td>
+              <td>성능 저하 &lt; [X]% / [perturbation 유형] 기준</td>
+              <td><span class="m-high">High</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Robustness-002</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Robustness</td>
+              <td>신뢰구간 [CI] 기반 공식 강건성 검증</td>
+              <td><span class="m-high">High</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Reliability -->
+            <tr>
+              <td><code>SC-Reliability-001</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Reliability</td>
+              <td>신뢰성 점수 ≥ [X]% / [측정 기간] 동안 [메트릭]</td>
+              <td><span class="m-high">High</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Reliability-003</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Reliability</td>
+              <td>평균 출력 편차 &lt; [임계값] / [조건] — 통계적 유의성</td>
+              <td><span class="m-high">High</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Transparency -->
+            <tr>
+              <td><code>SC-Transparency-002</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Transparency</td>
+              <td>투명성 Level [N] 달성 / [N]/[M] 기준 충족</td>
+              <td><span class="m-high">High</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Transparency-003</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Transparency</td>
+              <td>실시간 설명가능성 로깅 + 감사 추적 — 독립 검증</td>
+              <td><span class="m-high">High</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Bias/Fairness -->
+            <tr>
+              <td><code>SC-Bias-Fairness-001</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Bias/Fairness</td>
+              <td>인구통계 패리티 갭 &lt; [X]% / [보호 속성] 기준</td>
+              <td><span class="m-high">High</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Bias-Fairness-002</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Bias/Fairness</td>
+              <td>편향 위험 관리 — [그룹] 커버, 수용 기준 문서화</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Accountability -->
+            <tr>
+              <td><code>SC-Accountability-002</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Accountability</td>
+              <td>전체 감사 추적 유지 / 보존 기간 [N]년</td>
+              <td><span class="m-high">High</span></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><code>SC-Accountability-003</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Accountability</td>
+              <td>연간 독립 책임성 감사 — 거버넌스·추적성·의사결정</td>
+              <td><span class="m-high">High</span></td>
+              <td>—</td>
+            </tr>
+            <!-- Safety -->
+            <tr>
+              <td><code>SC-Safety-001</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Safety</td>
+              <td>안전 아키텍처 Class [I/II/III] 구현</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Safety-002</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Safety</td>
+              <td>SIL/ASIL [레벨] / 잔여위험 &lt; [임계값]</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Security -->
+            <tr>
+              <td><code>SC-Security-001</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Security</td>
+              <td>[공격 유형] 보안 통제 구현 + 위협 모델 문서화</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Security-002</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Security</td>
+              <td>독립 보안 감사 — 심각 취약점 0건</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Explainability -->
+            <tr>
+              <td><code>SC-Explainability-001</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Explainability</td>
+              <td>설명 충실도(faithfulness) 점수 ≥ [X]%</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Explainability-003</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Explainability</td>
+              <td>설명가능성 Level [N] / [메트릭] ≥ [값] / [사용자 그룹]</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Controllability -->
+            <tr>
+              <td><code>SC-Controllability-001</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Controllability</td>
+              <td>제어가능성 Level [N] / 정지·재정의 메커니즘</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Controllability-002</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Controllability</td>
+              <td>인간 인계 시간 &lt; [X]초 — 검증됨</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Intervenability -->
+            <tr>
+              <td><code>SC-Intervenability-001</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Intervenability</td>
+              <td>인간-인-루프 리뷰 / [결정 유형] 개입 절차</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Intervenability-003</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Intervenability</td>
+              <td>개입 성공률 ≥ [X]% / 평균 개입 시간 &lt; [Y]분</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Functional Correctness -->
+            <tr>
+              <td><code>SC-Functional_Correctness-001</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Functional Correctness</td>
+              <td>[메트릭] ≥ [X]% / [벤치마크] 기준 — 수용 기준 문서화</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Functional_Correctness-002</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Functional Correctness</td>
+              <td>기능 정확성 KPI: [메트릭1] ≥ [X], [메트릭2] ≥ [Y]</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Efficiency -->
+            <tr>
+              <td><code>SC-Efficiency-001</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Efficiency</td>
+              <td>추론 지연 ≤ [X]ms (p99) / 리소스 활용 ≤ [Y]%</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Efficiency-002</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Efficiency</td>
+              <td>처리량 ≥ [X] req/s / 컴퓨팅 비용 ≤ [Y]</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Availability -->
+            <tr>
+              <td><code>SC-Availability-001</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Availability</td>
+              <td>가용성 ≥ [X]% (SLA) / MTTR ≤ [Y]시간</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Availability-002</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Availability</td>
+              <td>결함 허용 아키텍처 / 백업·복구 절차 문서화</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Resilience -->
+            <tr>
+              <td><code>SC-Resilience-001</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Resilience</td>
+              <td>우아한 성능 저하 ≥ [X]% / [실패 조건] 하</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Resilience-002</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Resilience</td>
+              <td>복구 시간 ≤ [X]초 / 데이터 무결성 유지</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>S14.2.2 — 신규 11개 특성 Level 2/3 Claim (22개) <span class="new-char">신규 #16~#28</span></h3>
+        <table class="claim-table">
+          <thead>
+            <tr>
+              <th>Claim ID</th><th>Level</th><th>특성</th><th>측정 메트릭 요약</th>
+              <th>측정가능성</th><th>V&amp;V 표준</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Privacy -->
+            <tr>
+              <td><code>SC-Privacy-002</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Privacy <span class="new-char">신규</span></td>
+              <td>[N]% 개인정보 준수율 / [M]개 처리 활동 감사 기준</td>
+              <td><span class="m-high">High</span> <span class="q-quant">정량</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Privacy-003</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Privacy <span class="new-char">신규</span></td>
+              <td>독립 개인정보 영향평가 (PIA) + 예측 가능한 피해 분석</td>
+              <td><span class="m-high">High</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Authenticity -->
+            <tr>
+              <td><code>SC-Authenticity-002</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Authenticity <span class="new-char">신규</span></td>
+              <td>모든 제어 인터페이스 인증·인가 통제 구현</td>
+              <td><span class="m-high">High</span> <span class="q-quant">정량</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Authenticity-003</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Authenticity <span class="new-char">신규</span></td>
+              <td>독립 진위성 검증 + AI 구성요소 전체 연속성 문서화</td>
+              <td><span class="m-high">High</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Integrity -->
+            <tr>
+              <td><code>SC-Integrity-002</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Integrity <span class="new-char">신규</span></td>
+              <td>무결성 점수 ≥ [X] / 비인가 변경 0건</td>
+              <td><span class="m-high">High</span> <span class="q-quant">정량</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Integrity-003</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Integrity <span class="new-char">신규</span></td>
+              <td>독립 무결성 감사 — 데이터·모델·출력 무결성 공식 검증</td>
+              <td><span class="m-high">High</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Autonomy -->
+            <tr>
+              <td><code>SC-Autonomy-002</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Autonomy <span class="new-char">신규</span></td>
+              <td>인간 재정의 응답 시간 ≤ [X]초 / 정지 통제 기능</td>
+              <td><span class="m-high">High</span> <span class="q-quant">정량</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Autonomy-003</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Autonomy <span class="new-char">신규</span></td>
+              <td>검증된 인간 감독 기능 / 모든 운영 조건에서 ≤ [X]초</td>
+              <td><span class="m-high">High</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Effectiveness -->
+            <tr>
+              <td><code>SC-Effectiveness-002</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Effectiveness <span class="new-char">신규</span></td>
+              <td>유효성 점수 ≥ [X]% / [N]개 평가 기준</td>
+              <td><span class="m-high">High</span> <span class="q-quant">정량</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr style="background:#fdf4ff">
+              <td><code>SC-Effectiveness-003</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Effectiveness <span class="new-char">신규</span></td>
+              <td>계획 활동 달성률 ≥ [X]% + 수용 기준 문서화 <strong>(CA Type III)</strong></td>
+              <td><span class="m-high">High</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Harm -->
+            <tr>
+              <td><code>SC-Harm-002</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Harm <span class="new-char">신규</span></td>
+              <td>[N]개 피해 범주 완화 통제 / 심각도·가능성 등급화</td>
+              <td><span class="m-medium">Med</span> <span class="q-quant">정량</span></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><code>SC-Harm-003</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Harm <span class="new-char">신규</span></td>
+              <td>잔여 피해 위험 &lt; [임계값] — 모든 이해관계자 그룹</td>
+              <td><span class="m-medium">Med</span></td>
+              <td>—</td>
+            </tr>
+            <!-- Interpretability -->
+            <tr>
+              <td><code>SC-Interpretability-002</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Interpretability <span style="color:#e67e22;font-size:10px">PROXY</span></td>
+              <td>해석가능성 메트릭 점수 ≥ [X] / [모델 구성요소]</td>
+              <td><span class="m-medium">Med</span> <span class="q-quant">정량</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Interpretability-003</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Interpretability <span style="color:#e67e22;font-size:10px">PROXY</span></td>
+              <td>독립 검증 해석가능성 보고서 / [범위] 커버</td>
+              <td><span class="m-medium">Med</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Quality -->
+            <tr>
+              <td><code>SC-Quality-002</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Quality <span class="new-char">신규</span></td>
+              <td>품질 점수 ≥ [X]% / [M]개 품질 부속특성</td>
+              <td><span class="m-high">High</span> <span class="q-quant">정량</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Quality-003</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Quality <span class="new-char">신규</span></td>
+              <td>모든 normative AI 품질 요구사항 충족 — 독립 검증</td>
+              <td><span class="m-high">High</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Risk -->
+            <tr>
+              <td><code>SC-Risk-002</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Risk <span class="new-char">신규</span></td>
+              <td>[N]개 위험 처리 / 잔여 위험 ≤ [임계값]</td>
+              <td><span class="m-high">High</span> <span class="q-quant">정량</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Risk-003</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Risk <span class="new-char">신규</span></td>
+              <td>독립 AI 위험평가 / 모든 고위험 완화 + 잔여 위험 승인</td>
+              <td><span class="m-high">High</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Usability -->
+            <tr>
+              <td><code>SC-Usability-002</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Usability <span class="new-char">신규</span></td>
+              <td>사용자 작업 성공률 ≥ [X]% / 오류율 ≤ [Y]%</td>
+              <td><span class="m-high">High</span> <span class="q-quant">정량</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr style="background:#fdf4ff">
+              <td><code>SC-Usability-003</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Usability <span class="new-char">신규</span></td>
+              <td>검증된 사용성 점수 ≥ [X] / 모든 대상 사용자 카테고리 <strong>(CA Type III)</strong></td>
+              <td><span class="m-high">High</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <!-- Threat -->
+            <tr>
+              <td><code>SC-Threat-002</code></td>
+              <td><span class="badge badge-level2">L2</span></td>
+              <td>Threat <span class="new-char">신규</span></td>
+              <td>[N]개 위협 범주 통제 / 위험 평가·처리 요구사항</td>
+              <td><span class="m-medium">Med</span> <span class="q-quant">정량</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+            <tr>
+              <td><code>SC-Threat-003</code></td>
+              <td><span class="badge badge-level3">L3</span></td>
+              <td>Threat <span class="new-char">신규</span></td>
+              <td>독립 위협 평가 / 미완화 고심각도 AI 위협 0건</td>
+              <td><span class="m-high">High</span></td>
+              <td><span class="vv-badge">42119-2</span><span class="vv-badge-ts">29119-11</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:12px;color:#888;margin-top:6px;">
+          🟣 보라색 배경 = <strong>ca_type=typeIII</strong>로 명시된 Claim (SC-Effectiveness-003, SC-Usability-003) &nbsp;|&nbsp;
+          PROXY = DTS 6254(Explainability)로 Interpretability 대리 적용
+        </p>
+      </div>
+
+      <!-- S14.3: 특성별 측정 방법론 -->
+      <div class="content-section">
+        <h2>S14.3 — 신뢰성 특성별 측정 방법론</h2>
+        <p>ATFS/QFD는 각 신뢰성 특성에 대해 <strong>표준화된 측정 방법론</strong>을 명시해야 합니다.
+          아래는 measurability=high인 핵심 특성별 측정 접근법을 정리한 참조 가이드입니다.</p>
+
+        <div class="measure-grid">
+          <!-- Robustness -->
+          <div class="measure-card">
+            <div class="measure-card-header">
+              <span>🛡️</span>
+              <div class="char-name">Robustness / Reliability</div>
+              <span class="m-high">High</span>
+            </div>
+            <div class="measure-card-body">
+              <table>
+                <tr><td>핵심 메트릭</td><td>성능 저하율, 신뢰성 점수, 평균 출력 편차</td></tr>
+                <tr><td>측정 방법</td><td>Perturbation 테스팅, 장기 성능 모니터링, 통계적 분산 분석</td></tr>
+                <tr><td>임계값 예시</td><td>성능 저하 &lt;5%, 신뢰성 ≥95%, 편차 &lt;0.1σ</td></tr>
+                <tr><td>표준 근거</td><td>ISO/IEC 42119-2 §7.3.2 (강건성 테스팅)</td></tr>
+                <tr><td>V&amp;V 방법</td><td>독립 검증자가 동일 데이터셋·조건으로 재현 테스트</td></tr>
+              </table>
+            </div>
+          </div>
+          <!-- Bias/Fairness -->
+          <div class="measure-card">
+            <div class="measure-card-header">
+              <span>⚖️</span>
+              <div class="char-name">Bias / Fairness</div>
+              <span class="m-high">High</span>
+            </div>
+            <div class="measure-card-body">
+              <table>
+                <tr><td>핵심 메트릭</td><td>인구통계 패리티 갭, 등화된 오즈, 개인 공정성</td></tr>
+                <tr><td>측정 방법</td><td>보호 속성별 성능 비교, 쌍별 공정성 검사</td></tr>
+                <tr><td>임계값 예시</td><td>패리티 갭 &lt;3%, 등화 오즈 갭 &lt;5%</td></tr>
+                <tr><td>표준 근거</td><td>ISO/IEC 24027 편향 측정, ISO/IEC TR 24368 §6.3</td></tr>
+                <tr><td>V&amp;V 방법</td><td>다양한 보호 속성 데이터셋으로 공정성 지표 독립 계산</td></tr>
+              </table>
+            </div>
+          </div>
+          <!-- Privacy -->
+          <div class="measure-card">
+            <div class="measure-card-header">
+              <span>🔒</span>
+              <div class="char-name">Privacy <span class="new-char">신규</span></div>
+              <span class="m-high">High</span>
+            </div>
+            <div class="measure-card-body">
+              <table>
+                <tr><td>핵심 메트릭</td><td>개인정보 준수율, PIA 완료율, 데이터 최소화 지수</td></tr>
+                <tr><td>측정 방법</td><td>개인정보 처리 활동 감사, 데이터 흐름 매핑, PIA 수행</td></tr>
+                <tr><td>임계값 예시</td><td>준수율 ≥98%, PIA 완료 100%, 최소화 지수 ≥0.85</td></tr>
+                <tr><td>표준 근거</td><td>ISO/IEC TS 5723:2022 §7.4, GDPR Art. 35</td></tr>
+                <tr><td>V&amp;V 방법</td><td>독립 개인정보 감사인이 처리 활동 표본 검증</td></tr>
+              </table>
+            </div>
+          </div>
+          <!-- Autonomy -->
+          <div class="measure-card">
+            <div class="measure-card-header">
+              <span>🤖</span>
+              <div class="char-name">Autonomy <span class="new-char">신규</span></div>
+              <span class="m-high">High</span>
+            </div>
+            <div class="measure-card-body">
+              <table>
+                <tr><td>핵심 메트릭</td><td>재정의 응답 시간, 정지 성공률, 인간 감독 커버리지</td></tr>
+                <tr><td>측정 방법</td><td>재정의 명령 응답 시간 측정, 비상 정지 테스팅</td></tr>
+                <tr><td>임계값 예시</td><td>응답 ≤2초, 정지 성공률 100%, 감독 커버리지 ≥95%</td></tr>
+                <tr><td>표준 근거</td><td>ISO/IEC DTS 8200:2023 §6.3 (인간 감독 요구사항)</td></tr>
+                <tr><td>V&amp;V 방법</td><td>시나리오 기반 재정의 테스트, 타이머 측정 독립 검증</td></tr>
+              </table>
+            </div>
+          </div>
+          <!-- Effectiveness -->
+          <div class="measure-card">
+            <div class="measure-card-header">
+              <span>🎯</span>
+              <div class="char-name">Effectiveness <span class="new-char">신규</span></div>
+              <span class="m-high">High</span>
+            </div>
+            <div class="measure-card-body">
+              <table>
+                <tr><td>핵심 메트릭</td><td>유효성 점수, 계획 달성률, 목표 달성 비율</td></tr>
+                <tr><td>측정 방법</td><td>정의된 평가 기준 대비 달성률 측정, KPI 추적</td></tr>
+                <tr><td>임계값 예시</td><td>유효성 점수 ≥85%, 계획 달성률 ≥90%</td></tr>
+                <tr><td>표준 근거</td><td>ISO/IEC DTS 25058:2024 §5.3 (유효성 평가)</td></tr>
+                <tr><td>V&amp;V 방법</td><td><strong>Type III 명시</strong>: V&amp;V 기관이 평가 기준·데이터 확인</td></tr>
+              </table>
+            </div>
+          </div>
+          <!-- Quality -->
+          <div class="measure-card">
+            <div class="measure-card-header">
+              <span>💎</span>
+              <div class="char-name">Quality <span class="new-char">신규</span></div>
+              <span class="m-high">High</span>
+            </div>
+            <div class="measure-card-body">
+              <table>
+                <tr><td>핵심 메트릭</td><td>품질 점수, 부속특성 준수율, 결함 밀도</td></tr>
+                <tr><td>측정 방법</td><td>ISO 25000 SQuaRE 기반 품질 평가, 결함 분석</td></tr>
+                <tr><td>임계값 예시</td><td>품질 점수 ≥80%, 부속특성 준수 ≥90%, 결함 밀도 ≤0.5/KLOC</td></tr>
+                <tr><td>표준 근거</td><td>ISO/IEC 25010, ISO/IEC DTS 25059:2024</td></tr>
+                <tr><td>V&amp;V 방법</td><td>독립 품질 감사인이 코드·문서·프로세스 검토</td></tr>
+              </table>
+            </div>
+          </div>
+          <!-- Risk -->
+          <div class="measure-card">
+            <div class="measure-card-header">
+              <span>⚠️</span>
+              <div class="char-name">Risk <span class="new-char">신규</span></div>
+              <span class="m-high">High</span>
+            </div>
+            <div class="measure-card-body">
+              <table>
+                <tr><td>핵심 메트릭</td><td>위험 처리율, 잔여 위험 점수, 위험 완화 효과성</td></tr>
+                <tr><td>측정 방법</td><td>위험 레지스터 분석, 잔여 위험 정량화 (FMEA, FTA)</td></tr>
+                <tr><td>임계값 예시</td><td>고위험 처리율 100%, 잔여 위험 ≤Medium(3), MTTR &lt;24h</td></tr>
+                <tr><td>표준 근거</td><td>ISO/IEC 23894:2023, ISO/IEC FDIS 42005</td></tr>
+                <tr><td>V&amp;V 방법</td><td>독립 위험 평가자가 위험 레지스터·처리 근거 검토</td></tr>
+              </table>
+            </div>
+          </div>
+          <!-- Usability -->
+          <div class="measure-card">
+            <div class="measure-card-header">
+              <span>👤</span>
+              <div class="char-name">Usability <span class="new-char">신규</span></div>
+              <span class="m-high">High</span>
+            </div>
+            <div class="measure-card-body">
+              <table>
+                <tr><td>핵심 메트릭</td><td>작업 성공률, 오류율, 만족도 점수, 학습 시간</td></tr>
+                <tr><td>측정 방법</td><td>사용자 테스팅, 사용성 평가 (SUS, UMUX), A/B 테스트</td></tr>
+                <tr><td>임계값 예시</td><td>성공률 ≥85%, 오류율 ≤5%, SUS ≥68, 학습시간 ≤30분</td></tr>
+                <tr><td>표준 근거</td><td>ISO/IEC DTS 25058:2024, ISO 9241-11</td></tr>
+                <tr><td>V&amp;V 방법</td><td><strong>Type III 명시</strong>: 독립 UX 평가자가 대상 사용자와 테스팅 수행</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="note-box info">
+          <span class="icon">📋</span>
+          <div>
+            <strong>측정 조건 공개 의무 (QFD 핵심 요건)</strong><br>
+            모든 측정 수치는 다음 정보를 반드시 함께 공개해야 합니다:
+            <br>(1) <strong>테스트 데이터셋</strong>: 크기, 출처, 기간, 편향 여부 &nbsp;
+            (2) <strong>측정 환경</strong>: 하드웨어, 소프트웨어 스택, OS 버전 &nbsp;
+            (3) <strong>측정 시점</strong>: 모델 버전, 측정 날짜 &nbsp;
+            (4) <strong>신뢰구간</strong>: 통계적 유의성 수준 (예: 95% CI)
+          </div>
+        </div>
+      </div>
+
+      <!-- S14.4: V&V 프로세스 -->
+      <div class="content-section">
+        <h2>S14.4 — V&amp;V 이행 프로세스 (ISO/IEC 17029 기반)</h2>
+
+        <p>Type III ATFS는 <strong>ISO/IEC 17029:2019 (일반 원칙 및 요건 — V&amp;V 기관)</strong>을 준거 표준으로
+          독립 V&amp;V 기관이 수행하는 검증 절차를 포함합니다. AI 테스팅에는
+          <strong>ISO/IEC 42119-2</strong>(AI 시스템 테스팅)와 <strong>ISO/IEC TR 29119-11</strong>(AI 기반 시스템 테스팅)을
+          보조 표준으로 적용합니다.</p>
+
+        <div class="vv-phase">
+          <div class="vv-phase-header">
+            <div class="vv-phase-num">VV-01</div>
+            <div class="vv-phase-title">V&amp;V 기관 독립성 확보</div>
+            <div class="vv-phase-iso">ISO/IEC 17029 §5.2</div>
+          </div>
+          <div class="vv-phase-body">
+            <ul>
+              <li>V&amp;V 기관은 AI 제품 공급자와 이해충돌이 없어야 합니다 (조직·재정 독립성)</li>
+              <li>V&amp;V 기관은 AI 테스팅 역량(ISO/IEC 42119-2 또는 29119-11)을 보유해야 합니다</li>
+              <li>V&amp;V 수행자는 해당 AI 특성(신뢰성, 공정성, 보안 등)의 도메인 전문성을 가져야 합니다</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="vv-phase">
+          <div class="vv-phase-header">
+            <div class="vv-phase-num">VV-02</div>
+            <div class="vv-phase-title">검증 계획 수립 (Validation Planning)</div>
+            <div class="vv-phase-iso">ISO/IEC 17029 §7.2 · 42119-2 §5</div>
+          </div>
+          <div class="vv-phase-body">
+            <table style="font-size:13px;width:100%;border-collapse:collapse">
+              <thead><tr><th style="background:#f1f5f9;padding:6px 10px;text-align:left">항목</th><th style="background:#f1f5f9;padding:6px 10px;text-align:left">내용</th></tr></thead>
+              <tbody>
+                <tr style="border-bottom:1px solid #e8edf4"><td style="padding:6px 10px;font-weight:600">대상 Claim 확정</td><td style="padding:6px 10px">공급자가 선언한 Claim ID 및 수치 목록 확인</td></tr>
+                <tr style="border-bottom:1px solid #e8edf4"><td style="padding:6px 10px;font-weight:600">측정 방법론 검토</td><td style="padding:6px 10px">메트릭 정의, 임계값, 테스트 데이터셋 적합성 확인</td></tr>
+                <tr style="border-bottom:1px solid #e8edf4"><td style="padding:6px 10px;font-weight:600">재현 가능성 평가</td><td style="padding:6px 10px">동일 조건 재현을 위한 환경·데이터 접근권 확보</td></tr>
+                <tr><td style="padding:6px 10px;font-weight:600">검증 범위 결정</td><td style="padding:6px 10px">전수 검증 또는 표본 기반 검증 (위험 수준에 따라)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="vv-phase">
+          <div class="vv-phase-header">
+            <div class="vv-phase-num">VV-03</div>
+            <div class="vv-phase-title">AI 테스팅 수행 — 42119-2 · 29119-11 적용</div>
+            <div class="vv-phase-iso">ISO/IEC 42119-2 §7 · TR 29119-11 §7.3</div>
+          </div>
+          <div class="vv-phase-body">
+            <table style="font-size:13px;width:100%;border-collapse:collapse">
+              <thead><tr>
+                <th style="background:#0e4d7a;color:#fff;padding:6px 10px;text-align:left">테스트 유형</th>
+                <th style="background:#0e4d7a;color:#fff;padding:6px 10px;text-align:left">표준 참조</th>
+                <th style="background:#0e4d7a;color:#fff;padding:6px 10px;text-align:left">적용 특성 (예시)</th>
+              </tr></thead>
+              <tbody>
+                <tr style="border-bottom:1px solid #e8edf4">
+                  <td style="padding:6px 10px;font-weight:600">모델 성능 테스팅</td>
+                  <td style="padding:6px 10px"><span class="vv-badge">42119-2</span> §7.3.4.3</td>
+                  <td style="padding:6px 10px">Reliability, Effectiveness, Functional Correctness</td>
+                </tr>
+                <tr style="border-bottom:1px solid #e8edf4">
+                  <td style="padding:6px 10px;font-weight:600">강건성 테스팅</td>
+                  <td style="padding:6px 10px"><span class="vv-badge">42119-2</span> §7.3.2</td>
+                  <td style="padding:6px 10px">Robustness, Resilience, Availability</td>
+                </tr>
+                <tr style="border-bottom:1px solid #e8edf4">
+                  <td style="padding:6px 10px;font-weight:600">공정성·편향 테스팅</td>
+                  <td style="padding:6px 10px"><span class="vv-badge">42119-2</span> §7.3.5 · Annex C</td>
+                  <td style="padding:6px 10px">Bias/Fairness, Privacy, Harm</td>
+                </tr>
+                <tr style="border-bottom:1px solid #e8edf4">
+                  <td style="padding:6px 10px;font-weight:600">설명가능성·해석가능성 테스팅</td>
+                  <td style="padding:6px 10px"><span class="vv-badge">42119-2</span> §7.3.6</td>
+                  <td style="padding:6px 10px">Explainability, Interpretability, Transparency</td>
+                </tr>
+                <tr style="border-bottom:1px solid #e8edf4">
+                  <td style="padding:6px 10px;font-weight:600">보안·위협 테스팅</td>
+                  <td style="padding:6px 10px"><span class="vv-badge">42119-2</span> §7.3.3 · <span class="vv-badge-ts">29119-11</span> §7.3.2</td>
+                  <td style="padding:6px 10px">Security, Threat, Integrity, Authenticity</td>
+                </tr>
+                <tr style="border-bottom:1px solid #e8edf4">
+                  <td style="padding:6px 10px;font-weight:600">사용성·인간 요인 테스팅</td>
+                  <td style="padding:6px 10px"><span class="vv-badge-ts">29119-11</span> §7.3.4</td>
+                  <td style="padding:6px 10px">Usability, Controllability, Intervenability</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 10px;font-weight:600">수용 기준 검증</td>
+                  <td style="padding:6px 10px"><span class="vv-badge-ts">29119-11</span> §7.3 수용 기준</td>
+                  <td style="padding:6px 10px">Effectiveness, Quality, Risk, Autonomy</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="vv-phase">
+          <div class="vv-phase-header">
+            <div class="vv-phase-num">VV-04</div>
+            <div class="vv-phase-title">V&amp;V 진술서 발행</div>
+            <div class="vv-phase-iso">ISO/IEC 17029 §8</div>
+          </div>
+          <div class="vv-phase-body">
+            <p>검증 완료 후 V&amp;V 기관은 다음 내용을 포함한 <strong>공식 V&amp;V 진술서</strong>를 발행합니다:</p>
+            <ul>
+              <li><strong>검증 대상</strong>: AI 제품명, 버전, 평가 날짜</li>
+              <li><strong>검증 범위</strong>: 검증된 Claim ID 목록 및 특성</li>
+              <li><strong>검증 결과</strong>: 각 Claim의 측정 수치 확인 여부 (적합/부적합/조건부)</li>
+              <li><strong>준거 표준</strong>: 적용된 ISO 표준 목록 (17029, 42119-2, 29119-11 등)</li>
+              <li><strong>유효 기간</strong>: 재검증 권고 날짜</li>
+              <li><strong>V&amp;V 기관 정보</strong>: 기관명, 담당자, 서명·날짜</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="vv-phase">
+          <div class="vv-phase-header">
+            <div class="vv-phase-num">VV-05</div>
+            <div class="vv-phase-title">지속적 유효성 관리</div>
+            <div class="vv-phase-iso">ISO/IEC 17029 §9</div>
+          </div>
+          <div class="vv-phase-body">
+            <ul>
+              <li><strong>재검증 주기</strong>: 일반적으로 12개월 (고위험 AI: 6개월) — V&amp;V 기관 권고에 따름</li>
+              <li><strong>중대 변경 시 즉시 재검증</strong>: 모델 재학습, 데이터 파이프라인 변경, 운영 환경 변경</li>
+              <li><strong>이상 탐지 시 ATFS 일시 중단</strong>: 공급자가 이상 결과를 발견한 경우 즉시 V&amp;V 기관에 통보</li>
+              <li><strong>ATFS 공개 유지</strong>: 유효 기간 내 ATFS를 공개 접근 가능한 위치에 유지</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- S14.5: ATFS YAML 템플릿 -->
+      <div class="content-section">
+        <h2>S14.5 — ATFS 문서 YAML 구조 템플릿</h2>
+        <p>아래는 ATFS/QFD 문서의 표준화된 YAML 구조 템플릿입니다. 실제 ATFS 작성 시
+          <code>[대괄호]</code> 항목을 해당 AI 제품·측정값으로 대체합니다.</p>
+
+        <div class="yaml-block"><span class="yaml-comment"># ============================================================
+# AI Trustworthiness Fact Sheet (ATFS) v1.0
+# ISO/IEC 42117-X Type III · Based on ISO/IEC 17029
+# ============================================================</span>
+
+<span class="yaml-section">## Layer 1: 식별 및 범위 (Identification &amp; Scope)</span>
+
+<span class="yaml-key">atfs_id</span>: <span class="yaml-str">"ATFS-[조직코드]-[제품코드]-[YYYYMMDD]"</span>
+<span class="yaml-key">atfs_version</span>: <span class="yaml-str">"1.0"</span>
+<span class="yaml-key">issue_date</span>: <span class="yaml-str">"[YYYY-MM-DD]"</span>
+<span class="yaml-key">valid_until</span>: <span class="yaml-str">"[YYYY-MM-DD]"</span>  <span class="yaml-comment"># 보통 12개월</span>
+
+<span class="yaml-key">product</span>:
+  <span class="yaml-key">name</span>: <span class="yaml-str">"[AI 제품명]"</span>
+  <span class="yaml-key">version</span>: <span class="yaml-str">"[버전]"</span>
+  <span class="yaml-key">product_type</span>: <span class="yaml-str">"system"</span>  <span class="yaml-comment"># system | model | service</span>
+  <span class="yaml-key">provider</span>: <span class="yaml-str">"[공급자명]"</span>
+  <span class="yaml-key">release_date</span>: <span class="yaml-str">"[YYYY-MM-DD]"</span>
+  <span class="yaml-key">deployment_domain</span>: <span class="yaml-str">"[의료/금융/교육/일반 등]"</span>
+
+<span class="yaml-key">scope</span>:
+  <span class="yaml-key">in_scope</span>:
+    - <span class="yaml-str">"[평가 포함 기능·컴포넌트]"</span>
+    - <span class="yaml-str">"[평가 포함 데이터·사용 사례]"</span>
+  <span class="yaml-key">out_of_scope</span>:
+    - <span class="yaml-str">"[평가 제외 항목]"</span>
+  <span class="yaml-key">intended_use</span>: <span class="yaml-str">"[의도된 사용 목적 및 사용자]"</span>
+  <span class="yaml-key">evaluation_environment</span>:
+    <span class="yaml-key">hardware</span>: <span class="yaml-str">"[하드웨어 사양]"</span>
+    <span class="yaml-key">software_stack</span>: <span class="yaml-str">"[OS, 프레임워크, 버전]"</span>
+
+<span class="yaml-section">## Layer 2: QFD — 정량 사실 선언 (Quantitative Fact Declaration)</span>
+
+<span class="yaml-key">qfd_declarations</span>:
+
+  <span class="yaml-comment"># --- 신뢰성 그룹 (Reliability Group) ---</span>
+  - <span class="yaml-key">claim_id</span>: <span class="yaml-str">"SC-Reliability-001"</span>
+    <span class="yaml-key">characteristic</span>: <span class="yaml-str">"Reliability"</span>
+    <span class="yaml-key">claim_template</span>: <span class="yaml-str">"[System] achieves reliability score ≥ [X]% measured by [metric] over [period]"</span>
+    <span class="yaml-key">measured_value</span>: <span class="yaml-val">97.3</span>  <span class="yaml-comment"># 실측값</span>
+    <span class="yaml-key">threshold</span>: <span class="yaml-val">95.0</span>     <span class="yaml-comment"># 임계값</span>
+    <span class="yaml-key">unit</span>: <span class="yaml-str">"%"</span>
+    <span class="yaml-key">metric</span>: <span class="yaml-str">"출력 일관성 점수 (Output Consistency Score)"</span>
+    <span class="yaml-key">measurement_period</span>: <span class="yaml-str">"30일 (2026-01-01 ~ 2026-01-30)"</span>
+    <span class="yaml-key">test_dataset</span>:
+      <span class="yaml-key">name</span>: <span class="yaml-str">"[데이터셋명]"</span>
+      <span class="yaml-key">size</span>: <span class="yaml-val">10000</span>  <span class="yaml-comment"># 샘플 수</span>
+      <span class="yaml-key">distribution</span>: <span class="yaml-str">"[데이터 분포 설명]"</span>
+    <span class="yaml-key">confidence_interval</span>: <span class="yaml-str">"95% CI: [95.1, 99.4]"</span>
+    <span class="yaml-key">standard_ref</span>: <span class="yaml-str">"ISO/IEC 42119-2:2025 §7.3.4.3"</span>
+    <span class="yaml-key">claim_result</span>: <span class="yaml-str">"PASS"</span>  <span class="yaml-comment"># PASS | FAIL | CONDITIONAL</span>
+
+  <span class="yaml-comment"># --- 공정성 그룹 (Fairness Group) ---</span>
+  - <span class="yaml-key">claim_id</span>: <span class="yaml-str">"SC-Bias-Fairness-001"</span>
+    <span class="yaml-key">characteristic</span>: <span class="yaml-str">"Bias/Fairness"</span>
+    <span class="yaml-key">measured_value</span>: <span class="yaml-val">2.1</span>
+    <span class="yaml-key">threshold</span>: <span class="yaml-val">3.0</span>
+    <span class="yaml-key">unit</span>: <span class="yaml-str">"%"</span>
+    <span class="yaml-key">metric</span>: <span class="yaml-str">"인구통계 패리티 갭 (Demographic Parity Gap)"</span>
+    <span class="yaml-key">protected_attributes</span>: [<span class="yaml-str">"성별"</span>, <span class="yaml-str">"연령대"</span>, <span class="yaml-str">"지역"</span>]
+    <span class="yaml-key">standard_ref</span>: <span class="yaml-str">"ISO/IEC 42119-2:2025 §7.3.5; ISO/IEC 24027"</span>
+    <span class="yaml-key">claim_result</span>: <span class="yaml-str">"PASS"</span>
+
+  <span class="yaml-comment"># --- 자율성 그룹 (Autonomy Group) ---</span>
+  - <span class="yaml-key">claim_id</span>: <span class="yaml-str">"SC-Autonomy-002"</span>
+    <span class="yaml-key">characteristic</span>: <span class="yaml-str">"Autonomy"</span>
+    <span class="yaml-key">measured_value</span>: <span class="yaml-val">1.4</span>
+    <span class="yaml-key">threshold</span>: <span class="yaml-val">2.0</span>
+    <span class="yaml-key">unit</span>: <span class="yaml-str">"seconds"</span>
+    <span class="yaml-key">metric</span>: <span class="yaml-str">"인간 재정의 응답 시간 (Override Response Time, p99)"</span>
+    <span class="yaml-key">test_scenarios</span>: <span class="yaml-val">50</span>
+    <span class="yaml-key">standard_ref</span>: <span class="yaml-str">"ISO/IEC DTS 8200:2023 §6.3"</span>
+    <span class="yaml-key">claim_result</span>: <span class="yaml-str">"PASS"</span>
+
+  <span class="yaml-comment"># --- 추가 선언 항목 (계속) ---</span>
+  - <span class="yaml-key">claim_id</span>: <span class="yaml-str">"[SC-[Char]-[NNN]]"</span>
+    <span class="yaml-key">characteristic</span>: <span class="yaml-str">"[특성명]"</span>
+    <span class="yaml-key">measured_value</span>: <span class="yaml-val">[측정값]</span>
+    <span class="yaml-key">threshold</span>: <span class="yaml-val">[임계값]</span>
+    <span class="yaml-key">unit</span>: <span class="yaml-str">"[단위]"</span>
+    <span class="yaml-key">claim_result</span>: <span class="yaml-str">"[PASS|FAIL|CONDITIONAL]"</span>
+
+<span class="yaml-section">## Layer 3: V&V 검증 확인서 (Verification Statement)</span>
+
+<span class="yaml-key">vv_statement</span>:
+  <span class="yaml-key">vv_body</span>: <span class="yaml-str">"[V&amp;V 기관명]"</span>
+  <span class="yaml-key">vv_body_accreditation</span>: <span class="yaml-str">"ISO/IEC 17029 인가 기관 ([인가 번호])"</span>
+  <span class="yaml-key">lead_verifier</span>: <span class="yaml-str">"[검증 책임자명]"</span>
+  <span class="yaml-key">verification_date</span>: <span class="yaml-str">"[YYYY-MM-DD]"</span>
+  <span class="yaml-key">applicable_standards</span>:
+    - <span class="yaml-str">"ISO/IEC 17029:2019"</span>
+    - <span class="yaml-str">"ISO/IEC 42119-2:2025"</span>
+    - <span class="yaml-str">"ISO/IEC TR 29119-11"</span>
+  <span class="yaml-key">verified_claims</span>:
+    - <span class="yaml-key">claim_id</span>: <span class="yaml-str">"SC-Reliability-001"</span>
+      <span class="yaml-key">verification_method</span>: <span class="yaml-str">"독립 재현 테스트 (동일 데이터셋)"</span>
+      <span class="yaml-key">verification_result</span>: <span class="yaml-str">"97.1% 측정 확인 (원선언 97.3%와 허용 오차 내)"</span>
+      <span class="yaml-key">status</span>: <span class="yaml-str">"VERIFIED"</span>  <span class="yaml-comment"># VERIFIED | NOT_VERIFIED | PARTIALLY_VERIFIED</span>
+    - <span class="yaml-key">claim_id</span>: <span class="yaml-str">"SC-Bias-Fairness-001"</span>
+      <span class="yaml-key">verification_result</span>: <span class="yaml-str">"2.2% 측정 확인 (임계값 3.0% 미만 충족)"</span>
+      <span class="yaml-key">status</span>: <span class="yaml-str">"VERIFIED"</span>
+  <span class="yaml-key">overall_opinion</span>: <span class="yaml-str">"REASONABLE_ASSURANCE"</span>
+    <span class="yaml-comment"># REASONABLE_ASSURANCE | LIMITED_ASSURANCE | ADVERSE | DISCLAIMER</span>
+  <span class="yaml-key">conditions_or_exceptions</span>: <span class="yaml-str">"[조건부 또는 예외 사항, 없으면 null]"</span>
+  <span class="yaml-key">signature</span>: <span class="yaml-str">"[전자서명 또는 인장]"</span>
+  <span class="yaml-key">next_review_date</span>: <span class="yaml-str">"[YYYY-MM-DD]"</span>
+</div>
+      </div>
+
+      <!-- S14.6: 구현 로드맵 -->
+      <div class="content-section">
+        <h2>S14.6 — ATFS/QFD 구현 로드맵 및 권고사항</h2>
+
+        <h3>AI 제품 유형별 Type III 진입 전략</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>AI 제품 유형</th>
+              <th>권장 시작 특성</th>
+              <th>우선 Claim ID</th>
+              <th>단계별 접근법</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>🖥️ <strong>AI 시스템</strong><br><small>자율주행, 의료, 산업 AI</small></td>
+              <td>Safety, Reliability, Robustness, Autonomy</td>
+              <td>SC-Safety-001/002<br>SC-Reliability-001/003<br>SC-Autonomy-002/003</td>
+              <td>1단계: 안전성 + 신뢰성 측정<br>2단계: 강건성 + 자율성 V&amp;V<br>3단계: 전체 특성 ATFS</td>
+            </tr>
+            <tr>
+              <td>🧠 <strong>AI 모델</strong><br><small>LLM, 이미지 모델, 분류기</small></td>
+              <td>Reliability, Bias/Fairness, Transparency, Quality</td>
+              <td>SC-Reliability-001/003<br>SC-Bias-Fairness-001/002<br>SC-Quality-002/003</td>
+              <td>1단계: 성능 + 공정성 측정<br>2단계: 투명성 + 품질 V&amp;V<br>3단계: 설명가능성 추가</td>
+            </tr>
+            <tr>
+              <td>☁️ <strong>AI 서비스</strong><br><small>번역 API, 챗봇, 추천엔진</small></td>
+              <td>Availability, Reliability, Privacy, Usability</td>
+              <td>SC-Availability-001/002<br>SC-Privacy-002/003<br>SC-Usability-002/003</td>
+              <td>1단계: 가용성 + 개인정보 측정<br>2단계: 신뢰성 + 사용성 V&amp;V<br>3단계: 보안 + 위협 추가</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>최소 ATFS 요건 (MVP: Minimum Viable ATFS)</h3>
+        <div class="note-box success">
+          <span class="icon">✅</span>
+          <div>
+            <strong>첫 번째 ATFS 발행을 위한 최소 요건 (권고)</strong><br>
+            <ol style="margin:8px 0 0;padding-left:18px;font-size:13px;line-height:1.7">
+              <li><strong>최소 3개 이상</strong>의 신뢰성 특성 선택 (제품 유형과 위험 수준에 기반)</li>
+              <li>선택한 각 특성에 대해 <strong>Level 2 Claim 이상</strong> (정량 메트릭 포함)</li>
+              <li>모든 측정 수치에 <strong>테스트 데이터셋·환경·날짜 명시</strong></li>
+              <li>ISO/IEC 17029 기반 <strong>독립 V&amp;V 기관의 검증 확인서</strong> 첨부</li>
+              <li>ATFS 문서를 <strong>공개 접근 가능한 형태로 유지</strong> (유효 기간 내)</li>
+            </ol>
+          </div>
+        </div>
+
+        <h3>ATFS vs DTC 선택 가이드</h3>
+        <table>
+          <thead><tr><th>상황</th><th>권장 접근</th><th>이유</th></tr></thead>
+          <tbody>
+            <tr><td>빠른 출시, 내부 역량 충분</td><td>Type II (자기선언) + DTC (S13)</td><td>외부 V&amp;V 없이 즉시 발행 가능</td></tr>
+            <tr><td>고객·규제 신뢰 요구 높음</td><td><strong>Type III ATFS/QFD (S14)</strong></td><td>독립 검증으로 신뢰도 제고</td></tr>
+            <tr><td>고위험 AI (의료, 금융, 인프라)</td><td>Type I 인증 또는 Type III 선행</td><td>규제 대응 + 법적 책임 완화</td></tr>
+            <tr><td>EU AI Act 고위험 시스템</td><td>Type I 목표, Type III를 중간 단계</td><td>규정 준수 경로 수립</td></tr>
+            <tr><td>오픈소스·연구 AI 모델</td><td>Type II + Model Card + ATFS 선택</td><td>유연한 공개 선언 가능</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note-box warning">
+          <span class="icon">⚠️</span>
+          <div>
+            <strong>갭 특성 적용 불가 안내</strong><br>
+            #21 Functional Safety와 #23 Hazard는 현재 표준 갭으로 ATFS 적용이 제한됩니다.
+            Functional Safety는 ISO 61508/IEC 62061(도메인 특화 기능 안전 표준)을 별도 적용하십시오.
+            Hazard는 ISO/IEC DTR 5469 발행 후 TC 요구사항이 도출될 예정입니다.
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /main-content -->
+  </div>
+</div>
+</body>
+</html>

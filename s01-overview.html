@@ -51,6 +51,7 @@
         <a href="s11-tc-claim-mapping.html" class="nav-item"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
         <a href="s12-standards-tracker.html" class="nav-item"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
         <a href="s13-dtc-card.html" class="nav-item"><span class="section-id">S13</span>AI Developer Technical Card</a>
+        <a href="s14-atfs-qfd.html" class="nav-item"><span class="section-id">S14</span>ATFS / QFD (Type III)</a>
       </div>
     </div>
   </nav>
@@ -188,6 +189,7 @@
             <p>LCA 기반 사전 결정 파라미터를 사용한 <strong>정량적 신뢰성 데이터</strong> 진술. V&V(검증/확인) 기관에 의한 독립 확인이 필요합니다.</p>
             <p><strong>CA 기반 표준:</strong> ISO/IEC 17029 (Validation/Verification)</p>
             <p><strong>특징:</strong> 정량적 측정값 기반, V&V 기관 가용성이 현재 제한적</p>
+            <p style="margin-top:8px;font-size:12px">📖 <a href="s14-atfs-qfd.html" style="color:#be185d;font-weight:700">S14 ATFS/QFD 상세 가이드</a> — 52개 Level 2/3 Claim 측정 방법론 · V&V 5단계 프로세스 · YAML 템플릿</p>
           </div>
           <div class="tfl-type-box t4">
             <h4>🔧 Type IV — AI Developer Technical Card (DTC)</h4>
@@ -195,8 +197,73 @@
             <p>AI 개발자가 제공하는 <strong>기술 카드</strong> 형식의 신뢰성 정보. 기술적 세부사항 중심의 전문가 대상 문서.</p>
             <p><strong>특징:</strong> 자유 형식 기술 문서, 개발자 대상, 공식 CA 절차 불필요</p>
             <p><em>본 가이드에서 주로 다루는 유형: Type I, II, III (Type IV는 참조 용도)</em></p>
+            <p style="margin-top:8px;font-size:12px">📖 <a href="s13-dtc-card.html" style="color:#15803d;font-weight:700">S13 DTC 상세 가이드</a> — DTC 9개 섹션 구조 · HuggingFace/Google/OpenAI 비교 · YAML 템플릿</p>
           </div>
         </div>
+
+        <h3>TFL 유형 비교 표</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>구분</th>
+              <th>Type I — TFL</th>
+              <th>Type II — Self-declared</th>
+              <th style="background:#fff0f5;color:#9d174d">Type III — ATFS/QFD</th>
+              <th style="background:#f0fdf4;color:#15803d">Type IV — DTC</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>정식 명칭</strong></td>
+              <td>AI Trustworthiness Fact Label</td>
+              <td>Self-declared Trustworthiness Fact Claim</td>
+              <td>AI Trustworthiness Fact Sheet (ATFS) / Quantitative Fact Declaration (QFD)</td>
+              <td>AI Developer Technical Card</td>
+            </tr>
+            <tr>
+              <td><strong>CA 표준</strong></td>
+              <td>ISO/IEC 17065</td>
+              <td>ISO/IEC 17050</td>
+              <td>ISO/IEC 17029 + 42119-2 + 29119-11</td>
+              <td>자유 형식 (표준 없음)</td>
+            </tr>
+            <tr>
+              <td><strong>수행 주체</strong></td>
+              <td>인가된 CAB(제3자)</td>
+              <td>AI 제품 공급자·개발자</td>
+              <td>공급자 + 독립 V&amp;V 기관</td>
+              <td>AI 개발자·공급자</td>
+            </tr>
+            <tr>
+              <td><strong>정량 메트릭</strong></td>
+              <td>인증 기준에 따라</td>
+              <td>선택</td>
+              <td><strong>필수 (QFD 핵심)</strong></td>
+              <td>권장</td>
+            </tr>
+            <tr>
+              <td><strong>Level 대응</strong></td>
+              <td>Level 3</td>
+              <td>Level 1~2</td>
+              <td>Level 2~3</td>
+              <td>Level 제한 없음</td>
+            </tr>
+            <tr>
+              <td><strong>적합 상황</strong></td>
+              <td>고위험 AI · 규제 대응</td>
+              <td>낮은 위험 · 빠른 출시</td>
+              <td>중간 위험 · 신뢰 요구 높음</td>
+              <td>개발자 투명성 공개</td>
+            </tr>
+            <tr>
+              <td><strong>본 가이드 참조</strong></td>
+              <td>S03 (Claim) · S05 (CA)</td>
+              <td>S03 (Claim) · S05 (CA)</td>
+              <td><a href="s14-atfs-qfd.html" style="color:#be185d;font-weight:700">📊 S14 ATFS/QFD</a></td>
+              <td><a href="s13-dtc-card.html" style="color:#15803d;font-weight:700">🔧 S13 DTC</a></td>
+            </tr>
+          </tbody>
+        </table>
 
         <h3>단일 속성 보고서</h3>
         <p>ISO/IEC 42117-1 §5.4는 <strong>Single-attribute Trustworthiness Fact Report</strong>를 별도로 규정합니다. 특정 신뢰성 특성 하나에 집중하는 단일 속성 보고서로, 완전한 TFL 대비 범위를 한정합니다.</p>
@@ -276,14 +343,14 @@
             <tr>
               <td><span class="badge badge-level2">Level 2</span></td>
               <td>중급 (검증/확인)</td>
-              <td>Type II 또는 III</td>
-              <td>정량적 측정값 또는 독립 V&V. 중간 수준 증거 기반 필요</td>
+              <td>Type II 또는 <a href="s14-atfs-qfd.html" style="color:#be185d;font-weight:700">Type III</a></td>
+              <td>정량적 측정값 또는 독립 V&amp;V. 중간 수준 증거 기반 필요</td>
               <td><span class="badge badge-medium">중간</span></td>
             </tr>
             <tr>
               <td><span class="badge badge-level3">Level 3</span></td>
               <td>고급 (제3자 인증)</td>
-              <td>Type I (TFL) 또는 고급 Type III</td>
+              <td>Type I (TFL) 또는 고급 <a href="s14-atfs-qfd.html" style="color:#be185d;font-weight:700">Type III</a></td>
               <td>인정된 CAB에 의한 독립 인증. 높은 증거 요구. AI 전문 CAB 필요</td>
               <td><span class="badge badge-low-warn">높음</span></td>
             </tr>

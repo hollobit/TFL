@@ -139,6 +139,7 @@
         <a href="s11-tc-claim-mapping.html" class="nav-item"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
         <a href="s12-standards-tracker.html" class="nav-item"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
         <a href="s13-dtc-card.html" class="nav-item"><span class="section-id">S13</span>AI Developer Technical Card</a>
+        <a href="s14-atfs-qfd.html" class="nav-item"><span class="section-id">S14</span>ATFS / QFD (Type III)</a>
       </div>
     </div>
   </nav>
@@ -157,7 +158,7 @@
         <span class="icon">ℹ️</span>
         <div>
           <strong>비교 분석 방법론</strong>
-          28개 TCM 신뢰성 특성 각각에 대해 복수 소스(ISO/IEC TS 5723:2022, ISO/IEC TR 24028:2020, ISO/IEC 22989:2022, ISO/IEC DTS 6254, ISO/IEC DTR 5469, ISO/IEC 25059:2023, TCM CSV, WG3 TCM Web)의 정의를 비교합니다. 기존 15개 + 신규 식별 13개(#16 Privacy~#28 Threat).
+          28개 TCM 신뢰성 특성 각각에 대해 복수 소스(ISO/IEC TS 5723:2022, ISO/IEC TR 24028:2020, ISO/IEC 22989:2022, ISO/IEC DTS 6254, ISO/IEC DTR 5469, ISO/IEC 25059:2023, <strong>IS 38507:2023</strong>, TCM CSV, WG3 TCM Web)의 정의를 비교합니다. 기존 15개 + 신규 식별 13개(#16 Privacy~#28 Threat).<br><strong>적용 대상:</strong> 모든 특성 정의는 <strong>AI 시스템·AI 모델·AI 서비스</strong>에 공통 적용됩니다. 각 특성 어코디언 하단에 AI 서비스 적용 관점을 별도 표기합니다.
           정의 일치(✅), 차이 있음(⚠️), 미정의(❌) 상태를 표시하고, 표준화 갭 및 권고사항을 제시합니다. <strong>2026-02-20 업데이트:</strong> workspace/tc_text/*.txt 원문 추출 기반으로 모든 정의를 검증·수정.
         </div>
       </div>
@@ -185,6 +186,10 @@
           <div class="src-legend-item">
             <div class="src-dot" style="background:#e67e22"></div>
             <span><strong>WG3 Web</strong> — hollobit.github.io/WG3_TCM (TCM Web 공개 버전)</span>
+          </div>
+          <div class="src-legend-item">
+            <div class="src-dot" style="background:#2980b9"></div>
+            <span><strong>IS 38507</strong> — ISO/IEC 38507:2023 (AI 거버넌스 — 조직의 AI 사용 함의, DOC-20) <em style="font-size:11px;color:#888">AI 서비스 사용 조직 거버넌스 관점</em></span>
           </div>
         </div>
         <div style="margin-top:10px;font-size:12px;color:#666">
@@ -374,6 +379,9 @@
             <strong>분석:</strong> TS 5723이 Reliability를 <em>두 개</em>의 별개 정의(사이버보안 맥락 vs 시스템 맥락)로 제시합니다. TR 24028은 사이버보안 맥락 정의만 채택.
             <strong>갭:</strong> AI 시스템에서 어떤 Reliability 정의를 적용해야 하는지 명확한 지침 부재. ISO/IEC 25059(AI 품질 모델)에서는 Reliability를 별도 확장하나 어휘 표준과 완전한 정렬 필요.
             <strong>권고:</strong> ISO/IEC 42117-X는 §3.2.13(시스템 맥락) 정의를 AI 시스템 신뢰성에 적합한 기준으로 채택 권고.
+            <strong>🔵 AI 서비스 적용 관점:</strong> AI 서비스에서 Reliability는 <em>SLA(Service Level Agreement) 달성도</em>로 측정 가능합니다.
+            API uptime ≥ 99.5%, 응답 지연 p95 &lt; 500ms, 월간 오류율 &lt; 0.1% 등 서비스 수준 지표(SLI)로 정량화합니다.
+            IS 38507 §A.1은 AI 서비스 도입 조직이 서비스 신뢰성 요건을 계약에 명시할 것을 요구합니다.
           </div>
         </div>
       </div>
@@ -449,6 +457,9 @@
             <strong>분석:</strong> TS 5723은 정보 투명성(§3.2.19)과 시스템 투명성(§3.2.20) 두 정의를 제공합니다. TR 24028은 공식 정의 없이 개념적 서술만 제공.
             <strong>갭:</strong> AI 시스템 Transparency에 특화된 단일 정의 부재. DTS 6254(개발 중)가 이를 보완하는 방향.
             <strong>TCM 매핑 현황:</strong> 3개 Simple Claim(SC-Transparency-001~003) 모두 DTS 6254를 주요 출처로 사용.
+            <strong>🔵 AI 서비스 적용 관점:</strong> AI 서비스에서 Transparency는 <em>서비스 제공 사실·기능 공개</em>를 의미합니다.
+            IS 38507 §A.2.3은 조직이 AI 서비스 사용 사실을 이해관계자에게 고지할 것을 요구합니다.
+            실무적으로는 ① AI 생성 콘텐츠 표시(AI-generated disclosure), ② 서비스 기능·제약 공개, ③ 사용 모델 및 버전 명시, ④ 학습 데이터 출처 요약 공개 등이 포함됩니다.
           </div>
         </div>
       </div>
@@ -508,6 +519,9 @@
             <strong>분석:</strong> TS 5723(§3.2.1)은 광범위한 Accountability 정의(상태적 개념)를 제공하고, TR 24028(§3.1)은 추적 가능성(traceability) 측면을 강조한 좁은 정의를 제공합니다.
             <strong>차이점:</strong> TS 5723은 거버넌스 맥락(의무, 결과 공개)을 포함하는 반면, TR 24028은 기술적 추적가능성에 집중.
             <strong>TFL 적용:</strong> 두 정의 모두 SC-Accountability 계열 Claim에 적용됨. Level 3 Claim은 추적가능성(TR 24028) 기반, Level 1 Claim은 거버넌스(TS 5723, TR 24368) 기반.
+            <strong>🔵 AI 서비스 적용 관점 (IS 38507):</strong> IS 38507:2023은 Accountability를 <em>AI 서비스 사용 조직의 거버넌스 의무</em> 관점에서 다룹니다.
+            핵심 요구사항: ① AI 서비스 도입 의사결정 책임자 지정, ② AI 서비스 사용 정책 수립·공표, ③ 서비스 제공자-사용자 간 책임 분계점 계약화, ④ AI 서비스 성과 모니터링 및 정기 감사.
+            서비스 제공자 관점: API 오남용 탐지·차단 체계, 서비스 사용 로그 감사, 이용약관 위반 처리 절차 문서화.
           </div>
         </div>
       </div>
@@ -693,6 +707,14 @@
             <strong>분석:</strong> TS 5723의 Security 정의는 "저항성(resistance)" 관점(공격 대응)이고, TR 24028의 정의는 "접근 통제(access control)" 관점(정보 보호)입니다.
             <strong>차이점:</strong> TS 5723은 AI 보안 취약점(adversarial attack 등)에 적합한 정의, TR 24028은 정보보안 관점의 전통적 정의.
             <strong>TFL 적용:</strong> SC-Security 계열 Claim에서 두 관점을 모두 반영. Level 3 Claim(SC-Security-003)은 DTS 8200(거버넌스) 기반.
+            <strong>🔵 AI 서비스 적용 관점:</strong> AI 서비스에는 전통적 API 보안에 더해 AI-특화 보안 벡터가 추가됩니다.
+            <ul style="font-size:12px;margin:4px 0;padding-left:18px">
+              <li><strong>Prompt Injection</strong>: 악의적 입력을 통해 AI 서비스 행동 조작</li>
+              <li><strong>API Key 탈취·남용</strong>: 인증 정보 유출로 인한 무단 서비스 사용</li>
+              <li><strong>모델 역공학(Model Inversion)</strong>: API 반복 쿼리로 학습 데이터 추론</li>
+              <li><strong>Rate Limiting 우회</strong>: DDoS 또는 대량 쿼리를 통한 서비스 가용성 공격</li>
+            </ul>
+            IS 38507 §A.3은 AI 서비스 사용 조직의 보안 위험 평가 의무를 명시합니다.
           </div>
         </div>
       </div>
@@ -1124,6 +1146,10 @@
             <strong>분析:</strong> TS 5723(§3.2.4)이 Availability의 공식 출처이며, 정보보안의 CIA 트라이어드(기밀성, 무결성, 가용성) 중 하나로 정의됩니다.
             <strong>TR 24028 갭:</strong> TR 24028에 Availability 정의 없음. §3.42 (Trustworthiness) 주석에서 availability를 특성으로 언급하나 정의 미포함.
             <strong>S06 판정:</strong> Availability가 S06에서 "미흡(Insufficient)" 판정을 받은 이유 중 하나는 TC 요건 수 부족(IS 5338 + DTR 5469에서 3개 요건)이며, 어휘 갭과는 독립적.
+            <strong>🔵 AI 서비스 적용 관점:</strong> AI 서비스에서 Availability는 <em>API endpoint uptime</em>과 <em>서비스 응답 보장</em>으로 구체화됩니다.
+            SLA 지표 예: 월간 가용성 99.9%(=최대 43.8분 다운타임), 계획 점검 사전 공지, 지역별 failover 지원 여부.
+            IS 38507은 조직이 AI 서비스 의존도에 따른 가용성 위험을 평가하고, 대체 서비스 또는 수동 프로세스 전환 계획을 수립할 것을 권장합니다.
+            <strong>AI 모델 관점:</strong> 독립 배포 모델의 Availability는 inference 엔드포인트 uptime + 모델 업데이트 시 버전 호환성 유지로 측정.
           </div>
         </div>
       </div>
@@ -1181,6 +1207,10 @@
             <strong>신규 식별 근거:</strong> ISO/IEC 22989:2022 §3.5.16 Note 2는 trustworthiness 특성의 예시로 "privacy"를 명시합니다. TCM CSV "D" 마커 및 TS 5723·TR 24028 공식 정의 확인으로 본 가이드에 추가 식별.
             <strong>Security와의 구분:</strong> Security = 의도적 무단 접근·공격으로부터의 보호 / Privacy = 개인 생활·데이터에 대한 부당한 수집·사용으로부터의 자유. GDPR, AI Act Article 10 (데이터 거버넌스) 연계.
             <strong>권고:</strong> DTS 8200(보안) 및 DTS 6254(투명성)와 함께 Privacy 전담 조항 보강 필요. FDIS 42005(영향 평가)의 Privacy Impact Assessment 연계.
+            <strong>🔵 AI 서비스 적용 관점:</strong> AI 서비스에서 Privacy는 <em>API 쿼리 데이터(프롬프트·입력)의 수집·처리·보유</em>에 특히 중요합니다.
+            핵심 공개 요건: ① 쿼리 데이터의 학습 재사용 여부, ② 로그 보유 기간, ③ 제3자 공유 여부, ④ 데이터 삭제 요청 절차.
+            IS 38507 §A.2.2는 AI 서비스 사용 조직이 개인정보 처리 책임을 명확히 하고, GDPR·개인정보보호법 등 관련 규정 준수를 확인할 의무를 명시합니다.
+            <strong>AI 모델 관점:</strong> 배포 모델의 Privacy는 학습 데이터 프라이버시(데이터 최소화, 동의 기반 수집) + 추론 시 개인정보 노출 방지로 구성됩니다.
           </div>
         </div>
       </div>
@@ -1917,6 +1947,170 @@
         </div>
       </div>
 
+      <!-- S09.3: AI 서비스 적용성 가이드 -->
+      <div class="content-section" style="margin-top:24px">
+        <h2>S09.3 — AI 서비스 적용성 종합 가이드</h2>
+        <p style="font-size:13px;color:#555;margin-bottom:14px">
+          TFL 28개 TCM 신뢰성 특성은 AI 시스템·AI 모델·AI 서비스 모두에 적용됩니다.
+          아래 표는 <strong>AI 서비스</strong> 적용 시 각 특성별 주요 측정 지표, 참조 표준, 서비스 특유의 고려사항을 정리합니다.
+          IS 38507:2023(DOC-20)은 조직의 AI 서비스 거버넌스에 관한 주요 참조 표준입니다.
+        </p>
+
+        <div class="note-box info" style="margin-bottom:16px">
+          <span class="icon">🔵</span>
+          <div>
+            <strong>AI 서비스(AI Service) 정의</strong><br>
+            AI 기능을 API·플랫폼 형태로 제공하는 서비스. 번역 API, 챗봇, 추천 엔진, 이상탐지 API, AI 기반 SaaS 등.
+            서비스 제공자(provider)와 사용 조직(consumer) 간 책임 분계가 핵심 거버넌스 이슈입니다.
+          </div>
+        </div>
+
+        <div style="overflow-x:auto">
+          <table class="gap-table">
+            <thead>
+              <tr>
+                <th style="text-align:left;min-width:120px">특성</th>
+                <th style="min-width:160px">AI 서비스 주요 측정 지표</th>
+                <th style="min-width:140px">서비스 특유 고려사항</th>
+                <th style="min-width:100px">적용 강도</th>
+                <th style="min-width:100px">참조 표준</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Reliability</strong></td>
+                <td>API uptime %, 응답 지연 p95, 월간 오류율</td>
+                <td>SLA 계약, 서비스 상태 페이지 공개</td>
+                <td><span class="status-pill pill-match">⭐⭐⭐ 높음</span></td>
+                <td>IS 38507 §A.1, ISO/IEC 25059</td>
+              </tr>
+              <tr style="background:#f8f9fa">
+                <td><strong>Availability</strong></td>
+                <td>월간 가용성 %, MTTR, MTBF</td>
+                <td>failover 계획, 계획 점검 사전 공지</td>
+                <td><span class="status-pill pill-match">⭐⭐⭐ 높음</span></td>
+                <td>IS 38507, ISO/IEC 5338</td>
+              </tr>
+              <tr>
+                <td><strong>Security</strong></td>
+                <td>취약점 스캔 주기, 침투 테스트 결과, 인증 방식</td>
+                <td>Prompt Injection, API 키 관리, Rate limiting</td>
+                <td><span class="status-pill pill-match">⭐⭐⭐ 높음</span></td>
+                <td>IS 38507 §A.3, DTS 8200</td>
+              </tr>
+              <tr style="background:#f8f9fa">
+                <td><strong>Privacy</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td>
+                <td>데이터 보유 기간, 학습 재사용 여부, 삭제 요청 응답 시간</td>
+                <td>쿼리 로깅 정책, 제3자 공유 동의</td>
+                <td><span class="status-pill pill-match">⭐⭐⭐ 높음</span></td>
+                <td>IS 38507 §A.2.2, TS 5723 §3.2.9</td>
+              </tr>
+              <tr>
+                <td><strong>Transparency</strong></td>
+                <td>AI 사용 고지율, 모델 버전 공개 여부, 기능 제약 명시</td>
+                <td>AI-generated 콘텐츠 표시 의무</td>
+                <td><span class="status-pill pill-match">⭐⭐⭐ 높음</span></td>
+                <td>IS 38507 §A.2.3, DTS 6254</td>
+              </tr>
+              <tr style="background:#f8f9fa">
+                <td><strong>Accountability</strong></td>
+                <td>책임자 지정 여부, 감사 로그 보유 기간, 사고 보고 체계</td>
+                <td>서비스 제공자↔사용 조직 책임 분계 계약화</td>
+                <td><span class="status-pill pill-match">⭐⭐⭐ 높음</span></td>
+                <td>IS 38507 §A.2, TR 24368</td>
+              </tr>
+              <tr>
+                <td><strong>Trustworthiness</strong></td>
+                <td>TFL 자기선언 커버리지, 인증 획득 특성 수</td>
+                <td>서비스 수준별 TFL Type II~III 자기선언</td>
+                <td><span class="status-pill pill-diff">⭐⭐ 중간</span></td>
+                <td>ISO/IEC 42117-X, TS 5723 §3.1.1</td>
+              </tr>
+              <tr style="background:#f8f9fa">
+                <td><strong>Robustness</strong></td>
+                <td>입력 변형 시 성능 유지율, 적대적 입력 탐지율</td>
+                <td>프롬프트 조작·이상 입력 방어 체계</td>
+                <td><span class="status-pill pill-diff">⭐⭐ 중간</span></td>
+                <td>TR 24029-1/2, TS 5723 §3.2.16</td>
+              </tr>
+              <tr>
+                <td><strong>Bias/Fairness</strong></td>
+                <td>출력 편향 지표, 인구통계별 성능 격차</td>
+                <td>다언어·다문화 서비스에서 문화적 편향 모니터링</td>
+                <td><span class="status-pill pill-diff">⭐⭐ 중간</span></td>
+                <td>DTS 12791, TR 24027</td>
+              </tr>
+              <tr style="background:#f8f9fa">
+                <td><strong>Explainability</strong></td>
+                <td>설명 제공 비율, 설명 품질 사용자 평가</td>
+                <td>API 응답에 근거(rationale) 포함 여부</td>
+                <td><span class="status-pill pill-diff">⭐⭐ 중간</span></td>
+                <td>DTS 6254, 22989 §3.5.7</td>
+              </tr>
+              <tr>
+                <td><strong>Controllability</strong></td>
+                <td>사용자 제어 옵션 수, 출력 수정 가능 비율</td>
+                <td>서비스 내 파라미터 조정, 출력 필터링 기능</td>
+                <td><span class="status-pill pill-diff">⭐⭐ 중간</span></td>
+                <td>DTS 8200, 22989 §3.5.4</td>
+              </tr>
+              <tr style="background:#f8f9fa">
+                <td><strong>Risk</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td>
+                <td>위험 평가 수행 여부, 고위험 사용 사례 식별 수</td>
+                <td>IS 38507 기반 AI 서비스 위험 분류 및 허용 기준 수립</td>
+                <td><span class="status-pill pill-diff">⭐⭐ 중간</span></td>
+                <td>IS 38507 §A.3, FDIS 42005</td>
+              </tr>
+              <tr>
+                <td><strong>Quality</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td>
+                <td>서비스 품질 SLO 달성율, 고객 만족도(CSAT)</td>
+                <td>ISO 25059 품질 모델 기반 서비스 품질 평가</td>
+                <td><span class="status-pill pill-diff">⭐⭐ 중간</span></td>
+                <td>ISO/IEC 25059, TS 5723 §3.2.10/11</td>
+              </tr>
+              <tr style="background:#f8f9fa">
+                <td><strong>Usability</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td>
+                <td>API 문서 완결성 점수, 개발자 온보딩 시간, 오류 메시지 품질</td>
+                <td>개발자 경험(DX), SDK 제공 여부</td>
+                <td><span class="status-pill pill-diff">⭐⭐ 중간</span></td>
+                <td>TS 5723 §3.2.21, ISO 9241-11</td>
+              </tr>
+              <tr>
+                <td><strong>Authenticity</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td>
+                <td>디지털 서명 적용률, API 응답 무결성 검증</td>
+                <td>AI 생성 콘텐츠 진위 표시(워터마킹 등)</td>
+                <td><span class="status-pill pill-missing">⭐ 낮음</span></td>
+                <td>TS 5723 §3.2.3</td>
+              </tr>
+              <tr style="background:#f8f9fa">
+                <td><strong>Integrity</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td>
+                <td>API 응답 위변조 탐지율, 데이터 일관성 검증</td>
+                <td>전송 중 데이터 암호화(TLS), 응답 해시 검증</td>
+                <td><span class="status-pill pill-missing">⭐ 낮음</span></td>
+                <td>TS 5723 §3.2.7/8, DTS 8200</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note-box info" style="margin-top:14px">
+          <span class="icon">📋</span>
+          <div>
+            <strong>IS 38507:2023 주요 AI 서비스 거버넌스 요구사항 (DOC-20)</strong><br>
+            <table style="font-size:12px;margin-top:8px;border-collapse:collapse;width:100%">
+              <thead><tr style="background:#e8f0fe"><th style="padding:5px 8px;text-align:left">조항</th><th style="padding:5px 8px;text-align:left">내용</th><th style="padding:5px 8px;text-align:left">관련 특성</th></tr></thead>
+              <tbody>
+                <tr><td style="padding:4px 8px;border-bottom:1px solid #dee2e6">§A.2.1</td><td style="padding:4px 8px;border-bottom:1px solid #dee2e6">AI 서비스 사용 목적 문서화 및 의사결정 과정 기록</td><td style="padding:4px 8px;border-bottom:1px solid #dee2e6">Accountability, Transparency</td></tr>
+                <tr style="background:#f8f9fa"><td style="padding:4px 8px;border-bottom:1px solid #dee2e6">§A.2.2</td><td style="padding:4px 8px;border-bottom:1px solid #dee2e6">개인정보 처리 영향 평가 및 동의 체계 확인</td><td style="padding:4px 8px;border-bottom:1px solid #dee2e6">Privacy, Security</td></tr>
+                <tr><td style="padding:4px 8px;border-bottom:1px solid #dee2e6">§A.2.3</td><td style="padding:4px 8px;border-bottom:1px solid #dee2e6">AI 사용 사실 이해관계자 고지 의무</td><td style="padding:4px 8px;border-bottom:1px solid #dee2e6">Transparency, Accountability</td></tr>
+                <tr style="background:#f8f9fa"><td style="padding:4px 8px;border-bottom:1px solid #dee2e6">§A.3</td><td style="padding:4px 8px;border-bottom:1px solid #dee2e6">AI 서비스 위험 평가, 허용 기준 수립, 모니터링</td><td style="padding:4px 8px;border-bottom:1px solid #dee2e6">Risk, Safety, Security</td></tr>
+                <tr><td style="padding:4px 8px">§A.4</td><td style="padding:4px 8px">서비스 제공자 선정 기준 및 계약 요건</td><td style="padding:4px 8px">Reliability, Availability, Accountability</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
       <!-- S09.2: Gap Summary Table -->
       <div class="content-section" style="margin-top:24px">
         <h2>S09.2 — 종합 어휘 갭 분석</h2>
@@ -1981,6 +2175,8 @@
               <li><strong>22989 개정 시:</strong> Note 2 언급 특성(Privacy, Integrity, Authenticity, Quality, Usability) §3.5에 독립 정의 추가 필요</li>
               <li><strong>신규 식별 특성(#16~28) TC 추출:</strong> Privacy·Authenticity·Integrity·Risk·Threat 등 관련 SHALL/SHOULD 문장을 tc_text/*.txt에서 추가 추출하여 S10 및 S04 업데이트 필요</li>
               <li><strong>TCM과 TS 5723 정렬:</strong> TCM의 28개 특성 전체가 TS 5723에 포함되도록 SC42 WG3과 JTC 1/WG 13 공동 작업 필요</li>
+              <li><strong>AI 서비스 전용 어휘 보완:</strong> IS 38507:2023(AI 거버넌스)을 S09 소스로 추가 통합. Accountability·Transparency·Privacy·Risk에서 AI 서비스 제공자·사용 조직 관점의 정의 명확화 필요</li>
+              <li><strong>서비스 적용 측정 지표 표준화:</strong> S09.3 AI 서비스 적용 가이드 기반으로 서비스별 SLA/SLO 지표를 TFL Simple Claim Level 2~3에 반영하는 작업 필요</li>
             </ol>
           </div>
         </div>
