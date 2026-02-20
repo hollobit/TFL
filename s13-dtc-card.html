@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S13 TYPE IV AI Developer Technical Card (DTC) — ISO/IEC 42117-X TFL 가이드</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* DTC-specific styles */
+    .dtc-type-badge {
+      display: inline-block; background: #4a0e8f; color: #fff;
+      border-radius: 6px; padding: 4px 14px; font-size: 12px;
+      font-weight: 700; letter-spacing: 0.5px; font-family: monospace;
+    }
+    .ca-type-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+      margin: 16px 0;
+    }
+    .ca-type-card {
+      border: 2px solid #dee2e6; border-radius: 8px; padding: 14px;
+      text-align: center; position: relative; cursor: default;
+    }
+    .ca-type-card.active { border-color: #4a0e8f; background: #f5eeff; }
+    .ca-type-card .type-num {
+      font-size: 22px; font-weight: 800; color: #1a4480;
+      font-family: monospace; display: block; margin-bottom: 4px;
+    }
+    .ca-type-card.active .type-num { color: #4a0e8f; }
+    .ca-type-card .type-name { font-size: 12px; font-weight: 700; color: #333; margin-bottom: 4px; }
+    .ca-type-card .type-desc { font-size: 11px; color: #666; line-height: 1.4; }
+    .ca-type-card .new-badge {
+      position: absolute; top: -9px; right: 10px;
+      background: #e74c3c; color: #fff; font-size: 10px;
+      font-weight: 700; padding: 2px 8px; border-radius: 10px;
+    }
+    /* Source comparison table */
+    .source-compare-table { width: 100%; border-collapse: collapse; font-size: 0.83em; }
+    .source-compare-table th {
+      background: #1a4480; color: #fff; padding: 9px 10px;
+      text-align: left; font-size: 0.8em;
+    }
+    .source-compare-table th.hf { background: #ff6c00; }
+    .source-compare-table th.google { background: #1a73e8; }
+    .source-compare-table th.openai { background: #10a37f; }
+    .source-compare-table th.anthropic { background: #c45f3a; }
+    .source-compare-table th.deepmind { background: #4285f4; }
+    .source-compare-table td { padding: 7px 10px; border-bottom: 1px solid #e8edf4; vertical-align: top; }
+    .source-compare-table tr:hover { background: #f8f9fa; }
+    .tick { color: #27ae60; font-weight: 700; }
+    .cross { color: #aaa; }
+    /* DTC structure */
+    .dtc-structure {
+      border: 2px solid #4a0e8f; border-radius: 10px; overflow: hidden;
+    }
+    .dtc-header-bar {
+      background: #4a0e8f; color: #fff; padding: 14px 20px;
+      font-size: 14px; font-weight: 700;
+    }
+    .dtc-section-row {
+      border-bottom: 1px solid #e8edf4; padding: 0;
+    }
+    .dtc-section-row:last-child { border-bottom: none; }
+    .dtc-section-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 20px; background: #fafafa; cursor: pointer;
+    }
+    .dtc-section-header:hover { background: #f0eeff; }
+    .dtc-sec-num {
+      background: #4a0e8f; color: #fff; border-radius: 4px;
+      padding: 2px 8px; font-size: 11px; font-weight: 700;
+      font-family: monospace; min-width: 36px; text-align: center;
+    }
+    .dtc-sec-title { font-size: 14px; font-weight: 600; color: #2c3e50; flex: 1; }
+    .dtc-sec-origin {
+      font-size: 11px; color: #888; font-style: italic;
+    }
+    .dtc-fields {
+      padding: 12px 20px 16px 60px; background: #fff;
+    }
+    .dtc-field-item {
+      display: flex; gap: 8px; margin-bottom: 6px; font-size: 13px;
+    }
+    .dtc-field-item .field-name {
+      font-family: monospace; color: #4a0e8f; font-weight: 600;
+      min-width: 200px; font-size: 12px;
+    }
+    .dtc-field-item .field-req {
+      font-size: 10px; font-weight: 700; padding: 1px 6px;
+      border-radius: 10px; align-self: flex-start; white-space: nowrap;
+    }
+    .req-mandatory { background: #fde8e8; color: #c0392b; }
+    .req-recommended { background: #fff3cd; color: #856404; }
+    .req-optional { background: #e8f5e9; color: #27ae60; }
+    .dtc-field-item .field-desc { color: #555; font-size: 12px; line-height: 1.45; }
+    /* Mapping table */
+    .map-table { width: 100%; border-collapse: collapse; font-size: 0.82em; }
+    .map-table th { background: #2c3e50; color: #fff; padding: 8px 10px; text-align: left; }
+    .map-table td { padding: 7px 10px; border-bottom: 1px solid #e8edf4; vertical-align: top; }
+    .map-table tr:nth-child(even) { background: #f8f9fa; }
+    .map-table tr:hover { background: #e8f4ff; }
+    .char-tag {
+      display: inline-block; background: #e8f0fe; color: #1a4480;
+      border: 1px solid #c5d5f8; border-radius: 10px;
+      padding: 1px 7px; font-size: 11px; margin: 1px;
+    }
+    .dtc-field-ref {
+      font-family: monospace; font-size: 11px; color: #4a0e8f;
+      background: #f5eeff; border: 1px solid #d8b4fe;
+      border-radius: 4px; padding: 1px 6px;
+    }
+    /* Example DTC card */
+    .dtc-example {
+      background: #f9f9f9; border: 1px solid #ddd; border-radius: 8px;
+      padding: 20px; font-family: monospace; font-size: 12px;
+      line-height: 1.6; white-space: pre-wrap;
+    }
+    .dtc-example .dtc-key { color: #4a0e8f; font-weight: 700; }
+    .dtc-example .dtc-val { color: #1a6e1a; }
+    .dtc-example .dtc-comment { color: #888; font-style: italic; }
+    .dtc-example .dtc-section-marker { color: #1a4480; font-weight: 700; font-size: 11px; }
+    /* Summary stats */
+    .stat-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+      margin: 16px 0;
+    }
+    .stat-card {
+      background: #fff; border: 1px solid #dee2e6; border-radius: 8px;
+      padding: 14px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .stat-card .stat-num {
+      font-size: 26px; font-weight: 800; color: #4a0e8f;
+      font-family: monospace; display: block;
+    }
+    .stat-card .stat-label { font-size: 11px; color: #666; margin-top: 4px; }
+    /* Workflow diagram */
+    .workflow-steps {
+      display: flex; gap: 0; align-items: stretch;
+      flex-wrap: nowrap; margin: 16px 0; overflow-x: auto;
+    }
+    .wf-step {
+      flex: 1; min-width: 120px; background: #f0f4ff;
+      border: 1px solid #c5d5f8; border-radius: 4px;
+      padding: 12px 8px; text-align: center; position: relative;
+    }
+    .wf-step .wf-num {
+      display: block; font-size: 20px; font-weight: 800;
+      color: #1a4480; font-family: monospace; margin-bottom: 4px;
+    }
+    .wf-step .wf-label { font-size: 11px; color: #333; font-weight: 600; }
+    .wf-step .wf-sub { font-size: 10px; color: #666; margin-top: 3px; }
+    .wf-arrow {
+      display: flex; align-items: center; color: #1a4480;
+      font-size: 20px; padding: 0 4px;
+    }
+    /* Schema viewer */
+    .schema-block {
+      background: #1e1e2e; color: #cdd6f4; border-radius: 8px;
+      padding: 18px 20px; font-family: monospace; font-size: 12px;
+      line-height: 1.6; overflow-x: auto; margin: 12px 0;
+    }
+    .schema-block .sk { color: #89b4fa; }   /* key */
+    .schema-block .sv { color: #a6e3a1; }   /* value */
+    .schema-block .sc { color: #f38ba8; }   /* comment */
+    .schema-block .st { color: #fab387; }   /* type */
+    .schema-block .sm { color: #cba6f7; }   /* required marker */
+    .tab-nav {
+      display: flex; gap: 0; border-bottom: 2px solid #dee2e6;
+      margin-bottom: 0; overflow-x: auto;
+    }
+    .tab-btn {
+      padding: 9px 18px; font-size: 13px; font-weight: 600;
+      color: #555; cursor: pointer; border: none;
+      background: none; border-bottom: 3px solid transparent;
+      margin-bottom: -2px; white-space: nowrap;
+    }
+    .tab-btn.active { color: #4a0e8f; border-bottom-color: #4a0e8f; }
+    .tab-btn:hover { background: #f5eeff; }
+    .tab-panel { display: none; padding: 16px 0; }
+    .tab-panel.active { display: block; }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">ISO/IEC 42117-X</div>
+      <div class="title">TFL 운영 가이드</div>
+      <div class="version">v1.0 · 2026-02-20</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-label">메인</div>
+        <a href="index.html" class="nav-item">📋 가이드 홈</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">섹션</div>
+        <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
+        <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>28개 TCM 신뢰성 특성</a>
+        <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
+        <a href="s04-tc-mapping.html" class="nav-item"><span class="section-id">S04</span>TCM-TC 요구사항 매핑</a>
+        <a href="s05-ca-guide.html" class="nav-item"><span class="section-id">S05</span>CA 이행 가이드</a>
+        <a href="s06-gaps.html" class="nav-item"><span class="section-id">S06</span>커버리지 갭 및 권고사항</a>
+        <a href="s07-references.html" class="nav-item"><span class="section-id">S07</span>참조 표준 및 용어 사전</a>
+        <a href="s08-standards-diagram.html" class="nav-item"><span class="section-id">S08</span>표준 연관도</a>
+        <a href="s09-vocabulary.html" class="nav-item"><span class="section-id">S09</span>특성 Vocabulary 비교</a>
+        <a href="s10-requirements-list.html" class="nav-item"><span class="section-id">S10</span>요구사항 전체 목록</a>
+        <a href="s11-tc-claim-mapping.html" class="nav-item"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
+        <a href="s12-standards-tracker.html" class="nav-item"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
+        <a href="s13-dtc-card.html" class="nav-item active"><span class="section-id">S13</span>AI Developer Technical Card</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div class="page-header">
+      <div>
+        <h1>S13 — AI Developer Technical Card (DTC)</h1>
+        <div class="breadcrumb"><a href="index.html">홈</a> › S13</div>
+      </div>
+      <div class="badge-group">
+        <span class="dtc-type-badge">TYPE IV</span>
+        <span class="badge" style="background:#f5eeff;color:#4a0e8f;border-color:#d8b4fe">DTC 초안</span>
+        <span class="badge badge-draft">2026-02-20</span>
+      </div>
+    </div>
+
+    <div class="main-content">
+
+      <div class="note-box warning">
+        <span class="icon">⚠️</span>
+        <div>
+          <strong>초안 상태 — S13 DTC 구조는 제안 사항</strong><br>
+          AI Developer Technical Card (DTC)는 ISO/IEC 42117-X TFL 표준 체계에서 신규로 제안되는 TYPE IV 문서입니다.
+          본 문서는 구성 방안 초안으로, 최종 표준화 전 내용이 변경될 수 있습니다.
+          현재 HuggingFace Model Card, Google MCT, OpenAI/Anthropic/Google DeepMind System Card 규격을 참조하여 TFL 맥락에 맞게 재설계하였습니다.
+        </div>
+      </div>
+
+      <!-- S13.1: DTC 개요 -->
+      <div class="content-section">
+        <h2>S13.1 — DTC (Developer Technical Card) 개요</h2>
+
+        <p style="font-size:0.9em;color:#444;margin-bottom:16px">
+          <strong>AI Developer Technical Card (DTC)</strong>는 AI 시스템 개발자가 자신의 AI 시스템에 대해 TFL(Trustworthiness Framework Label) 신뢰성 특성 준수 여부를 체계적으로 기술하는 <strong>표준화된 기술 문서</strong>입니다.
+          ISO/IEC 17067 적합성 인증 유형 체계 내에서 TYPE IV 위치에 해당하며, 개발자 자체 선언(SDoC, TYPE I)의 심화 버전이자 제3자 인증을 위한 기술 근거 문서 역할을 합니다.
+        </p>
+
+        <!-- CA Type Classification -->
+        <h3>TFL 적합성 평가(CA) 유형 분류</h3>
+        <div class="ca-type-grid">
+          <div class="ca-type-card">
+            <span class="type-num">I</span>
+            <div class="type-name">SDoC</div>
+            <div class="type-desc">Supplier's Declaration of Conformity<br>개발자 자체 적합성 선언 (ISO 17050)</div>
+          </div>
+          <div class="ca-type-card">
+            <span class="type-num">II</span>
+            <div class="type-name">2nd-Party Audit</div>
+            <div class="type-desc">구매자/고객 주도 평가<br>사용자 기반 검토 및 계약 기반 감사</div>
+          </div>
+          <div class="ca-type-card">
+            <span class="type-num">III</span>
+            <div class="type-name">V&amp;V Testing</div>
+            <div class="type-desc">제3자 V&amp;V (ISO 17029)<br>독립 시험기관의 검증·확인<br>(42119-2 / 29119-11 기반)</div>
+          </div>
+          <div class="ca-type-card active">
+            <span class="new-badge">신규</span>
+            <span class="type-num">IV</span>
+            <div class="type-name">DTC</div>
+            <div class="type-desc">AI Developer Technical Card<br>TFL 특성 기반 개발자 기술 카드<br>(본 S13 정의)</div>
+          </div>
+        </div>
+
+        <h3>DTC의 목적과 차별성</h3>
+        <table class="source-compare-table" style="margin-bottom:16px">
+          <thead>
+            <tr>
+              <th>구분</th>
+              <th>Model Card<br>(HF/Google)</th>
+              <th>System Card<br>(OpenAI/Anthropic)</th>
+              <th>TYPE IV DTC<br>(TFL 신규)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>주 목적</strong></td>
+              <td>모델 성능/편향 공개</td>
+              <td>안전성 위험 평가 공개</td>
+              <td>TFL 신뢰성 특성 준수 기술</td>
+            </tr>
+            <tr>
+              <td><strong>기준 표준</strong></td>
+              <td>비표준 (HF 관행)</td>
+              <td>비표준 (회사 내부 정책)</td>
+              <td>ISO/IEC 42117-X (TFL)</td>
+            </tr>
+            <tr>
+              <td><strong>특성 커버리지</strong></td>
+              <td>성능·공정성 위주</td>
+              <td>CBRN·자율성 위주</td>
+              <td>28개 TCM 신뢰성 특성 전체</td>
+            </tr>
+            <tr>
+              <td><strong>TC-REQ 연계</strong></td>
+              <td class="cross">✗</td>
+              <td class="cross">✗</td>
+              <td class="tick">✓ TC-REQ 검증 결과 매핑</td>
+            </tr>
+            <tr>
+              <td><strong>Simple Claim 연계</strong></td>
+              <td class="cross">✗</td>
+              <td class="cross">✗</td>
+              <td class="tick">✓ SC ID 기반 주장 체계</td>
+            </tr>
+            <tr>
+              <td><strong>V&amp;V 결과 포함</strong></td>
+              <td>부분적 (metrics)</td>
+              <td>부분적 (red team)</td>
+              <td class="tick">✓ TYPE III V&V 결과 구조화</td>
+            </tr>
+            <tr>
+              <td><strong>국제 표준 적합성</strong></td>
+              <td class="cross">✗</td>
+              <td class="cross">✗</td>
+              <td class="tick">✓ ISO 17067 CA 체계 내 위치</td>
+            </tr>
+            <tr>
+              <td><strong>기계 가독성</strong></td>
+              <td>YAML+MD (HF)</td>
+              <td>비정형 PDF</td>
+              <td>JSON-LD 또는 YAML+HTML</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Stats -->
+        <div class="stat-grid">
+          <div class="stat-card">
+            <span class="stat-num">28</span>
+            <div class="stat-label">TCM 신뢰성 특성<br>(커버 대상)</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">45</span>
+            <div class="stat-label">Simple Claim<br>(SC 카탈로그)</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">9</span>
+            <div class="stat-label">DTC 필수 섹션<br>(MANDATORY)</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">4</span>
+            <div class="stat-label">참조 규격<br>(HF·Google·OpenAI·Anthropic)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S13.2: 기존 규격 분석 -->
+      <div class="content-section">
+        <h2>S13.2 — 기존 Model Card / System Card 규격 비교 분석</h2>
+
+        <div class="tab-nav" id="specTabs">
+          <button class="tab-btn active" onclick="showTab('hf')">HuggingFace MC</button>
+          <button class="tab-btn" onclick="showTab('google')">Google MCT</button>
+          <button class="tab-btn" onclick="showTab('openai')">OpenAI System Card</button>
+          <button class="tab-btn" onclick="showTab('anthropic')">Anthropic RSP</button>
+          <button class="tab-btn" onclick="showTab('deepmind')">Google DeepMind FSF</button>
+        </div>
+
+        <!-- HuggingFace -->
+        <div class="tab-panel active" id="tab-hf">
+          <h3 style="color:#ff6c00">HuggingFace Model Card 규격</h3>
+          <p style="font-size:0.87em;color:#555;margin-bottom:12px">
+            HuggingFace Model Card는 두 부분으로 구성: YAML 프론트 매터(기계 가독 메타데이터)와 마크다운 본문(인간 가독 설명). DTC 설계에서 YAML 프론트 매터 구조를 참조함.
+          </p>
+          <div class="schema-block">
+<span class="sc"># HuggingFace Model Card — YAML Front Matter 구조</span>
+<span class="sk">language:</span> <span class="sv">[ko, en]</span>             <span class="sc"># 지원 언어</span>
+<span class="sk">license:</span> <span class="sv">apache-2.0</span>            <span class="sc"># 라이선스</span>
+<span class="sk">library_name:</span> <span class="sv">transformers</span>      <span class="sc"># 사용 라이브러리</span>
+<span class="sk">tags:</span> <span class="sv">[text-generation, ...]</span>    <span class="sc"># 기능 태그</span>
+<span class="sk">datasets:</span> <span class="sv">[dataset-name]</span>        <span class="sc"># 학습 데이터셋</span>
+<span class="sk">metrics:</span> <span class="sv">[accuracy, f1]</span>        <span class="sc"># 평가 지표 목록</span>
+<span class="sk">pipeline_tag:</span> <span class="sv">text-generation</span>   <span class="sc"># 파이프라인 유형</span>
+<span class="sk">base_model:</span> <span class="sv">model-name</span>          <span class="sc"># 기반 모델 (파인튜닝 시)</span>
+<span class="sk">co2_eq_emissions:</span>
+  <span class="sk">  emissions:</span> <span class="sv">42.5</span>              <span class="sc"># kg CO₂eq</span>
+  <span class="sk">  source:</span> <span class="sv">codecarbon</span>
+  <span class="sk">  training_type:</span> <span class="sv">pre-training</span>
+  <span class="sk">  geographical_location:</span> <span class="sv">KR</span>
+<span class="sk">model-index:</span>
+  <span class="sk">  - name:</span> <span class="sv">model-id</span>
+    <span class="sk">    results:</span>
+      <span class="sk">      - task:</span> <span class="sv">{type: text-generation}</span>
+        <span class="sk">        dataset:</span> <span class="sv">{name: ..., type: ...}</span>
+        <span class="sk">        metrics:</span>
+          <span class="sk">          - type:</span> <span class="sv">accuracy</span>
+            <span class="sk">            value:</span> <span class="sv">0.876</span>
+
+<span class="sc"># Markdown Body — 권장 섹션</span>
+<span class="sm">## Model Description</span>       <span class="sc"># 모델 설명 (필수)</span>
+<span class="sm">## Direct Use</span>               <span class="sc"># 직접 사용 목적</span>
+<span class="sm">## Out-of-Scope Use</span>         <span class="sc"># 비적합 사용 사례</span>
+<span class="sm">## Bias, Risks, Limitations</span> <span class="sc"># 편향·위험·제한</span>
+<span class="sm">## Training Details</span>         <span class="sc"># 학습 데이터 및 절차</span>
+<span class="sm">## Evaluation</span>               <span class="sc"># 평가 결과</span>
+<span class="sm">## Environmental Impact</span>     <span class="sc"># 환경 영향</span>
+<span class="sm">## Model Card Contact</span>       <span class="sc"># 연락처 (필수)</span>
+          </div>
+          <div class="note-box info" style="margin-top:10px">
+            <span class="icon">💡</span>
+            <div><strong>DTC 차용 요소:</strong> co2_eq_emissions 구조 → DTC §9 Environmental Impact에 채택. model-index의 task/dataset/metric 삼각 구조 → DTC §5 Performance Evidence에 채택. pipeline_tag 개념 → DTC §1 System Identity에서 ai_system_type으로 확장.</div>
+          </div>
+        </div>
+
+        <!-- Google MCT -->
+        <div class="tab-panel" id="tab-google">
+          <h3 style="color:#1a73e8">Google Model Card Toolkit (MCT) 규격</h3>
+          <p style="font-size:0.87em;color:#555;margin-bottom:12px">
+            Google MCT는 JSON 스키마 기반으로 4개 최상위 섹션으로 구성. 특히 <code>quantitative_analysis</code>의 슬라이스 기반 성능 분해와 <code>considerations.ethical_considerations</code>의 구조화된 위험 기술이 DTC 설계에 반영됨.
+          </p>
+          <div class="schema-block">
+<span class="sc">// Google Model Card Toolkit JSON Schema (핵심 구조)</span>
+{
+  <span class="sk">"model_details"</span>: {           <span class="sc">// REQUIRED</span>
+    <span class="sk">"name"</span>: <span class="sv">"string"</span>,
+    <span class="sk">"overview"</span>: <span class="sv">"string"</span>,
+    <span class="sk">"owners"</span>: [{<span class="sk">"name"</span>: <span class="sv">"..."</span>, <span class="sk">"contact"</span>: <span class="sv">"..."</span>}],
+    <span class="sk">"version"</span>: {<span class="sk">"name"</span>: <span class="sv">"v1.0"</span>, <span class="sk">"date"</span>: <span class="sv">"2025-01"</span>},
+    <span class="sk">"licenses"</span>: [{<span class="sk">"identifier"</span>: <span class="sv">"Apache-2.0"</span>}],
+    <span class="sk">"references"</span>: [{<span class="sk">"link"</span>: <span class="sv">"..."</span>}]
+  },
+  <span class="sk">"model_parameters"</span>: {        <span class="sc">// OPTIONAL</span>
+    <span class="sk">"model_architecture"</span>: <span class="sv">"string"</span>,
+    <span class="sk">"input_format"</span>: <span class="sv">"string"</span>,
+    <span class="sk">"output_format"</span>: <span class="sv">"string"</span>,
+    <span class="sk">"data"</span>: [{
+      <span class="sk">"name"</span>: <span class="sv">"training set"</span>,
+      <span class="sk">"sensitive"</span>: <span class="sv">false</span>,
+      <span class="sk">"graphics"</span>: {<span class="sk">"collection"</span>: []}
+    }]
+  },
+  <span class="sk">"quantitative_analysis"</span>: {   <span class="sc">// OPTIONAL</span>
+    <span class="sk">"performance_metrics"</span>: [{
+      <span class="sk">"type"</span>: <span class="sv">"accuracy"</span>,
+      <span class="sk">"value"</span>: <span class="sv">0.876</span>,
+      <span class="sk">"slice"</span>: <span class="sv">"gender=female"</span>,  <span class="sc">// 슬라이스 분해</span>
+      <span class="sk">"confidence_interval"</span>: {<span class="sk">"lower"</span>: <span class="sv">0.85</span>, <span class="sk">"upper"</span>: <span class="sv">0.90</span>}
+    }]
+  },
+  <span class="sk">"considerations"</span>: {          <span class="sc">// OPTIONAL</span>
+    <span class="sk">"users"</span>: [{<span class="sk">"description"</span>: <span class="sv">"의도된 사용자"</span>}],
+    <span class="sk">"use_cases"</span>: [{<span class="sk">"description"</span>: <span class="sv">"의도된 사용 목적"</span>}],
+    <span class="sk">"limitations"</span>: [{<span class="sk">"description"</span>: <span class="sv">"알려진 제한사항"</span>}],
+    <span class="sk">"ethical_considerations"</span>: [{
+      <span class="sk">"name"</span>: <span class="sv">"Privacy risk"</span>,         <span class="sc">// 위험 명칭 (필수)</span>
+      <span class="sk">"mitigation_strategy"</span>: <span class="sv">"..."</span>   <span class="sc">// 완화 전략 (필수)</span>
+    }]
+  }
+}
+          </div>
+          <div class="note-box info" style="margin-top:10px">
+            <span class="icon">💡</span>
+            <div><strong>DTC 차용 요소:</strong> ethical_considerations의 {name, mitigation_strategy} 패턴 → DTC §6 Risk &amp; Harm Assessment의 risk_items 구조로 채택. quantitative_analysis의 slice 기반 분해 → DTC §5 Performance Evidence에서 TFL 특성별 슬라이스로 확장. model_details.owners → DTC §1 Developer Identity에 매핑.</div>
+          </div>
+        </div>
+
+        <!-- OpenAI -->
+        <div class="tab-panel" id="tab-openai">
+          <h3 style="color:#10a37f">OpenAI Preparedness Framework v2 &amp; System Card</h3>
+          <p style="font-size:0.87em;color:#555;margin-bottom:12px">
+            OpenAI System Card는 Preparedness Framework v2 기반으로 CBRN·사이버·AI 자가개선·AI 자율성 4개 도메인에 대해 Low/Medium/High/Critical 4단계 위험 등급으로 평가. "Safe-completions" 방법론 및 외부 감사(METR, Apollo Research, SecureBio) 결과 포함.
+          </p>
+          <table class="source-compare-table">
+            <thead>
+              <tr><th>도메인</th><th>평가 기준</th><th>등급 기준</th><th>DTC 매핑</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Biological &amp; Chemical</strong></td>
+                <td>위험 물질 합성 지원 능력</td>
+                <td>Low→Medium→High→Critical<br>전문가 대비 능력 상승률</td>
+                <td class="dtc-field-ref">DTC §6.2 safety_domains[CBRN]</td>
+              </tr>
+              <tr>
+                <td><strong>Cybersecurity</strong></td>
+                <td>공격 도구 생성·자동화</td>
+                <td>스크립트 키디 수준 → 국가급</td>
+                <td class="dtc-field-ref">DTC §6.2 safety_domains[Cyber]</td>
+              </tr>
+              <tr>
+                <td><strong>AI Self-Improvement</strong></td>
+                <td>자체 모델 개선 능력</td>
+                <td>제한적 → 완전 자율 개선</td>
+                <td class="dtc-field-ref">DTC §6.2 safety_domains[Self-improvement]</td>
+              </tr>
+              <tr>
+                <td><strong>AI Autonomy</strong></td>
+                <td>장기 독립 작업 수행</td>
+                <td>단순 → 인간 없이 복잡 목표</td>
+                <td class="dtc-field-ref">DTC §6.2 safety_domains[Autonomy]</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="note-box info" style="margin-top:10px">
+            <span class="icon">💡</span>
+            <div><strong>DTC 차용 요소:</strong> Low/Medium/High/Critical 4단계 위험 등급 → DTC §6 risk_level enum에 채택. external_auditors 필드 → DTC §8 Governance의 third_party_audits에 채택. safe-completions 방법론 → DTC §6.3 mitigation_methods 기술 가이드라인으로 참조.</div>
+          </div>
+        </div>
+
+        <!-- Anthropic -->
+        <div class="tab-panel" id="tab-anthropic">
+          <h3 style="color:#c45f3a">Anthropic RSP (Responsible Scaling Policy) 기반 System Card</h3>
+          <p style="font-size:0.87em;color:#555;margin-bottom:12px">
+            Anthropic RSP는 ASL(AI Safety Level) 임계값 체계(ASL-2/3/4)로 모델 위험을 계층화. CBRN·사이버·자율성 3개 도메인 + 정렬 평가(alignment faking, scheming, evaluation awareness, deception) 포함. Apollo Research·METR 외부 감사.
+          </p>
+          <table class="source-compare-table">
+            <thead>
+              <tr><th>요소</th><th>내용</th><th>DTC 매핑</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>ASL-2</strong></td>
+                <td>현재 대다수 Claude 모델. 기본 배포 허용.</td>
+                <td class="dtc-field-ref">DTC §6.1 safety_level = "ASL-2 equivalent"</td>
+              </tr>
+              <tr>
+                <td><strong>ASL-3</strong></td>
+                <td>CBRN 위험 임계 초과. 강화된 배포 제어 필요.</td>
+                <td class="dtc-field-ref">DTC §6.1 safety_level = "ASL-3"</td>
+              </tr>
+              <tr>
+                <td><strong>ASL-4</strong></td>
+                <td>자율 AI 역량 임계. 특수 격리 배포만 허용.</td>
+                <td class="dtc-field-ref">DTC §6.1 safety_level = "ASL-4"</td>
+              </tr>
+              <tr>
+                <td><strong>정렬 평가</strong></td>
+                <td>alignment faking, scheming, evaluation awareness, deception 4개 항목 red-team</td>
+                <td class="dtc-field-ref">DTC §6.3 alignment_evaluation</td>
+              </tr>
+              <tr>
+                <td><strong>외부 감사</strong></td>
+                <td>Apollo Research (alignment), METR (autonomy)</td>
+                <td class="dtc-field-ref">DTC §8.2 external_auditors</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="note-box info" style="margin-top:10px">
+            <span class="icon">💡</span>
+            <div><strong>DTC 차용 요소:</strong> ASL 수준 체계 → DTC §6.1 ai_safety_level 필드로 채택 (TFL 특성 #19 Autonomy, #20 Threat와 연계). alignment_evaluation 4개 항목 → DTC §6.3에 선택 항목으로 포함. RSP 정책 문서 참조 → DTC §8.1 governance_policy_ref.</div>
+          </div>
+        </div>
+
+        <!-- DeepMind -->
+        <div class="tab-panel" id="tab-deepmind">
+          <h3 style="color:#4285f4">Google DeepMind Frontier Safety Framework (FSF)</h3>
+          <p style="font-size:0.87em;color:#555;margin-bottom:12px">
+            Google DeepMind FSF는 CCL(Critical Capability Levels) 기반으로 5개 도메인(CBRN, 사이버보안, 해로운 조작, ML R&amp;D, 오정렬)을 평가. Alert threshold와 CCL threshold의 2단계 경보 체계. Gemini 3 Pro: 사이버 alert threshold 도달, CCL 미도달.
+          </p>
+          <table class="source-compare-table">
+            <thead>
+              <tr><th>CCL 도메인</th><th>Alert Threshold</th><th>CCL Threshold</th><th>DTC 매핑</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>CBRN</strong></td>
+                <td>전문가 수준 지원 가능</td>
+                <td>대규모 공격 촉진 가능</td>
+                <td class="dtc-field-ref">DTC §6.2 ccl_domain[CBRN]</td>
+              </tr>
+              <tr>
+                <td><strong>Cybersecurity</strong></td>
+                <td>자동화된 공격 생성</td>
+                <td>인프라 공격 자율화</td>
+                <td class="dtc-field-ref">DTC §6.2 ccl_domain[Cyber]</td>
+              </tr>
+              <tr>
+                <td><strong>Harmful Manipulation</strong></td>
+                <td>설득·기만 능력</td>
+                <td>대규모 사회 조작</td>
+                <td class="dtc-field-ref">DTC §6.2 ccl_domain[Manipulation]</td>
+              </tr>
+              <tr>
+                <td><strong>ML R&amp;D</strong></td>
+                <td>AI 훈련 개선</td>
+                <td>완전 자율 AI 개발</td>
+                <td class="dtc-field-ref">DTC §6.2 ccl_domain[ML_RnD]</td>
+              </tr>
+              <tr>
+                <td><strong>Misalignment</strong></td>
+                <td>목표 이탈 행동</td>
+                <td>자율 인간 감독 회피</td>
+                <td class="dtc-field-ref">DTC §6.2 ccl_domain[Misalignment]</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="note-box info" style="margin-top:10px">
+            <span class="icon">💡</span>
+            <div><strong>DTC 차용 요소:</strong> Alert/CCL 2단계 임계값 → DTC §6.2 frontier_safety_assessment의 threshold_status 필드. 5개 CCL 도메인 → DTC §6.2 safety_domains 확장 목록. 2단계 경보 → TFL 특성 #20 Threat·#23 Hazard 연계.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S13.3: DTC 구조 초안 -->
+      <div class="content-section">
+        <h2>S13.3 — DTC 구조 초안 (TYPE IV 문서 설계)</h2>
+
+        <p style="font-size:0.87em;color:#555;margin-bottom:14px">
+          아래 DTC 구조는 TFL 28개 특성 준수 주장을 체계적으로 기술하기 위한 9개 필수 섹션과 4개 선택 섹션으로 구성됩니다.
+          <strong>M = Mandatory (필수)</strong>, <strong>R = Recommended (권장)</strong>, <strong>O = Optional (선택)</strong>
+        </p>
+
+        <div class="dtc-structure">
+          <div class="dtc-header-bar">
+            TYPE IV — AI Developer Technical Card (DTC) v0.1 구조 초안
+            <span style="font-size:11px;font-weight:400;opacity:0.8;margin-left:16px">ISO/IEC 42117-X 기반 · 2026-02-20</span>
+          </div>
+
+          <!-- Section 1 -->
+          <div class="dtc-section-row">
+            <div class="dtc-section-header">
+              <span class="dtc-sec-num">§1</span>
+              <span class="dtc-sec-title">System Identity &amp; Overview — AI 시스템 식별 정보</span>
+              <span class="badge" style="background:#fde8e8;color:#c0392b;border-color:#f5b7b1;font-size:10px">MANDATORY</span>
+              <span class="dtc-sec-origin">← HF model card (model_details) + Google MCT</span>
+            </div>
+            <div class="dtc-fields">
+              <div class="dtc-field-item">
+                <span class="field-name">dtc_id</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">DTC 고유 식별자 (예: DTC-2025-ORG-001). 발행 연도-기관코드-일련번호</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">ai_system_name</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">AI 시스템 상용명 또는 제품명</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">ai_system_version</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">버전 번호 (예: 2.1.0) + 릴리스 날짜</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">ai_system_type</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">유형: foundation_model | application | pipeline | agent | tool. ISO/IEC 22989 정의 기준</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">developer_organization</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">개발 기관명, 국가, 연락처 (이메일/URL)</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">dtc_issue_date</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">DTC 최초 발행일 (ISO 8601)</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">dtc_valid_until</span>
+                <span class="field-req req-recommended">R</span>
+                <span class="field-desc">DTC 유효 기간 만료일. 주기적 갱신 권장 (12개월)</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">tfl_standard_ref</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">적용 TFL 표준 버전 (예: ISO/IEC 42117-1:202X PWI-2025-10-02)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2 -->
+          <div class="dtc-section-row">
+            <div class="dtc-section-header">
+              <span class="dtc-sec-num">§2</span>
+              <span class="dtc-sec-title">Intended Use &amp; Deployment Context — 사용 목적 및 배포 맥락</span>
+              <span class="badge" style="background:#fde8e8;color:#c0392b;border-color:#f5b7b1;font-size:10px">MANDATORY</span>
+              <span class="dtc-sec-origin">← HF (Direct Use / Out-of-Scope) + Google MCT (considerations.use_cases)</span>
+            </div>
+            <div class="dtc-fields">
+              <div class="dtc-field-item">
+                <span class="field-name">intended_use_cases</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">의도된 사용 목적 및 시나리오 목록 (최소 1개). 도메인 명시 (의료·금융·교육 등)</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">intended_users</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">의도된 사용자 유형 및 전문성 수준</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">out_of_scope_uses</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">명시적 비적합 사용 사례 목록. 오남용 방지 정책 근거</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">deployment_regions</span>
+                <span class="field-req req-recommended">R</span>
+                <span class="field-desc">배포 지역 (국가/지역). 규제 적용 범위 연계</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">operational_environment</span>
+                <span class="field-req req-recommended">R</span>
+                <span class="field-desc">운영 환경 특성: 고위험 여부 (EU AI Act Annex III 해당 여부)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3 -->
+          <div class="dtc-section-row">
+            <div class="dtc-section-header">
+              <span class="dtc-sec-num">§3</span>
+              <span class="dtc-sec-title">TFL Trustworthiness Claims — TFL 신뢰성 특성 주장</span>
+              <span class="badge" style="background:#fde8e8;color:#c0392b;border-color:#f5b7b1;font-size:10px">MANDATORY</span>
+              <span class="dtc-sec-origin">← TFL S03 Simple Claim 카탈로그 · S04 TCM-TC 매핑</span>
+            </div>
+            <div class="dtc-fields">
+              <div class="dtc-field-item">
+                <span class="field-name">claimed_characteristics</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">주장하는 TCM 신뢰성 특성 목록 (28개 중 해당 항목). 특성 ID + 이름 + 주장 근거 요약</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">simple_claims</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">채택한 Simple Claim ID 목록 (예: SC-FC-01, SC-REL-02). S03 카탈로그 기준. 각 SC별 Level(1/2/3) 명시</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">claim_scope</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">주장 범위 한정 사항 (특정 버전, 배포 환경, 사용 시나리오로 제한 시 명시)</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">non_claimed_characteristics</span>
+                <span class="field-req req-recommended">R</span>
+                <span class="field-desc">주장하지 않는 특성 목록 및 사유 (갭 투명성 확보)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 4 -->
+          <div class="dtc-section-row">
+            <div class="dtc-section-header">
+              <span class="dtc-sec-num">§4</span>
+              <span class="dtc-sec-title">TC Requirement Verification — TC 요구사항 검증 결과</span>
+              <span class="badge" style="background:#fde8e8;color:#c0392b;border-color:#f5b7b1;font-size:10px">MANDATORY</span>
+              <span class="dtc-sec-origin">← TFL S04 TC-REQ 매핑 · S10 요구사항 전체 목록</span>
+            </div>
+            <div class="dtc-fields">
+              <div class="dtc-field-item">
+                <span class="field-name">tc_req_results</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">TC-REQ ID별 검증 결과: {tc_req_id, status: met|partial|not_met|n/a, evidence_ref, verified_date}</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">verification_method</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">검증 방법: self_assessment | type3_vv | third_party_audit | type2_audit</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">coverage_summary</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">전체 대상 TC-REQ 수, 충족 수, 부분 충족 수, 미충족 수 집계</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">partial_met_justification</span>
+                <span class="field-req req-recommended">R</span>
+                <span class="field-desc">부분 충족(partial) 항목별 사유 및 보완 계획 기술</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 5 -->
+          <div class="dtc-section-row">
+            <div class="dtc-section-header">
+              <span class="dtc-sec-num">§5</span>
+              <span class="dtc-sec-title">Performance Evidence — 성능 증거 및 평가 결과</span>
+              <span class="badge" style="background:#fde8e8;color:#c0392b;border-color:#f5b7b1;font-size:10px">MANDATORY</span>
+              <span class="dtc-sec-origin">← HF model-index + Google MCT quantitative_analysis</span>
+            </div>
+            <div class="dtc-fields">
+              <div class="dtc-field-item">
+                <span class="field-name">benchmark_results</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">벤치마크 결과 목록: {benchmark_name, metric, value, dataset, evaluation_date, evaluator}</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">disaggregated_metrics</span>
+                <span class="field-req req-recommended">R</span>
+                <span class="field-desc">슬라이스 기반 성능 분해 (인구통계·도메인·언어별). TFL #4 Bias &amp; Fairness 연계</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">vv_test_results</span>
+                <span class="field-req req-recommended">R</span>
+                <span class="field-desc">TYPE III V&amp;V 시험 결과 (42119-2/29119-11 기반): {test_type, standard_clause, result, pass_fail, tester}</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">robustness_assessment</span>
+                <span class="field-req req-recommended">R</span>
+                <span class="field-desc">적대적 테스트 결과 (42119-2 §7.3.4.4). TFL #10 Resilience 연계</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">drift_monitoring</span>
+                <span class="field-req req-optional">O</span>
+                <span class="field-desc">드리프트/부실화 모니터링 결과 (42119-2 §7.3.4.5). TFL #8 Reliability 연계</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 6 -->
+          <div class="dtc-section-row">
+            <div class="dtc-section-header">
+              <span class="dtc-sec-num">§6</span>
+              <span class="dtc-sec-title">Risk, Safety &amp; Harm Assessment — 위험·안전·피해 평가</span>
+              <span class="badge" style="background:#fde8e8;color:#c0392b;border-color:#f5b7b1;font-size:10px">MANDATORY</span>
+              <span class="dtc-sec-origin">← OpenAI Preparedness + Anthropic RSP + Google DeepMind FSF + FDIS 42005</span>
+            </div>
+            <div class="dtc-fields">
+              <div class="dtc-field-item">
+                <span class="field-name">risk_assessment_method</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">위험 평가 방법론 참조 표준 (예: ISO/IEC FDIS 42005, ISO 31000)</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">risk_items</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">위험 항목: {risk_name, risk_level: Low|Medium|High|Critical, likelihood, severity, mitigation_strategy}</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">frontier_safety_assessment</span>
+                <span class="field-req req-recommended">R</span>
+                <span class="field-desc">첨단 AI 안전 평가: {domain: CBRN|Cyber|Manipulation|ML_RnD|Misalignment, threshold_status: below_alert|at_alert|at_ccl}</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">ai_safety_level</span>
+                <span class="field-req req-recommended">R</span>
+                <span class="field-desc">AI 안전 수준 (Anthropic RSP 유사): ASL-2 | ASL-3 | ASL-4 또는 조직 자체 체계</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">alignment_evaluation</span>
+                <span class="field-req req-optional">O</span>
+                <span class="field-desc">정렬 평가: {alignment_faking, scheming, evaluation_awareness, deception} — 각 항목 평가 결과</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">harm_categories</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">피해 유형 목록 및 심각도 (FDIS 42005 기반): {harm_type, severity, affected_group, mitigation}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 7 -->
+          <div class="dtc-section-row">
+            <div class="dtc-section-header">
+              <span class="dtc-sec-num">§7</span>
+              <span class="dtc-sec-title">Transparency &amp; Explainability — 투명성 및 설명가능성</span>
+              <span class="badge" style="background:#fff3cd;color:#856404;border-color:#ffc107;font-size:10px">RECOMMENDED</span>
+              <span class="dtc-sec-origin">← TFL #6 Explainability · DTS 6254 · FDIS 12792</span>
+            </div>
+            <div class="dtc-fields">
+              <div class="dtc-field-item">
+                <span class="field-name">transparency_level</span>
+                <span class="field-req req-recommended">R</span>
+                <span class="field-desc">투명성 수준 (FDIS 12792 기반): full | partial | limited. 공개 가능한 정보 범위</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">explainability_methods</span>
+                <span class="field-req req-recommended">R</span>
+                <span class="field-desc">설명가능성 기법 목록 (예: SHAP, LIME, attention visualization). DTS 6254 참조</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">training_data_description</span>
+                <span class="field-req req-recommended">R</span>
+                <span class="field-desc">학습 데이터 설명 (공개 가능 범위 내): 소스, 크기, 기간, 처리 방법</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">model_architecture_description</span>
+                <span class="field-req req-optional">O</span>
+                <span class="field-desc">모델 아키텍처 설명 (공개 가능 범위 내): 파라미터 수, 레이어 구조 등</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">limitations_and_known_issues</span>
+                <span class="field-req req-recommended">R</span>
+                <span class="field-desc">알려진 한계 및 이슈 목록. HF "Bias, Risks, Limitations" 섹션 참조</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 8 -->
+          <div class="dtc-section-row">
+            <div class="dtc-section-header">
+              <span class="dtc-sec-num">§8</span>
+              <span class="dtc-sec-title">Governance &amp; Accountability — 거버넌스 및 책임성</span>
+              <span class="badge" style="background:#fde8e8;color:#c0392b;border-color:#f5b7b1;font-size:10px">MANDATORY</span>
+              <span class="dtc-sec-origin">← TFL #3 Accountability · 42001 AIMS · FDIS 38507</span>
+            </div>
+            <div class="dtc-fields">
+              <div class="dtc-field-item">
+                <span class="field-name">responsible_contact</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">DTC 책임 담당자 연락처 (이름, 역할, 이메일). 문의 및 불만 접수 창구</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">governance_policy_ref</span>
+                <span class="field-req req-recommended">R</span>
+                <span class="field-desc">AI 거버넌스 정책 문서 참조 (42001 AIMS 정책, RSP/FSF 등)</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">third_party_audits</span>
+                <span class="field-req req-recommended">R</span>
+                <span class="field-desc">제3자 감사 결과 요약: {auditor, audit_type, audit_date, scope, outcome}</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">incident_reporting_url</span>
+                <span class="field-req req-mandatory">M</span>
+                <span class="field-desc">인시던트 보고 채널 URL 또는 이메일</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">update_frequency</span>
+                <span class="field-req req-recommended">R</span>
+                <span class="field-desc">DTC 갱신 주기 및 갱신 트리거 조건 (major 업데이트, incident 발생 등)</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">regulatory_compliance</span>
+                <span class="field-req req-optional">O</span>
+                <span class="field-desc">적용 규제 준수 현황: EU AI Act, GDPR, NIST AI RMF 등</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 9 -->
+          <div class="dtc-section-row">
+            <div class="dtc-section-header">
+              <span class="dtc-sec-num">§9</span>
+              <span class="dtc-sec-title">Environmental &amp; Social Impact — 환경·사회적 영향</span>
+              <span class="badge" style="background:#fff3cd;color:#856404;border-color:#ffc107;font-size:10px">RECOMMENDED</span>
+              <span class="dtc-sec-origin">← HF co2_eq_emissions + DTR 20226 (Environmental Sustainability)</span>
+            </div>
+            <div class="dtc-fields">
+              <div class="dtc-field-item">
+                <span class="field-name">co2_eq_emissions</span>
+                <span class="field-req req-recommended">R</span>
+                <span class="field-desc">CO₂ 등가 배출량 (훈련+추론): {training_kg, inference_kg_per_query, measurement_tool, geo_location}. DTR 20226 기준</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">energy_consumption</span>
+                <span class="field-req req-recommended">R</span>
+                <span class="field-desc">에너지 소비량 (kWh): 훈련 총량, 추론 평균 단가. TFL #28 Environmental Sustainability 연계</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">social_impact_assessment</span>
+                <span class="field-req req-optional">O</span>
+                <span class="field-desc">사회적 영향 평가 요약: 고용, 접근성, 디지털 격차, 취약계층 영향</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">water_usage</span>
+                <span class="field-req req-optional">O</span>
+                <span class="field-desc">데이터센터 냉각 물 사용량 (훈련 단계)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Appendices -->
+          <div class="dtc-section-row" style="background:#f8f0ff">
+            <div class="dtc-section-header" style="background:#f0e8ff">
+              <span class="dtc-sec-num" style="background:#7c3aed">App</span>
+              <span class="dtc-sec-title">부록 — Evidence Index &amp; Cross-Reference</span>
+              <span class="badge" style="background:#e8f5e9;color:#27ae60;border-color:#a5d6a7;font-size:10px">OPTIONAL</span>
+            </div>
+            <div class="dtc-fields">
+              <div class="dtc-field-item">
+                <span class="field-name">evidence_index</span>
+                <span class="field-req req-optional">O</span>
+                <span class="field-desc">증거 문서 색인: {doc_id, title, type: test_report|audit_report|cert, url, access_level: public|restricted}</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">sc_to_tc_crossref</span>
+                <span class="field-req req-optional">O</span>
+                <span class="field-desc">Simple Claim → TC-REQ 상호 참조 표 (S11 기준)</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">tfl_standard_coverage</span>
+                <span class="field-req req-optional">O</span>
+                <span class="field-desc">TFL 참조 표준별 적용 섹션 매핑 (S07 참조 표준 목록 기준)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S13.4: TC-REQ → DTC 매핑 -->
+      <div class="content-section">
+        <h2>S13.4 — TC-REQ 검증 결과 → DTC 필드 매핑</h2>
+        <p style="font-size:0.87em;color:#555;margin-bottom:14px">
+          S04의 TC 요구사항 검증 결과가 DTC의 어떤 섹션/필드에 기록되어야 하는지 특성 그룹별로 매핑합니다.
+        </p>
+        <table class="map-table">
+          <thead>
+            <tr>
+              <th>특성 그룹</th>
+              <th>대표 TC-REQ IDs</th>
+              <th>DTC 섹션</th>
+              <th>DTC 필드</th>
+              <th>비고</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="char-tag">Functional Correctness</span></td>
+              <td style="font-family:monospace;font-size:11px">TC-FC-001~005</td>
+              <td>§4 + §5</td>
+              <td><span class="dtc-field-ref">tc_req_results</span><br><span class="dtc-field-ref">benchmark_results</span></td>
+              <td>ISO 25059 기반 품질 검증</td>
+            </tr>
+            <tr>
+              <td><span class="char-tag">Reliability</span><span class="char-tag">Availability</span></td>
+              <td style="font-family:monospace;font-size:11px">TC-REL-001~004<br>TC-AVAIL-001~003</td>
+              <td>§4 + §5</td>
+              <td><span class="dtc-field-ref">tc_req_results</span><br><span class="dtc-field-ref">drift_monitoring</span></td>
+              <td>42119-2 §7.3.4.5 드리프트 테스트</td>
+            </tr>
+            <tr>
+              <td><span class="char-tag">Resilience</span></td>
+              <td style="font-family:monospace;font-size:11px">TC-RES-001~004</td>
+              <td>§5 + §6</td>
+              <td><span class="dtc-field-ref">robustness_assessment</span><br><span class="dtc-field-ref">risk_items</span></td>
+              <td>42119-2 §7.3.4.4 적대적 테스트</td>
+            </tr>
+            <tr>
+              <td><span class="char-tag">Bias &amp; Fairness</span></td>
+              <td style="font-family:monospace;font-size:11px">TC-BF-001~005</td>
+              <td>§5 + §6</td>
+              <td><span class="dtc-field-ref">disaggregated_metrics</span><br><span class="dtc-field-ref">harm_categories</span></td>
+              <td>42119-2 §7.3.3.9 편향 테스트</td>
+            </tr>
+            <tr>
+              <td><span class="char-tag">Explainability</span><span class="char-tag">Interpretability</span></td>
+              <td style="font-family:monospace;font-size:11px">TC-EXPL-001~003<br>TC-INTR-001~003</td>
+              <td>§7</td>
+              <td><span class="dtc-field-ref">explainability_methods</span><br><span class="dtc-field-ref">transparency_level</span></td>
+              <td>DTS 6254 / 42119-2 §7.3.4.7</td>
+            </tr>
+            <tr>
+              <td><span class="char-tag">Privacy</span><span class="char-tag">Integrity</span><span class="char-tag">Authenticity</span></td>
+              <td style="font-family:monospace;font-size:11px">TC-PRIV-001~003<br>TC-INTG-001~003<br>TC-AUTH-001~003</td>
+              <td>§6 + §8</td>
+              <td><span class="dtc-field-ref">risk_items</span><br><span class="dtc-field-ref">regulatory_compliance</span></td>
+              <td>TS 5723 / DTS 8200 기반<br>GDPR 연계</td>
+            </tr>
+            <tr>
+              <td><span class="char-tag">Accountability</span><span class="char-tag">Transparency</span></td>
+              <td style="font-family:monospace;font-size:11px">TC-ACCT-001~004<br>TC-TRANS-001~003</td>
+              <td>§7 + §8</td>
+              <td><span class="dtc-field-ref">governance_policy_ref</span><br><span class="dtc-field-ref">third_party_audits</span></td>
+              <td>FDIS 38507 거버넌스 연계</td>
+            </tr>
+            <tr>
+              <td><span class="char-tag">Controllability</span><span class="char-tag">Intervenability</span><span class="char-tag">Autonomy</span></td>
+              <td style="font-family:monospace;font-size:11px">TC-CTRL-001~004<br>TC-INTV-001~003<br>TC-AUTO-001~005</td>
+              <td>§6</td>
+              <td><span class="dtc-field-ref">frontier_safety_assessment</span><br><span class="dtc-field-ref">ai_safety_level</span></td>
+              <td>DTS 8200 / Anthropic RSP 연계</td>
+            </tr>
+            <tr>
+              <td><span class="char-tag">Risk</span><span class="char-tag">Threat</span><span class="char-tag">Harm</span><span class="char-tag">Hazard</span></td>
+              <td style="font-family:monospace;font-size:11px">TC-RISK-001~010<br>TC-THRT-001~004<br>TC-HARM-001~004</td>
+              <td>§6</td>
+              <td><span class="dtc-field-ref">risk_items</span><br><span class="dtc-field-ref">harm_categories</span><br><span class="dtc-field-ref">alignment_evaluation</span></td>
+              <td>FDIS 42005/42006 · DTR 5469 연계</td>
+            </tr>
+            <tr>
+              <td><span class="char-tag">Efficiency</span><span class="char-tag">Environmental Sustainability</span></td>
+              <td style="font-family:monospace;font-size:11px">TC-EFF-001~003<br>TC-ENV-001~003</td>
+              <td>§9</td>
+              <td><span class="dtc-field-ref">co2_eq_emissions</span><br><span class="dtc-field-ref">energy_consumption</span></td>
+              <td>DTR 20226 기반</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- S13.5: Simple Claim → DTC -->
+      <div class="content-section">
+        <h2>S13.5 — Simple Claim → DTC 증거 필드 매핑</h2>
+        <p style="font-size:0.87em;color:#555;margin-bottom:14px">
+          S03의 Simple Claim(SC) 카탈로그에서 각 SC가 DTC의 어떤 섹션·필드에 증거로 기록되어야 하는지, 그리고 V&V 가능 여부에 따른 증거 유형을 정의합니다.
+        </p>
+
+        <div class="note-box info">
+          <span class="icon">ℹ️</span>
+          <div>
+            <strong>Simple Claim Level과 DTC 증거 요건의 상관관계</strong><br>
+            • <strong>Level 1 (문서 기반)</strong>: §8 거버넌스 문서, §7 투명성 문서로 증거 충족 가능<br>
+            • <strong>Level 2 (측정 기반)</strong>: §5 성능 증거에 구체적 수치 필요. V&V 적용 가능 SC의 경우 TYPE III 시험 결과 포함<br>
+            • <strong>Level 3 (독립 검증 기반)</strong>: §4 TC-REQ 검증 결과 + §8 제3자 감사 결과 필수. ISO 17029 TYPE III 요건
+          </div>
+        </div>
+
+        <table class="map-table" style="margin-top:14px">
+          <thead>
+            <tr>
+              <th style="width:110px">SC ID</th>
+              <th>Simple Claim 주장 문구 (요약)</th>
+              <th style="width:60px">Level</th>
+              <th>DTC 필드</th>
+              <th style="width:90px">V&V 표준</th>
+              <th>증거 유형</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-family:monospace;font-size:11px">SC-FC-01</td>
+              <td style="font-size:12px">정확도 기준 이상 달성</td>
+              <td style="text-align:center"><span class="badge" style="background:#dbeafe;color:#1e40af;border-color:#93c5fd;font-size:10px">L2</span></td>
+              <td><span class="dtc-field-ref">§5 benchmark_results</span></td>
+              <td style="font-size:11px">42119-2 §7.3.4.3</td>
+              <td style="font-size:12px">독립 테스트셋 성능 측정값</td>
+            </tr>
+            <tr>
+              <td style="font-family:monospace;font-size:11px">SC-FC-02</td>
+              <td style="font-size:12px">사용 목적 기능 충족</td>
+              <td style="text-align:center"><span class="badge" style="background:#dbeafe;color:#1e40af;border-color:#93c5fd;font-size:10px">L2</span></td>
+              <td><span class="dtc-field-ref">§4 tc_req_results</span><br><span class="dtc-field-ref">§5 benchmark_results</span></td>
+              <td style="font-size:11px">42119-2 §7.3.4.3</td>
+              <td style="font-size:12px">기능 테스트 결과 보고서</td>
+            </tr>
+            <tr>
+              <td style="font-family:monospace;font-size:11px">SC-REL-01</td>
+              <td style="font-size:12px">반복 실행 일관성 보장</td>
+              <td style="text-align:center"><span class="badge" style="background:#dbeafe;color:#1e40af;border-color:#93c5fd;font-size:10px">L2</span></td>
+              <td><span class="dtc-field-ref">§5 vv_test_results</span><br><span class="dtc-field-ref">§5 drift_monitoring</span></td>
+              <td style="font-size:11px">42119-2 §7.3.4.5<br>29119-11 §7.2</td>
+              <td style="font-size:12px">반복 실행 분산 측정값</td>
+            </tr>
+            <tr>
+              <td style="font-family:monospace;font-size:11px">SC-BF-01</td>
+              <td style="font-size:12px">인구통계 그룹 간 공정성</td>
+              <td style="text-align:center"><span class="badge" style="background:#ede9fe;color:#6d28d9;border-color:#c4b5fd;font-size:10px">L3</span></td>
+              <td><span class="dtc-field-ref">§5 disaggregated_metrics</span><br><span class="dtc-field-ref">§6 harm_categories</span><br><span class="dtc-field-ref">§8 third_party_audits</span></td>
+              <td style="font-size:11px">42119-2 §7.3.3.9</td>
+              <td style="font-size:12px">편향 테스트 + 제3자 감사</td>
+            </tr>
+            <tr>
+              <td style="font-family:monospace;font-size:11px">SC-EXPL-01</td>
+              <td style="font-size:12px">설명가능한 출력 제공</td>
+              <td style="text-align:center"><span class="badge" style="background:#dcfce7;color:#166534;border-color:#86efac;font-size:10px">L1</span></td>
+              <td><span class="dtc-field-ref">§7 explainability_methods</span><br><span class="dtc-field-ref">§7 transparency_level</span></td>
+              <td style="font-size:11px">42119-2 §7.3.4.7</td>
+              <td style="font-size:12px">설명 방법 문서 + 시연</td>
+            </tr>
+            <tr>
+              <td style="font-family:monospace;font-size:11px">SC-PRIV-01</td>
+              <td style="font-size:12px">개인정보 비식별화 처리</td>
+              <td style="text-align:center"><span class="badge" style="background:#ede9fe;color:#6d28d9;border-color:#c4b5fd;font-size:10px">L3</span></td>
+              <td><span class="dtc-field-ref">§4 tc_req_results[TC-PRIV]</span><br><span class="dtc-field-ref">§8 regulatory_compliance[GDPR]</span></td>
+              <td style="font-size:11px">42119-2 §7.3.3.3</td>
+              <td style="font-size:12px">데이터 출처 감사 + 규정 준수 문서</td>
+            </tr>
+            <tr>
+              <td style="font-family:monospace;font-size:11px">SC-ACCT-01</td>
+              <td style="font-size:12px">AI 의사결정 추적가능</td>
+              <td style="text-align:center"><span class="badge" style="background:#dcfce7;color:#166534;border-color:#86efac;font-size:10px">L1</span></td>
+              <td><span class="dtc-field-ref">§8 governance_policy_ref</span><br><span class="dtc-field-ref">§8 incident_reporting_url</span></td>
+              <td style="font-size:11px">—</td>
+              <td style="font-size:12px">거버넌스 문서 + 감사 로그</td>
+            </tr>
+            <tr>
+              <td style="font-family:monospace;font-size:11px">SC-ENV-01</td>
+              <td style="font-size:12px">탄소 배출량 공개</td>
+              <td style="text-align:center"><span class="badge" style="background:#dcfce7;color:#166534;border-color:#86efac;font-size:10px">L1</span></td>
+              <td><span class="dtc-field-ref">§9 co2_eq_emissions</span><br><span class="dtc-field-ref">§9 energy_consumption</span></td>
+              <td style="font-size:11px">DTR 20226</td>
+              <td style="font-size:12px">배출량 측정 리포트</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- S13.6: DTC 작성 예시 -->
+      <div class="content-section">
+        <h2>S13.6 — DTC YAML 작성 예시 (초안)</h2>
+        <p style="font-size:0.87em;color:#555;margin-bottom:14px">
+          아래는 가상의 AI 시스템에 대한 DTC YAML 작성 예시입니다. 실제 작성 시 각 필드에 해당 AI 시스템의 구체적 정보를 입력합니다.
+        </p>
+        <div class="schema-block">
+<span class="sc"># ====================================================</span>
+<span class="sc"># TYPE IV — AI Developer Technical Card (DTC) v0.1</span>
+<span class="sc"># ISO/IEC 42117-X TFL 기반 · 2026-02-20</span>
+<span class="sc"># ====================================================</span>
+
+<span class="sc">## §1 System Identity</span>
+<span class="sk">dtc_id:</span> <span class="sv">DTC-2026-EXAMPLE-001</span>
+<span class="sk">ai_system_name:</span> <span class="sv">ExampleAI v2.1</span>
+<span class="sk">ai_system_version:</span>
+  <span class="sk">  name:</span> <span class="sv">"2.1.0"</span>
+  <span class="sk">  release_date:</span> <span class="sv">"2025-12-01"</span>
+<span class="sk">ai_system_type:</span> <span class="sv">application</span>   <span class="sc"># foundation_model|application|pipeline|agent|tool</span>
+<span class="sk">developer_organization:</span>
+  <span class="sk">  name:</span> <span class="sv">Example AI Corporation</span>
+  <span class="sk">  country:</span> <span class="sv">KR</span>
+  <span class="sk">  contact:</span> <span class="sv">tfl-contact@example.ai</span>
+<span class="sk">dtc_issue_date:</span> <span class="sv">"2026-02-20"</span>
+<span class="sk">dtc_valid_until:</span> <span class="sv">"2027-02-20"</span>
+<span class="sk">tfl_standard_ref:</span> <span class="sv">ISO/IEC 42117-1:202X PWI-2025-10-02</span>
+
+<span class="sc">## §2 Intended Use</span>
+<span class="sk">intended_use_cases:</span>
+  <span class="sk">  - domain:</span> <span class="sv">medical</span>
+    <span class="sk">    description:</span> <span class="sv">의료 문서 요약 및 임상 의사결정 지원</span>
+    <span class="sk">    risk_level:</span> <span class="sv">High</span>   <span class="sc"># EU AI Act Annex III</span>
+<span class="sk">out_of_scope_uses:</span>
+  <span class="sk">  - description:</span> <span class="sv">자율 진단 또는 처방. 반드시 의사 감독 하에 사용</span>
+  <span class="sk">  - description:</span> <span class="sv">14세 미만 소아 적용 금지 (미검증)</span>
+
+<span class="sc">## §3 TFL Claims</span>
+<span class="sk">claimed_characteristics:</span>
+  <span class="sk">  - char_id:</span> <span class="sv">"#1"</span>
+    <span class="sk">    name:</span> <span class="sv">Functional Correctness</span>
+    <span class="sk">    claim_basis:</span> <span class="sv">ISO 25059 §4.2 기반 TC-FC-001~003 충족</span>
+  <span class="sk">  - char_id:</span> <span class="sv">"#8"</span>
+    <span class="sk">    name:</span> <span class="sv">Reliability</span>
+    <span class="sk">    claim_basis:</span> <span class="sv">반복 실행 분산 0.3% 이하 확인</span>
+  <span class="sk">  - char_id:</span> <span class="sv">"#4"</span>
+    <span class="sk">    name:</span> <span class="sv">Bias &amp; Fairness</span>
+    <span class="sk">    claim_basis:</span> <span class="sv">연령·성별 서브그룹 공정성 검증 완료</span>
+<span class="sk">simple_claims:</span>
+  <span class="sk">  - sc_id:</span> <span class="sv">SC-FC-01</span>
+    <span class="sk">    level:</span> <span class="sv">2</span>
+    <span class="sk">    assertion:</span> <span class="sv">>"의료 문서 요약 정확도 ≥ 0.89 (ROUGE-L)"</span>
+  <span class="sk">  - sc_id:</span> <span class="sv">SC-BF-01</span>
+    <span class="sk">    level:</span> <span class="sv">3</span>
+    <span class="sk">    assertion:</span> <span class="sv">"연령별 그룹 정확도 편차 ±3% 이내"</span>
+
+<span class="sc">## §4 TC Requirement Verification</span>
+<span class="sk">verification_method:</span> <span class="sv">type3_vv</span>   <span class="sc"># ISO 17029 제3자 V&V</span>
+<span class="sk">tc_req_results:</span>
+  <span class="sk">  - tc_req_id:</span> <span class="sv">TC-FC-001</span>
+    <span class="sk">    status:</span> <span class="sv">met</span>
+    <span class="sk">    evidence_ref:</span> <span class="sv">EVD-2026-001</span>
+    <span class="sk">    verified_date:</span> <span class="sv">"2026-01-15"</span>
+  <span class="sk">  - tc_req_id:</span> <span class="sv">TC-BF-003</span>
+    <span class="sk">    status:</span> <span class="sv">partial</span>
+    <span class="sk">    evidence_ref:</span> <span class="sv">EVD-2026-008</span>
+    <span class="sk">    justification:</span> <span class="sv">소아 연령대 데이터 부족 — 2026Q3 보완 예정</span>
+<span class="sk">coverage_summary:</span>
+  <span class="sk">  total:</span> <span class="sv">24</span>
+  <span class="sk">  met:</span> <span class="sv">20</span>
+  <span class="sk">  partial:</span> <span class="sv">3</span>
+  <span class="sk">  not_met:</span> <span class="sv">1</span>
+
+<span class="sc">## §5 Performance Evidence</span>
+<span class="sk">benchmark_results:</span>
+  <span class="sk">  - benchmark_name:</span> <span class="sv">MedQA-Korean</span>
+    <span class="sk">    metric:</span> <span class="sv">ROUGE-L</span>
+    <span class="sk">    value:</span> <span class="sv">0.891</span>
+    <span class="sk">    dataset:</span> <span class="sv">MedQA-KR-2024-holdout</span>
+    <span class="sk">    evaluation_date:</span> <span class="sv">"2026-01-10"</span>
+    <span class="sk">    evaluator:</span> <span class="sv">KOLAS Accredited Lab A</span>
+<span class="sk">disaggregated_metrics:</span>
+  <span class="sk">  - slice:</span> <span class="sv">age_group=adult</span>
+    <span class="sk">    metric:</span> <span class="sv">ROUGE-L</span>
+    <span class="sk">    value:</span> <span class="sv">0.893</span>
+  <span class="sk">  - slice:</span> <span class="sv">age_group=elderly</span>
+    <span class="sk">    metric:</span> <span class="sv">ROUGE-L</span>
+    <span class="sk">    value:</span> <span class="sv">0.882</span>
+
+<span class="sc">## §6 Risk &amp; Safety</span>
+<span class="sk">risk_assessment_method:</span> <span class="sv">ISO/IEC FDIS 42005</span>
+<span class="sk">risk_items:</span>
+  <span class="sk">  - risk_name:</span> <span class="sv">오진 유발 요약 오류</span>
+    <span class="sk">    risk_level:</span> <span class="sv">High</span>
+    <span class="sk">    likelihood:</span> <span class="sv">Low</span>
+    <span class="sk">    severity:</span> <span class="sv">Critical</span>
+    <span class="sk">    mitigation_strategy:</span> <span class="sv">의사 검토 필수화 UX 설계 + 불확실성 경고 표시</span>
+<span class="sk">ai_safety_level:</span> <span class="sv">ASL-2-equivalent</span>   <span class="sc"># Anthropic RSP 참조</span>
+
+<span class="sc">## §8 Governance</span>
+<span class="sk">responsible_contact:</span>
+  <span class="sk">  name:</span> <span class="sv">홍길동</span>
+  <span class="sk">  role:</span> <span class="sv">AI Safety Officer</span>
+  <span class="sk">  email:</span> <span class="sv">safety@example.ai</span>
+<span class="sk">third_party_audits:</span>
+  <span class="sk">  - auditor:</span> <span class="sv">Example Certification Body</span>
+    <span class="sk">    audit_type:</span> <span class="sv">type3_vv</span>
+    <span class="sk">    audit_date:</span> <span class="sv">"2026-01-20"</span>
+    <span class="sk">    outcome:</span> <span class="sv">passed</span>
+    <span class="sk">    scope:</span> <span class="sv">TC-FC-001~005, TC-BF-001~003</span>
+<span class="sk">incident_reporting_url:</span> <span class="sv">https://example.ai/report-incident</span>
+<span class="sk">update_frequency:</span> <span class="sv">annual + upon_major_update</span>
+
+<span class="sc">## §9 Environmental Impact</span>
+<span class="sk">co2_eq_emissions:</span>
+  <span class="sk">  training_kg:</span> <span class="sv">12400</span>
+  <span class="sk">  inference_kg_per_query:</span> <span class="sv">0.0003</span>
+  <span class="sk">  measurement_tool:</span> <span class="sv">CodeCarbon v2.3</span>
+  <span class="sk">  geo_location:</span> <span class="sv">KR-Seoul</span>
+<span class="sk">energy_consumption:</span>
+  <span class="sk">  training_kwh:</span> <span class="sv">48000</span>
+  <span class="sk">  inference_kwh_per_1k_queries:</span> <span class="sv">0.12</span>
+        </div>
+      </div>
+
+      <!-- S13.7: 구현 로드맵 -->
+      <div class="content-section">
+        <h2>S13.7 — DTC 표준화 로드맵 및 향후 과제</h2>
+
+        <h3>DTC 작성 프로세스 (권장 워크플로우)</h3>
+        <div class="workflow-steps">
+          <div class="wf-step">
+            <span class="wf-num">①</span>
+            <div class="wf-label">TFL 특성 선택</div>
+            <div class="wf-sub">S02에서 28개 중 해당 특성 식별</div>
+          </div>
+          <div class="wf-arrow">→</div>
+          <div class="wf-step">
+            <span class="wf-num">②</span>
+            <div class="wf-label">SC 채택</div>
+            <div class="wf-sub">S03 카탈로그에서 SC ID 선택·수준 결정</div>
+          </div>
+          <div class="wf-arrow">→</div>
+          <div class="wf-step">
+            <span class="wf-num">③</span>
+            <div class="wf-label">TC-REQ 매핑</div>
+            <div class="wf-sub">S04에서 해당 TC-REQ 목록 확인</div>
+          </div>
+          <div class="wf-arrow">→</div>
+          <div class="wf-step">
+            <span class="wf-num">④</span>
+            <div class="wf-label">검증 수행</div>
+            <div class="wf-sub">S03.6 V&V 분석 기반 TYPE III 시험</div>
+          </div>
+          <div class="wf-arrow">→</div>
+          <div class="wf-step">
+            <span class="wf-num">⑤</span>
+            <div class="wf-label">DTC 작성</div>
+            <div class="wf-sub">§1~§9 필드 입력 + 증거 색인</div>
+          </div>
+          <div class="wf-arrow">→</div>
+          <div class="wf-step">
+            <span class="wf-num">⑥</span>
+            <div class="wf-label">공개·갱신</div>
+            <div class="wf-sub">배포·모니터링·연간 갱신</div>
+          </div>
+        </div>
+
+        <h3>표준화 향후 과제</h3>
+        <table class="map-table" style="margin-top:10px">
+          <thead>
+            <tr><th>과제</th><th>내용</th><th>참조 표준</th><th>우선순위</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>DTC JSON-LD 스키마</strong></td>
+              <td>기계 가독 DTC 스키마 표준화 (JSON Schema / JSON-LD)</td>
+              <td>ISO/IEC 42117-X 부속서</td>
+              <td><span style="color:#c0392b;font-weight:700">🔴 높음</span></td>
+            </tr>
+            <tr>
+              <td><strong>DTC 등록 리포지터리</strong></td>
+              <td>발행된 DTC 중앙 등록 체계 (SC 42 또는 민간)</td>
+              <td>ISO 17067 §4.4</td>
+              <td><span style="color:#f39c12;font-weight:700">🟡 중간</span></td>
+            </tr>
+            <tr>
+              <td><strong>DTC 갱신 주기 규정</strong></td>
+              <td>DTC 유효기간, 트리거 이벤트(major update, incident) 규정화</td>
+              <td>ISO/IEC 42001 §9.1</td>
+              <td><span style="color:#f39c12;font-weight:700">🟡 중간</span></td>
+            </tr>
+            <tr>
+              <td><strong>DTS 25058 IS 전환 시 반영</strong></td>
+              <td>DTS 25058 기반 TC-REQ → IS 확정 시 DTC §4 기준 강화</td>
+              <td>ISO/IEC DTS 25058 (S12 추적)</td>
+              <td><span style="color:#f39c12;font-weight:700">🟡 중간</span></td>
+            </tr>
+            <tr>
+              <td><strong>EU AI Act 연계</strong></td>
+              <td>EU AI Act Article 11 기술 문서 ↔ DTC §2/§4/§6 매핑 정의</td>
+              <td>EU Regulation 2024/1689</td>
+              <td><span style="color:#c0392b;font-weight:700">🔴 높음</span></td>
+            </tr>
+            <tr>
+              <td><strong>자동화 DTC 생성 도구</strong></td>
+              <td>TC-REQ 검증 시스템 → DTC YAML 자동 생성 파이프라인</td>
+              <td>ISO/IEC 5338 AI 수명주기</td>
+              <td><span style="color:#27ae60;font-weight:700">🟢 장기</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note-box warning" style="margin-top:16px">
+          <span class="icon">🔗</span>
+          <div>
+            <strong>관련 문서 바로가기</strong><br>
+            <a href="s03-claims.html">S03 Simple Claim 카탈로그</a> (SC 선택 기준) ·
+            <a href="s04-tc-mapping.html">S04 TC-REQ 매핑</a> (검증 대상 요구사항) ·
+            <a href="s05-ca-guide.html">S05 CA 이행 가이드</a> (적합성 평가 절차) ·
+            <a href="s10-requirements-list.html">S10 전체 SHALL/SHOULD 목록</a> (TC 원문 참조) ·
+            <a href="s12-standards-tracker.html">S12 표준 추적기</a> (DTS→IS 전환 현황)
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /main-content -->
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>

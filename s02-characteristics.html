@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>S02 15개 TCM 신뢰성 특성 — ISO/IEC 42117-X TFL 가이드</title>
+  <title>S02 28개 TCM 신뢰성 특성 — ISO/IEC 42117-X TFL 가이드</title>
   <link rel="stylesheet" href="assets/style.css">
   <style>
     .char-table td:nth-child(3) { font-family: monospace; font-size: 12px; }
@@ -40,12 +40,18 @@
       <div class="nav-section">
         <div class="nav-label">섹션</div>
         <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
-        <a href="s02-characteristics.html" class="nav-item active"><span class="section-id">S02</span>15개 TCM 신뢰성 특성</a>
+        <a href="s02-characteristics.html" class="nav-item active"><span class="section-id">S02</span>28개 TCM 신뢰성 특성</a>
         <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
         <a href="s04-tc-mapping.html" class="nav-item"><span class="section-id">S04</span>TCM-TC 요구사항 매핑</a>
         <a href="s05-ca-guide.html" class="nav-item"><span class="section-id">S05</span>CA 이행 가이드</a>
         <a href="s06-gaps.html" class="nav-item"><span class="section-id">S06</span>커버리지 갭 및 권고사항</a>
         <a href="s07-references.html" class="nav-item"><span class="section-id">S07</span>참조 표준 및 용어 사전</a>
+        <a href="s08-standards-diagram.html" class="nav-item"><span class="section-id">S08</span>표준 연관도</a>
+        <a href="s09-vocabulary.html" class="nav-item"><span class="section-id">S09</span>특성 Vocabulary 비교</a>
+        <a href="s10-requirements-list.html" class="nav-item"><span class="section-id">S10</span>요구사항 전체 목록</a>
+        <a href="s11-tc-claim-mapping.html" class="nav-item"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
+        <a href="s12-standards-tracker.html" class="nav-item"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
+        <a href="s13-dtc-card.html" class="nav-item"><span class="section-id">S13</span>AI Developer Technical Card</a>
       </div>
     </div>
   </nav>
@@ -53,7 +59,7 @@
   <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
     <div class="page-header">
       <div>
-        <h1>S02 — 15개 TCM 신뢰성 특성</h1>
+        <h1>S02 — 28개 TCM 신뢰성 특성</h1>
         <div class="breadcrumb"><a href="index.html">홈</a> › S02</div>
       </div>
     </div>
@@ -201,6 +207,84 @@
               <td><span class="coverage-full">✅ 완전</span></td>
               <td>TR 24028, DTR 5469, DTS 8200</td><td>RES 형식 20개 포함</td>
             </tr>
+            <tr style="background:#e8f5e9">
+              <td>16</td><td><strong>Privacy</strong> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규</span></td><td>5</td>
+              <td><div class="bar-container"><div class="coverage-bar"><div class="fill fill-partial" style="width:50%"></div></div><span class="bar-num">5</span></div></td>
+              <td><span class="coverage-partial">⚠️ 부분</span></td>
+              <td>TS 5723 §3.2.9, TR 24028 §3.28</td><td>TCM D 마커, ISO 22989 Note 2</td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td>17</td><td><strong>Authenticity</strong> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규</span></td><td>3</td>
+              <td><div class="bar-container"><div class="coverage-bar"><div class="fill fill-partial" style="width:30%"></div></div><span class="bar-num">3</span></div></td>
+              <td><span class="coverage-partial">⚠️ 부분</span></td>
+              <td>TS 5723 §3.2.3</td><td>TCM D 마커, ISO 22989 Note 2</td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td>18</td><td><strong>Integrity</strong> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규</span></td><td>3</td>
+              <td><div class="bar-container"><div class="coverage-bar"><div class="fill fill-partial" style="width:30%"></div></div><span class="bar-num">3</span></div></td>
+              <td><span class="coverage-partial">⚠️ 부분</span></td>
+              <td>TS 5723 §3.2.7~8, TR 24028 §3.21</td><td>TCM D 마커, ISO 22989 Note 2</td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td>19</td><td><strong>Autonomy</strong> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규</span></td><td>5</td>
+              <td><div class="bar-container"><div class="coverage-bar"><div class="fill fill-partial" style="width:50%"></div></div><span class="bar-num">5</span></div></td>
+              <td><span class="coverage-partial">⚠️ 부분</span></td>
+              <td>TR 24028 §3.7</td><td>TCM D, g 마커</td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td>20</td><td><strong>Effectiveness</strong> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규</span></td><td>3</td>
+              <td><div class="bar-container"><div class="coverage-bar"><div class="fill fill-partial" style="width:30%"></div></div><span class="bar-num">3</span></div></td>
+              <td><span class="coverage-partial">⚠️ 부분</span></td>
+              <td>TR 24028 §3.14</td><td>TCM D* (폐기)</td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td>21</td><td><strong>Functional Safety</strong> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규</span></td><td>0</td>
+              <td><div class="bar-container"><div class="coverage-bar"><div class="fill fill-insuf" style="width:0%"></div></div><span class="bar-num" style="color:#c0392b">갭</span></div></td>
+              <td><span class="coverage-insuf">❌ 갭</span></td>
+              <td>DTR 5469, IEC 61508</td><td>TCM D, g, c 마커</td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td>22</td><td><strong>Harm</strong> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규</span></td><td>3</td>
+              <td><div class="bar-container"><div class="coverage-bar"><div class="fill fill-partial" style="width:30%"></div></div><span class="bar-num">3</span></div></td>
+              <td><span class="coverage-partial">⚠️ 부분</span></td>
+              <td>ISO 31000, FDIS 42005</td><td>TCM D*, g (폐기)</td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td>23</td><td><strong>Hazard</strong> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규</span></td><td>0</td>
+              <td><div class="bar-container"><div class="coverage-bar"><div class="fill fill-insuf" style="width:0%"></div></div><span class="bar-num" style="color:#c0392b">갭</span></div></td>
+              <td><span class="coverage-insuf">❌ 갭</span></td>
+              <td>IEC 61508, ISO 31000</td><td>TCM D* (폐기)</td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td>24</td><td><strong>Interpretability</strong> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규</span></td><td>3</td>
+              <td><div class="bar-container"><div class="coverage-bar"><div class="fill fill-partial" style="width:30%"></div></div><span class="bar-num">3 <span style="color:#e67e22;font-size:9px">PROXY</span></span></div></td>
+              <td><span class="coverage-partial">⚠️ PROXY</span></td>
+              <td>WG3 Web (D 미확정)</td><td>DTS 6254 연계</td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td>25</td><td><strong>Quality</strong> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규</span></td><td>6</td>
+              <td><div class="bar-container"><div class="coverage-bar"><div class="fill fill-partial" style="width:60%"></div></div><span class="bar-num">4</span></div></td>
+              <td><span class="coverage-partial">⚠️ 부분</span></td>
+              <td>TS 5723 §3.2.10~11</td><td>TCM D 마커, ISO 22989 Note 2</td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td>26</td><td><strong>Risk</strong> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규</span></td><td>10</td>
+              <td><div class="bar-container"><div class="coverage-bar"><div class="fill fill-full" style="width:100%"></div></div><span class="bar-num">10</span></div></td>
+              <td><span class="coverage-full">✅ 완전</span></td>
+              <td>ISO 31000:2018 §3.1</td><td>TCM D,N,g 마커 (최강), WG3 Web</td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td>27</td><td><strong>Usability</strong> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규</span></td><td>4</td>
+              <td><div class="bar-container"><div class="coverage-bar"><div class="fill fill-partial" style="width:40%"></div></div><span class="bar-num">4</span></div></td>
+              <td><span class="coverage-partial">⚠️ 부분</span></td>
+              <td>TS 5723 §3.2.21</td><td>TCM D* (deprecated), ISO 22989 Note 2</td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td>28</td><td><strong>Threat</strong> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규</span></td><td>3</td>
+              <td><div class="bar-container"><div class="coverage-bar"><div class="fill fill-partial" style="width:30%"></div></div><span class="bar-num">3</span></div></td>
+              <td><span class="coverage-partial">⚠️ 부분</span></td>
+              <td>—</td><td>WG3 Web, TCM CSV (D 마커 확인 필요)</td>
+            </tr>
           </tbody>
         </table>
 
@@ -319,6 +403,91 @@
             <p>AI 시스템이 장애·공격·데이터 드리프트 등 역경 상황에서 복구하고 핵심 기능을 유지하는 능력.</p>
             <div class="standards">주요 표준: ISO/IEC TR 24028, ISO/IEC DTR 5469, ISO/IEC DTS 8200, ISO/IEC 23894</div>
             <div class="req-list">TC-REQ-003, 006, 036, 104, 105, 108, 124 (7개) + TC-XXXXX-RES 형식 20개<br>TC-24028-RES-01~07, TC-5469-RES-01~05, TC-8200-RES-01~03, TC-23894-RES-01, TC-5338-RES-01, TC-29119-RES-01~02, TC-25058-RES-01</div>
+          </div>
+
+          <!-- 신규 식별 특성 (TCM CSV D 마커 + ISO 22989:2022 Note 2 기반) -->
+          <div class="note-box info" style="margin:16px 0 10px 0">
+            <span class="icon">🔍</span>
+            <div><strong>신규 식별 특성 (#16~28)</strong> — TCM CSV D 마커 확인, ISO/IEC 22989:2022 §3.5.16 Note 2 명시, WG3 TCM Web 등재 기반으로 이번 분석에서 추가 식별됨. TC 요구사항 추출은 추후 업데이트 예정.</div>
+          </div>
+
+          <div class="char-card partial">
+            <h4>🔍 Privacy <small>(프라이버시)</small> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규 식별</span></h4>
+            <p>개인의 사생활, 가족, 서신, 개인정보에 대한 부당하거나 불법적인 데이터 수집·사용으로부터의 자유. AI 시스템의 Privacy-by-design, 데이터 최소화, GDPR 정합성을 포함.</p>
+            <div class="standards">주요 표준: ISO/IEC TS 5723:2022 §3.2.9, ISO/IEC TR 24028:2020 §3.28 · TCM CSV D 마커 · ISO 22989:2022 Note 2 명시</div>
+            <div class="req-list"><strong>TC-PRIV-001~005 추출 완료:</strong> TC-PRIV-001 SHALL (5338 §6.4.1.3), TC-PRIV-002~003 SHOULD (DTS 25058 §9.8/§11.1), TC-PRIV-004 SHOULD (42119-2 §7.3.3.2), TC-PRIV-005 SHOULD (FDIS 42005 §6.8.2.5 — 이해관계자별 privacy 피해 분석)</div>
+          </div>
+          <div class="char-card partial">
+            <h4>🔍 Authenticity <small>(진본성)</small> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규 식별</span></h4>
+            <p>엔티티(AI 시스템, 모델, 데이터)가 주장하는 바대로 실재함을 확인할 수 있는 속성. AI 모델 공급망 출처 진위성, 학습 데이터 출처 검증, AI 시스템 신원 확인을 포함.</p>
+            <div class="standards">주요 표준: ISO/IEC TS 5723:2022 §3.2.3 · TCM CSV D 마커 · ISO 22989:2022 Note 2 명시</div>
+            <div class="req-list"><strong>TC-AUTH-001~003 추출 완료:</strong> TC-AUTH-001~002 SHOULD (DTS 8200 §7.1 — 인증된 제어 주체 요구), TC-AUTH-003 SHOULD (DTS 25058 §11.5 — ISO 25023 진본성 품질 측정)</div>
+          </div>
+          <div class="char-card partial">
+            <h4>🔍 Integrity <small>(무결성)</small> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규 식별</span></h4>
+            <p>AI 시스템·데이터·모델이 무단 변경·삭제·치환 없이 정확성과 완전성을 유지하는 속성. 데이터 무결성(학습 데이터 오염 방지), 모델 무결성(가중치 변조 방지), 추론 결과 무결성을 포함.</p>
+            <div class="standards">주요 표준: ISO/IEC TS 5723:2022 §3.2.7~8, ISO/IEC TR 24028:2020 §3.21 · TCM CSV D 마커 · ISO 22989:2022 Note 2 명시</div>
+            <div class="req-list"><strong>TC-INTG-001~003 추출 완료:</strong> TC-INTG-001~003 SHOULD (DTS 25058 §11.2/§9.1.1/§11.5 — 데이터·시스템·무결성 품질 측정)</div>
+          </div>
+          <div class="char-card partial">
+            <h4>🔍 Autonomy <small>(자율성)</small> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규 식별</span></h4>
+            <p>AI 시스템이 자기 학습 또는 자체 생성 규칙으로 스스로 운영되는 특성. 자율성 수준에 따라 인간 감시(Human Oversight) 및 Controllability 요구사항이 결정됨.</p>
+            <div class="standards">주요 표준: ISO/IEC TR 24028:2020 §3.7 · TCM CSV D, g 마커</div>
+            <div class="req-list"><strong>TC-AUTO-001~005 추출 완료:</strong> TC-AUTO-001 SHALL (DTS 8200 §7.2.1.2), TC-AUTO-002~005 SHOULD (DTS 8200 §5.1/§8.1/§6.8/§6.6). DTS 8200 §5.1: "controllability is a technical prerequisite of human oversight" — Autonomy 역개념 규범화</div>
+          </div>
+          <div class="char-card partial">
+            <h4>🔍 Effectiveness <small>(효과성)</small> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규 식별</span></h4>
+            <p>AI 시스템이 계획된 활동을 실현하고 계획된 결과를 달성하는 정도. Efficiency(자원 활용)와 구분: 목표 달성 여부에 집중.</p>
+            <div class="standards">주요 표준: ISO/IEC TR 24028:2020 §3.14 · TCM CSV D* (폐기)</div>
+            <div class="req-list"><strong>TC-EFFE-001~003 추출 완료:</strong> TC-EFFE-001 SHOULD (DTS 25058 §14 — 효과성 하위특성 품질 측정), TC-EFFE-002~003 SHOULD (DTS 25058 §6.2 — AI 시스템 목표 달성도 평가)</div>
+          </div>
+          <div class="char-card partial">
+            <h4>🔍 Functional Safety <small>(기능 안전성)</small> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규 식별</span></h4>
+            <p>안전 관련 시스템의 올바른 기능에 의존하는 전반적 안전의 일부. AI 시스템에서 HARA, SIL/ASIL 수준 결정, Safety case 작성을 포함.</p>
+            <div class="standards">주요 표준: ISO/IEC DTR 5469 · TCM CSV D, g, c 마커 · IEC 61508, ISO 26262</div>
+            <div class="req-list"><span style="color:#c0392b">⚠️ 갭:</span> DTR 5469는 Technical Report 성격 (normative SHALL/SHOULD 없음), IEC 61508/ISO 26262 tc_text 미포함. AI-특화 기능안전 IS 발행 대기 중.</div>
+          </div>
+          <div class="char-card partial">
+            <h4>🔍 Harm <small>(위해)</small> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규 식별</span></h4>
+            <p>AI 시스템이 유발하는 신체적·심리적·재정적·사회적 부정적 결과. Hazard(위험원) → Risk → Harm(위해) 인과 체계에서 현실화된 결과에 해당.</p>
+            <div class="standards">주요 표준: TCM CSV D*, g (폐기) · WG3 Web · ISO 31000, FDIS 42005</div>
+            <div class="req-list"><strong>TC-HARM-001~003 추출 완료:</strong> TC-HARM-001 SHALL (FDIS 42005 §5.8 — harm 방지 의무), TC-HARM-002 SHOULD (FDIS 42005 §6.8.1 — harm 사전 분석), TC-HARM-003 SHOULD (FDIS 42005 §6.8.2.1 — 심각도·발생가능성 harm 평가)</div>
+          </div>
+          <div class="char-card partial">
+            <h4>🔍 Hazard <small>(위험원)</small> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규 식별</span></h4>
+            <p>AI 시스템이 가진 잠재적 위해 원천. 모델 편향, 허위 정보, 환경 인식 실패, 사이버 취약점 등이 AI 특유의 hazard에 해당.</p>
+            <div class="standards">주요 표준: TCM CSV D* (폐기) · WG3 Web · IEC 61508, ISO 31000</div>
+            <div class="req-list"><span style="color:#c0392b">⚠️ 갭:</span> DTR 5469 TR 성격 (normative 없음), FDIS 42005에 hazard-specific normative 미존재. AI 기능안전 전담 IS 표준 발행 필요.</div>
+          </div>
+          <div class="char-card partial">
+            <h4>🔍 Interpretability <small>(해석 가능성)</small> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규 식별</span></h4>
+            <p>AI 모델의 내부 메커니즘·표현을 인간이 이해할 수 있는 방식으로 제공하는 속성. Explainability(결정 이유)와 구분: 모델 내부 구조의 가독성에 집중.</p>
+            <div class="standards">주요 표준: WG3 Web 등재 · TCM CSV (D 미확정)</div>
+            <div class="req-list"><strong>TC-INTR-001~003 [PROXY] 추출 완료:</strong> DTS 6254 §7.4.2.2 SHOULD (INTR-002), §7.4.2.6 SHOULD (INTR-003), §7.4.3.2 SHOULD (INTR-001). ⚠️ Interpretability 전용 IS 미발행 — DTS 6254 Explainability로 대체</div>
+          </div>
+          <div class="char-card partial">
+            <h4>🔍 Quality <small>(품질)</small> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규 식별</span></h4>
+            <p>AI 시스템·데이터의 특성이 요구되는 니즈를 충족하는 정도. TS 5723 데이터 품질(§3.2.10)과 시스템 품질(§3.2.11) 이중 정의. ISO/IEC 25059 AI 품질 모델과 연계.</p>
+            <div class="standards">주요 표준: ISO/IEC TS 5723:2022 §3.2.10~11 · TCM CSV D 마커 · ISO 22989:2022 Note 2 명시</div>
+            <div class="req-list"><strong>TC-QUAL-001~006 추출 완료:</strong> TC-QUAL-001~003 SHOULD (DTS 25058 §11.5/§10.4/§10.5 — 진본성·적합성·신뢰성 품질 측정), TC-QUAL-004 SHALL (25059 §6.1 — AI 품질 요구사항 정의), TC-QUAL-005 SHALL (TS 4213 §5.3.5 — ML 테스트 데이터 독립성), TC-QUAL-006 SHALL (TS 4213 §5.3.10 — 하이퍼파라미터 정보 누출 금지) <em style="color:#27ae60">[2026-02-20 신규]</em></div>
+          </div>
+          <div class="char-card partial">
+            <h4>🔍 Risk <small>(위험)</small> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규 식별</span></h4>
+            <p>불확실성이 목표에 미치는 영향 (ISO 31000:2018 §3.1). AI 시스템에서 기술적·사회적·윤리적 차원의 위험을 포함. TCM CSV "D, N, g" 최강 마커. FDIS 42005(위험 영향 평가), FDIS 42006(위험 관리)과 연계.</p>
+            <div class="standards">주요 표준: ISO 31000:2018 §3.1 · TCM CSV D,N,g 마커 · WG3 TCM Web 등재</div>
+            <div class="req-list"><strong>TC-RISK-001~010 추출 완료:</strong> SHALL×2 (23894 §5.2, 5338 §6.4.1.4), SHOULD×8 (23894/5338/42119-2/TR24028 + DTS 25058 §17.1 — AI 위험 식별·우선순위화·ISO 23894 준거 관리)</div>
+          </div>
+          <div class="char-card partial">
+            <h4>🔍 Usability <small>(유용성/사용성)</small> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규 식별</span></h4>
+            <p>특정 사용자가 목표를 달성하기 위해 AI 시스템을 사용할 때의 효과성·효율성·만족도 (TS 5723 §3.2.21 "Usability"). ISO 22989 Note 2 명시. TCM CSV D* (deprecated) — TS 5723 용어로 통합됨. ISO 25059 품질 모델의 구성 요소.</p>
+            <div class="standards">주요 표준: ISO/IEC TS 5723:2022 §3.2.21 · ISO 9241-11 기반 · TCM CSV D* · ISO 22989:2022 Note 2 명시</div>
+            <div class="req-list"><strong>TC-USEAB-001~004 추출 완료:</strong> TC-USEAB-001 SHOULD (DTS 25058 §9.2 — 사용편의성 지표), TC-USEAB-002~004 SHOULD (DTS 25058 §9.3/§9.4/§9.6 — 운영 효율성·사용자 오류·인지 부하)</div>
+          </div>
+          <div class="char-card partial">
+            <h4>🔍 Threat <small>(위협)</small> <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규 식별</span></h4>
+            <p>AI 시스템에 대한 잠재적 위협 요인. 적대적 공격(adversarial attack), 데이터 포이즈닝, 모델 역공학 등 AI-특화 위협 포함. Security, Risk, Hazard와 인과적 체인 형성: Threat → Risk → Harm. WG3 TCM Web 등재.</p>
+            <div class="standards">주요 표준: TCM CSV 등재 · WG3 TCM Web 등재 · ISO/IEC 27000:2018 계열 보안 위협 개념</div>
+            <div class="req-list"><strong>TC-THRT-001~003 추출 완료:</strong> TC-THRT-001 SHALL (TR 24028 §5.1 — 위협 존재 시 예방 의무), TC-THRT-002 SHOULD (23894 §6.4.2.6 — 위협 원천 식별), TC-THRT-003 SHOULD (DTS 8200 §8.3.5 — 위험 평가·처리를 위한 제어가능성 설계)</div>
           </div>
         </div>
       </div>

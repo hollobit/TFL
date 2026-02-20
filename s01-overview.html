@@ -39,12 +39,18 @@
       <div class="nav-section">
         <div class="nav-label">섹션</div>
         <a href="s01-overview.html" class="nav-item active"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
-        <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>15개 TCM 신뢰성 특성</a>
+        <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>28개 TCM 신뢰성 특성</a>
         <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
         <a href="s04-tc-mapping.html" class="nav-item"><span class="section-id">S04</span>TCM-TC 요구사항 매핑</a>
         <a href="s05-ca-guide.html" class="nav-item"><span class="section-id">S05</span>CA 이행 가이드</a>
         <a href="s06-gaps.html" class="nav-item"><span class="section-id">S06</span>커버리지 갭 및 권고사항</a>
         <a href="s07-references.html" class="nav-item"><span class="section-id">S07</span>참조 표준 및 용어 사전</a>
+        <a href="s08-standards-diagram.html" class="nav-item"><span class="section-id">S08</span>표준 연관도</a>
+        <a href="s09-vocabulary.html" class="nav-item"><span class="section-id">S09</span>특성 Vocabulary 비교</a>
+        <a href="s10-requirements-list.html" class="nav-item"><span class="section-id">S10</span>요구사항 전체 목록</a>
+        <a href="s11-tc-claim-mapping.html" class="nav-item"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
+        <a href="s12-standards-tracker.html" class="nav-item"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
+        <a href="s13-dtc-card.html" class="nav-item"><span class="section-id">S13</span>AI Developer Technical Card</a>
       </div>
     </div>
   </nav>
@@ -147,8 +153,8 @@
 
       <!-- S01.3 -->
       <div class="content-section">
-        <h2>S01.3 — 15개 TCM 신뢰성 특성 개관</h2>
-        <p>TFL 파이프라인은 SC42 TCM(Trustworthiness Characteristics Matrix)에서 도출한 <strong>15개 신뢰성 특성</strong>을 기반으로 합니다:</p>
+        <h2>S01.3 — 28개 TCM 신뢰성 특성 개관</h2>
+        <p>TFL 파이프라인은 SC42 TCM(Trustworthiness Characteristics Matrix)에서 도출한 신뢰성 특성을 기반으로 합니다. 기존 15개에 이번 분석에서 13개(#16~28)를 추가 식별하여 총 <strong>28개</strong>로 확장:</p>
         <table>
           <thead>
             <tr><th>#</th><th>특성명</th><th>TC 수</th><th>커버리지</th><th>주요 출처 표준</th></tr>
@@ -169,9 +175,22 @@
             <tr><td>13</td><td><strong>Efficiency</strong></td><td>4</td><td><span class="coverage-insuf">❌ 미흡</span></td><td>DTS 25058, 5338</td></tr>
             <tr><td>14</td><td><strong>Availability</strong></td><td>2</td><td><span class="coverage-insuf">❌ 미흡</span></td><td>5338, DTS 25058</td></tr>
             <tr><td>15</td><td><strong>Resilience</strong></td><td>27</td><td><span class="coverage-full">✅ 완전</span></td><td>TR 24028 (RES 7개 포함), DTR 5469</td></tr>
+            <tr style="background:#e8f5e9"><td>16</td><td><strong>Privacy</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td>—</td><td><span style="color:#888;font-size:12px">🔍 추출 예정</span></td><td>TS 5723 §3.2.9, TR 24028 §3.28</td></tr>
+            <tr style="background:#e8f5e9"><td>17</td><td><strong>Authenticity</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td>—</td><td><span style="color:#888;font-size:12px">🔍 추출 예정</span></td><td>TS 5723 §3.2.3</td></tr>
+            <tr style="background:#e8f5e9"><td>18</td><td><strong>Integrity</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td>—</td><td><span style="color:#888;font-size:12px">🔍 추출 예정</span></td><td>TS 5723 §3.2.7~8, TR 24028 §3.21</td></tr>
+            <tr style="background:#e8f5e9"><td>19</td><td><strong>Autonomy</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td>—</td><td><span style="color:#888;font-size:12px">🔍 추출 예정</span></td><td>TR 24028 §3.7, TCM D,g</td></tr>
+            <tr style="background:#e8f5e9"><td>20</td><td><strong>Effectiveness</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td>—</td><td><span style="color:#888;font-size:12px">🔍 추출 예정</span></td><td>TR 24028 §3.14, TCM D*</td></tr>
+            <tr style="background:#e8f5e9"><td>21</td><td><strong>Functional Safety</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td>—</td><td><span style="color:#888;font-size:12px">🔍 추출 예정</span></td><td>DTR 5469, IEC 61508, TCM D,g,c</td></tr>
+            <tr style="background:#e8f5e9"><td>22</td><td><strong>Harm</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td>—</td><td><span style="color:#888;font-size:12px">🔍 추출 예정</span></td><td>WG3 Web, TCM D*,g, ISO 31000</td></tr>
+            <tr style="background:#e8f5e9"><td>23</td><td><strong>Hazard</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td>—</td><td><span style="color:#888;font-size:12px">🔍 추출 예정</span></td><td>WG3 Web, TCM D*, IEC 61508</td></tr>
+            <tr style="background:#e8f5e9"><td>24</td><td><strong>Interpretability</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td>—</td><td><span style="color:#888;font-size:12px">🔍 추출 예정</span></td><td>WG3 Web (유일 소스 — 심각 갭)</td></tr>
+            <tr style="background:#e8f5e9"><td>25</td><td><strong>Quality</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td>—</td><td><span style="color:#888;font-size:12px">🔍 추출 예정</span></td><td>TS 5723 §3.2.10~11, ISO 22989 Note 2</td></tr>
+            <tr style="background:#e8f5e9"><td>26</td><td><strong>Risk</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td>—</td><td><span style="color:#888;font-size:12px">🔍 추출 예정</span></td><td>ISO 31000:2018 §3.1, TCM D,N,g</td></tr>
+            <tr style="background:#e8f5e9"><td>27</td><td><strong>Usability</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td>—</td><td><span style="color:#888;font-size:12px">🔍 추출 예정</span></td><td>TS 5723 §3.2.21, ISO 22989 Note 2</td></tr>
+            <tr style="background:#e8f5e9"><td>28</td><td><strong>Threat</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td>—</td><td><span style="color:#888;font-size:12px">🔍 추출 예정</span></td><td>WG3 Web, TCM CSV, ISO 27000</td></tr>
           </tbody>
         </table>
-        <p><strong>합계: 148개 요구사항</strong> (TC-REQ 형식 128개 + TC-XXXXX-RES 형식 20개), 19개 SC42 표준 문서로부터 추출</p>
+        <p><strong>합계: 148개 요구사항</strong> (TC-REQ 형식 128개 + TC-XXXXX-RES 형식 20개), 23개 SC42 표준 문서로부터 추출. #16~28은 TCM CSV D 마커·WG3 TCM Web·ISO 22989:2022 Note 2 기반 신규 식별 — TC 추출 예정.</p>
 
         <div class="note-box warning">
           <span class="icon">⚠️</span>
@@ -239,7 +258,7 @@
           <div class="phase-box">
             <h5>Phase 1A</h5>
             <strong>TC 추출</strong>
-            <ul><li>19개 SC42 표준</li><li>148개 요구사항 추출</li><li>→ tc_structured.json</li></ul>
+            <ul><li>23개 SC42 표준</li><li>148개 요구사항 추출</li><li>→ tc_structured.json</li></ul>
           </div>
           <div class="arrow">→</div>
           <div class="phase-box">

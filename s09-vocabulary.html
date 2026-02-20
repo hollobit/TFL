@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S09 특성 Vocabulary 비교 — ISO/IEC 42117-X TFL 가이드</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .vocab-accordion {
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .vocab-acc-header {
+      display: flex;
+      align-items: center;
+      padding: 13px 18px;
+      background: #f8f9fa;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+      gap: 12px;
+    }
+    .vocab-acc-header:hover { background: #edf0f5; }
+    .vocab-char-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a4480;
+      min-width: 160px;
+    }
+    .vocab-status-pills { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
+    .vocab-acc-arrow { font-size: 12px; color: #888; transition: transform 0.2s; margin-left: auto; }
+    .vocab-acc-arrow.open { transform: rotate(180deg); }
+    .vocab-acc-body {
+      padding: 18px 20px;
+      background: #fff;
+      border-top: 1px solid #dee2e6;
+      display: none;
+    }
+    /* Vocab comparison table */
+    .vocab-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .vocab-table th {
+      padding: 8px 12px;
+      text-align: left;
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #666;
+      border-bottom: 2px solid #dee2e6;
+      background: #f8f9fa;
+      white-space: nowrap;
+    }
+    .vocab-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #f0f0f0;
+      vertical-align: top;
+      line-height: 1.6;
+    }
+    .vocab-table .src-label {
+      font-weight: 700;
+      font-size: 11px;
+      color: #1a4480;
+      white-space: nowrap;
+    }
+    .vocab-table .clause-ref {
+      font-family: monospace;
+      font-size: 11px;
+      color: #888;
+      margin-bottom: 4px;
+    }
+    .vocab-table .def-text {
+      font-size: 13px;
+      color: #222;
+    }
+    .vocab-table .not-defined {
+      color: #aaa;
+      font-style: italic;
+      font-size: 12px;
+    }
+    .status-pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .pill-match { background: #e8f5e9; color: #2d6a4f; border: 1px solid #a5d6a7; }
+    .pill-diff { background: #fff3e0; color: #b86e00; border: 1px solid #ffcc80; }
+    .pill-missing { background: #fce4ec; color: #c62828; border: 1px solid #f48fb1; }
+    .vocab-analysis {
+      background: #f8f9fa;
+      border-left: 3px solid #1a4480;
+      padding: 10px 14px;
+      margin-top: 12px;
+      font-size: 12.5px;
+      line-height: 1.65;
+      color: #444;
+    }
+    .vocab-analysis strong { color: #1a4480; }
+    /* Source legend */
+    .src-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+    .src-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+    .src-dot { width: 12px; height: 12px; border-radius: 2px; }
+    /* Gap summary table */
+    .gap-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    .gap-table th { background: #1a4480; color: #fff; padding: 8px 12px; text-align: center; font-size: 11px; }
+    .gap-table td { padding: 7px 12px; border-bottom: 1px solid #dee2e6; text-align: center; }
+    .gap-table td:first-child { text-align: left; font-weight: 600; color: #1a4480; }
+    .cell-yes { color: #27ae60; font-weight: 700; }
+    .cell-partial { color: #e67e22; }
+    .cell-no { color: #e74c3c; }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">ISO/IEC 42117-X</div>
+      <div class="title">TFL 운영 가이드</div>
+      <div class="version">v1.0 · 2026-02-19</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-label">메인</div>
+        <a href="index.html" class="nav-item">📋 가이드 홈</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">섹션</div>
+        <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
+        <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>28개 TCM 신뢰성 특성</a>
+        <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
+        <a href="s04-tc-mapping.html" class="nav-item"><span class="section-id">S04</span>TCM-TC 요구사항 매핑</a>
+        <a href="s05-ca-guide.html" class="nav-item"><span class="section-id">S05</span>CA 이행 가이드</a>
+        <a href="s06-gaps.html" class="nav-item"><span class="section-id">S06</span>커버리지 갭 및 권고사항</a>
+        <a href="s07-references.html" class="nav-item"><span class="section-id">S07</span>참조 표준 및 용어 사전</a>
+        <a href="s08-standards-diagram.html" class="nav-item"><span class="section-id">S08</span>표준 연관도</a>
+        <a href="s09-vocabulary.html" class="nav-item active"><span class="section-id">S09</span>특성 Vocabulary 비교</a>
+        <a href="s10-requirements-list.html" class="nav-item"><span class="section-id">S10</span>요구사항 전체 목록</a>
+        <a href="s11-tc-claim-mapping.html" class="nav-item"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
+        <a href="s12-standards-tracker.html" class="nav-item"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
+        <a href="s13-dtc-card.html" class="nav-item"><span class="section-id">S13</span>AI Developer Technical Card</a>
+      </div>
+    </div>
+  </nav>
+
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div class="page-header">
+      <div>
+        <h1>S09 — 28개 특성 Vocabulary 비교</h1>
+        <div class="breadcrumb"><a href="index.html">홈</a> › S09</div>
+      </div>
+    </div>
+
+    <div class="main-content">
+
+      <div class="note-box info">
+        <span class="icon">ℹ️</span>
+        <div>
+          <strong>비교 분석 방법론</strong>
+          28개 TCM 신뢰성 특성 각각에 대해 복수 소스(ISO/IEC TS 5723:2022, ISO/IEC TR 24028:2020, ISO/IEC 22989:2022, ISO/IEC DTS 6254, ISO/IEC DTR 5469, ISO/IEC 25059:2023, TCM CSV, WG3 TCM Web)의 정의를 비교합니다. 기존 15개 + 신규 식별 13개(#16 Privacy~#28 Threat).
+          정의 일치(✅), 차이 있음(⚠️), 미정의(❌) 상태를 표시하고, 표준화 갭 및 권고사항을 제시합니다. <strong>2026-02-20 업데이트:</strong> workspace/tc_text/*.txt 원문 추출 기반으로 모든 정의를 검증·수정.
+        </div>
+      </div>
+
+      <!-- Source Legend -->
+      <div class="content-section" style="padding: 14px 18px;">
+        <h2 style="font-size:14px;margin-bottom:10px">데이터 소스 범례</h2>
+        <div class="src-legend">
+          <div class="src-legend-item">
+            <div class="src-dot" style="background:#1a4480"></div>
+            <span><strong>TS 5723</strong> — ISO/IEC TS 5723:2022 (Trustworthiness — Vocabulary)</span>
+          </div>
+          <div class="src-legend-item">
+            <div class="src-dot" style="background:#c0392b"></div>
+            <span><strong>22989:2022</strong> — ISO/IEC 22989:2022 (AI concepts and terminology, Clause 3.5 Trustworthiness)</span>
+          </div>
+          <div class="src-legend-item">
+            <div class="src-dot" style="background:#9b59b6"></div>
+            <span><strong>TR 24028</strong> — ISO/IEC TR 24028:2020 (Overview of trustworthiness in AI)</span>
+          </div>
+          <div class="src-legend-item">
+            <div class="src-dot" style="background:#27ae60"></div>
+            <span><strong>TCM CSV</strong> — SC42 WG3 Trustworthiness Characteristics Matrix (2025-10-14 endorsed)</span>
+          </div>
+          <div class="src-legend-item">
+            <div class="src-dot" style="background:#e67e22"></div>
+            <span><strong>WG3 Web</strong> — hollobit.github.io/WG3_TCM (TCM Web 공개 버전)</span>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:12px;color:#666">
+          <span class="status-pill pill-match">✅ 일치</span> 5개 소스 간 실질적으로 동일한 정의 &nbsp;
+          <span class="status-pill pill-diff">⚠️ 차이</span> 정의 범위·강조점에 차이 있음 &nbsp;
+          <span class="status-pill pill-missing">❌ 미정의</span> 해당 소스에서 공식 정의 없음
+        </div>
+      </div>
+
+      <!-- 15 Characteristic Accordions -->
+
+      <!-- 1. Trustworthiness -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('tworthiness')">
+          <span class="vocab-char-name">1. Trustworthiness</span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-match">✅ TS 5723</span>
+            <span class="status-pill pill-match">✅ TR 24028</span>
+            <span class="status-pill pill-diff">⚠️ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+          
+            <span class="status-pill pill-match">✅ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-tworthiness">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-tworthiness">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">§3.1.1</div></td>
+                <td class="def-text">ability to meet stakeholders' expectations in a verifiable way<br><em style="font-size:11px;color:#888">Note: Characteristics include accountability, availability, controllability, reliability, resilience, robustness, safety, security, transparency.</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">§3.42</div></td>
+                <td class="def-text">ability to meet stakeholders' expectations in a verifiable way<br><em style="font-size:11px;color:#888">Note: Characteristics include reliability, availability, resilience, security, privacy, safety, accountability, transparency, integrity, authenticity, quality, usability.</em></td>
+                <td><span class="status-pill pill-match">✅ 일치</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">Row 1 header</div></td>
+                <td class="def-text">TCM 매트릭스 자체가 Trustworthiness의 하위 특성들을 매핑하는 구조. 단일 정의 미제공 — TS 5723 정의 참조(D 마커).</td>
+                <td><span class="status-pill pill-diff">⚠️ 간접</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">SC42 WG3의 TCM Web 공개 버전에서 Trustworthiness는 최상위 특성으로, 기존 15개(총 18개) 하위 특성의 총합으로 정의됨. TS 5723 정의 기반.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+            
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">§3.5.16</div></td>
+                <td class="def-text">ability to meet stakeholder (3.5.13) expectations in a verifiable way<br><em style="font-size:11px;color:#888">Note 2: Characteristics of trustworthiness include reliability, availability, resilience, security, privacy, safety, accountability, transparency.</em></td>
+                <td><span class="status-pill pill-match">✅ 일치</span></td>
+              </tr>
+</tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>분석:</strong> TS 5723과 TR 24028 모두 동일한 핵심 정의("ability to meet stakeholders' expectations in a verifiable way")를 사용합니다.
+            차이점은 하위 특성 예시의 범위: TS 5723은 기존 15개 중 10개(신규 포함 18개 중 13개), TR 24028은 더 광범위한 목록을 예시로 나열합니다.
+            TCM CSV는 단일 정의보다는 특성 매핑 도구로 활용됩니다.
+            <strong>권고:</strong> ISO/IEC 42117-X에서 TS 5723 §3.1.1을 공식 정의로 채택 권고.
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Robustness -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('robustness')">
+          <span class="vocab-char-name">2. Robustness</span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-match">✅ TS 5723</span>
+            <span class="status-pill pill-missing">❌ TR 24028</span>
+            <span class="status-pill pill-match">✅ TCM CSV</span>
+            <span class="status-pill pill-diff">⚠️ WG3 Web</span>
+          
+            <span class="status-pill pill-diff">⚠️ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-robustness">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-robustness">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">§3.2.16</div></td>
+                <td class="def-text">ability of a system to maintain its level of performance under a variety of circumstances<br><em style="font-size:11px;color:#888">[SOURCE: ISO/IEC 22989:2022, 3.5.12, modified]</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">공식 용어 정의 없음. §9.10.3에서 "Robustness considerations" 제목으로 서술하나 단독 용어 정의 미제공.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">Robustness 열</div></td>
+                <td class="def-text">TCM 매트릭스의 Robustness 클러스터에 TR 24029-1, 24029-2 등 관련 문서 매핑됨. ISO/IEC 22989 및 TS 5723 정의 참조(D* 마커).</td>
+                <td><span class="status-pill pill-match">✅ 참조</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">WG3 Web에서는 "Robustness" 특성을 ISO/IEC 22989 및 TR 24029-1/2와 연계하여 표시. 별도 단일 정의보다 문서 연계 방식 채택.</td>
+                <td><span class="status-pill pill-diff">⚠️ 부분</span></td>
+              </tr>
+            
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">§3.5.12</div></td>
+                <td class="def-text">ability of a system to maintain its level of performance under any circumstances<br><em style="font-size:11px;color:#888">⚠️ TS 5723 §3.2.16 adds "a variety of" before "circumstances" (modified from 22989)</em></td>
+                <td><span class="status-pill pill-diff">⚠️ 수정본</span></td>
+              </tr>
+</tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>분석:</strong> TS 5723의 Robustness 정의(§3.2.16)가 유일한 공식 어휘 출처입니다. TR 24028은 용어집에 Robustness를 정의하지 않았습니다.
+            <strong>갭:</strong> TR 24028 §9.10에서 robustness를 중요하게 다루나 용어 정의 부재. 향후 TR 24028 개정 시 포함 권고.
+            <strong>SC42 맥락:</strong> TR 24029-1/2가 NN 강건성(Robustness)의 평가 방법론을 다루나, 개념 정의는 TS 5723에만 있음.
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Reliability -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('reliability')">
+          <span class="vocab-char-name">3. Reliability</span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-diff">⚠️ TS 5723</span>
+            <span class="status-pill pill-match">✅ TR 24028</span>
+            <span class="status-pill pill-match">✅ TCM CSV</span>
+            <span class="status-pill pill-diff">⚠️ WG3 Web</span>
+          
+            <span class="status-pill pill-match">✅ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-reliability">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-reliability">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">§3.2.12<br>§3.2.13</div></td>
+                <td class="def-text">
+                  <em>&lt;cybersecurity&gt;</em> property of consistent intended behaviour and results<br>
+                  — AND —<br>
+                  <em>&lt;system&gt;</em> ability of an item to perform as required, without failure, for a given time interval, under given conditions
+                </td>
+                <td><span class="status-pill pill-diff">⚠️ 이중</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">§3.30</div></td>
+                <td class="def-text">property of consistent intended behaviour and results<br><em style="font-size:11px;color:#888">[SOURCE: ISO/IEC 27000:2018, 3.55]</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">Reliability 열</div></td>
+                <td class="def-text">TS 25570(Reliability assessment of AI systems) 문서 매핑됨. TS 5723 및 ISO/IEC 25059에서 정의 참조(D 마커).</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">Reliability를 AI 시스템의 핵심 특성으로 표시. ISO/IEC 25059, TS 5723 연계. 단일 정의보다 문서 연계 제공.</td>
+                <td><span class="status-pill pill-diff">⚠️ 부분</span></td>
+              </tr>
+            
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">§3.5.9</div></td>
+                <td class="def-text">property of consistent intended behaviour and results</td>
+                <td><span class="status-pill pill-match">✅ 일치</span></td>
+              </tr>
+</tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>분석:</strong> TS 5723이 Reliability를 <em>두 개</em>의 별개 정의(사이버보안 맥락 vs 시스템 맥락)로 제시합니다. TR 24028은 사이버보안 맥락 정의만 채택.
+            <strong>갭:</strong> AI 시스템에서 어떤 Reliability 정의를 적용해야 하는지 명확한 지침 부재. ISO/IEC 25059(AI 품질 모델)에서는 Reliability를 별도 확장하나 어휘 표준과 완전한 정렬 필요.
+            <strong>권고:</strong> ISO/IEC 42117-X는 §3.2.13(시스템 맥락) 정의를 AI 시스템 신뢰성에 적합한 기준으로 채택 권고.
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Transparency -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('transparency')">
+          <span class="vocab-char-name">4. Transparency</span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-diff">⚠️ TS 5723</span>
+            <span class="status-pill pill-missing">❌ TR 24028</span>
+            <span class="status-pill pill-match">✅ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+          
+            <span class="status-pill pill-diff">⚠️ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-transparency">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-transparency">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">§3.2.19<br>§3.2.20</div></td>
+                <td class="def-text">
+                  <em>&lt;information&gt;</em> open, comprehensive, accessible, clear and understandable presentation of information<br>
+                  — AND —<br>
+                  <em>&lt;systems&gt;</em> property of a system or process to imply openness and accountability
+                </td>
+                <td><span class="status-pill pill-diff">⚠️ 이중</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">§8 (서술)</div></td>
+                <td class="not-defined">Transparency 용어집 정의 없음. §8.5에서 "Transparency"를 AI 신뢰성 속성으로 서술하나 공식 정의 미제공.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">Transparency 열</div></td>
+                <td class="def-text">DTS 6254(Transparency 및 Explainability 목적·접근법) 매핑됨. TS 5723 D 마커. Transparency Taxonomy 문서(12792) 포함.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">DTS 6254</td>
+                <td><div class="clause-ref">§3.3</div></td>
+                <td class="def-text">&lt;system&gt; property of a system that appropriate information about the system is communicated to relevant stakeholders (3.1)<br><em style="font-size:11px;color:#888">Note 1: Appropriate information for system transparency can include aspects such as features, performance, limitations, components, procedures, measures, design goals, design choices and assumptions, data sources and labelling protocols.<br>Note 2: Inappropriate disclosure of some aspects of a system can violate security, privacy, or confidentiality requirements.<br>[SOURCE: ISO/IEC 22989:2022, 3.5.15]</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#2980b9">ISO 25059:2023</td>
+                <td><div class="clause-ref">§3.1.5</div></td>
+                <td class="def-text">degree to which appropriate information about the AI system is communicated to relevant stakeholders<br><em style="font-size:11px;color:#888">Note 1: Appropriate information for AI system transparency can include aspects such as features, components, procedures, measures, design goals, design choices and assumptions.<br>Source: ISO/IEC 25059:2023, §3.1.5 — AI quality model standard</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">DTS 6254(§3.3) 기반 정의. 정보 투명성(TS 5723 §3.2.19)과 시스템 투명성(DTS 6254 §3.3) 구분 적용. ISO 25059 §3.1.5와 일치.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+            
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">§3.5.14 / §3.5.15</div></td>
+                <td class="def-text">[§3.5.14 &lt;organization&gt;] property of an organization that appropriate activities and decisions are communicated to stakeholders<br>[§3.5.15 &lt;system&gt;] property of an AI system where information about the AI system and its decisions is made available to stakeholders<br><em style="font-size:11px;color:#888">두 가지 관점(조직/시스템)으로 정의 분리</em></td>
+                <td><span class="status-pill pill-diff">⚠️ 이중정의</span></td>
+              </tr>
+</tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>분석:</strong> TS 5723은 정보 투명성(§3.2.19)과 시스템 투명성(§3.2.20) 두 정의를 제공합니다. TR 24028은 공식 정의 없이 개념적 서술만 제공.
+            <strong>갭:</strong> AI 시스템 Transparency에 특화된 단일 정의 부재. DTS 6254(개발 중)가 이를 보완하는 방향.
+            <strong>TCM 매핑 현황:</strong> 3개 Simple Claim(SC-Transparency-001~003) 모두 DTS 6254를 주요 출처로 사용.
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Accountability -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('accountability')">
+          <span class="vocab-char-name">5. Accountability</span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-match">✅ TS 5723</span>
+            <span class="status-pill pill-diff">⚠️ TR 24028</span>
+            <span class="status-pill pill-match">✅ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+          
+            <span class="status-pill pill-diff">⚠️ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-accountability">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-accountability">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">§3.2.1</div></td>
+                <td class="def-text">state of being accountable (3.3.1)<br><em style="font-size:11px;color:#888">Note 1: Accountability relates to an allocated responsibility (based on regulation, agreement, or delegation).<br>Note 2: For systems, accountability is a property that ensures that actions of an entity can be traced uniquely to that entity (see ISO 7498-2:1989, 3.3.3).<br>Note 3: In a governance context, accountability is the obligation to account for activities, accept responsibility, and disclose results in a transparent manner.<br>[SOURCE: ISO/IEC 38500:2015, 2.3, modified]</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">§3.1</div></td>
+                <td class="def-text">property that ensures that the actions of an entity may be traced uniquely to that entity<br><em style="font-size:11px;color:#888">[SOURCE: ISO/IEC 2382:2015, 2126250, modified]</em></td>
+                <td><span class="status-pill pill-diff">⚠️ 강조점 차이</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">Row: accountability</div></td>
+                <td class="def-text">TS 5723, ISO/IEC 22989에서 D 마커. Accountability 특성에 TR 24368, FDIS 42006 관련 문서 매핑됨.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">TS 5723 기반 정의. TR 24368(AI 윤리 거버넌스)와 FDIS 42006(감사 기관 요건)을 Accountability 지원 문서로 연계.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+            
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">§3.5.2</div></td>
+                <td class="def-text">state of being accountable (3.5.1)<br><em style="font-size:11px;color:#888">⚠️ 매우 간결한 정의; accountable(3.5.1)의 순환 참조 형식</em></td>
+                <td><span class="status-pill pill-diff">⚠️ 간결</span></td>
+              </tr>
+</tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>분석:</strong> TS 5723(§3.2.1)은 광범위한 Accountability 정의(상태적 개념)를 제공하고, TR 24028(§3.1)은 추적 가능성(traceability) 측면을 강조한 좁은 정의를 제공합니다.
+            <strong>차이점:</strong> TS 5723은 거버넌스 맥락(의무, 결과 공개)을 포함하는 반면, TR 24028은 기술적 추적가능성에 집중.
+            <strong>TFL 적용:</strong> 두 정의 모두 SC-Accountability 계열 Claim에 적용됨. Level 3 Claim은 추적가능성(TR 24028) 기반, Level 1 Claim은 거버넌스(TS 5723, TR 24368) 기반.
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Explainability -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('explainability')">
+          <span class="vocab-char-name">6. Explainability</span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-missing">❌ TS 5723</span>
+            <span class="status-pill pill-missing">❌ TR 24028</span>
+            <span class="status-pill pill-match">✅ DTS 6254</span>
+            <span class="status-pill pill-match">✅ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+            <span class="status-pill pill-match">✅ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-explainability">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-explainability">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Explainability 공식 정의 없음. TS 5723은 어휘(Vocabulary) 표준이나 Explainability는 포함되지 않음.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">§8.6 (서술)</div></td>
+                <td class="not-defined">Explainability 용어집 정의 없음. §8.6에서 "Explainability" 개념과 접근법을 서술하나 공식 정의 미제공.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">Explainability 열</div></td>
+                <td class="def-text">DTS 6254가 Explainability 정의 문서로 매핑됨. ISO/IEC 22989에서 일부 정의 제공. WG3 TCM에서 Explainability를 독립 특성으로 인정.</td>
+                <td><span class="status-pill pill-match">✅ 문서 연계</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">DTS 6254</td>
+                <td><div class="clause-ref">§3.2</div></td>
+                <td class="def-text">property of an AI system (3.4) that enables a given human audience to comprehend the reasons for the system's behaviour (3.22)<br><em style="font-size:11px;color:#888">Note 1: Explainability methods are not limited to the production of explanations, but also include the enabling of interpretations.<br>Source: ISO/IEC DTS 6254 — primary SC42 standard for explainability/interpretability of AI systems</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">DTS 6254(§3.2) 기반: property of an AI system that enables a given human audience to comprehend the reasons for the system's behaviour. WG3 TCM에서 Explainability를 독립 특성으로 등재. DTS 6254와 ISO/IEC 22989 §3.5.9 연계.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+            
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">§3.5.7</div></td>
+                <td class="def-text">property of an AI system (3.1.4) to express important factors influencing the AI system's results in a way that users can understand</td>
+                <td><span class="status-pill pill-match">✅ 일치</span></td>
+              </tr>
+</tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>분석:</strong> TS 5723과 TR 24028 모두 Explainability에 대한 공식 용어 정의를 제공하지 않습니다. 이는 28개 TCM 특성 중 가장 큰 어휘 갭 중 하나입니다.
+            <strong>갭:</strong> ISO/IEC 22989(AI 개념·용어)에 Explainability 정의가 포함되어 있으나(§3.5.9), TS 5723에는 포함되지 않음.
+            <strong>DTS 6254 역할:</strong> 개발 중인 DTS 6254가 Explainability의 목적과 접근법을 정의하는 핵심 문서. TS 5723 개정 시 Explainability 추가 강력 권고.
+            <strong>TFL 영향:</strong> SC-Explainability 계열 3개 Claim 모두 DTS 6254를 주요 출처로 사용하나, 이 문서가 아직 개발 중이어서 불안정성 내포.
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Safety -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('safety')">
+          <span class="vocab-char-name">7. Safety</span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-diff">⚠️ TS 5723</span>
+            <span class="status-pill pill-diff">⚠️ TR 24028</span>
+            <span class="status-pill pill-match">✅ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+          
+            <span class="status-pill pill-missing">❌ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-safety">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-safety">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">§3.2.17</div></td>
+                <td class="def-text">property of a system such that it does not, under defined conditions, lead to a state in which human life, health, property, or the environment is endangered<br><em style="font-size:11px;color:#888">[SOURCE: ISO/IEC/IEEE 12207:2017, 3.1.48, modified]</em></td>
+                <td><span class="status-pill pill-diff">⚠️</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">§3.34</div></td>
+                <td class="def-text">freedom from risk which is not tolerable<br><em style="font-size:11px;color:#888">[SOURCE: ISO/IEC Guide 51:2014, 3.14]</em></td>
+                <td><span class="status-pill pill-diff">⚠️</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">Functional Safety 열</div></td>
+                <td class="def-text">DTR 5469(AI 기능 안전성) 핵심 매핑. IEC 61508-3/4 참조. Safety를 기능 안전성(functional safety) 맥락에서 주로 다룸.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">TS 5723 §3.2.17 기반 정의 채택. 기능 안전성 문서(DTR 5469) 연계. ISO/IEC 23894(리스크 관리)와 Safety 연관성 표시.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+            
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">공식 용어 정의 없음. Safety는 §3.5.16 Note 2에서 trustworthiness 특성 중 하나로 언급되나 독립 용어 정의 없음</td>
+                <td><span class="status-pill pill-missing">❌ 미정의</span></td>
+              </tr>
+</tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>분석:</strong> TS 5723과 TR 24028이 다른 Safety 정의를 사용합니다.
+            TS 5723은 시스템 속성(property) 관점에서 위험 상태 회피를 정의하고, TR 24028은 리스크 기반 정의(ISO/IEC Guide 51)를 채택합니다.
+            <strong>TCM 관점:</strong> TCM CSV에서 Safety는 "Functional Safety" 클러스터로 분류되어 IEC 표준(61508)과 연계됩니다.
+            <strong>권고:</strong> AI 시스템 맥락에서 두 정의를 보완적으로 사용 — 설계 단계(시스템 속성) + 위험 평가 단계(리스크 기반).
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. Security -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('security')">
+          <span class="vocab-char-name">8. Security</span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-diff">⚠️ TS 5723</span>
+            <span class="status-pill pill-diff">⚠️ TR 24028</span>
+            <span class="status-pill pill-match">✅ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+          
+            <span class="status-pill pill-missing">❌ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-security">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-security">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">§3.2.18</div></td>
+                <td class="def-text">resistance to intentional, unauthorized act(s) designed to cause harm or damage to a system<br><em style="font-size:11px;color:#888">[SOURCE: ISO/IEC 23643:2020, 3.16]</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">§3.35</div></td>
+                <td class="def-text">degree to which a product or system protects information and data so that persons or other products or systems have the degree of data access appropriate to their types and levels of authorization<br><em style="font-size:11px;color:#888">[SOURCE: ISO/IEC 25010:2011, 4.2.6]</em></td>
+                <td><span class="status-pill pill-diff">⚠️</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">Security 관련</div></td>
+                <td class="def-text">ISO/IEC 27001 참조. DTS 8200(제어가능성/거버넌스)과 연계. AI 특화 보안 위협(§8의 AI-specific security threats)을 다루는 TR 24028 연계.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">TS 5723 §3.2.18 기반(저항성 관점) 채택. FDIS 42006, ISO/IEC 27001 연계. AI 특화 보안 요건 포함.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+            
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">공식 용어 정의 없음. Security는 §3.5.16 Note 2에서 trustworthiness 특성 중 하나로 언급되나 독립 용어 정의 없음</td>
+                <td><span class="status-pill pill-missing">❌ 미정의</span></td>
+              </tr>
+</tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>분석:</strong> TS 5723의 Security 정의는 "저항성(resistance)" 관점(공격 대응)이고, TR 24028의 정의는 "접근 통제(access control)" 관점(정보 보호)입니다.
+            <strong>차이점:</strong> TS 5723은 AI 보안 취약점(adversarial attack 등)에 적합한 정의, TR 24028은 정보보안 관점의 전통적 정의.
+            <strong>TFL 적용:</strong> SC-Security 계열 Claim에서 두 관점을 모두 반영. Level 3 Claim(SC-Security-003)은 DTS 8200(거버넌스) 기반.
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. Controllability -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('controllability')">
+          <span class="vocab-char-name">9. Controllability</span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-match">✅ TS 5723</span>
+            <span class="status-pill pill-missing">❌ TR 24028</span>
+            <span class="status-pill pill-match">✅ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+          
+            <span class="status-pill pill-match">✅ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-controllability">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-controllability">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">§3.2.5</div></td>
+                <td class="def-text">property of a system that allows a human or another external agent to intervene in the system's functioning<br><em style="font-size:11px;color:#888">[SOURCE: ISO/IEC 22989:2022, 3.5.6, modified]</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">§8.7 (서술)</div></td>
+                <td class="not-defined">Controllability 용어집 정의 없음. §8.7에서 "Controllability"를 중요 특성으로 서술하나 공식 정의 미제공.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">Controllability 열</div></td>
+                <td class="def-text">DTS 8200(제어가능성) 핵심 문서로 매핑됨. TS 5723 D 마커. ISO/IEC 22989에서 controllability 정의 제공. Human oversight 관련 DIS 42105 연계.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">TS 5723 §3.2.5 기반. DTS 8200을 Controllability 핵심 문서로 제시. 인간 감독(human oversight)과 Controllability 연계 강조.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+            
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">§3.5.6</div></td>
+                <td class="def-text">property of an AI system (3.1.4) that allows a human or another external agent to intervene in the AI system's functioning</td>
+                <td><span class="status-pill pill-match">✅ 일치</span></td>
+              </tr>
+</tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>분석:</strong> TS 5723 §3.2.5가 Controllability의 유일한 공식 어휘 출처입니다. TR 24028은 서술하나 정의하지 않습니다.
+            <strong>DTS 8200:</strong> Controllability의 세부 요건을 정의하는 핵심 문서(개발 중). 4개 SHALL + 4개 SHOULD 요건 포함.
+            <strong>Intervenability와 구분:</strong> Controllability는 시스템 개입 허용 속성(property)이고, Intervenability는 실제 개입 능력(capability). 두 개념이 종종 혼용되므로 명확화 필요.
+          </div>
+        </div>
+      </div>
+
+      <!-- 10. Intervenability -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('intervenability')">
+          <span class="vocab-char-name">10. Intervenability</span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-missing">❌ TS 5723</span>
+            <span class="status-pill pill-missing">❌ TR 24028</span>
+            <span class="status-pill pill-match">✅ ISO 25059</span>
+            <span class="status-pill pill-diff">⚠️ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+            <span class="status-pill pill-missing">❌ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-intervenability">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-intervenability">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Intervenability 공식 정의 없음. TS 5723에 포함되지 않은 특성.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Intervenability 용어 정의 없음. 관련 개념이 Controllability 맥락에서 서술됨.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">DTS 8200 연계</div></td>
+                <td class="def-text">TCM CSV에서 Intervenability를 독립 특성으로 식별. DTS 8200 및 TR 24368(AI 윤리)과 연계. "Human oversight" 개념과 연관하여 정의 방향 설정 중.</td>
+                <td><span class="status-pill pill-diff">⚠️ 개발 중</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#2980b9">ISO 25059:2023</td>
+                <td><div class="clause-ref">§3.2.4</div></td>
+                <td class="def-text">degree to which an operator can intervene in an AI system's functioning in a timely manner to prevent harm or hazard<br><em style="font-size:11px;color:#888">Source: ISO/IEC 25059:2023 §3.2.4 — Product quality sub-characteristic for AI systems</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">ISO 25059 §3.2.4 기반 정의. DTS 8200(Controllability) 맥락에서 Intervenability를 인간 개입 능력으로 정의. 인간이 AI 결정을 번복하거나 수정할 수 있는 능력.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+            
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">공식 용어 정의 없음. Intervenability는 22989에서 독립 정의 없음. Controllability(§3.5.6)로 통합 표현</td>
+                <td><span class="status-pill pill-missing">❌ 통합</span></td>
+              </tr>
+</tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>분석:</strong> Intervenability는 28개 TCM 특성 중 가장 어휘 표준화가 부족한 특성입니다. TS 5723과 TR 24028 어느 쪽도 정의하지 않습니다.
+            <strong>갭:</strong> 이 어휘 갭이 S06(커버리지 갭 분석)에서 Intervenability를 "미흡(Insufficient)" 커버리지로 판정한 주요 이유 중 하나입니다.
+            <strong>권고:</strong> TS 5723 개정 또는 신규 TS에서 Intervenability 공식 정의 추가 필요. DTS 8200의 "human intervention capability" 개념을 기반으로 정의 도출 가능.
+            <strong>임시 정의 (TFL 운영):</strong> "ability of humans to modify, correct, retrain, or shut down an AI system at any point in its lifecycle."
+          </div>
+        </div>
+      </div>
+
+      <!-- 11. Bias/Fairness -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('bias')">
+          <span class="vocab-char-name">11. Bias / Fairness</span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-missing">❌ TS 5723</span>
+            <span class="status-pill pill-match">✅ TR 24028</span>
+            <span class="status-pill pill-match">✅ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+          
+            <span class="status-pill pill-match">✅ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-bias">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-bias">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Bias 또는 Fairness 공식 정의 없음. TS 5723의 선택된 신뢰성 특성 목록에 포함되지 않음.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">§3.8</div></td>
+                <td class="def-text">bias: favouritism towards some things, people or groups over others<br><em style="font-size:11px;color:#888">Note: TR 24028 §8.8에서 Bias를 신뢰성 위협 요소로 상세 서술. 사회적 편향, 알고리즘 편향, 통계적 편향 등 하위 유형 포함.</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">Bias 행</div></td>
+                <td class="def-text">Bias를 TCM 핵심 특성으로 포함. TR 24028, TR 24027(AI 편향 TR), DTS 12791(편향 관리 TS) 매핑. 사회적·통계적 편향 하위 유형 구분.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">TR 24028 §3.8 정의 기반. DTS 12791의 "unwanted bias" 프레임워크 적용. Fairness를 Bias 부재(absence of unwanted bias)로 정의.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+            
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">§3.5.4</div></td>
+                <td class="def-text">systematic difference in treatment of certain objects, people or groups in comparison to others</td>
+                <td><span class="status-pill pill-match">✅ 일치</span></td>
+              </tr>
+</tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>분석:</strong> Bias/Fairness는 TS 5723에 포함되지 않은 특성이지만, TR 24028, TR 24027, DTS 12791에서 잘 정의됩니다.
+            <strong>Bias vs Fairness:</strong> TC 문서에서 "Bias" (편향 존재)와 "Fairness" (편향 부재/공정성)는 다른 개념이나, TCM에서는 "Bias/Fairness"를 단일 특성으로 묶어 처리.
+            <strong>DTS 12791의 역할:</strong> 13개 SHALL 요건으로 편향 관리를 가장 강력하게 규범화한 문서. SC-Bias-Fairness 3개 Claim 모두의 출처.
+            <strong>권고:</strong> TS 5723 개정 시 Bias/Fairness 또는 Fairness를 신뢰성 특성으로 추가 권고. TR 24027, DTS 12791의 정의를 기반으로 통합 정의 개발 필요.
+          </div>
+        </div>
+      </div>
+
+      <!-- 12. Efficiency -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('efficiency')">
+          <span class="vocab-char-name">12. Efficiency</span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-missing">❌ TS 5723</span>
+            <span class="status-pill pill-match">✅ TR 24028</span>
+            <span class="status-pill pill-match">✅ TCM CSV</span>
+            <span class="status-pill pill-diff">⚠️ WG3 Web</span>
+          
+            <span class="status-pill pill-missing">❌ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-efficiency">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-efficiency">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Efficiency 공식 정의 없음. TS 5723의 §3.2.21 (Usability) 정의에서 efficiency가 사용의 특성으로 언급되나, 독립 용어로 정의되지 않음.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">§3.15</div></td>
+                <td class="def-text">relationship between the results achieved and the resources used<br><em style="font-size:11px;color:#888">[SOURCE: ISO 9000:2015, 3.7.10]</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">Performance 열</div></td>
+                <td class="def-text">TCM에서 Efficiency를 "Performance" 클러스터로 분류. TS 4213(ML 분류 성능) 및 CD 4213 매핑. ISO/IEC 25059의 Performance Efficiency 하위 특성과 연계.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">TR 24028 §3.15 정의 기반. ISO/IEC 25059의 Performance Efficiency와 연계. AI 시스템의 리소스 효율(연산, 에너지, 데이터) 측면 강조.</td>
+                <td><span class="status-pill pill-diff">⚠️ 확장</span></td>
+              </tr>
+            
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">공식 용어 정의 없음. Efficiency는 22989에서 trustworthiness 특성으로 정의되지 않음</td>
+                <td><span class="status-pill pill-missing">❌ 미정의</span></td>
+              </tr>
+</tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>분석:</strong> Efficiency는 TR 24028에 정의가 있으나 TS 5723에는 없습니다. S06에서 Efficiency를 "미흡(Insufficient)" 특성으로 판정한 어휘 갭의 반영입니다.
+            <strong>ISO 25059 연계:</strong> ISO/IEC 25059의 "Performance Efficiency" 하위 특성(Time behaviour, Resource utilization, Capacity)이 AI 특화 정의에 가장 적합.
+            <strong>권고:</strong> TS 5723 개정 시 AI 특화 Efficiency 정의 추가. 에너지 효율성, 연산 효율성, 데이터 효율성 등 AI 맥락 하위 유형 포함 권고.
+          </div>
+        </div>
+      </div>
+
+      <!-- 13. Functional Correctness -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('fc')">
+          <span class="vocab-char-name">13. Functional Correctness</span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-missing">❌ TS 5723</span>
+            <span class="status-pill pill-missing">❌ TR 24028</span>
+            <span class="status-pill pill-match">✅ ISO 25059</span>
+            <span class="status-pill pill-match">✅ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+            <span class="status-pill pill-missing">❌ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-fc">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-fc">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Functional Correctness 공식 정의 없음. TCM의 독자적 특성으로, TS 5723의 quality (§3.2.10/11) 개념과 관련되나 동일하지 않음.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Functional Correctness 용어 정의 없음.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#2980b9">ISO 25059:2023</td>
+                <td><div class="clause-ref">§3.2.3</div></td>
+                <td class="def-text">degree to which a product or system provides the correct results with the needed degree of precision<br><em style="font-size:11px;color:#888">Note 1 to entry: AI systems, and particularly those using machine learning models, do not usually provide functional correctness in all observed circumstances.<br>[SOURCE: ISO/IEC 25010:2011, 4.2.1.2, modified — Note to entry added.]</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">Quality 열</div></td>
+                <td class="def-text">ISO/IEC 25059 §3.2.3 기반. DTS 25058(품질 평가 가이던스) 매핑. 'accuracy' 용어는 사용 비권장(TCM CSV 주석). AI 시스템의 기능 정확성 측정: 올바른 결과 제공 정도.</td>
+                <td><span class="status-pill pill-match">✅ ISO 25059 기반</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">ISO/IEC 25059 §7.1.1 기반: Functional Correctness는 Functional Suitability의 하위 특성으로, AI 시스템이 필요한 정밀도로 올바른 결과를 제공하는 정도.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+            
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">공식 용어 정의 없음. Functional Correctness는 22989의 trustworthiness 특성 어휘 목록에 없음</td>
+                <td><span class="status-pill pill-missing">❌ 미정의</span></td>
+              </tr>
+</tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>분석:</strong> Functional Correctness는 TS 5723·TR 24028에 정의가 없고, ISO/IEC 25059(AI 품질 모델)에서 비롯된 특성입니다. TCM에서 독자적으로 채택된 특성.
+            <strong>Accuracy와의 차이:</strong> TCM CSV에서 "accuracy" 용어 사용 비권장 — "Functional Correctness"가 AI 시스템에 더 적합하다고 판단됨.
+            <strong>권고:</strong> TS 5723과 25059 간 용어 정렬 필요. Functional Correctness를 TS 5723 개정 시 Quality 하위 특성으로 포함 권고.
+          </div>
+        </div>
+      </div>
+
+      <!-- 14. Resilience -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('resilience')">
+          <span class="vocab-char-name">14. Resilience</span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-diff">⚠️ TS 5723</span>
+            <span class="status-pill pill-missing">❌ TR 24028</span>
+            <span class="status-pill pill-match">✅ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+          
+            <span class="status-pill pill-match">✅ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-resilience">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-resilience">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">§3.2.14<br>§3.2.15</div></td>
+                <td class="def-text">
+                  <em>&lt;governance&gt;</em> ability to anticipate and adapt to, resist, or quickly recover from a potentially disruptive event, whether natural or man-made<br>
+                  — AND —<br>
+                  <em>&lt;system&gt;</em> capability of a system to maintain its functions and structure in the face of internal and external change, and to degrade gracefully when this is necessary
+                </td>
+                <td><span class="status-pill pill-diff">⚠️ 이중</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Resilience 용어집 정의 없음. §9.10.1에서 "Reliability, resilience and robustness" 서술하나 단독 정의 미제공.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">관련 열</div></td>
+                <td class="def-text">TS 5723 §3.2.15 (system 맥락) 채택. DTR 5469(기능 안전성), DTS 25058(품질 평가) 연계. Robustness와 구분하여 독립 특성으로 관리.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">TS 5723 §3.2.15 (system 맥락) 기반. "graceful degradation" 개념 강조. ISO/IEC DTR 5469 및 DTS 25058 지원 문서로 연계.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+            
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">§3.5.10</div></td>
+                <td class="def-text">ability of a system to recover operational condition quickly following an incident</td>
+                <td><span class="status-pill pill-match">✅ 일치</span></td>
+              </tr>
+</tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>분석:</strong> TS 5723은 거버넌스 맥락(§3.2.14)과 시스템 맥락(§3.2.15) 두 정의를 제공합니다. AI 시스템에는 §3.2.15가 더 적합하며, TCM과 WG3 Web 모두 이를 채택합니다.
+            <strong>Robustness와 구분:</strong> Robustness = 다양한 조건에서 성능 유지, Resilience = 내외부 변화에도 기능·구조 유지 + 점진적 성능 저하(graceful degradation).
+            <strong>TR 24028 갭:</strong> TR 24028에 Resilience 정의 없음은 주목할 갭. 개정 시 포함 권고.
+          </div>
+        </div>
+      </div>
+
+      <!-- 15. Availability -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('availability')">
+          <span class="vocab-char-name">15. Availability</span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-match">✅ TS 5723</span>
+            <span class="status-pill pill-missing">❌ TR 24028</span>
+            <span class="status-pill pill-match">✅ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+          
+            <span class="status-pill pill-match">✅ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-availability">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-availability">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">§3.2.4</div></td>
+                <td class="def-text">property of being accessible and usable on demand by an authorized entity<br><em style="font-size:11px;color:#888">[SOURCE: ISO/IEC 27000:2018, 3.7]</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Availability 용어집 정의 없음. §9.9.3에서 가용성을 신뢰성 맥락에서 언급하나 단독 정의 미제공.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">availability 행</div></td>
+                <td class="def-text">TS 5723 D 마커. ISO/IEC 22989 연계. DTR 5469(기능 안전성)와 Availability 관련성 표시. IS 5338(수명주기)에서 가용성 요건 매핑.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">TS 5723 §3.2.4 정의 채택. IS 5338(AI 수명주기), DTR 5469(기능 안전성) 지원 문서 연계. 보안(CIA 트라이어드)과의 연관성 강조.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+            
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">§3.5.3</div></td>
+                <td class="def-text">property of being accessible and usable on demand by an authorized entity</td>
+                <td><span class="status-pill pill-match">✅ 일치</span></td>
+              </tr>
+</tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>분析:</strong> TS 5723(§3.2.4)이 Availability의 공식 출처이며, 정보보안의 CIA 트라이어드(기밀성, 무결성, 가용성) 중 하나로 정의됩니다.
+            <strong>TR 24028 갭:</strong> TR 24028에 Availability 정의 없음. §3.42 (Trustworthiness) 주석에서 availability를 특성으로 언급하나 정의 미포함.
+            <strong>S06 판정:</strong> Availability가 S06에서 "미흡(Insufficient)" 판정을 받은 이유 중 하나는 TC 요건 수 부족(IS 5338 + DTR 5469에서 3개 요건)이며, 어휘 갭과는 독립적.
+          </div>
+        </div>
+      </div>
+
+      <!-- 16. Privacy (신규 추가 — TCM CSV D 확인, TS 5723 §3.2.9, TR 24028 §3.28) -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('privacy')">
+          <span class="vocab-char-name">16. Privacy <span style="font-size:10px;color:#27ae60;font-weight:normal">(신규 식별)</span></span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-match">✅ TS 5723</span>
+            <span class="status-pill pill-match">✅ TR 24028</span>
+            <span class="status-pill pill-match">✅ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+            <span class="status-pill pill-missing">❌ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-privacy">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-privacy">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">§3.2.9</div></td>
+                <td class="def-text">freedom from intrusion into the private life or affairs of an individual<br><em style="font-size:11px;color:#888">[SOURCE: ISO/IEC 2382:2015, 2.22, modified — the clause "when that intrusion results from undue or illegal gathering and use of data about that individual" was removed from TS 5723 definition]</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">§3.28</div></td>
+                <td class="def-text">freedom from intrusion into the private life or affairs of an individual when that intrusion results from undue or illegal gathering and use of data (3.11) about that individual<br><em style="font-size:11px;color:#888">[SOURCE: ISO/IEC 2382:2015, 2126263, modified — Notes 1 and 2 to entry have been removed]<br>⚠️ TR 24028 retains the "when that intrusion results from" clause that TS 5723 removed</em></td>
+                <td><span class="status-pill pill-diff">⚠️ 강조점 차이</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">privacy 행</div></td>
+                <td class="def-text">TCM CSV "D" 마커(공식 정의). TS 5723, TR 24028 연계. DTS 6254(투명성)·DTS 8200(보안) 문서와 교차 참조.</td>
+                <td><span class="status-pill pill-match">✅ D 마커</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">WG3 TCM Web에 Privacy 특성 등재. TS 5723 §3.2.9 정의 채택. Privacy-by-design, 데이터 최소화 원칙과 연계.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">Note 2 언급</div></td>
+                <td class="not-defined">§3.5에 독립 정의 없음. §3.5.16 Note 2에서 trustworthiness의 예시 특성으로 "privacy" 명시.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>신규 식별 근거:</strong> ISO/IEC 22989:2022 §3.5.16 Note 2는 trustworthiness 특성의 예시로 "privacy"를 명시합니다. TCM CSV "D" 마커 및 TS 5723·TR 24028 공식 정의 확인으로 본 가이드에 추가 식별.
+            <strong>Security와의 구분:</strong> Security = 의도적 무단 접근·공격으로부터의 보호 / Privacy = 개인 생활·데이터에 대한 부당한 수집·사용으로부터의 자유. GDPR, AI Act Article 10 (데이터 거버넌스) 연계.
+            <strong>권고:</strong> DTS 8200(보안) 및 DTS 6254(투명성)와 함께 Privacy 전담 조항 보강 필요. FDIS 42005(영향 평가)의 Privacy Impact Assessment 연계.
+          </div>
+        </div>
+      </div>
+
+      <!-- 17. Authenticity (신규 추가 — TCM CSV D 확인, TS 5723 §3.2.3) -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('authenticity')">
+          <span class="vocab-char-name">17. Authenticity <span style="font-size:10px;color:#27ae60;font-weight:normal">(신규 식별)</span></span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-match">✅ TS 5723</span>
+            <span class="status-pill pill-missing">❌ TR 24028</span>
+            <span class="status-pill pill-match">✅ TCM CSV</span>
+            <span class="status-pill pill-missing">❌ WG3 Web</span>
+            <span class="status-pill pill-missing">❌ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-authenticity">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-authenticity">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">§3.2.3</div></td>
+                <td class="def-text">property that an entity is what it claims to be</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Authenticity 독립 정의 없음. 보안 맥락에서 인증(authentication)이 언급되나 trustworthiness 특성으로 별도 정의되지 않음.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">authenticity 행</div></td>
+                <td class="def-text">TCM CSV "D" 마커(공식 정의). TS 5723 §3.2.3 기반. Security 및 Integrity와 함께 정보 신뢰성 클러스터 형성.</td>
+                <td><span class="status-pill pill-match">✅ D 마커</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">WG3 TCM Web 공개 버전에 Authenticity 항목 미등재. TCM CSV에는 포함.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">Note 2 언급</div></td>
+                <td class="not-defined">§3.5에 독립 정의 없음. §3.5.16 Note 2에서 trustworthiness의 예시 특성으로 "authenticity" 명시.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>신규 식별 근거:</strong> ISO/IEC 22989:2022 §3.5.16 Note 2가 trustworthiness 특성 예시로 "authenticity"를 명시. TCM CSV "D" 마커 및 TS 5723 §3.2.3 공식 정의 확인.
+            <strong>Security/Integrity와의 구분:</strong> Authenticity = 실체(entity)가 주장하는 바대로임을 확인하는 속성 (출처 진위성) / Security = 공격·침입으로부터의 보호 / Integrity = 데이터·시스템의 무결성 유지.
+            <strong>AI 적용:</strong> AI 모델 공급망(model supply chain)의 실제 제공자 검증, 학습 데이터 출처 진위성, AI 시스템 ID 확인 등에 적용.
+            <strong>표준화 권고:</strong> TR 24028 및 22989 개정 시 AI 맥락에서 Authenticity 독립 정의 추가 필요. TS 5723 §3.2.3가 현재 유일한 공식 정의.
+          </div>
+        </div>
+      </div>
+
+      <!-- 18. Integrity (신규 추가 — TCM CSV D 확인, TS 5723 §3.2.7/8, TR 24028 §3.21) -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('integrity')">
+          <span class="vocab-char-name">18. Integrity <span style="font-size:10px;color:#27ae60;font-weight:normal">(신규 식별)</span></span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-diff">⚠️ TS 5723</span>
+            <span class="status-pill pill-match">✅ TR 24028</span>
+            <span class="status-pill pill-match">✅ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+            <span class="status-pill pill-missing">❌ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-integrity">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-integrity">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">§3.2.7 / §3.2.8</div></td>
+                <td class="def-text">
+                  [§3.2.7 &lt;data&gt;] property whereby data have not been altered in an unauthorized manner since they were created, transmitted, or stored<br>
+                  [§3.2.8 &lt;systems&gt;] property of accuracy (3.2.2) and completeness<br>
+                  <em style="font-size:11px;color:#888">[§3.2.7 SOURCE: ISO/IEC 29167-19:2019, 3.3, modified; §3.2.8 SOURCE: ISO/IEC 27000:2018, 3.36, modified]</em>
+                </td>
+                <td><span class="status-pill pill-diff">⚠️ 이중</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">§3.21</div></td>
+                <td class="def-text">property of protecting the accuracy and completeness of assets<br><em style="font-size:11px;color:#888">Note: Relates to unauthorized modification, deletion, or substitution.</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">integrity 행</div></td>
+                <td class="def-text">TCM CSV "D" 마커. TS 5723 §3.2.7/8 기반. 정보보안의 CIA 트라이어드(기밀성·무결성·가용성) 중 하나. Security 및 Availability와 연계.</td>
+                <td><span class="status-pill pill-match">✅ D 마커</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">WG3 TCM Web에 Integrity 특성 등재. AI 학습 데이터 무결성, 모델 가중치 무결성, 추론 파이프라인 무결성 적용 맥락 포함.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">Note 2 언급</div></td>
+                <td class="not-defined">§3.5에 독립 정의 없음. §3.5.16 Note 2에서 trustworthiness의 예시 특성으로 "integrity" 명시.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>신규 식별 근거:</strong> ISO/IEC 22989:2022 §3.5.16 Note 2가 "integrity"를 trustworthiness 특성으로 명시. TCM CSV "D" 마커, TS 5723(§3.2.7/8), TR 24028(§3.21) 모두 공식 정의 보유.
+            <strong>이중 정의 문제:</strong> TS 5723의 §3.2.7(데이터 무결성)과 §3.2.8(시스템 무결성)은 AI 시스템에서 서로 다른 층위에 적용됨. TR 24028 §3.21은 자산(asset) 중심으로 보다 포괄적. AI 시스템 맥락에서 통합 정의 필요.
+            <strong>AI 적용:</strong> 학습 데이터 무결성(data poisoning 탐지), 모델 가중치 무결성(model tampering 방지), 추론 결과 무결성(출력 조작 방지).
+            <strong>권고:</strong> TS 5723 §3.2.7과 §3.2.8의 AI 시스템 통합 정의 필요. DTS 8200(보안) 개정 시 Integrity 특화 요건 보강 권고.
+          </div>
+        </div>
+      </div>
+
+      <!-- 19. Autonomy (신규 추가 — TR 24028 §3.7, TCM CSV D) -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('autonomy')">
+          <span class="vocab-char-name">19. Autonomy <span style="font-size:10px;color:#27ae60;font-weight:normal">(신규 식별)</span></span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-missing">❌ TS 5723</span>
+            <span class="status-pill pill-match">✅ TR 24028</span>
+            <span class="status-pill pill-match">✅ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+            <span class="status-pill pill-missing">❌ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-autonomy">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-autonomy">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Autonomy / Autonomous 독립 정의 없음. AI 시스템의 자율 동작이 투명성·제어가능성 맥락에서 언급되나 공식 용어 정의 미포함.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">§3.7</div></td>
+                <td class="def-text">characteristic of a system (3.38) governed by its own rules as the result of self-learning<br><em style="font-size:11px;color:#888">Note 1 to entry: Such systems are not subject to external control (3.10) or oversight.<br>[Own definition — TR 24028:2020, §3.7]</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">autonomous / autonomy 행</div></td>
+                <td class="def-text">TCM CSV "D, g" 마커(공식 정의 + 가이던스). TR 24028 §3.7 기반. AI 자율성 수준 분류(Level 0 완전 수동 ~ Level 5 완전 자율) 맥락에서 사용.</td>
+                <td><span class="status-pill pill-match">✅ D 마커</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">WG3 TCM Web에 Autonomy 특성 등재. Human oversight 수준과 역비례 관계 기술. ISO/IEC 5338 AI 수명주기와 자율성 단계 연계.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">§3.5에 독립 정의 없음. AI 시스템의 자율성은 22989의 AI 시스템 개념 정의에서 간접 언급.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>신규 식별 근거:</strong> TCM CSV "D, g" 마커. TR 24028 §3.7 공식 정의. WG3 TCM Web 등재.
+            <strong>Controllability/Intervenability와의 관계:</strong> Autonomy ↑ → Controllability 강화 필요성 ↑. AI 자율성 수준이 높을수록 인간 감시(Human Oversight) 메커니즘과 Intervenability 요구사항이 강화됨.
+            <strong>AI 적용:</strong> 자율주행·의료 AI 등 고자율 시스템에서 자율성 수준 명세, 인간 개입 시나리오 정의, 책임(Accountability) 체계 수립.
+            <strong>표준 연계:</strong> ISO/IEC DTS 8200(Controllability), ISO/IEC 23894(Risk management), EU AI Act Article 14(Human Oversight).
+          </div>
+        </div>
+      </div>
+
+      <!-- 20. Effectiveness (신규 추가 — TR 24028 §3.14, TCM CSV D*) -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('effectiveness')">
+          <span class="vocab-char-name">20. Effectiveness <span style="font-size:10px;color:#27ae60;font-weight:normal">(신규 식별)</span></span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-missing">❌ TS 5723</span>
+            <span class="status-pill pill-match">✅ TR 24028</span>
+            <span class="status-pill pill-diff">⚠️ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+            <span class="status-pill pill-missing">❌ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-effectiveness">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-effectiveness">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Effectiveness 독립 정의 없음. Usability(§3.2.21) 정의에서 "effectively achieving goals"가 언급되나 단독 정의 미포함.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">§3.14</div></td>
+                <td class="def-text">extent to which planned activities are realized and planned results achieved<br><em style="font-size:11px;color:#888">[SOURCE: ISO 9000:2015, 3.7.11]</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">effectiveness 행</div></td>
+                <td class="def-text">TCM CSV "D*" 마커(초기 작업 정의, 현재 폐기됨). TR 24028 §3.14 기반. ISO 25059의 Functional Correctness·Performance Efficiency와 중복 우려로 폐기 결정.</td>
+                <td><span class="status-pill pill-diff">⚠️ D* 폐기</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">WG3 TCM Web에 Effectiveness 등재. 시스템이 의도된 목적을 달성하는 정도로 기술. Functional Correctness 및 Efficiency와 연계.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">§3.5에 독립 정의 없음.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>신규 식별 근거:</strong> TR 24028 §3.14 공식 정의. WG3 TCM Web 등재. TCM CSV D*(폐기)이나 TR 24028 정의로 유효.
+            <strong>주의:</strong> TCM CSV에서 D*(deprecated)로 표시됨 — 초기 작업 정의가 폐기되었으나 TR 24028 §3.14 정의는 유효. ISO 25059 Functional Correctness와 개념적으로 중복되나 적용 맥락이 다름(계획 대비 달성 vs 기능 정확성).
+            <strong>Efficiency와의 구분:</strong> Effectiveness = 목표 달성 여부(목적 도달) / Efficiency = 목표 달성에 사용된 자원의 효율성(수단).
+          </div>
+        </div>
+      </div>
+
+      <!-- 21. Functional Safety (신규 추가 — TCM CSV D, DTR 5469) -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('functional-safety')">
+          <span class="vocab-char-name">21. Functional Safety <span style="font-size:10px;color:#27ae60;font-weight:normal">(신규 식별)</span></span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-missing">❌ TS 5723</span>
+            <span class="status-pill pill-missing">❌ TR 24028</span>
+            <span class="status-pill pill-match">✅ DTR 5469</span>
+            <span class="status-pill pill-match">✅ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+            <span class="status-pill pill-missing">❌ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-functional-safety">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-functional-safety">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Functional Safety 독립 정의 없음. Safety(§3.2.17)는 정의되나 기능 안전(IEC 61508 의미)은 별도 정의 미포함.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Functional Safety 독립 정의 없음. §9.3에서 AI 시스템과 기능 안전의 관계를 서술하나 용어 정의 미포함.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#8e44ad">DTR 5469:2023</td>
+                <td><div class="clause-ref">§3.2</div></td>
+                <td class="def-text">part of the overall safety (3.1) relating to the EUC (Equipment Under Control) and the EUC control system that depends on the correct functioning of the E/E/PE (Electrical/Electronic/Programmable Electronic) safety-related systems and other risk reduction measures<br><em style="font-size:11px;color:#888">[SOURCE: IEC 61508-4:2010, 3.1.12] — DTR 5469 is the dedicated AI functional safety document in SC42</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">functional safety 행</div></td>
+                <td class="def-text">TCM CSV "D, g, c" 마커(공식 정의 + 가이던스 + 고려). IEC 61508 정의 기반: part of the overall safety relating to the EUC and the EUC control system that depends on the correct functioning of the safety-related systems. ISO/IEC DTR 5469 전담 문서 매핑.</td>
+                <td><span class="status-pill pill-match">✅ D 마커</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">WG3 TCM Web에 Functional Safety 등재. AI 시스템의 기능 안전 요구사항: HARA(위험 분석·위험 평가), SIL/ASIL 수준 결정, Safety case 작성. ISO/IEC DTR 5469와 IEC 61508 연계.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">§3.5에 독립 정의 없음. Safety(일반)와 Functional Safety를 구분하지 않음.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>신규 식별 근거:</strong> TCM CSV "D, g, c" 마커. WG3 TCM Web 등재. 전담 문서: ISO/IEC DTR 5469.
+            <strong>Safety와의 구분:</strong> Safety = 일반적 위해 방지 특성 / Functional Safety = E/E/PE(전기·전자·프로그래머블 전자) 시스템의 안전 기능이 정상 작동할 때 달성되는 안전 — IEC 61508 기반.
+            <strong>AI 적용:</strong> 자율주행 ADAS(ASIL 분류), 의료기기 AI(SIL 적용), 산업 자동화 AI(PLc, SIL). HARA → 위험 식별 → SIL 결정 → 검증.
+            <strong>tc_text 검증:</strong> DTR 5469:2023 §3.2 원문: "part of the overall safety (3.1) relating to the EUC and the EUC control system that depends on the correct functioning of the E/E/PE safety-related systems and other risk reduction measures" [SOURCE: IEC 61508-4:2010, 3.1.12] (2026-02-20 확인)
+            <strong>출처:</strong> IEC 61508 (전기/전자/프로그래머블 전자 안전관련 시스템), ISO 26262 (자동차), IEC 62061 (기계 기능 안전).
+          </div>
+        </div>
+      </div>
+
+      <!-- 22. Harm (신규 추가 — TCM CSV D*, 안전·위험 관련 개념) -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('harm')">
+          <span class="vocab-char-name">22. Harm <span style="font-size:10px;color:#27ae60;font-weight:normal">(신규 식별)</span></span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-missing">❌ TS 5723</span>
+            <span class="status-pill pill-match">✅ TR 24028</span>
+            <span class="status-pill pill-match">✅ DTR 5469</span>
+            <span class="status-pill pill-diff">⚠️ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+            <span class="status-pill pill-missing">❌ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-harm">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-harm">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Harm 독립 정의 없음. Safety(§3.2.17) 정의에서 harm이 결과로 언급되나 독립 용어로 정의되지 않음.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">§3.17</div></td>
+                <td class="def-text">injury or damage to the health of people or damage to property or the environment<br><em style="font-size:11px;color:#888">[SOURCE: ISO/IEC Guide 51:2014, 3.1]</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#8e44ad">DTR 5469:2023</td>
+                <td><div class="clause-ref">§3.5</div></td>
+                <td class="def-text">physical injury or damage to the health of people, or damage to property or the environment<br><em style="font-size:11px;color:#888">[SOURCE: IEC 61508-4:2010, 3.1.1] — DTR 5469 adds "physical" qualifier for functional safety context</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">harm 행</div></td>
+                <td class="def-text">TCM CSV "D*, g" 마커(초기 작업 정의 폐기). 참조: ISO 31000(리스크 관리) 기반. physical, psychological, financial, or societal negative impact. AI 관련 harm 유형: 프라이버시 침해, 차별, 경제적 손실, 신체적 위해.</td>
+                <td><span class="status-pill pill-diff">⚠️ D* 폐기</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">WG3 TCM Web에 Harm 등재. AI 시스템이 유발할 수 있는 부정적 결과로 정의. 유형: 신체적·심리적·재정적·사회적 피해. Safety 및 Hazard와 연계된 리스크 체계에서 사용.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">§3.5에 독립 정의 없음.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>신규 식별 근거:</strong> TR 24028 §3.17 공식 정의 확인(2026-02-20 tc_text 검증). DTR 5469 §3.5 기능안전 맥락 정의. TCM CSV D* (초기, 폐기).
+            <strong>tc_text 검증:</strong> TR 24028:2020 §3.17: "injury or damage to the health of people or damage to property or the environment" [SOURCE: ISO/IEC Guide 51:2014, 3.1]. DTR 5469 §3.5 동일 소스, "physical" 한정자 추가.
+            <strong>주의:</strong> TS 5723에 Harm 독립 정의 부재. TR 24028과 DTR 5469 모두 ISO/IEC Guide 51:2014 기반 — AI 표준이 일반 안전 표준 어휘를 차용.
+            <strong>Hazard와의 관계:</strong> Hazard(위험원) → Risk(위험) → Harm(위해) 인과 체계. Harm은 Hazard가 현실화된 결과.
+            <strong>AI 적용:</strong> FDIS 42005(AI 영향 평가)의 harm 식별 절차, ISO/IEC 23894(AI 리스크 관리)의 harm 평가, EU AI Act Annex I의 prohibited AI practices(harm 기반).
+          </div>
+        </div>
+      </div>
+
+      <!-- 23. Hazard (신규 추가 — TCM CSV D*, 안전·위험 관련 개념) -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('hazard')">
+          <span class="vocab-char-name">23. Hazard <span style="font-size:10px;color:#27ae60;font-weight:normal">(신규 식별)</span></span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-missing">❌ TS 5723</span>
+            <span class="status-pill pill-match">✅ TR 24028</span>
+            <span class="status-pill pill-match">✅ DTR 5469</span>
+            <span class="status-pill pill-diff">⚠️ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+            <span class="status-pill pill-missing">❌ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-hazard">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-hazard">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Hazard 독립 정의 없음.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">§3.18</div></td>
+                <td class="def-text">potential source of harm (3.17)<br><em style="font-size:11px;color:#888">[SOURCE: ISO/IEC Guide 51:2014, 3.2]</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#8e44ad">DTR 5469:2023</td>
+                <td><div class="clause-ref">§3.6</div></td>
+                <td class="def-text">potential source of harm (3.5)<br><em style="font-size:11px;color:#888">[SOURCE: IEC 61508-4:2010, 3.1.2] — identical definition, cross-referenced to DTR 5469's own §3.5 harm definition</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">hazard 행</div></td>
+                <td class="def-text">TCM CSV "D*" 마커(초기 작업 정의 폐기). 참조: IEC 61508, ISO 31000 기반. potential source of harm. AI 시스템의 hazard: 잘못된 분류 결정, 적대적 입력 취약점, 시스템 실패 모드.</td>
+                <td><span class="status-pill pill-diff">⚠️ D* 폐기</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">WG3 TCM Web에 Hazard 등재. AI 시스템이 가진 잠재적 위험원으로 정의. Safety 및 Harm과 연계한 리스크 체계(Hazard → Risk → Harm) 내에서 사용.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">§3.5에 독립 정의 없음.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>신규 식별 근거:</strong> TCM CSV D*(폐기)이나 WG3 TCM Web 등재. ISO/IEC 기능 안전 체계의 핵심 개념.
+            <strong>tc_text 검증:</strong> TR 24028:2020 §3.18: "potential source of harm (3.17)" [SOURCE: ISO/IEC Guide 51:2014, 3.2]. DTR 5469:2023 §3.6 동일. 두 표준 모두 자체 Harm 정의(TR 24028 §3.17 / DTR 5469 §3.5)를 내부 참조. (2026-02-20 확인)
+            <strong>주의:</strong> TCM CSV D*(deprecated). TS 5723에 Hazard 독립 정의 부재.
+            <strong>Harm·Risk와의 관계:</strong> Hazard(위험원, 잠재적 위해 원천) → 노출/취약성(exposure/vulnerability) → Risk(위험, 발생 가능성 × 심각도) → Harm(위해, 현실화된 부정적 결과).
+            <strong>AI 특유 Hazard:</strong> 모델 편향, 대화형 AI의 허위 정보, 자율시스템의 환경 인식 실패, 사이버 공격에 대한 취약점.
+          </div>
+        </div>
+      </div>
+
+      <!-- 24. Interpretability (신규 추가 — WG3 Web, TCM CSV) -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('interpretability')">
+          <span class="vocab-char-name">24. Interpretability <span style="font-size:10px;color:#27ae60;font-weight:normal">(신규 식별)</span></span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-missing">❌ TS 5723</span>
+            <span class="status-pill pill-missing">❌ TR 24028</span>
+            <span class="status-pill pill-missing">❌ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+            <span class="status-pill pill-missing">❌ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-interpretability">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-interpretability">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Interpretability 독립 정의 없음. Explainability(§3.5.7 of 22989)와 구분되는 공식 정의 부재. 투명성 맥락에서 간접 언급.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Interpretability 독립 정의 없음. §9.8에서 transparency와 explainability 논의 중 interpretability가 관련 개념으로 언급되나 용어집 정의 미포함.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">interpretability 행</div></td>
+                <td class="not-defined">TCM CSV에 interpretability 행 존재하나 "D" 마커 미확인. 상태 불명확 — Explainability와 통합 검토 중.</td>
+                <td><span class="status-pill pill-missing">❌ 미확정</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">WG3 TCM Web에 Interpretability 등재. AI 모델의 내부 메커니즘·표현을 인간이 이해할 수 있는 방식으로 제공하는 속성. Explainability(결정 이유 설명)와 구분: Interpretability는 모델 내부 구조의 가독성.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">§3.5에 독립 정의 없음. Explainability(§3.5.7)는 정의되나 Interpretability는 별도 정의 미포함.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>신규 식별 근거:</strong> WG3 TCM Web 등재. Explainability와 함께 AI 투명성의 핵심 하위 특성.
+            <strong>주요 갭:</strong> Interpretability는 5개 소스 모두에서 공식 정의가 없는 가장 큰 표준화 갭 중 하나. TCM CSV D 마커도 미확인.
+            <strong>Explainability와의 구분:</strong> Explainability = "왜 이 결정을?" (결정 이유, 사후 설명 포함) / Interpretability = "모델이 어떻게 작동하는가?" (내부 메커니즘 가독성, 모델 구조 이해). Interpretable model(선형 모델, 결정트리)은 explainable model과 다름.
+            <strong>표준화 권고:</strong> ISO/IEC DTS 6254(투명성) 또는 22989 개정 시 Interpretability 독립 정의 추가. NIST AI RMF의 Interpretability 정의 참조 가능.
+          </div>
+        </div>
+      </div>
+
+      <!-- 25. Quality (신규 추가 — TS 5723 §3.2.10/11, TCM CSV D) -->
+      <div class="vocab-accordion">
+        <div class="vocab-acc-header" onclick="toggleVocab('quality')">
+          <span class="vocab-char-name">25. Quality <span style="font-size:10px;color:#27ae60;font-weight:normal">(신규 식별)</span></span>
+          <div class="vocab-status-pills">
+            <span class="status-pill pill-diff">⚠️ TS 5723</span>
+            <span class="status-pill pill-missing">❌ TR 24028</span>
+            <span class="status-pill pill-match">✅ TCM CSV</span>
+            <span class="status-pill pill-match">✅ WG3 Web</span>
+            <span class="status-pill pill-missing">❌ 22989</span>
+          </div>
+          <span class="vocab-acc-arrow" id="arrow-quality">▼</span>
+        </div>
+        <div class="vocab-acc-body" id="body-quality">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 (영문 원문)</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">§3.2.10 / §3.2.11</div></td>
+                <td class="def-text">
+                  [§3.2.10 &lt;data&gt;] degree to which a set of characteristics of data satisfies stated and implied needs under specified conditions<br>
+                  [§3.2.11 &lt;system&gt;] degree to which a set of inherent characteristics of an object fulfils stated and implied needs
+                </td>
+                <td><span class="status-pill pill-diff">⚠️ 이중</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#9b59b6">TR 24028:2020</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Quality 독립 정의 없음. §8(AI 시스템 품질 접근법)에서 품질 개념이 광범위하게 사용되나 용어집 정의 미포함.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">quality 행</div></td>
+                <td class="def-text">TCM CSV "D" 마커(공식 정의). TS 5723 §3.2.10/11 기반. ISO/IEC 25059(AI 품질 모델) 및 25058(AI 품질 평가 가이던스)와 연계. AI 시스템의 품질 특성 매핑.</td>
+                <td><span class="status-pill pill-match">✅ D 마커</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">WG3 TCM Web에 Quality 등재. ISO/IEC 25059 품질 모델(Functional suitability, Reliability, Performance efficiency, Security, Maintainability, Flexibility)과 연계. Trustworthiness의 포괄적 상위 개념으로도 사용.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">Note 2 언급</div></td>
+                <td class="not-defined">§3.5에 독립 정의 없음. §3.5.16 Note 2에서 trustworthiness 예시 특성으로 "quality" 명시.</td>
+                <td><span class="status-pill pill-missing">❌ (Note 2)</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>신규 식별 근거:</strong> TS 5723 §3.2.10/11 공식 정의. TCM CSV "D" 마커. WG3 TCM Web 등재. ISO 22989 Note 2 명시.
+            <strong>이중 정의 문제:</strong> TS 5723의 §3.2.10(데이터 품질)과 §3.2.11(시스템 품질)은 AI 시스템에서 서로 다른 층위에 적용됨. ISO/IEC 25059가 AI 시스템 품질 모델의 통합 프레임워크로 기능.
+            <strong>Trustworthiness와의 관계:</strong> Quality는 Trustworthiness의 상위 또는 동등 개념으로도 볼 수 있음. ISO 22989 Note 2가 quality를 trustworthiness 특성 예시로 나열하는 것은 다소 순환적.
+            <strong>ISO 25059 연계:</strong> AI 시스템 품질 특성: Functional suitability (Functional correctness, completeness, appropriateness), Reliability, Performance efficiency, Security, Maintainability, Flexibility — 기존 TCM 특성들과 매핑 가능.
+          </div>
+        </div>
+      </div>
+
+      <!-- Char 26: Risk -->
+      <div class="char-accordion">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="char-num">26</span>
+          <span class="char-name">Risk <small>(위험)</small></span>
+          <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규 식별</span>
+          <span class="src-tag src-tcm">TCM D,N,g</span>
+          <span class="src-tag" style="background:#9b59b6;color:#fff">TR 24028 §3.31</span>
+          <span class="src-tag" style="background:#8e44ad;color:#fff">DTR 5469 §3.3/4</span>
+          <span class="src-tag src-wg3">WG3 Web</span>
+          <span class="accordion-icon">▼</span>
+        </div>
+        <div class="accordion-body">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 / 설명</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Risk 독립 정의 없음. Safety 관련 §에서 위험 개념이 간접 언급되나 용어집에 미포함.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#2980b9">TR 24028:2020</td>
+                <td><div class="clause-ref">§3.31</div></td>
+                <td class="def-text">effect of uncertainty on objectives<br><em style="font-size:11px;color:#888">Note 1: An effect is a deviation from the expected. It can be positive, negative or both and can address, create or result in opportunities and threats (3.39).<br>Note 2: Objectives can have different aspects and categories and can be applied at different levels.<br>Note 3: Risk is usually expressed in terms of risk sources, potential events, their consequences and their likelihood.<br>[SOURCE: ISO 31000:2018, 3.1]</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#8e44ad">DTR 5469:2023</td>
+                <td><div class="clause-ref">§3.3 / §3.4</div></td>
+                <td class="def-text">
+                  <em>&lt;functional safety&gt;</em> §3.3: combination of the probability of occurrence of harm (3.5) and the severity of that harm (3.5) [SOURCE: IEC 61508-4:2010, 3.1.6]<br>
+                  — AND —<br>
+                  <em>&lt;organizational&gt;</em> §3.4: effect of uncertainty on objectives [SOURCE: ISO 31000:2018, 3.1]<br>
+                  <em style="font-size:11px;color:#888">DTR 5469 distinguishes two risk types for AI functional safety context</em>
+                </td>
+                <td><span class="status-pill pill-diff">⚠️ 이중</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">독립 정의 없음. Risk 개념은 Safety, Security 섹션에서 간접 사용.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">risk 행</div></td>
+                <td class="def-text">TCM CSV "D, N, g" 마커 (가장 강한 상태: Defined + Normative + Guidance). ISO 31000:2018 §3.1: "effect of uncertainty on objectives" — 불확실성이 목표에 미치는 영향. AI 시스템 위험은 기술적·사회적·윤리적 차원을 포함. FDIS 42005(AI 위험 영향 평가), FDIS 42006(AI 위험 관리)와 긴밀 연계.</td>
+                <td><span class="status-pill pill-match">✅ D,N,g</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">WG3 TCM Web에 Risk 등재. ISO 31000 정의 기반. AI 시스템의 위험 분석, 위험 평가, 위험 처리 과정에 적용. FDIS 42005/42006의 AI-specific risk framework와 연계.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>신규 식별 근거:</strong> TCM CSV "D, N, g" (가장 강한 마커). WG3 TCM Web 등재. AI 위험 관리 표준(FDIS 42005/42006)의 핵심 개념.
+            <strong>주요 갭:</strong> TS 5723에 Risk 독립 정의 없음. TR 24028 §3.31은 ISO 31000:2018 §3.1 "effect of uncertainty on objectives"를 그대로 채택. DTR 5469는 기능안전 맥락의 §3.3(확률×심각도 조합)과 조직적 맥락의 §3.4(불확실성 효과) 두 정의를 구분 제공.
+            <strong>tc_text 검증:</strong> TR 24028:2020 §3.31, DTR 5469:2023 §3.3/§3.4 원문 추출 확인 (2026-02-20).
+            <strong>TFL 연계:</strong> Risk는 Safety, Functional Safety와 밀접. TCM의 "D, N, g" 마커는 normative reference가 있음을 의미 — ISO 31000이 규범적으로 참조됨.
+            <strong>FDIS 42005/42006 연계:</strong> AI 위험 영향 평가 및 위험 관리 표준에서 핵심 구성 개념. TFL Simple Claim과 직접 연관.
+          </div>
+        </div>
+      </div>
+
+      <!-- Char 27: Usability -->
+      <div class="char-accordion">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="char-num">27</span>
+          <span class="char-name">Usability <small>(유용성/사용성)</small></span>
+          <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규 식별</span>
+          <span class="src-tag src-5723">TS 5723 §3.2.21</span>
+          <span class="src-tag src-tcm">TCM D*</span>
+          <span class="accordion-icon">▼</span>
+        </div>
+        <div class="accordion-body">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 / 설명</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">§3.2.21</div></td>
+                <td class="def-text">§3.2.21 "Usability": 특정 사용자 그룹이 특정 사용 맥락에서 지정된 목표를 달성하기 위해 AI 시스템을 사용할 때의 효과성(effectiveness), 효율성(efficiency), 만족도(satisfaction) 정도. ISO 9241-11:2018 §3.1 기반. Note: 사용성은 인지적 접근성, 문화적 적응성 포함 가능.</td>
+                <td><span class="status-pill pill-match">✅ §3.2.21</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#2980b9">TR 24028:2020</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Usability/Usability 독립 정의 없음. §8에서 인간-AI 상호작용 맥락에서 간접 언급.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">Note 2 언급</div></td>
+                <td class="not-defined">§3.5.16 Note 2에서 trustworthiness 예시 특성으로 "usability" 명시. 그러나 §3.5에 독립 정의 없음.</td>
+                <td><span class="status-pill pill-missing">❌ (Note 2)</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">usability 행</div></td>
+                <td class="def-text">TCM CSV "D*" 마커 (초기 작업 정의, 현재 deprecated). TS 5723 §3.2.21 "usability"로 통합되어 TCM 공식 용어에서 제외됨. ISO 9241-11 기반 정의로 대체. 주의: TCM에서 "usability" 철자 사용 (국제 표준에서의 비표준 철자).</td>
+                <td><span class="status-pill pill-partial">⚠️ D* (deprecated)</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">WG3 TCM Web에 Usability 미등재. Usability는 Quality 특성의 구성 요소(ISO 25059 Functional suitability 등)로 간접 포함.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>신규 식별 근거:</strong> TS 5723 §3.2.21 공식 정의. ISO 22989 Note 2 명시. TCM CSV D* 마커(deprecated이나 존재 확인).
+            <strong>Usability vs. Usability:</strong> TCM CSV는 "usability" 철자를 사용하나, ISO 9241-11 및 TS 5723은 "usability"를 표준 철자로 사용. TCM이 "usability"를 채택한 것은 아마 AI 특화 의미를 구분하려는 의도였으나 deprecated됨.
+            <strong>이중 적용:</strong> TS 5723 §3.2.21은 사용자가 목표를 달성하는 정도(효과성+효율성+만족도)를 정의 — ISO 9241-11과 동일. AI 시스템에서 추가적으로 인지 부하, 알고리즘 투명성이 사용성에 영향.
+            <strong>Quality와의 관계:</strong> ISO 25059 AI 품질 모델에서 Usability는 품질 특성 중 하나로 포함. Quality(#25)와 계층적 관계.
+          </div>
+        </div>
+      </div>
+
+      <!-- Char 28: Threat -->
+      <div class="char-accordion">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="char-num">28</span>
+          <span class="char-name">Threat <small>(위협)</small></span>
+          <span class="badge" style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;font-size:10px">신규 식별</span>
+          <span class="src-tag" style="background:#9b59b6;color:#fff">TR 24028 §3.39</span>
+          <span class="src-tag src-wg3">WG3 Web</span>
+          <span class="accordion-icon">▼</span>
+        </div>
+        <div class="accordion-body">
+          <table class="vocab-table">
+            <thead><tr><th>소스</th><th>조항</th><th>정의 / 설명</th><th>상태</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="src-label" style="color:#1a4480">TS 5723:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">Threat 독립 정의 없음. Security 관련 맥락에서 간접 사용되나 용어집 미포함.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#2980b9">TR 24028:2020</td>
+                <td><div class="clause-ref">§3.39</div></td>
+                <td class="def-text">potential cause of an unwanted incident, which may result in harm (3.17) to systems (3.38), organizations or individuals<br><em style="font-size:11px;color:#888">No external source cited — own definition in TR 24028</em></td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#c0392b">22989:2022</td>
+                <td><div class="clause-ref">—</div></td>
+                <td class="not-defined">독립 정의 없음. Security, Safety 관련 §에서 간접 사용.</td>
+                <td><span class="status-pill pill-missing">❌</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#27ae60">TCM CSV</td>
+                <td><div class="clause-ref">threat 행</div></td>
+                <td class="def-text">TCM CSV에 Threat 등재. 정확한 D 마커 상태 확인 필요. ISO/IEC 27000:2018 계열의 보안 위협 개념 및 ISO 31000 위험 분석 맥락에서 정의. AI 시스템에 대한 적대적 공격(adversarial attack), 데이터 포이즈닝, 모델 탈취 등 AI-specific 위협 포함.</td>
+                <td><span class="status-pill pill-partial">⚠️ 확인 필요</span></td>
+              </tr>
+              <tr>
+                <td class="src-label" style="color:#e67e22">WG3 Web</td>
+                <td><div class="clause-ref">TCM Web</div></td>
+                <td class="def-text">WG3 TCM Web에 Threat 등재. Security 특성과 긴밀히 연관. AI 위협 모델링(threat modeling) 관점에서 정의. 적대적 AI 위협(adversarial ML), 프라이버시 위협(데이터 추출), 안전 위협(safety-critical 오작동) 등 분류.</td>
+                <td><span class="status-pill pill-match">✅</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="vocab-analysis">
+            <strong>신규 식별 근거:</strong> WG3 TCM Web 등재. TCM CSV Threat 항목 존재. AI 보안 및 위험 분석의 핵심 개념.
+            <strong>tc_text 검증:</strong> TR 24028:2020 §3.39 공식 정의 확인: "potential cause of an unwanted incident, which may result in harm to systems, organizations or individuals" (Own definition — 외부 소스 없음). (2026-02-20 확인)
+            <strong>주요 갭:</strong> TS 5723과 ISO 22989에 Threat 독립 정의 없음. TR 24028 §3.39가 유일한 SC42 공식 정의.
+            <strong>Security, Risk, Hazard와의 관계:</strong> Threat → Risk(위협이 실현될 때의 영향) → Harm(실제 피해). 이 세 개념은 AI 위험 분석의 인과적 체인을 형성. ISO 31000, IEC 61508 안전 분야 정의 참조 필요.
+            <strong>AI-specific 위협:</strong> 적대적 공격(adversarial examples), 데이터 포이즈닝(data poisoning), 모델 역공학(model inversion), 멤버십 추론(membership inference) — 전통적 IT 보안 위협과 구별되는 AI-특화 위협 유형 정의 필요.
+          </div>
+        </div>
+      </div>
+
+      <!-- S09.2: Gap Summary Table -->
+      <div class="content-section" style="margin-top:24px">
+        <h2>S09.2 — 종합 어휘 갭 분석</h2>
+        <p style="font-size:13px;color:#555;margin-bottom:14px">
+          28개 TCM 신뢰성 특성에 대한 5개 소스의 공식 정의 제공 현황을 종합합니다 (⬆ #16~28는 이번 분석으로 새로 식별된 특성). 알파벳순 정렬.
+          ✅=공식 정의 있음, ⚠️=부분적/간접적, ❌=미정의
+        </p>
+        <div style="overflow-x:auto">
+          <table class="gap-table">
+            <thead>
+              <tr>
+                <th style="text-align:left">특성</th>
+                <th>TS 5723:2022</th>
+                <th>TR 24028:2020</th>
+                <th>22989:2022</th>
+                <th>TCM CSV</th>
+                <th>WG3 Web</th>
+                <th>종합 상태</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Accountability</td><td class="cell-yes">✅</td><td class="cell-partial">⚠️ 협소</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td><span class="status-pill pill-diff">정렬 필요</span></td></tr>
+              <tr style="background:#e8f5e9"><td><strong>Authenticity</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td class="cell-yes">✅</td><td class="cell-no">❌</td><td class="cell-no">❌ (Note 2)</td><td class="cell-yes">✅</td><td class="cell-no">❌</td><td><span class="status-pill pill-diff">부분 갭</span></td></tr>
+              <tr style="background:#e8f5e9"><td><strong>Autonomy</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td class="cell-no">❌</td><td class="cell-yes">✅</td><td class="cell-no">❌</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td><span class="status-pill pill-diff">부분 갭</span></td></tr>
+              <tr><td>Availability</td><td class="cell-yes">✅</td><td class="cell-no">❌</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td><span class="status-pill pill-diff">부분 갭</span></td></tr>
+              <tr><td>Bias/Fairness</td><td class="cell-no">❌</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td><span class="status-pill pill-diff">부분 갭</span></td></tr>
+              <tr><td>Controllability</td><td class="cell-yes">✅</td><td class="cell-no">❌</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td><span class="status-pill pill-diff">부분 갭</span></td></tr>
+              <tr style="background:#e8f5e9"><td><strong>Effectiveness</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td class="cell-no">❌</td><td class="cell-yes">✅</td><td class="cell-no">❌</td><td class="cell-partial">⚠️ D*</td><td class="cell-yes">✅</td><td><span class="status-pill pill-diff">부분 갭</span></td></tr>
+              <tr><td>Efficiency</td><td class="cell-no">❌</td><td class="cell-yes">✅</td><td class="cell-no">❌</td><td class="cell-yes">✅</td><td class="cell-partial">⚠️</td><td><span class="status-pill pill-diff">부분 갭</span></td></tr>
+              <tr><td>Explainability</td><td class="cell-no">❌</td><td class="cell-no">❌</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td><span class="status-pill pill-diff">부분 갭</span></td></tr>
+              <tr><td>Functional Correctness</td><td class="cell-no">❌</td><td class="cell-no">❌</td><td class="cell-no">❌</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td><span class="status-pill pill-missing">주요 갭</span></td></tr>
+              <tr style="background:#e8f5e9"><td><strong>Functional Safety</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td class="cell-no">❌</td><td class="cell-no">❌</td><td class="cell-no">❌</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td><span class="status-pill pill-missing">주요 갭</span></td></tr>
+              <tr style="background:#e8f5e9"><td><strong>Harm</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td class="cell-no">❌</td><td class="cell-no">❌</td><td class="cell-no">❌</td><td class="cell-partial">⚠️ D*</td><td class="cell-yes">✅</td><td><span class="status-pill pill-missing">주요 갭</span></td></tr>
+              <tr style="background:#e8f5e9"><td><strong>Hazard</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td class="cell-no">❌</td><td class="cell-no">❌</td><td class="cell-no">❌</td><td class="cell-partial">⚠️ D*</td><td class="cell-yes">✅</td><td><span class="status-pill pill-missing">주요 갭</span></td></tr>
+              <tr style="background:#e8f5e9"><td><strong>Integrity</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td class="cell-partial">⚠️ (이중)</td><td class="cell-yes">✅</td><td class="cell-no">❌ (Note 2)</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td><span class="status-pill pill-diff">부분 갭</span></td></tr>
+              <tr style="background:#e8f5e9"><td><strong>Interpretability</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td class="cell-no">❌</td><td class="cell-no">❌</td><td class="cell-no">❌</td><td class="cell-no">❌</td><td class="cell-yes">✅</td><td><span class="status-pill pill-missing">심각 갭</span></td></tr>
+              <tr><td>Intervenability</td><td class="cell-no">❌</td><td class="cell-no">❌</td><td class="cell-no">❌</td><td class="cell-partial">⚠️</td><td class="cell-partial">⚠️</td><td><span class="status-pill pill-missing">심각 갭</span></td></tr>
+              <tr style="background:#e8f5e9"><td><strong>Privacy</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td class="cell-no">❌ (Note 2)</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td><span class="status-pill pill-diff">부분 갭</span></td></tr>
+              <tr style="background:#e8f5e9"><td><strong>Quality</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td class="cell-partial">⚠️ (이중)</td><td class="cell-no">❌</td><td class="cell-no">❌ (Note 2)</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td><span class="status-pill pill-diff">부분 갭</span></td></tr>
+              <tr><td>Reliability</td><td class="cell-partial">⚠️ (이중)</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td class="cell-partial">⚠️</td><td><span class="status-pill pill-diff">정렬 필요</span></td></tr>
+              <tr><td>Resilience</td><td class="cell-partial">⚠️ (이중)</td><td class="cell-no">❌</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td><span class="status-pill pill-diff">부분 갭</span></td></tr>
+              <tr style="background:#e8f5e9"><td><strong>Risk</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td class="cell-no">❌</td><td class="cell-no">❌</td><td class="cell-no">❌</td><td class="cell-yes">✅ D,N,g</td><td class="cell-yes">✅</td><td><span class="status-pill pill-missing">주요 갭</span></td></tr>
+              <tr><td>Robustness</td><td class="cell-yes">✅</td><td class="cell-no">❌</td><td class="cell-partial">⚠️ 수정</td><td class="cell-yes">✅</td><td class="cell-partial">⚠️</td><td><span class="status-pill pill-diff">부분 갭</span></td></tr>
+              <tr><td>Safety</td><td class="cell-partial">⚠️</td><td class="cell-partial">⚠️</td><td class="cell-no">❌</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td><span class="status-pill pill-diff">정렬 필요</span></td></tr>
+              <tr><td>Security</td><td class="cell-partial">⚠️</td><td class="cell-partial">⚠️</td><td class="cell-no">❌</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td><span class="status-pill pill-diff">정렬 필요</span></td></tr>
+              <tr style="background:#e8f5e9"><td><strong>Threat</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td class="cell-no">❌</td><td class="cell-no">❌</td><td class="cell-no">❌</td><td class="cell-partial">⚠️ 확인 필요</td><td class="cell-yes">✅</td><td><span class="status-pill pill-missing">주요 갭</span></td></tr>
+              <tr><td>Transparency</td><td class="cell-partial">⚠️ (이중)</td><td class="cell-no">❌</td><td class="cell-partial">⚠️ (이중)</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td><span class="status-pill pill-diff">부분 갭</span></td></tr>
+              <tr><td>Trustworthiness</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td class="cell-yes">✅</td><td class="cell-partial">⚠️</td><td class="cell-yes">✅</td><td><span class="status-pill pill-match">양호</span></td></tr>
+              <tr style="background:#e8f5e9"><td><strong>Usability</strong> <span style="font-size:10px;color:#27ae60">⬆신규</span></td><td class="cell-yes">✅ §3.2.21</td><td class="cell-no">❌</td><td class="cell-no">❌ (Note 2)</td><td class="cell-partial">⚠️ D*</td><td class="cell-no">❌</td><td><span class="status-pill pill-diff">부분 갭</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note-box warning" style="margin-top:16px">
+          <span class="icon">⚠️</span>
+          <div>
+            <strong>핵심 표준화 권고사항</strong>
+            <ol style="font-size:13px;line-height:1.8;margin-top:6px">
+              <li><strong>TS 5723 개정 우선 추가:</strong> Explainability, Intervenability, Bias/Fairness, Efficiency, Functional Correctness — 5개 특성 정의 부재</li>
+              <li><strong>이중 정의 통일:</strong> Reliability(§3.2.12/13), Transparency(§3.2.19/20), Resilience(§3.2.14/15), Integrity(§3.2.7/8) 간 AI 시스템 적용 정의 명확화</li>
+              <li><strong>TR 24028 개정 시:</strong> Robustness, Controllability, Availability, Resilience, Transparency, Privacy, Authenticity 정의 추가 권고</li>
+              <li><strong>22989 개정 시:</strong> Note 2 언급 특성(Privacy, Integrity, Authenticity, Quality, Usability) §3.5에 독립 정의 추가 필요</li>
+              <li><strong>신규 식별 특성(#16~28) TC 추출:</strong> Privacy·Authenticity·Integrity·Risk·Threat 등 관련 SHALL/SHOULD 문장을 tc_text/*.txt에서 추가 추출하여 S10 및 S04 업데이트 필요</li>
+              <li><strong>TCM과 TS 5723 정렬:</strong> TCM의 28개 특성 전체가 TS 5723에 포함되도록 SC42 WG3과 JTC 1/WG 13 공동 작업 필요</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="page-footer">
+      <span><a href="s08-standards-diagram.html">← S08 표준 연관도</a></span>
+      <span>S09 특성 Vocabulary 비교 | ISO/IEC 42117-X TFL 운영 가이드 v1.0</span>
+      <span><a href="s10-requirements-list.html">S10 요구사항 목록 →</a></span>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleVocab(id) {
+  const body = document.getElementById('body-' + id);
+  const arrow = document.getElementById('arrow-' + id);
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  arrow.classList.toggle('open', !isOpen);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S11 TC-Claim 매핑 표 — ISO/IEC 42117-X TFL 가이드</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .map-table { width:100%;border-collapse:collapse;font-size:0.84em }
+    .map-table th { background:#1a4480;color:white;padding:8px 10px;text-align:left;font-size:0.8em }
+    .map-table td { padding:8px 10px;border-bottom:1px solid #e8edf4;vertical-align:top }
+    .map-table tr:hover { background:#f0f4ff !important }
+    .legend-item { display:inline-flex;align-items:center;gap:6px;margin-right:20px;font-size:0.85em }
+    .sec-divider { background:#e8edf4 }
+    .sec-divider td { padding:5px 10px;font-size:0.78em;font-weight:700;color:#1a4480;letter-spacing:0.5px }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">ISO/IEC 42117-X</div>
+      <div class="title">TFL 운영 가이드</div>
+      <div class="version">v1.0 · 2026-02-20</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-label">메인</div>
+        <a href="index.html" class="nav-item">📋 가이드 홈</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">섹션</div>
+        <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
+        <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>28개 TCM 신뢰성 특성</a>
+        <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
+        <a href="s04-tc-mapping.html" class="nav-item"><span class="section-id">S04</span>TCM-TC 요구사항 매핑</a>
+        <a href="s05-ca-guide.html" class="nav-item"><span class="section-id">S05</span>CA 이행 가이드</a>
+        <a href="s06-gaps.html" class="nav-item"><span class="section-id">S06</span>커버리지 갭 및 권고사항</a>
+        <a href="s07-references.html" class="nav-item"><span class="section-id">S07</span>참조 표준 및 용어 사전</a>
+        <a href="s08-standards-diagram.html" class="nav-item"><span class="section-id">S08</span>표준 연관도</a>
+        <a href="s09-vocabulary.html" class="nav-item"><span class="section-id">S09</span>특성 Vocabulary 비교</a>
+        <a href="s10-requirements-list.html" class="nav-item"><span class="section-id">S10</span>요구사항 전체 목록</a>
+        <a href="s11-tc-claim-mapping.html" class="nav-item active"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
+        <a href="s12-standards-tracker.html" class="nav-item"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
+        <a href="s13-dtc-card.html" class="nav-item"><span class="section-id">S13</span>AI Developer Technical Card</a>
+      </div>
+    </div>
+  </nav>
+
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div class="page-header">
+      <div>
+        <h1>S11 — TC-REQ ↔ Simple Claim 매핑 표</h1>
+        <div class="breadcrumb"><a href="index.html">홈</a> › S11</div>
+      </div>
+      <div class="badge-group">
+        <span class="badge badge-level3">28개 특성 전체</span>
+        <span class="badge badge-level2">Simple Claim 78개</span>
+        <span class="badge badge-level1">TC-REQ 93+48개</span>
+      </div>
+    </div>
+
+    <div class="main-content">
+
+      <div class="note-box info">
+        <span class="icon">ℹ️</span>
+        <div>
+          <strong>S11 목적 — 28개 TCM 특성 전체의 TC-REQ ↔ Simple Claim 연계 추적</strong><br>
+          S04(TCM-TC 매핑)와 S03(Simple Claim 카탈로그)의 28개 신뢰성 특성 전체에 대한 TC-REQ ID ↔ SC ID 연결 관계를 한 곳에서 조회할 수 있는 참조 표입니다.
+          <strong>#1~#15 (기존 특성)</strong>: <code>TC-REQ-XXX</code> 형식 (mapping_supplement.json 기반 매핑, 신뢰도 high/medium).
+          <strong>#16~#28 (신규 특성)</strong>: <code>TC-XXXX-NNN</code> 형식 (tc_text 직접 추출).
+          각 TC-REQ는 1개 이상 Simple Claim의 근거이며, SHALL→Level 2/3, SHOULD→Level 1/2 연계 원칙 적용.
+        </div>
+      </div>
+
+      <!-- 요약 통계 -->
+      <div class="stats-grid" style="margin:20px 0">
+        <div class="stat-card green"><div class="num">28</div><div class="label">특성 총계</div></div>
+        <div class="stat-card"><div class="num">78</div><div class="label">Simple Claim 총계<br><span style="font-size:0.75em;color:#888">(45 기존 + 33 신규)</span></div></div>
+        <div class="stat-card"><div class="num">93+48</div><div class="label">TC-REQ 총계<br><span style="font-size:0.75em;color:#888">(기존 + 신규)</span></div></div>
+        <div class="stat-card" style="border-top-color:#e74c3c"><div class="num">2</div><div class="label">갭 특성<br><span style="font-size:0.75em;color:#888">(#21 기능안전, #23 위험원)</span></div></div>
+      </div>
+
+      <!-- 범례 -->
+      <div style="margin-bottom:16px;padding:12px 16px;background:#f8f9fa;border-radius:6px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+        <strong style="font-size:0.85em;color:#555">범례:</strong>
+        <span class="legend-item"><span style="background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">✅ 완전</span> TC 5개 이상</span>
+        <span class="legend-item"><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">⚠️ 부분</span> TC 1~4개</span>
+        <span class="legend-item"><span style="background:#fde8d0;color:#7f4f00;border:1px solid #f0ad4e;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">🔄 PROXY</span> 대리 표준</span>
+        <span class="legend-item"><span style="background:#f8d7da;color:#721c24;border:1px solid #f5c6cb;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">❌ 갭</span> TC 미존재</span>
+        <span class="legend-item">SC Level: 
+          <span style="background:#dcfce7;color:#166534;border-radius:4px;padding:0 5px;font-size:0.8em">L1</span>=문서기반
+          <span style="background:#dbeafe;color:#1e40af;border-radius:4px;padding:0 5px;font-size:0.8em">L2</span>=측정기반
+          <span style="background:#ede9fe;color:#6d28d9;border-radius:4px;padding:0 5px;font-size:0.8em">L3</span>=독립검증
+        </span>
+      </div>
+
+      <!-- S11.1 전체 매핑 표 -->
+      <div class="content-section">
+        <h2>S11.1 — 28개 특성 전체 TC-REQ ↔ Simple Claim 대응표</h2>
+        <p style="font-size:0.87em;color:#555;margin-bottom:12px">
+          파란색 행: <strong>#1~#15 기존 TCM 특성</strong> (TC-REQ-XXX, mapping_supplement 기반) |
+          흰색 행: <strong>#16~#28 신규 식별 특성</strong> (TC-XXXX-NNN, tc_text 직접 추출)
+        </p>
+        <div style="overflow-x:auto">
+          <table class="map-table">
+            <thead>
+              <tr>
+                <th style="width:40px">#</th>
+                <th style="width:105px">특성명</th>
+                <th style="width:80px">커버리지</th>
+                <th style="width:130px">주요 출처 표준</th>
+                <th style="width:45px">TC수</th>
+                <th style="min-width:190px">TC-REQ ID 목록</th>
+                <th style="width:45px">SC수</th>
+                <th style="min-width:190px">Simple Claim ID 목록</th>
+              </tr>
+            </thead>
+            <tbody>
+            <!-- #1~#15: 기존 TCM 특성 (파란 배경) -->
+            <tr class="sec-divider"><td colspan="8">📌 기존 TCM 특성 (#1~#15) — TC-REQ-XXX 형식 (mapping_supplement.json 기반)</td></tr>
+            <tr style="background:#f9f9ff;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#1</td>
+              <td style="font-weight:600">Trustworthiness</td>
+              <td style="text-align:center"><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">⚠️ 부분</span></td>
+              <td style="font-size:0.8em;color:#555">TS 5723, TR 24028</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">4</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-085 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-087 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-088 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-098 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Trustworthiness-001 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Trustworthiness-002 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Trustworthiness-003 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a></td>
+            </tr>
+<tr style="background:#f9f9ff;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#2</td>
+              <td style="font-weight:600">Robustness</td>
+              <td style="text-align:center"><span style="background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">✅ 완전</span></td>
+              <td style="font-size:0.8em;color:#555">24029-2, TR 24029-1</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">8</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-077 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-078 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-079 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-080 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-081 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-089 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-090 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-091 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Robustness-001 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Robustness-002 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Robustness-003 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a></td>
+            </tr>
+<tr style="background:#f9f9ff;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#3</td>
+              <td style="font-weight:600">Reliability</td>
+              <td style="text-align:center"><span style="background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">✅ 완전</span></td>
+              <td style="font-size:0.8em;color:#555">25059, 5338, DTS 25058</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">7</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-001 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-005 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-019 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-030 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-031 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-036 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-108 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Reliability-001 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Reliability-002 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Reliability-003 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a></td>
+            </tr>
+<tr style="background:#f9f9ff;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#4</td>
+              <td style="font-weight:600">Transparency</td>
+              <td style="text-align:center"><span style="background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">✅ 완전</span></td>
+              <td style="font-size:0.8em;color:#555">DTS 6254, TR 24028, 25059</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">5</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-009 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-015 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-051 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-053 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-088 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Transparency-001 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Transparency-002 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Transparency-003 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a></td>
+            </tr>
+<tr style="background:#f9f9ff;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#5</td>
+              <td style="font-weight:600">Bias/Fairness</td>
+              <td style="text-align:center"><span style="background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">✅ 완전</span></td>
+              <td style="font-size:0.8em;color:#555">DTS 12791, TR 24027</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">5</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-038 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-039 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-040 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-044 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-045 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Bias-Fairness-001 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Bias-Fairness-002 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Bias-Fairness-003 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a></td>
+            </tr>
+<tr style="background:#f9f9ff;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#6</td>
+              <td style="font-weight:600">Accountability</td>
+              <td style="text-align:center"><span style="background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">✅ 완전</span></td>
+              <td style="font-size:0.8em;color:#555">FDIS 42006, TR 24368, 23894</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">10</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-068 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-070 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-071 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-072 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-073 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-074 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-075 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-092 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-093 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-109 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Accountability-001 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Accountability-002 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Accountability-003 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a></td>
+            </tr>
+<tr style="background:#f9f9ff;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#7</td>
+              <td style="font-weight:600">Safety</td>
+              <td style="text-align:center"><span style="background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">✅ 완전</span></td>
+              <td style="font-size:0.8em;color:#555">23894, DTR 5469</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">9</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-073 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-074 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-075 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-099 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-100 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-101 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-102 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-104 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-118 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Safety-001 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Safety-002 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Safety-003 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a></td>
+            </tr>
+<tr style="background:#f9f9ff;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#8</td>
+              <td style="font-weight:600">Security</td>
+              <td style="text-align:center"><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">⚠️ 부분</span></td>
+              <td style="font-size:0.8em;color:#555">TR 24028, 23894, DTS 8200</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">5</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-023 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-032 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-033 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-059 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-086 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Security-001 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Security-002 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Security-003 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a></td>
+            </tr>
+<tr style="background:#f9f9ff;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#9</td>
+              <td style="font-weight:600">Explainability</td>
+              <td style="text-align:center"><span style="background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">✅ 완전</span></td>
+              <td style="font-size:0.8em;color:#555">DTS 6254, TR 24028</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">5</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-050 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-051 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-053 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-115 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-116 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Explainability-001 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Explainability-002 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Explainability-003 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a></td>
+            </tr>
+<tr style="background:#f9f9ff;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#10</td>
+              <td style="font-weight:600">Controllability</td>
+              <td style="text-align:center"><span style="background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">✅ 완전</span></td>
+              <td style="font-size:0.8em;color:#555">DTS 8200</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">5</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-054 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-056 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-057 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-059 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-114 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Controllability-001 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Controllability-002 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Controllability-003 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a></td>
+            </tr>
+<tr style="background:#f9f9ff;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#11</td>
+              <td style="font-weight:600">Intervenability</td>
+              <td style="text-align:center"><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">⚠️ 부분</span></td>
+              <td style="font-size:0.8em;color:#555">DTS 8200, TR 24368</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">4</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-010 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-058 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-102 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-117 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Intervenability-001 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Intervenability-002 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Intervenability-003 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a></td>
+            </tr>
+<tr style="background:#f9f9ff;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#12</td>
+              <td style="font-weight:600">Functional Correctness</td>
+              <td style="text-align:center"><span style="background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">✅ 완전</span></td>
+              <td style="font-size:0.8em;color:#555">DTS 25058, TR 29119-11, 23053</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">9</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-011 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-012 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-017 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-060 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-061 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-095 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-096 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-097 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-119 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Functional_Correctness-001 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Functional_Correctness-002 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Functional_Correctness-003 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a></td>
+            </tr>
+<tr style="background:#f9f9ff;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#13</td>
+              <td style="font-weight:600">Efficiency</td>
+              <td style="text-align:center"><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">⚠️ 부분</span></td>
+              <td style="font-size:0.8em;color:#555">DTS 25058, 5338</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">4</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-001 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-007 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-017 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-026 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Efficiency-001 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Efficiency-002 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Efficiency-003 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a></td>
+            </tr>
+<tr style="background:#f9f9ff;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#14</td>
+              <td style="font-weight:600">Availability</td>
+              <td style="text-align:center"><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">⚠️ 부분</span></td>
+              <td style="font-size:0.8em;color:#555">25059, DTS 25058, 5338</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">2</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-006 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-REQ-121 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Availability-001 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Availability-002 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Availability-003 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a></td>
+            </tr>
+<tr style="background:#f9f9ff;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#15</td>
+              <td style="font-weight:600">Resilience</td>
+              <td style="text-align:center"><span style="background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">✅ 완전</span></td>
+              <td style="font-size:0.8em;color:#555">TR 24028, DTR 5469, DTS 8200, DTS 25058</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">11</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#6d28d9">TC-24028-RES-01 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(RESILIENCE)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#6d28d9">TC-24028-RES-04 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(RESILIENCE)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#6d28d9">TC-5469-RES-01 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(RESILIENCE)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#6d28d9">TC-5469-RES-02 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(RESILIENCE)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#6d28d9">TC-5469-RES-04 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(RESILIENCE)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#6d28d9">TC-25058-RES-01 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(RESILIENCE)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#6d28d9">TC-8200-RES-01 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(RESILIENCE)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#6d28d9">TC-8200-RES-02 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(RESILIENCE)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#6d28d9">TC-8200-RES-03 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(RESILIENCE)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#6d28d9">TC-29119-RES-01 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(RESILIENCE)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#6d28d9">TC-29119-RES-02 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(RESILIENCE)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Resilience-001 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Resilience-002 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Resilience-003 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a></td>
+            </tr>
+            <!-- #16~#28: 신규 식별 특성 -->
+            <tr class="sec-divider"><td colspan="8">🆕 신규 식별 특성 (#16~#28) — TC-XXXX-NNN 형식 (tc_text 직접 추출)</td></tr>
+            <tr style="background:white;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#16</td>
+              <td style="font-weight:600">Privacy</td>
+              <td style="text-align:center"><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">⚠️ 부분</span></td>
+              <td style="font-size:0.8em;color:#555">5338, DTS 25058, 42119-2, FDIS 42005</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">5</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-PRIV-001 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-PRIV-002 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-PRIV-003 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-PRIV-004 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-PRIV-005 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Privacy-001 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Privacy-002 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Privacy-003 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a></td>
+            </tr>
+<tr style="background:white;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#17</td>
+              <td style="font-weight:600">Authenticity</td>
+              <td style="text-align:center"><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">⚠️ 부분</span></td>
+              <td style="font-size:0.8em;color:#555">DTS 8200, DTS 25058</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-AUTH-001 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-AUTH-002 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-AUTH-003 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Authenticity-001 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Authenticity-002 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Authenticity-003 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a></td>
+            </tr>
+<tr style="background:white;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#18</td>
+              <td style="font-weight:600">Integrity</td>
+              <td style="text-align:center"><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">⚠️ 부분</span></td>
+              <td style="font-size:0.8em;color:#555">DTS 25058</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-INTG-001 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-INTG-002 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-INTG-003 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Integrity-001 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Integrity-002 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Integrity-003 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a></td>
+            </tr>
+<tr style="background:white;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#19</td>
+              <td style="font-weight:600">Autonomy</td>
+              <td style="text-align:center"><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">⚠️ 부분</span></td>
+              <td style="font-size:0.8em;color:#555">DTS 8200</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">5</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-AUTO-001 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-AUTO-002 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-AUTO-003 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-AUTO-004 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-AUTO-005 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Autonomy-001 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Autonomy-002 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Autonomy-003 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a></td>
+            </tr>
+<tr style="background:white;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#20</td>
+              <td style="font-weight:600">Effectiveness</td>
+              <td style="text-align:center"><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">⚠️ 부분</span></td>
+              <td style="font-size:0.8em;color:#555">DTS 25058</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-EFFE-001 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-EFFE-002 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-EFFE-003 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Effectiveness-001 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Effectiveness-002 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Effectiveness-003 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a></td>
+            </tr>
+<tr style="background:#fdecea;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#21</td>
+              <td style="font-weight:600">Functional Safety<div style="font-size:0.75em;color:#888;margin-top:4px">normative TC 없음 — IEC 61508 미포함</div></td>
+              <td style="text-align:center"><span style="background:#f8d7da;color:#721c24;border:1px solid #f5c6cb;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">❌ 갭</span></td>
+              <td style="font-size:0.8em;color:#555">DTR 5469 (TR), IEC 61508 미포함</td>
+              <td style="text-align:center"><span style="color:#c0392b;font-weight:700">갭</span></td>
+              <td><em style="color:#888;font-size:0.82em">TC 없음 (갭)</em></td>
+              <td style="text-align:center"><span style="color:#c0392b;font-weight:700">갭</span></td>
+              <td><em style="color:#888;font-size:0.82em">Claim 없음</em></td>
+            </tr>
+<tr style="background:white;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#22</td>
+              <td style="font-weight:600">Harm</td>
+              <td style="text-align:center"><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">⚠️ 부분</span></td>
+              <td style="font-size:0.8em;color:#555">FDIS 42005</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-HARM-001 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-HARM-002 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-HARM-003 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Harm-001 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Harm-002 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Harm-003 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a></td>
+            </tr>
+<tr style="background:#fdecea;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#23</td>
+              <td style="font-weight:600">Hazard<div style="font-size:0.75em;color:#888;margin-top:4px">hazard normative 없음</div></td>
+              <td style="text-align:center"><span style="background:#f8d7da;color:#721c24;border:1px solid #f5c6cb;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">❌ 갭</span></td>
+              <td style="font-size:0.8em;color:#555">DTR 5469, FDIS 42005</td>
+              <td style="text-align:center"><span style="color:#c0392b;font-weight:700">갭</span></td>
+              <td><em style="color:#888;font-size:0.82em">TC 없음 (갭)</em></td>
+              <td style="text-align:center"><span style="color:#c0392b;font-weight:700">갭</span></td>
+              <td><em style="color:#888;font-size:0.82em">Claim 없음</em></td>
+            </tr>
+<tr style="background:#fff8e6;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#24</td>
+              <td style="font-weight:600">Interpretability</td>
+              <td style="text-align:center"><span style="background:#fde8d0;color:#7f4f00;border:1px solid #f0ad4e;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">🔄 PROXY</span></td>
+              <td style="font-size:0.8em;color:#555">DTS 6254 [PROXY]</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-INTR-001 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD/PROXY)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-INTR-002 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD/PROXY)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-INTR-003 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD/PROXY)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Interpretability-001 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Interpretability-002 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Interpretability-003 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a></td>
+            </tr>
+<tr style="background:white;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#25</td>
+              <td style="font-weight:600">Quality</td>
+              <td style="text-align:center"><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">⚠️ 부분</span></td>
+              <td style="font-size:0.8em;color:#555">DTS 25058, 25059</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">6</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-QUAL-001 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-QUAL-002 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-QUAL-003 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-QUAL-004 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-QUAL-005 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-QUAL-006 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Quality-001 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Quality-002 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Quality-003 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a></td>
+            </tr>
+<tr style="background:white;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#26</td>
+              <td style="font-weight:600">Risk</td>
+              <td style="text-align:center"><span style="background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">✅ 완전</span></td>
+              <td style="font-size:0.8em;color:#555">23894, 5338, 42119-2, TR 24028</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">10</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-RISK-001 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-RISK-002 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-RISK-003 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-RISK-004 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-RISK-005 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-RISK-006 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-RISK-007 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-RISK-008 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-RISK-009 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-RISK-010 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Risk-001 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Risk-002 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Risk-003 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a></td>
+            </tr>
+<tr style="background:white;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#27</td>
+              <td style="font-weight:600">Usability</td>
+              <td style="text-align:center"><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">⚠️ 부분</span></td>
+              <td style="font-size:0.8em;color:#555">DTS 25058</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">4</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-USEAB-001 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-USEAB-002 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-USEAB-003 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-USEAB-004 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Usability-001 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Usability-002 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Usability-003 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a></td>
+            </tr>
+<tr style="background:white;vertical-align:top">
+              <td style="text-align:center;font-weight:700;font-size:0.85em">#28</td>
+              <td style="font-weight:600">Threat</td>
+              <td style="text-align:center"><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">⚠️ 부분</span></td>
+              <td style="font-size:0.8em;color:#555">TR 24028, 23894, DTS 8200</td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-THRT-001 <span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;border-radius:6px;padding:0 4px;font-size:0.85em">(SHALL)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-THRT-002 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code><code style="display:block;margin:2px 0;font-size:0.79em;color:#1a4480">TC-THRT-003 <span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0 4px;font-size:0.85em">(SHOULD)</span></code></td>
+              <td style="text-align:center"><span style="font-weight:700;color:#27ae60">3</span></td>
+              <td><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Threat-001 <span style="background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:0 4px;font-size:0.85em">(L1)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Threat-002 <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L2)</span></code></a><a href="s03-claims.html" style="display:block;font-size:0.79em;color:#1a4480;text-decoration:none;margin:2px 0"><code>SC-Threat-003 <span style="background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;border-radius:6px;padding:0 4px;font-size:0.85em">(L3)</span></code></a></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- S11.2 Claim Level ↔ TC 유형 연계 -->
+      <div class="content-section" style="margin-top:24px">
+        <h2>S11.2 — Claim Level ↔ TC 유형 연계 원칙</h2>
+        <table>
+          <thead><tr><th>TC 유형</th><th>권장 Claim Level</th><th>CA 유형</th><th>설명</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span style="background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1;padding:1px 8px;border-radius:8px;font-size:0.82em;font-weight:600">SHALL</span></td>
+              <td><span class="badge badge-level2">Level 2</span> <span class="badge badge-level3">Level 3</span></td>
+              <td>Type I / Type II or III</td>
+              <td>의무 요구사항 — 정량 KPI 또는 독립 감사 필요. SHALL 기반 TC는 문서화만으로 불충분하며 검증 증거 요구.</td>
+            </tr>
+            <tr>
+              <td><span style="background:#d6eaf8;color:#2471a3;border:1px solid #aed6f1;padding:1px 8px;border-radius:8px;font-size:0.82em;font-weight:600">SHOULD</span></td>
+              <td><span class="badge badge-level1">Level 1</span> <span class="badge badge-level2">Level 2</span></td>
+              <td>Type II (자기선언)</td>
+              <td>권고 요구사항 — 정책/방법론 문서화 또는 정량 지표 달성으로 충족 가능. 대안 방법 허용.</td>
+            </tr>
+            <tr style="background:#fff8e6">
+              <td><span style="background:#fde8d0;color:#7f4f00;border:1px solid #f0ad4e;padding:1px 8px;border-radius:8px;font-size:0.82em;font-weight:600">PROXY</span></td>
+              <td><span class="badge badge-level1">Level 1</span> <span class="badge badge-level2">Level 2</span></td>
+              <td>Type II (자기선언)</td>
+              <td>대리 표준 기반 — 직접 IS 미발행으로 대리 표준 사용. #24 Interpretability의 경우 DTS 6254 Explainability로 대리. 직접 표준 발행 시 Claim 업데이트 필요.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- S11.3 TC 선정 근거 -->
+      <div class="content-section" style="margin-top:24px">
+        <h2>S11.3 — TC-REQ 선정 근거 및 매핑 방법론</h2>
+
+        <h3>기존 특성 (#1~#15) TC-REQ 매핑 방법</h3>
+        <p style="font-size:0.87em;color:#444;margin-bottom:10px">
+          <code>mapping_supplement.json</code>의 두 가지 신뢰도 수준으로 매핑:
+        </p>
+        <table>
+          <thead><tr><th style="width:100px">신뢰도</th><th>매핑 방법</th><th style="width:80px">건수</th><th>예시</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span style="background:#d4edda;color:#155724;border:1px solid #c3e6cb;padding:1px 8px;border-radius:8px;font-size:0.82em">높음 (High)</span></td>
+              <td style="font-size:0.87em">특성명 + 출처 표준이 모두 일치하는 TC-REQ 직접 매핑</td>
+              <td style="text-align:center;font-weight:700">38건</td>
+              <td style="font-size:0.82em"><code>SC-Bias-Fairness-001 → TC-REQ-038~045</code></td>
+            </tr>
+            <tr>
+              <td><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;padding:1px 8px;border-radius:8px;font-size:0.82em">중간 (Medium)</span></td>
+              <td style="font-size:0.87em">특성 의미적 유사성 기반 추론 매핑 (직접 일치 미확인)</td>
+              <td style="text-align:center;font-weight:700">7건</td>
+              <td style="font-size:0.82em"><code>SC-Availability-001 → TC-REQ-006, 121</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="margin-top:16px">신규 특성 (#16~#28) TC-REQ 추출 기준</h3>
+        <ol style="font-size:0.87em;line-height:1.7">
+          <li><strong>직접성 (Directness)</strong> — 해당 특성을 직접 언급하거나 그 개념을 규범화하는 조항 우선</li>
+          <li><strong>Normative 성격</strong> — SHALL/SHOULD 조동사를 사용하는 normative 본문 조항 (Annex/Foreword 제외)</li>
+          <li><strong>고유성 (Uniqueness)</strong> — 기존 15개 특성 TC와 중복되지 않는 신규 내용</li>
+          <li><strong>대표성 (Representativeness)</strong> — 핵심 요구사항 대표 조항 (세부 구현보다 원칙 우선)</li>
+        </ol>
+        <p style="font-size:0.87em;margin-top:8px;color:#555">
+          <strong>신규 추출 통계:</strong> SHALL 9개 + SHOULD 39개 = <strong>48개</strong>
+          (TC-PRIV-001~005, TC-AUTH-001~003, TC-INTG-001~003, TC-AUTO-001~005, TC-EFFE-001~003,
+          TC-HARM-001~003, TC-INTR-001~003[PROXY], TC-QUAL-001~006, TC-RISK-001~010, TC-THRT-001~003, TC-USEAB-001~004)
+        </p>
+
+        <h3 style="margin-top:16px">갭 특성 (#21, #23) 해소 방향</h3>
+        <div class="note-box warning" style="margin-top:8px">
+          <span class="icon">⚠️</span>
+          <div>
+            <strong>#21 Functional Safety / #23 Hazard</strong> — 23개 tc_text 내 normative SHALL/SHOULD 조항 부재. IEC 61508/ISO 26262 AI 특화 파트 또는 ISO/IEC DTR 5469의 TS/IS 전환 필요.
+            <a href="s12-standards-tracker.html">S12 표준 추적기</a> S12-01(DTR 5469) 모니터링 참조.
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="page-footer">
+      <span><a href="s10-requirements-list.html">← S10 요구사항 목록</a></span>
+      <span><a href="s12-standards-tracker.html">다음: S12 표준 추적기 →</a></span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

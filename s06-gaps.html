@@ -36,12 +36,18 @@
       <div class="nav-section">
         <div class="nav-label">섹션</div>
         <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
-        <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>15개 TCM 신뢰성 특성</a>
+        <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>28개 TCM 신뢰성 특성</a>
         <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
         <a href="s04-tc-mapping.html" class="nav-item"><span class="section-id">S04</span>TCM-TC 요구사항 매핑</a>
         <a href="s05-ca-guide.html" class="nav-item"><span class="section-id">S05</span>CA 이행 가이드</a>
         <a href="s06-gaps.html" class="nav-item active"><span class="section-id">S06</span>커버리지 갭 및 권고사항</a>
         <a href="s07-references.html" class="nav-item"><span class="section-id">S07</span>참조 표준 및 용어 사전</a>
+        <a href="s08-standards-diagram.html" class="nav-item"><span class="section-id">S08</span>표준 연관도</a>
+        <a href="s09-vocabulary.html" class="nav-item"><span class="section-id">S09</span>특성 Vocabulary 비교</a>
+        <a href="s10-requirements-list.html" class="nav-item"><span class="section-id">S10</span>요구사항 전체 목록</a>
+        <a href="s11-tc-claim-mapping.html" class="nav-item"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
+        <a href="s12-standards-tracker.html" class="nav-item"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
+        <a href="s13-dtc-card.html" class="nav-item"><span class="section-id">S13</span>AI Developer Technical Card</a>
       </div>
     </div>
   </nav>
@@ -185,13 +191,401 @@
         </div>
       </div>
 
+      <!-- S06.7 신규 식별 특성 갭 분석 -->
+      <div class="content-section">
+        <h2>S06.7 — 신규 식별 특성 (#16~28) 어휘·TC 갭 분석</h2>
+
+        <div class="note-box warning">
+          <span class="icon">⚠️</span>
+          <div>
+            <strong>신규 식별 13개 특성 공통 현황</strong><br>
+            Privacy~Threat(#16~#28)은 TCM CSV D 마커, WG3 TCM Web 등재, ISO/IEC 22989:2022 §3.5.16 Note 2 기반으로 이번 분석에서 신규 식별되었습니다.
+            <strong>전용 TC 요구사항이 현재 없으며</strong>, 기존 TC-REQ 풀에서 간접 연계 항목만 존재합니다.
+            아래 갭 분석은 어휘 표준화 현황과 TC 확보 우선순위를 제시합니다.
+          </div>
+        </div>
+
+        <!-- 갭 심각도 개요 표 -->
+        <h3>신규 특성 갭 심각도 개요</h3>
+        <div style="overflow-x:auto">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th><th>특성</th><th>어휘 갭</th><th>TC 갭</th><th>TCM D 마커</th><th>전용 TC 추출 가능 표준</th><th>심각도</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background:#fef9f9">
+                <td>24</td><td><strong>Interpretability</strong></td>
+                <td><span class="badge badge-medium">부분 — PROXY</span></td>
+                <td><span class="badge badge-medium">TC-INTR-001~003 [PROXY]</span></td>
+                <td>❌</td><td>DTS 6254 PROXY 적용</td>
+                <td><span class="badge badge-medium">⚠️ PROXY</span></td>
+              </tr>
+              <tr style="background:#fef9f9">
+                <td>21</td><td><strong>Functional Safety</strong></td>
+                <td><span class="badge badge-low-warn">주요 — TCM/WG3만</span></td>
+                <td><span class="badge badge-medium">Safety와 혼재</span></td>
+                <td>D,g,c</td><td>DTR 5469 (분리 추출)</td>
+                <td><span class="badge badge-low-warn">❌ 주요</span></td>
+              </tr>
+              <tr style="background:#fef9f9">
+                <td>22</td><td><strong>Harm</strong></td>
+                <td><span class="badge badge-low-warn">주요 — WG3/TCM D*</span></td>
+                <td><span class="badge badge-low-warn">전용 TC 없음</span></td>
+                <td>D*,g</td><td>FDIS 42005 (미발행)</td>
+                <td><span class="badge badge-low-warn">❌ 주요</span></td>
+              </tr>
+              <tr style="background:#fef9f9">
+                <td>23</td><td><strong>Hazard</strong></td>
+                <td><span class="badge badge-low-warn">주요 — WG3/TCM D*</span></td>
+                <td><span class="badge badge-medium">Safety와 혼재</span></td>
+                <td>D*</td><td>DTR 5469 (분리 추출)</td>
+                <td><span class="badge badge-low-warn">❌ 주요</span></td>
+              </tr>
+              <tr style="background:#fef9f9">
+                <td>26</td><td><strong>Risk</strong></td>
+                <td><span class="badge badge-low-warn">주요 — 외부 표준만</span></td>
+                <td><span class="badge badge-medium">Safety/Account와 혼재</span></td>
+                <td>D,N,g ✅</td><td>FDIS 42005, 23894:2023</td>
+                <td><span class="badge badge-low-warn">❌ 주요</span></td>
+              </tr>
+              <tr style="background:#fef9f9">
+                <td>28</td><td><strong>Threat</strong></td>
+                <td><span class="badge badge-medium">부분 — WG3/TCM</span></td>
+                <td><span class="badge badge-medium">Security와 혼재</span></td>
+                <td>확인 필요</td><td>DTS 8200, FDIS 42005</td>
+                <td><span class="badge badge-low-warn">❌ 주요</span></td>
+              </tr>
+              <tr style="background:#fffdf5">
+                <td>16</td><td><strong>Privacy</strong></td>
+                <td><span class="badge badge-medium">부분 — TS 5723 / TR 24028</span></td>
+                <td><span class="badge badge-medium">Security TC 간접 5개</span></td>
+                <td>D ✅</td><td>TS 5723 §3.2.9, TR 24028 §3.28</td>
+                <td><span class="badge badge-medium">⚠️ 부분</span></td>
+              </tr>
+              <tr style="background:#fffdf5">
+                <td>17</td><td><strong>Authenticity</strong></td>
+                <td><span class="badge badge-medium">부분 — TS 5723만</span></td>
+                <td><span class="badge badge-medium">간접 4개</span></td>
+                <td>D ✅</td><td>TS 5723 §3.2.3</td>
+                <td><span class="badge badge-medium">⚠️ 부분</span></td>
+              </tr>
+              <tr style="background:#fffdf5">
+                <td>18</td><td><strong>Integrity</strong></td>
+                <td><span class="badge badge-medium">부분 — TS 5723 / TR 24028</span></td>
+                <td><span class="badge badge-medium">Security/Reliability TC 간접 6개</span></td>
+                <td>D ✅</td><td>TS 5723 §3.2.7~8, TR 24028 §3.21</td>
+                <td><span class="badge badge-medium">⚠️ 부분</span></td>
+              </tr>
+              <tr style="background:#fffdf5">
+                <td>19</td><td><strong>Autonomy</strong></td>
+                <td><span class="badge badge-medium">부분 — TR 24028만</span></td>
+                <td><span class="badge badge-medium">Controllability TC 간접 6개</span></td>
+                <td>D,g ✅</td><td>TR 24028 §3.7, DTS 8200</td>
+                <td><span class="badge badge-medium">⚠️ 부분</span></td>
+              </tr>
+              <tr style="background:#fffdf5">
+                <td>20</td><td><strong>Effectiveness</strong></td>
+                <td><span class="badge badge-medium">부분 — TR 24028만 (D*)</span></td>
+                <td><span class="badge badge-medium">Efficiency TC 간접 5개</span></td>
+                <td>D* (deprecated)</td><td>TR 24028 §3.14, DTS 25058</td>
+                <td><span class="badge badge-medium">⚠️ 부분</span></td>
+              </tr>
+              <tr style="background:#fffdf5">
+                <td>25</td><td><strong>Quality</strong></td>
+                <td><span class="badge badge-medium">부분 — TS 5723 이중정의</span></td>
+                <td><span class="badge badge-medium">Reliability TC 간접 8개</span></td>
+                <td>D ✅</td><td>TS 5723 §3.2.10~11, DTS 25058</td>
+                <td><span class="badge badge-medium">⚠️ 부분</span></td>
+              </tr>
+              <tr style="background:#fffdf5">
+                <td>27</td><td><strong>Usability</strong></td>
+                <td><span class="badge badge-medium">부분 — TS 5723 (D*)</span></td>
+                <td><span class="badge badge-medium">Efficiency TC 간접 4개</span></td>
+                <td>D* (deprecated)</td><td>TS 5723 §3.2.21, ISO 9241-11</td>
+                <td><span class="badge badge-medium">⚠️ 부분</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 심각 갭: Interpretability -->
+        <h3 style="margin-top:24px">❌ 심각 갭 — Interpretability (#24)</h3>
+        <div class="gap-card">
+          <h3>⚠️ Interpretability (해석 가능성) — PROXY 완료 (TC-INTR-001~003), 전용 IS 발행 필요</h3>
+          <div class="current">
+            <strong>현황 (2026-02-20 업데이트)</strong>: DTS 6254 §7.4.2.2, §7.4.2.6, §7.4.3.2에서 <strong>TC-INTR-001~003 [PROXY] 3개 추출 완료</strong>. 단, Interpretability 전용 IS 미발행으로 PROXY 상태 유지.<br>
+            <strong>근본 원인</strong>: Interpretability는 Explainability(사후 설명)와 개념적으로 구별됨 — AI 모델의 내부 동작 원리 이해 능력. DTS 6254 §3.2/§3.17: "Explainability ≠ Interpretability" 명시. 현행 SC42 표준에서 Interpretability 독립 IS 미발행.<br>
+            <strong>PROXY TC 현황</strong>: TC-INTR-001 (DTS 6254 §7.4.3.2 SHOULD — 투명성 정보 분류), TC-INTR-002 (§7.4.2.2 SHOULD — 알고리즘 투명성), TC-INTR-003 (§7.4.2.6 SHOULD — 기술 정보 접근성)
+          </div>
+          <div class="future">
+            <strong>보강 방안</strong>:
+            <ul style="margin-top:6px">
+              <li><strong>ISO/IEC DTS 6254 개정 시</strong>: Interpretability 독립 섹션 신설 요구사항을 SC42 WG3에 NP(신규 작업 항목) 형태로 제안</li>
+              <li><strong>IEEE P7001 (AI 투명성)</strong>: 인간-AI 상호작용 관점의 해석 가능성 요구사항 참조 가능</li>
+              <li><strong>EU AI Act Recital 47</strong>: 고위험 AI 시스템의 해석 가능성 의무화 규정 — 규정 기반 비ISO 요구사항으로 보완 가능</li>
+              <li><strong>NIST AI RMF 1.0</strong>: Explainable AI 원칙 중 Interpretability 요건 참조</li>
+            </ul>
+            <strong>목표 TC 수</strong>: 5~8개 (전용 표준 발행 후)
+          </div>
+          <h4>권고 조치 (장기)</h4>
+          <ol>
+            <li>SC42 WG3에 Interpretability 전용 표준 또는 DTS 6254 개정 NP 제안 (2026~2027)</li>
+            <li>현재는 Explainability(#9) TC를 Interpretability에 대한 대리(proxy) 지표로 활용하되 한계 명시</li>
+            <li>WG3 TCM에서의 정의를 기반으로 TC 추출 가능 여부 재검토 (2026)</li>
+          </ol>
+        </div>
+
+        <!-- 주요 갭: Functional Safety, Harm, Hazard, Risk, Threat -->
+        <h3 style="margin-top:24px">❌ 주요 갭 — Functional Safety·Harm·Hazard·Risk·Threat (#21~23, #26, #28)</h3>
+
+        <div class="gap-card">
+          <h3>❌ Functional Safety (#21) — Safety 특성과 혼재, 분리 추출 필요</h3>
+          <div class="current">
+            <strong>현황 (2026-02-20 확인)</strong>: 전용 TC <strong>0개 — 갭 확인</strong>. ISO/IEC DTR 5469 전체 추출 시 Technical Report 성격으로 normative SHALL/SHOULD 없음 확인. IEC 61508·ISO 26262 tc_text 23개 소스에 미포함.<br>
+            <strong>근본 원인</strong>: DTR 5469 "Technical Report" 성격 — TR은 정보적(informative) 문서로 normative 요구사항 없음. IEC 61508 §3.1.12 기준 "Functional Safety = E/E/PE 시스템 오작동이 위험 상태를 야기하지 않도록 보장"은 일반 Safety와 구별되는 엄밀한 개념이나, AI-특화 IS로 발행된 표준 없음.<br>
+            <strong>갭 해소 조건</strong>: ① DTR 5469 → IS 전환, ② IEC 61508 AI 특화 Part 개발, ③ ISO/IEC SC42 × IEC TC 65 공동 프로젝트 시작
+          </div>
+          <div class="future">
+            <strong>보강 방안</strong>:
+            <ul style="margin-top:6px">
+              <li><strong>DTR 5469 재분류</strong>: 기존 Safety(#7) TC 중 기능안전(SIL/ASIL) 관련 항목을 Functional Safety(#21)로 재귀속 (6~8개 예상)</li>
+              <li><strong>IEC 61508:2010 Part 3/4</strong>: 소프트웨어 및 AI 시스템의 기능안전 요구사항 추가 추출</li>
+              <li><strong>ISO 26262 (차량 기능안전)</strong>: AI 기반 ADAS/자율주행 시스템에 적용되는 ASIL 요구사항</li>
+            </ul>
+            <strong>목표 TC 수</strong>: 8~12개 (DTR 5469 재분류 + 추가 추출)
+          </div>
+          <h4>권고 조치 (단기)</h4>
+          <ol>
+            <li>DTR 5469 기존 TC-REQ-099~105, TC-5469-RES-01~05 중 IEC 61508 SIL 언급 조항을 Functional Safety(#21)로 재분류</li>
+            <li>DTR 5469 전체 SHALL/SHOULD 재추출 시 Safety vs. Functional Safety 기준으로 분리 매핑</li>
+          </ol>
+        </div>
+
+        <div class="gap-card">
+          <h3>⚠️ Harm (#22) — TC-HARM-001~003 추출 완료 / ❌ Hazard (#23) — 갭 확인</h3>
+          <div class="current">
+            <strong>Harm 현황 (2026-02-20 업데이트)</strong>: TC-HARM-001~003 <strong>3개 추출 완료</strong>. TC-HARM-001 SHALL (FDIS 42005 §5.8 — harm 방지 의무), TC-HARM-002 SHOULD (§6.8.1 — 이해관계자별 harm 사전 분석), TC-HARM-003 SHOULD (§6.8.2.1 — 심각도·발생가능성 평가). Harm 갭 해소.<br>
+            <strong>Hazard 현황 (2026-02-20 확인)</strong>: Hazard-specific normative 요구사항 없음 확인 완료. DTR 5469 TR 성격, FDIS 42005에 hazard 독립 조항 없음. <strong>갭 유지</strong>.<br>
+            <strong>근본 원인 (Hazard)</strong>: Hazard는 Safety 위험 분석의 선행 개념이나 AI 전용 IS에서 독립 normative화 미이루어짐. TCM CSV D* (deprecated) 상태. IEC 61508 AI 특화 IS 개발 시 해소 기대.
+          </div>
+          <div class="future">
+            <strong>보강 방안 (업데이트)</strong>:
+            <ul style="margin-top:6px">
+              <li><strong>Harm: 완료</strong> — TC-HARM-001~003 추출 완료. FDIS 42005 IS 발행 시 normative 강도 확정. 추가 조항 재추출 가능.</li>
+              <li><strong>Hazard 추가 탐색</strong>: FDIS 42005 IS 발행 후 hazard-related 조항 재확인 (현재 FDIS 검토 결과 normative 없음)</li>
+              <li><strong>IEC 61508 §3.1.7 (Hazard 정의)</strong>: 기능안전 맥락 Hazard 요구사항 — Functional Safety(#21)와 공동 추출</li>
+              <li><strong>ISO 31000:2018 위험 분석 조항</strong>: Hazard identification 요구사항 참조</li>
+              <li><strong>DTR 5469 재검토</strong>: 기존 Safety TC 중 Hazard analysis 관련 조항 재귀속</li>
+            </ul>
+            <strong>목표 TC 수</strong>: Harm 6~8개, Hazard 6~8개 (FDIS 42005 발행 후)
+          </div>
+          <h4>권고 조치 (단기 — FDIS 42005 발행 대기)</h4>
+          <ol>
+            <li>FDIS 42005 최종 발행 즉시 Harm·Hazard 전용 TC 추출 (2025년 하반기 예상)</li>
+            <li>ISO/IEC 23894:2023 기존 TC-REQ-028, 063~065 중 Harm·Hazard 관련 항목 재분류 검토</li>
+            <li>TCM CSV D* 상태 재검토 — FDIS 42005 발행 후 D 마커 승격 기대</li>
+          </ol>
+        </div>
+
+        <div class="gap-card">
+          <h3>❌ Risk (#26) — 가장 강한 TCM D,N,g 마커, 기존 TC는 Safety/Accountability와 혼재</h3>
+          <div class="current">
+            <strong>현황</strong>: 전용 TC <strong>0개</strong> — 기존 Safety·Accountability TC에서 위험 관련 조항이 혼재 (TC-REQ-028, 063~065, 092, 094, TC-23894-RES-01)<br>
+            <strong>주목 포인트</strong>: TCM CSV "D, N, g" 마커는 28개 특성 중 가장 강한 상태 — Normative reference(ISO 31000 규범적 참조) 및 Guidance 모두 존재<br>
+            <strong>FDIS 42005/42006 의존성</strong>: AI 위험 영향 평가(42005)와 AI 감사(42006) 모두 ISO 31000 Risk 정의를 normatively 참조 — TC 추출 근거 강력
+          </div>
+          <div class="future">
+            <strong>보강 방안</strong>:
+            <ul style="margin-top:6px">
+              <li><strong>ISO/IEC 23894:2023 전면 재추출</strong>: 위험 관리 프로세스(식별→분석→평가→처리) 단계별 8~10개 Risk 전용 TC 추출</li>
+              <li><strong>FDIS 42005 발행 후</strong>: AI 위험 영향 평가 조항에서 5~8개 추가 추출</li>
+              <li><strong>ISO/IEC 42001:2023 AIMS 위험 조항</strong>: §6.1 위험·기회 다루기 조항에서 3~5개 추출 가능</li>
+              <li><strong>기존 TC 재분류</strong>: Safety·Accountability 매핑 TC 중 위험 관리 특성 강한 항목을 Risk(#26)로 다중 매핑</li>
+            </ul>
+            <strong>목표 TC 수</strong>: 10~15개
+          </div>
+          <h4>권고 조치 (단기)</h4>
+          <ol>
+            <li>ISO/IEC 23894:2023 전체 SHALL/SHOULD 재추출 — Risk 전용 TC 분리 (3개월 내, 5~8개 가능)</li>
+            <li>ISO/IEC 42001:2023 §6.1 조항에서 Risk 특성 TC 추출 (2~3개)</li>
+            <li>FDIS 42005 발행 즉시 Risk·Harm·Hazard 통합 추출 실시</li>
+          </ol>
+        </div>
+
+        <div class="gap-card">
+          <h3>❌ Threat (#28) — Security 특성과 혼재, AI-특화 위협 분류 부재</h3>
+          <div class="current">
+            <strong>현황</strong>: 전용 TC <strong>0개</strong> — 기존 Security TC(TC-REQ-023, 033, 059, 086, 127)에서 간접 연계<br>
+            <strong>근본 원인</strong>: AI-특화 위협 유형(적대적 공격·데이터 포이즈닝·모델 역공학·멤버십 추론)을 분류하는 전담 SC42 표준 미발행<br>
+            <strong>TCM 마커 불확실</strong>: TCM CSV의 정확한 D 마커 상태 확인 필요
+          </div>
+          <div class="future">
+            <strong>보강 방안</strong>:
+            <ul style="margin-top:6px">
+              <li><strong>ISO/IEC DTS 8200 전면 재추출</strong>: 위협 모델링 관련 조항에서 Threat 전용 TC 분리 (4~6개)</li>
+              <li><strong>MITRE ATLAS</strong>: AI 위협 분류 체계 — 비ISO 참조로 보완 가능</li>
+              <li><strong>NIST AI RMF 1.0 GOVERN 기능</strong>: AI 위협 인식·대응 요구사항 참조</li>
+              <li><strong>ISO/IEC 27001:2022 위협 분석 조항</strong>: 사이버 보안 위협을 AI 맥락으로 확장 적용</li>
+            </ul>
+            <strong>목표 TC 수</strong>: 6~10개
+          </div>
+          <h4>권고 조치 (단기)</h4>
+          <ol>
+            <li>DTS 8200 전체 SHALL/SHOULD 재추출 — Security·Threat 분리 매핑 (3~6개월)</li>
+            <li>TCM CSV Threat 항목 D 마커 상태 공식 확인 (SC42 WG3 문의)</li>
+            <li>AI-특화 위협 분류 체계(MITRE ATLAS 등) 비ISO 참조로 보완</li>
+          </ol>
+        </div>
+
+        <!-- 부분 갭: 7개 특성 통합 분석 -->
+        <h3 style="margin-top:24px">⚠️ 부분 갭 — Privacy·Authenticity·Integrity·Autonomy·Effectiveness·Quality·Usability (#16~20, #25, #27)</h3>
+
+        <div class="partial-card">
+          <h3>⚠️ 부분 갭 7개 특성 — 공통 분석</h3>
+          <p>이 7개 특성은 TS 5723 또는 TR 24028에 공식 정의가 존재하나, 기존 TC-REQ 풀에서 전용 요구사항 없이 인접 특성 TC를 간접 활용하는 상태입니다.</p>
+          <table>
+            <thead><tr><th>특성</th><th>공식 정의 출처</th><th>간접 연계 TC</th><th>핵심 갭 내용</th><th>TC 추출 경로</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Privacy #16</strong></td>
+                <td>TS 5723 §3.2.9<br>TR 24028 §3.28</td>
+                <td>Security TC 5개<br>(TC-REQ-023,033,059,086,127)</td>
+                <td>개인정보 처리 전담 조항 없음. GDPR Article 25 (Privacy by Design)와 연계 조항 부재</td>
+                <td>TS 5723 §3.2.9 SHALL/SHOULD 직접 추출<br>→ 예상 5~8개</td>
+              </tr>
+              <tr>
+                <td><strong>Authenticity #17</strong></td>
+                <td>TS 5723 §3.2.3</td>
+                <td>Security/Integrity TC 4개<br>(TC-REQ-001,023,059,072)</td>
+                <td>데이터·모델 출처 검증(provenance) 전담 조항 없음. AI 생성 콘텐츠 진본성 요구사항 부재</td>
+                <td>TS 5723 §3.2.3 직접 추출<br>→ 예상 3~5개</td>
+              </tr>
+              <tr>
+                <td><strong>Integrity #18</strong></td>
+                <td>TS 5723 §3.2.7~8<br>TR 24028 §3.21</td>
+                <td>Security/Reliability TC 6개<br>(TC-REQ-001,023,059,060,086,105)</td>
+                <td>이중 정의(데이터·시스템) 통합 요구사항 없음. 무결성 수준(SIL) 연계 기준 미정</td>
+                <td>TS 5723 §3.2.7~8 직접 추출<br>→ 예상 6~10개</td>
+              </tr>
+              <tr>
+                <td><strong>Autonomy #19</strong></td>
+                <td>TR 24028 §3.7</td>
+                <td>Controllability TC 6개<br>(TC-REQ-054~056,102,113,114)</td>
+                <td>자율성 수준(Level 0~5) 분류 기준 없음. 자율 결정 범위 제한 전담 요구사항 없음</td>
+                <td>TR 24028 §3.7 직접 추출<br>+ DTS 8200 자율성 조항<br>→ 예상 5~8개</td>
+              </tr>
+              <tr>
+                <td><strong>Effectiveness #20</strong></td>
+                <td>TR 24028 §3.14</td>
+                <td>Efficiency/Quality TC 5개<br>(TC-REQ-001,017,060,095,096)</td>
+                <td>TCM D* (deprecated) 상태. Efficiency와의 개념 혼동. 목표 달성률 측정 기준 없음</td>
+                <td>TR 24028 §3.14 직접 추출<br>→ 예상 3~5개 (D* 한계)</td>
+              </tr>
+              <tr>
+                <td><strong>Quality #25</strong></td>
+                <td>TS 5723 §3.2.10~11</td>
+                <td>Reliability/Correctness TC 8개<br>(TC-REQ-031,036,042,044,060,095~096,108)</td>
+                <td>이중 정의(데이터·시스템 품질) 통합 프레임워크 없음. ISO 25059 연계 공식화 미완</td>
+                <td>TS 5723 §3.2.10~11<br>+ DTS 25058 품질 조항<br>→ 예상 8~12개</td>
+              </tr>
+              <tr>
+                <td><strong>Usability #27</strong></td>
+                <td>TS 5723 §3.2.21</td>
+                <td>Efficiency TC 4개<br>(TC-REQ-017,026,095,119)</td>
+                <td>TCM D* (deprecated). "usability" vs "usability" 철자 혼용. 사용자 맥락별 차등 기준 없음</td>
+                <td>TS 5723 §3.2.21 직접 추출<br>+ ISO 9241-11 연계<br>→ 예상 4~6개</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4>부분 갭 7개 특성 — 추출 완료 결과 (2026-02-20)</h4>
+          <div class="note-box info" style="background:#e8f5e9;border-color:#a5d6a7;border-left-color:#2d6a4f;margin-bottom:8px">
+            <span class="icon">✅</span>
+            <div>아래 권고 조치들은 모두 실행 완료되었습니다. TS 5723 §3.2.X에는 규범적 SHALL/SHOULD가 없음이 확인되어, DTS 25058·25059·42119-2·5338·DTS 8200·FDIS 42005 등에서 직접 추출했습니다.</div>
+          </div>
+          <ol>
+            <li>✅ <strong>TS 5723 검색 완료 — normative 없음 확인</strong>: §3.2.3/7~8/9/10~11/21 전체 검색 — SHALL/SHOULD 없음. 대신 DTS 25058(§9.x/§11.x/§14)·25059·42119-2에서 추출 완료 (TC-PRIV~AUTH~INTG~QUAL~USEAB 18개)</li>
+            <li>✅ <strong>DTS 8200 추출 완료</strong>: Autonomy(TC-AUTO-001~005), Authenticity(TC-AUTH-001~002). TR 24028은 informative TR 성격으로 normative 없음 확인.</li>
+            <li>✅ <strong>TCM D* 항목 처리 완료</strong>: Effectiveness(D*) → TC-EFFE-001~003 (DTS 25058 §6.2/§14). Usability(D*) → TC-USEAB-001~004 (DTS 25058 §9.2/§9.3/§9.4/§9.6).</li>
+            <li>⚠️ <strong>SC42 표준 정렬 요청 (지속)</strong>: Integrity·Quality의 이중 정의 통합을 위해 SC42 WG3 및 WG 13 공동 작업 제안 — 미해결 과제.</li>
+          </ol>
+        </div>
+
+        <!-- 신규 특성 TC 추출 로드맵 (업데이트: 2026-02-20 추출 완료) -->
+        <h3 style="margin-top:24px">신규 특성 TC 추출 통합 로드맵 — 실행 결과</h3>
+        <div class="note-box info" style="margin-bottom:12px;background:#e8f5e9;border-color:#a5d6a7;border-left-color:#2d6a4f">
+          <span class="icon">✅</span>
+          <div><strong>추출 완료 (2026-02-20):</strong> 23개 tc_text 소스 문서 전체를 직접 분석하여 <strong>45개 신규 TC-REQ ID</strong>를 확보했습니다. 아래 로드맵의 대부분 항목이 완료되었습니다. 남은 갭 2건(#21 Functional Safety, #23 Hazard)은 해당 표준이 기술 보고서(TR) 성격이거나 normative SHALL/SHOULD 없음 확인.</div>
+        </div>
+        <table>
+          <thead><tr><th>시기</th><th>대상 표준</th><th>대상 특성</th><th>실제 TC 수</th><th>상태</th></tr></thead>
+          <tbody>
+            <tr style="background:#e8f5e9">
+              <td><s>즉시 (1개월)</s></td>
+              <td>ISO/IEC 23894:2023 추출</td>
+              <td>Risk (#26)</td>
+              <td><strong>TC-RISK-001~010 (10개)</strong></td>
+              <td><span class="badge badge-normative">✅ 완료</span></td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td><s>단기 (3개월)</s></td>
+              <td>DTS 25058·25059·42119-2·5338 추출 (TS 5723 normative 없음 확인)</td>
+              <td>Privacy·Authenticity·Integrity·Quality·Usability (#16,17,18,25,27)</td>
+              <td><strong>TC-PRIV~INTG~QUAL~USEAB 18개</strong></td>
+              <td><span class="badge badge-normative">✅ 완료</span></td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td><s>단기 (3개월)</s></td>
+              <td>ISO/IEC DTS 8200 추출 (TR 24028 normative 없음 확인)</td>
+              <td>Autonomy (#19) · Effectiveness (#20)</td>
+              <td><strong>TC-AUTO-001~005 (5개), TC-EFFE-001~003 (3개)</strong></td>
+              <td><span class="badge badge-normative">✅ 완료</span></td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td><s>단기 (3~6개월)</s></td>
+              <td>DTS 8200 + TR 24028 추출</td>
+              <td>Threat (#28) · Authenticity (#17)</td>
+              <td><strong>TC-THRT-001~002, TC-AUTH-001~003</strong></td>
+              <td><span class="badge badge-normative">✅ 완료</span></td>
+            </tr>
+            <tr style="background:#fde8e8">
+              <td>장기 (전용 IS 발행 후)</td>
+              <td>ISO/IEC DTR 5469 — TR 성격상 normative 없음 확인</td>
+              <td>Functional Safety (#21) · Hazard (#23)</td>
+              <td>—</td>
+              <td><span class="badge badge-informative">❌ 갭 확인</span></td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td><s>중기 (FDIS 42005 발행 후)</s></td>
+              <td>ISO/IEC FDIS 42005 추출</td>
+              <td>Harm (#22) · Privacy (#16) · Risk (#26)</td>
+              <td><strong>TC-HARM-001~003, TC-PRIV-005, TC-RISK-009~010</strong></td>
+              <td><span class="badge badge-normative">✅ 완료</span></td>
+            </tr>
+            <tr style="background:#fff8e1">
+              <td>장기 (2026~2028)</td>
+              <td>DTS 6254 개정 또는 신규 Interpretability 표준</td>
+              <td>Interpretability (#24)</td>
+              <td>TC-INTR-001~003 [PROXY] 등록</td>
+              <td><span class="badge" style="background:#fff3cd;color:#856404;border:1px solid #ffc107">PROXY</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="note-box info" style="margin-top:12px">
+          <span class="icon">ℹ️</span>
+          <div>신규 13개 특성 TC 추출이 완료되어 신규 TC 45개 확보. 기존 TC-REQ 148개 포함 총 <strong>193개+</strong>의 TC 기반 확보. 남은 과제: #21 Functional Safety·#23 Hazard 전용 normative IS(IEC 61508 AI 특화판) 발행 대기.</div>
+        </div>
+      </div>
+
       <!-- S06.3 CSV-TFL 매핑 불일치 -->
       <div class="content-section">
         <h2>S06.3 — CSV-TFL 매핑 불일치 항목</h2>
-        <p>TCM-Endorsed-2025-10-14-update-r2.csv와 TFL 15개 특성 체계 간 다음 불일치 항목이 식별되었습니다:</p>
+        <p>TCM-Endorsed-2025-10-14-update-r2.csv와 TFL 28개 특성 체계 간 다음 불일치 항목이 식별되었습니다:</p>
 
         <details>
-          <summary>CSV에 있으나 TFL 15개 특성과 직접 매핑 안 되는 항목</summary>
+          <summary>CSV에 있으나 TFL 28개 특성과 직접 매핑 안 되는 항목</summary>
           <div class="details-content">
             <table>
               <thead><tr><th>CSV 항목</th><th>상태</th><th>TFL 매핑 현황</th></tr></thead>
@@ -276,60 +670,109 @@
         <table>
           <thead><tr><th>우선순위</th><th>구분</th><th>대상 특성</th><th>조치 내용</th><th>시기</th></tr></thead>
           <tbody>
-            <tr>
+            <tr style="background:#fff8f8">
               <td><span class="badge badge-low-warn">P1 Critical</span></td>
               <td>즉시 조치</td>
               <td>Intervenability</td>
               <td>ISO/IEC 42001 A.9.2~A.9.4 기존 조항 재추출 (2~3개 즉시 가능)</td>
               <td>3개월 내</td>
             </tr>
-            <tr>
+            <tr style="background:#fff8f8">
               <td><span class="badge badge-low-warn">P1 Critical</span></td>
               <td>즉시 조치</td>
               <td>Availability</td>
               <td>ISO 22301:2019 + ISO/IEC DTR 5469 가용성 조항 추출 (4~6개)</td>
               <td>3~6개월</td>
             </tr>
-            <tr>
+            <tr style="background:#e8f5e9">
+              <td><span class="badge badge-low-warn">P1 Critical</span></td>
+              <td>즉시 조치 <span class="badge" style="background:#27ae60;color:#fff;font-size:10px">신규</span></td>
+              <td>Risk (#26)</td>
+              <td>ISO/IEC 23894:2023 재추출 — Risk 전용 TC 분리 (5~8개 즉시 가능)</td>
+              <td>1~3개월</td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td><span class="badge badge-low-warn">P1 Critical</span></td>
+              <td>단기 조치 <span class="badge" style="background:#27ae60;color:#fff;font-size:10px">신규</span></td>
+              <td>Privacy·Authenticity·Integrity·Quality·Usability (#16,17,18,25,27)</td>
+              <td>ISO/IEC TS 5723:2022 §3.2.3/7~8/9/10~11/21 일괄 SHALL/SHOULD 추출 (20~40개 예상)</td>
+              <td>3개월</td>
+            </tr>
+            <tr style="background:#fff8e1">
               <td><span class="badge badge-medium">P2 Major</span></td>
               <td>단기 조치</td>
               <td>Security</td>
               <td>ISO/IEC DTS 8200 추가 조항 + ISO/IEC 27001:2022 공급자 관계 조항 (5개 목표)</td>
               <td>6~12개월</td>
             </tr>
-            <tr>
+            <tr style="background:#fff8e1">
               <td><span class="badge badge-medium">P2 Major</span></td>
               <td>단기 조치</td>
               <td>Explainability</td>
               <td>ISO/IEC DTS 6254 청중별 추가 조항 추출 (4개 목표)</td>
               <td>6~12개월</td>
             </tr>
-            <tr>
+            <tr style="background:#fff8e1">
               <td><span class="badge badge-medium">P2 Major</span></td>
               <td>단기 조치</td>
               <td>Efficiency</td>
               <td>ISO/IEC DTS 25058 성능 효율성 조항 + 5338:2024 에너지 조항 재추출 (4~5개)</td>
               <td>6~12개월</td>
             </tr>
-            <tr>
+            <tr style="background:#e8f5e9">
+              <td><span class="badge badge-medium">P2 Major</span></td>
+              <td>단기 조치 <span class="badge" style="background:#27ae60;color:#fff;font-size:10px">신규</span></td>
+              <td>Autonomy (#19) · Effectiveness (#20)</td>
+              <td>ISO/IEC TR 24028:2020 §3.7/3.14 SHALL/SHOULD 직접 추출 (8~13개 예상)</td>
+              <td>3~6개월</td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td><span class="badge badge-medium">P2 Major</span></td>
+              <td>단기 조치 <span class="badge" style="background:#27ae60;color:#fff;font-size:10px">신규</span></td>
+              <td>Functional Safety (#21) · Hazard (#23)</td>
+              <td>ISO/IEC DTR 5469 재추출 — Safety vs. Functional Safety 분리 매핑 (8~12개)</td>
+              <td>3~6개월</td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td><span class="badge badge-medium">P2 Major</span></td>
+              <td>단기 조치 <span class="badge" style="background:#27ae60;color:#fff;font-size:10px">신규</span></td>
+              <td>Threat (#28)</td>
+              <td>ISO/IEC DTS 8200 재추출 — Security·Threat 분리 매핑 (6~10개)</td>
+              <td>3~6개월</td>
+            </tr>
+            <tr style="background:#fff8f8">
               <td><span class="badge badge-high">P3 계획</span></td>
               <td>중기 조치</td>
               <td>Intervenability</td>
               <td>ISO/IEC AWI 42007 발행 후 human oversight 조항 전면 추출 (5~6개 추가)</td>
               <td>2026~2027</td>
             </tr>
-            <tr>
+            <tr style="background:#e8f5e9">
+              <td><span class="badge badge-high">P3 계획</span></td>
+              <td>중기 조치 <span class="badge" style="background:#27ae60;color:#fff;font-size:10px">신규</span></td>
+              <td>Harm (#22) · Hazard (#23) · Risk (#26) · Threat (#28)</td>
+              <td>ISO/IEC FDIS 42005 발행 즉시 AI 영향 평가 조항 통합 추출 (15~20개)</td>
+              <td>2025 하반기~2026</td>
+            </tr>
+            <tr style="background:#fff8f8">
               <td><span class="badge badge-high">P3 계획</span></td>
               <td>중기 조치</td>
               <td>전체</td>
               <td>ISO/IEC TS 42119-2:2025 개정 테스팅 요구사항 각 특성별 추가 매핑</td>
               <td>2026</td>
             </tr>
-            <tr>
+            <tr style="background:#e8f5e9">
+              <td><span class="badge badge-high">P4 장기</span></td>
+              <td>장기 조치 <span class="badge" style="background:#27ae60;color:#fff;font-size:10px">신규</span></td>
+              <td>Interpretability (#24)</td>
+              <td>SC42에 DTS 6254 개정 NP 제안 — Interpretability 독립 조항 신설 (5~8개 목표)</td>
+              <td>2026~2027</td>
+            </tr>
+            <tr style="background:#fff8f8">
               <td><span class="badge badge-high">P4 장기</span></td>
               <td>장기 조치</td>
               <td>전체</td>
-              <td>CSV TCM과의 공식 갱신 회의 개최. 2025년 신규 표준 반영</td>
+              <td>CSV TCM과의 공식 갱신 회의 개최. 28개 특성 기준 TCM 전면 업데이트</td>
               <td>2026~2027</td>
             </tr>
           </tbody>

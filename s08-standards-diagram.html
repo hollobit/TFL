@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S08 표준 연관도 — ISO/IEC 42117-X TFL 가이드</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .diagram-container {
+      background: #fff;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+    .diagram-toolbar {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px;
+      background: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .diagram-toolbar span { font-size: 13px; font-weight: 600; color: #444; margin-right: 4px; }
+    .filter-btn {
+      padding: 5px 14px; border: 1px solid #dee2e6; border-radius: 20px;
+      font-size: 12px; font-weight: 600; cursor: pointer; background: #fff;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover { border-color: #1a4480; color: #1a4480; }
+    .filter-btn.active { background: #1a4480; color: #fff; border-color: #1a4480; }
+    .filter-btn.cluster-ca.active { background: #27ae60; border-color: #27ae60; }
+    .filter-btn.cluster-vocab.active { background: #9b59b6; border-color: #9b59b6; }
+    .filter-btn.cluster-quality.active { background: #e67e22; border-color: #e67e22; }
+    .filter-btn.cluster-process.active { background: #2980b9; border-color: #2980b9; }
+
+    #svg-diagram {
+      display: block;
+      width: 100%;
+      height: 640px;
+      cursor: grab;
+    }
+    #svg-diagram:active { cursor: grabbing; }
+
+    /* Detail panel */
+    .detail-panel {
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 300px;
+      background: #fff;
+      border-left: 1px solid #dee2e6;
+      padding: 20px;
+      transform: translateX(100%);
+      transition: transform 0.25s;
+      overflow-y: auto;
+      z-index: 10;
+    }
+    .detail-panel.open { transform: translateX(0); }
+    .detail-panel .close-btn {
+      float: right; background: none; border: none; font-size: 18px;
+      cursor: pointer; color: #888; padding: 0;
+    }
+    .detail-panel h3 { font-size: 14px; color: #1a4480; margin-bottom: 4px; clear: both; }
+    .detail-panel .dp-id { font-family: monospace; font-size: 12px; font-weight: 700; color: #555; margin-bottom: 12px; }
+    .detail-panel .dp-row { display: flex; gap: 8px; margin-bottom: 6px; font-size: 12px; }
+    .detail-panel .dp-label { color: #888; min-width: 50px; }
+    .detail-panel .dp-val { color: #212529; font-weight: 500; }
+    .detail-panel .dp-desc { font-size: 12px; color: #555; line-height: 1.5; margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px; }
+    .detail-panel .dp-relations { margin-top: 10px; }
+    .detail-panel .dp-relations h4 { font-size: 12px; color: #888; margin-bottom: 6px; text-transform: uppercase; }
+    .detail-panel .rel-item { font-size: 12px; padding: 3px 0; color: #444; }
+    .detail-panel .rel-arrow { color: #1a4480; margin-right: 4px; }
+
+    /* Legend */
+    .legend-grid {
+      display: flex; gap: 16px; flex-wrap: wrap; margin-top: 12px;
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+    .legend-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+    .legend-line {
+      width: 30px; height: 2px; flex-shrink: 0;
+    }
+    .legend-section { margin-top: 8px; }
+    .legend-section h4 { font-size: 11px; text-transform: uppercase; color: #888; margin-bottom: 6px; }
+
+    /* SVG node styles (via JS) */
+    .svg-node { cursor: pointer; }
+    .svg-node:hover circle, .svg-node:hover ellipse { filter: brightness(1.15); }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">ISO/IEC 42117-X</div>
+      <div class="title">TFL 운영 가이드</div>
+      <div class="version">v1.0 · 2026-02-19</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-label">메인</div>
+        <a href="index.html" class="nav-item">📋 가이드 홈</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">섹션</div>
+        <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
+        <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>28개 TCM 신뢰성 특성</a>
+        <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
+        <a href="s04-tc-mapping.html" class="nav-item"><span class="section-id">S04</span>TCM-TC 요구사항 매핑</a>
+        <a href="s05-ca-guide.html" class="nav-item"><span class="section-id">S05</span>CA 이행 가이드</a>
+        <a href="s06-gaps.html" class="nav-item"><span class="section-id">S06</span>커버리지 갭 및 권고사항</a>
+        <a href="s07-references.html" class="nav-item"><span class="section-id">S07</span>참조 표준 및 용어 사전</a>
+        <a href="s08-standards-diagram.html" class="nav-item active"><span class="section-id">S08</span>표준 연관도</a>
+        <a href="s09-vocabulary.html" class="nav-item"><span class="section-id">S09</span>특성 Vocabulary 비교</a>
+        <a href="s10-requirements-list.html" class="nav-item"><span class="section-id">S10</span>요구사항 전체 목록</a>
+        <a href="s11-tc-claim-mapping.html" class="nav-item"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
+        <a href="s12-standards-tracker.html" class="nav-item"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
+        <a href="s13-dtc-card.html" class="nav-item"><span class="section-id">S13</span>AI Developer Technical Card</a>
+      </div>
+    </div>
+  </nav>
+
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div class="page-header">
+      <div>
+        <h1>S08 — 표준 연관도 (대화형)</h1>
+        <div class="breadcrumb"><a href="index.html">홈</a> › S08</div>
+      </div>
+    </div>
+
+    <div class="main-content">
+
+      <div class="note-box info">
+        <span class="icon">ℹ️</span>
+        <div>
+          <strong>대화형 SVG 다이어그램</strong>
+          노드를 클릭하면 상세 정보 패널이 열립니다. 필터 버튼으로 클러스터별 하이라이트 가능. 마우스 드래그로 이동, 스크롤로 확대/축소.
+        </div>
+      </div>
+
+      <!-- Diagram -->
+      <div class="content-section" style="padding: 0; overflow: visible;">
+        <div class="diagram-container">
+          <div class="diagram-toolbar">
+            <span>필터:</span>
+            <button class="filter-btn active" id="btn-all" onclick="filterCluster('all')">전체</button>
+            <button class="filter-btn cluster-ca" id="btn-ca" onclick="filterCluster('ca')">CA 표준 (인증)</button>
+            <button class="filter-btn cluster-vocab" id="btn-vocab" onclick="filterCluster('vocab')">TC/어휘 표준</button>
+            <button class="filter-btn cluster-quality" id="btn-quality" onclick="filterCluster('quality')">품질 모델</button>
+            <button class="filter-btn cluster-process" id="btn-process" onclick="filterCluster('process')">프로세스/테스팅</button>
+            <div style="margin-left:auto; font-size:12px; color:#888;">노드 클릭 → 상세 패널 | 드래그/스크롤로 탐색</div>
+          </div>
+
+          <svg id="svg-diagram" viewBox="0 0 900 640" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arrow-norm" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#1a4480" opacity="0.8"/>
+              </marker>
+              <marker id="arrow-info" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#9b59b6" opacity="0.6"/>
+              </marker>
+              <marker id="arrow-inter-norm" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L7,3 z" fill="#c0392b" opacity="0.85"/>
+              </marker>
+              <marker id="arrow-inter-info" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L7,3 z" fill="#7f8c8d" opacity="0.75"/>
+              </marker>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+
+            <!-- ── EDGES (drawn first, behind nodes) ── -->
+            <g id="edges-layer">
+              <!-- Normative references to center (TFL) -->
+              <!-- CA Standards cluster -->
+              <line class="edge norm" x1="450" y1="295" x2="680" y2="180" stroke="#1a4480" stroke-width="2" stroke-opacity="0.6" marker-end="url(#arrow-norm)"/>
+              <line class="edge norm" x1="450" y1="295" x2="710" y2="240" stroke="#1a4480" stroke-width="2" stroke-opacity="0.6" marker-end="url(#arrow-norm)"/>
+              <line class="edge norm" x1="450" y1="295" x2="700" y2="310" stroke="#1a4480" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arrow-norm)"/>
+              <line class="edge norm" x1="450" y1="295" x2="680" y2="370" stroke="#1a4480" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arrow-norm)"/>
+              <line class="edge norm" x1="450" y1="295" x2="730" y2="430" stroke="#1a4480" stroke-width="1.5" stroke-opacity="0.5" stroke-dasharray="5,3" marker-end="url(#arrow-info)"/>
+
+              <!-- Vocab/TC standards cluster (left) -->
+              <line class="edge info" x1="450" y1="295" x2="200" y2="120" stroke="#9b59b6" stroke-width="1.5" stroke-opacity="0.5" stroke-dasharray="6,3" marker-end="url(#arrow-info)"/>
+              <line class="edge info" x1="450" y1="295" x2="165" y2="195" stroke="#9b59b6" stroke-width="1.5" stroke-opacity="0.5" stroke-dasharray="6,3" marker-end="url(#arrow-info)"/>
+              <line class="edge info" x1="450" y1="295" x2="155" y2="270" stroke="#9b59b6" stroke-width="1.5" stroke-opacity="0.5" stroke-dasharray="6,3" marker-end="url(#arrow-info)"/>
+              <line class="edge info" x1="450" y1="295" x2="175" y2="345" stroke="#9b59b6" stroke-width="1.5" stroke-opacity="0.5" stroke-dasharray="6,3" marker-end="url(#arrow-info)"/>
+              <line class="edge info" x1="450" y1="295" x2="215" y2="415" stroke="#9b59b6" stroke-width="1" stroke-opacity="0.4" stroke-dasharray="6,3" marker-end="url(#arrow-info)"/>
+              <line class="edge info" x1="450" y1="295" x2="240" y2="475" stroke="#9b59b6" stroke-width="1" stroke-opacity="0.4" stroke-dasharray="6,3" marker-end="url(#arrow-info)"/>
+              <line class="edge info" x1="450" y1="295" x2="175" y2="490" stroke="#9b59b6" stroke-width="1" stroke-opacity="0.4" stroke-dasharray="6,3" marker-end="url(#arrow-info)"/>
+              <line class="edge info" x1="450" y1="295" x2="300" y2="510" stroke="#9b59b6" stroke-width="1" stroke-opacity="0.4" stroke-dasharray="6,3" marker-end="url(#arrow-info)"/>
+
+              <!-- Quality cluster (bottom) -->
+              <line class="edge norm" x1="450" y1="295" x2="380" y2="530" stroke="#e67e22" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arrow-norm)"/>
+              <line class="edge norm" x1="450" y1="295" x2="450" y2="545" stroke="#e67e22" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arrow-norm)"/>
+              <line class="edge norm" x1="450" y1="295" x2="520" y2="530" stroke="#e67e22" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arrow-norm)"/>
+              <line class="edge norm" x1="450" y1="295" x2="590" y2="510" stroke="#e67e22" stroke-width="1" stroke-opacity="0.4" marker-end="url(#arrow-norm)"/>
+              <line class="edge norm" x1="450" y1="295" x2="640" y2="490" stroke="#e67e22" stroke-width="1" stroke-opacity="0.4" marker-end="url(#arrow-norm)"/>
+
+              <!-- Process cluster (top) -->
+              <line class="edge norm" x1="450" y1="295" x2="310" y2="80" stroke="#2980b9" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arrow-norm)"/>
+              <line class="edge info" x1="450" y1="295" x2="390" y2="65" stroke="#2980b9" stroke-width="1" stroke-opacity="0.4" stroke-dasharray="5,3" marker-end="url(#arrow-info)"/>
+              <line class="edge info" x1="450" y1="295" x2="470" y2="58" stroke="#2980b9" stroke-width="1" stroke-opacity="0.4" stroke-dasharray="5,3" marker-end="url(#arrow-info)"/>
+              <line class="edge info" x1="450" y1="295" x2="550" y2="65" stroke="#2980b9" stroke-width="1" stroke-opacity="0.4" stroke-dasharray="5,3" marker-end="url(#arrow-info)"/>
+              <line class="edge norm" x1="450" y1="295" x2="610" y2="82" stroke="#2980b9" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arrow-norm)"/>
+              <line class="edge info" x1="450" y1="295" x2="340" y2="135" stroke="#2980b9" stroke-width="1" stroke-opacity="0.4" stroke-dasharray="5,3" marker-end="url(#arrow-info)"/>
+              <line class="edge info" x1="450" y1="295" x2="570" y2="135" stroke="#2980b9" stroke-width="1" stroke-opacity="0.4" stroke-dasharray="5,3" marker-end="url(#arrow-info)"/>
+              <line class="edge norm" x1="450" y1="295" x2="365" y2="170" stroke="#2980b9" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arrow-norm)"/>
+            </g>
+            <!-- ── INTER-STANDARD EDGES (표준 간 참조 관계) ── -->
+            <g id="inter-edges-layer">
+              <!-- == Process cluster internal == -->
+              <!-- IS 42001 → IS 23894: AIMS normatively references Risk Mgmt -->
+              <line class="inter-edge inter-norm" x1="596" y1="100" x2="584" y2="126" stroke="#c0392b" stroke-width="1.8" stroke-opacity="0.8" marker-end="url(#arrow-inter-norm)"/>
+              <!-- IS 42001 → IS 5338: AIMS normatively references AI lifecycle -->
+              <line class="inter-edge inter-norm" x1="574" y1="84" x2="352" y2="80" stroke="#c0392b" stroke-width="1.5" stroke-opacity="0.7" marker-end="url(#arrow-inter-norm)"/>
+              <!-- FDIS 42006 → IS 42001: audit/cert body requirements under AIMS -->
+              <path class="inter-edge inter-norm" d="M520,56 C568,44 600,62 598,78" stroke="#c0392b" stroke-width="1.5" stroke-opacity="0.7" fill="none" marker-end="url(#arrow-inter-norm)"/>
+              <!-- FDIS 42005 → IS 23894: impact assessment uses risk methodology -->
+              <line class="inter-edge inter-norm" x1="430" y1="72" x2="544" y2="130" stroke="#c0392b" stroke-width="1.5" stroke-opacity="0.7" marker-end="url(#arrow-inter-norm)"/>
+              <!-- FDIS 42005 → IS 42001: impact assessment scoped under AIMS (informative) -->
+              <path class="inter-edge inter-info" d="M436,58 C502,40 566,52 580,78" stroke="#7f8c8d" stroke-width="1.2" stroke-opacity="0.65" stroke-dasharray="5,3" fill="none" marker-end="url(#arrow-inter-info)"/>
+              <!-- TS 42119-2 → IS 5338: AI testing extends lifecycle processes -->
+              <line class="inter-edge inter-info" x1="342" y1="161" x2="316" y2="98" stroke="#7f8c8d" stroke-width="1.2" stroke-opacity="0.65" stroke-dasharray="5,3" marker-end="url(#arrow-inter-info)"/>
+              <!-- TS 42119-2 → TR 29119-11: AI testing TS extends testing guide -->
+              <path class="inter-edge inter-info" d="M408,167 C470,130 520,80 519,78" stroke="#7f8c8d" stroke-width="1.2" stroke-opacity="0.65" stroke-dasharray="5,3" fill="none" marker-end="url(#arrow-inter-info)"/>
+              <!-- TR 24368 → FDIS 42005: ethics overview informs impact assessment -->
+              <line class="inter-edge inter-info" x1="356" y1="126" x2="376" y2="72" stroke="#7f8c8d" stroke-width="1.2" stroke-opacity="0.65" stroke-dasharray="5,3" marker-end="url(#arrow-inter-info)"/>
+              <!-- == Vocab cluster internal == -->
+              <!-- TR 24028 → TS 5723: TR 24028 references TS 5723 vocabulary -->
+              <line class="inter-edge inter-info" x1="177" y1="182" x2="193" y2="137" stroke="#7f8c8d" stroke-width="1.2" stroke-opacity="0.65" stroke-dasharray="5,3" marker-end="url(#arrow-inter-info)"/>
+              <!-- IS 22989 → TS 5723: IS 22989 AI concepts is basis for TS 5723 vocabulary -->
+              <path class="inter-edge inter-info" d="M173,336 C120,265 128,178 179,133" stroke="#7f8c8d" stroke-width="1.2" stroke-opacity="0.65" stroke-dasharray="5,3" fill="none" marker-end="url(#arrow-inter-info)"/>
+              <!-- DTS 12791 → TR 24027: bias management builds on bias overview -->
+              <path class="inter-edge inter-info" d="M232,510 C80,458 78,358 145,293" stroke="#7f8c8d" stroke-width="1.2" stroke-opacity="0.6" stroke-dasharray="5,3" fill="none" marker-end="url(#arrow-inter-info)"/>
+              <!-- == Quality cluster internal == -->
+              <!-- DTS 25058 → IS 25059: evaluation guide extends quality model -->
+              <line class="inter-edge inter-norm" x1="425" y1="552" x2="451" y2="543" stroke="#c0392b" stroke-width="1.5" stroke-opacity="0.7" marker-end="url(#arrow-inter-norm)"/>
+              <!-- TR 24029-1 → IS 24029-2: Part 1 overview → Part 2 formal methods series -->
+              <line class="inter-edge inter-info" x1="572" y1="540" x2="596" y2="512" stroke="#7f8c8d" stroke-width="1.2" stroke-opacity="0.65" stroke-dasharray="5,3" marker-end="url(#arrow-inter-info)"/>
+              <!-- == Cross-cluster == -->
+              <!-- TS 5723 → IS 5338: TC vocabulary referenced by lifecycle standard -->
+              <line class="inter-edge inter-info" x1="240" y1="106" x2="264" y2="82" stroke="#7f8c8d" stroke-width="1.2" stroke-opacity="0.65" stroke-dasharray="5,3" marker-end="url(#arrow-inter-info)"/>
+              <!-- IS 17065 → FDIS 42006: cert body req → AIMS audit/cert body (CA→Process) -->
+              <path class="inter-edge inter-norm" d="M706,230 C680,120 580,68 522,57" stroke="#c0392b" stroke-width="1.5" stroke-opacity="0.65" fill="none" marker-end="url(#arrow-inter-norm)"/>
+            </g>
+
+            <!-- ── CENTER NODE: TFL ── -->
+            <g class="svg-node" id="node-tfl" data-id="tfl" onclick="showDetail('tfl')" transform="translate(450,295)">
+              <circle r="52" fill="#1a4480" stroke="#fff" stroke-width="3" filter="url(#glow)"/>
+              <text text-anchor="middle" dy="-8" fill="#fff" font-size="11" font-weight="700">ISO/IEC</text>
+              <text text-anchor="middle" dy="6" fill="#fff" font-size="11" font-weight="700">42117-X</text>
+              <text text-anchor="middle" dy="20" fill="#ffd700" font-size="10" font-weight="600">TFL (PWI)</text>
+            </g>
+
+            <!-- ── CLUSTER A: CA 표준 (right) ── -->
+            <!-- ISO 17067 DIS -->
+            <g class="svg-node cluster-ca" id="node-17067" data-id="17067" onclick="showDetail('17067')" transform="translate(720,160)">
+              <ellipse rx="52" ry="26" fill="#27ae60" stroke="#fff" stroke-width="2"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="10" font-weight="700">DIS 17067</text>
+              <text text-anchor="middle" dy="9" fill="#fff" font-size="8.5">CA Framework</text>
+            </g>
+            <!-- ISO 17065 IS -->
+            <g class="svg-node cluster-ca" id="node-17065" data-id="17065" onclick="showDetail('17065')" transform="translate(748,245)">
+              <ellipse rx="48" ry="24" fill="#1a6e3a" stroke="#fff" stroke-width="2"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="10" font-weight="700">IS 17065</text>
+              <text text-anchor="middle" dy="9" fill="#fff" font-size="8.5">Certification Body</text>
+            </g>
+            <!-- ISO 17050 -->
+            <g class="svg-node cluster-ca" id="node-17050" data-id="17050" onclick="showDetail('17050')" transform="translate(738,320)">
+              <ellipse rx="45" ry="22" fill="#2ecc71" stroke="#fff" stroke-width="2"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">IS 17050</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">SDoC</text>
+            </g>
+            <!-- ISO 17029 -->
+            <g class="svg-node cluster-ca" id="node-17029" data-id="17029" onclick="showDetail('17029')" transform="translate(718,385)">
+              <ellipse rx="45" ry="22" fill="#27ae60" stroke="#fff" stroke-width="1.5"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">IS 17029</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">Validation/Verif.</text>
+            </g>
+            <!-- AWI 42007 -->
+            <g class="svg-node cluster-ca" id="node-42007" data-id="42007" onclick="showDetail('42007')" transform="translate(770,455)">
+              <ellipse rx="44" ry="22" fill="#e74c3c" stroke="#fff" stroke-width="1.5"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">AWI 42007</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">AI Assessment</text>
+            </g>
+
+            <!-- ── CLUSTER B: TC/어휘 표준 (left) ── -->
+            <!-- TS 5723 -->
+            <g class="svg-node cluster-vocab" id="node-5723" data-id="5723" onclick="showDetail('5723')" transform="translate(195,115)">
+              <ellipse rx="52" ry="24" fill="#2980b9" stroke="#fff" stroke-width="2"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="10" font-weight="700">TS 5723</text>
+              <text text-anchor="middle" dy="9" fill="#fff" font-size="8.5">TC Vocabulary</text>
+            </g>
+            <!-- TR 24028 -->
+            <g class="svg-node cluster-vocab" id="node-24028" data-id="24028" onclick="showDetail('24028')" transform="translate(158,198)">
+              <ellipse rx="50" ry="24" fill="#9b59b6" stroke="#fff" stroke-width="2"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="10" font-weight="700">TR 24028</text>
+              <text text-anchor="middle" dy="9" fill="#fff" font-size="8.5">AI Trustworthiness</text>
+            </g>
+            <!-- TR 24027 -->
+            <g class="svg-node cluster-vocab" id="node-24027" data-id="24027" onclick="showDetail('24027')" transform="translate(145,275)">
+              <ellipse rx="46" ry="22" fill="#8e44ad" stroke="#fff" stroke-width="1.5"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">TR 24027</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">Bias in AI</text>
+            </g>
+            <!-- IS 22989 -->
+            <g class="svg-node cluster-vocab" id="node-22989" data-id="22989" onclick="showDetail('22989')" transform="translate(168,352)">
+              <ellipse rx="46" ry="22" fill="#1a4480" stroke="#fff" stroke-width="1.5"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">IS 22989</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">AI Concepts/Terms</text>
+            </g>
+            <!-- DTR 5469 -->
+            <g class="svg-node cluster-vocab" id="node-5469" data-id="5469" onclick="showDetail('5469')" transform="translate(210,425)">
+              <ellipse rx="45" ry="21" fill="#e67e22" stroke="#fff" stroke-width="1.5"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">DTR 5469</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">Functional Safety</text>
+            </g>
+            <!-- DTS 8200 -->
+            <g class="svg-node cluster-vocab" id="node-8200" data-id="8200" onclick="showDetail('8200')" transform="translate(240,490)">
+              <ellipse rx="43" ry="21" fill="#e67e22" stroke="#fff" stroke-width="1.5"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">DTS 8200</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">AI Governance</text>
+            </g>
+            <!-- DTS 6254 -->
+            <g class="svg-node cluster-vocab" id="node-6254" data-id="6254" onclick="showDetail('6254')" transform="translate(165,502)">
+              <ellipse rx="43" ry="21" fill="#e67e22" stroke="#fff" stroke-width="1.5"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">DTS 6254</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">Transparency</text>
+            </g>
+            <!-- DTS 12791 -->
+            <g class="svg-node cluster-vocab" id="node-12791" data-id="12791" onclick="showDetail('12791')" transform="translate(305,528)">
+              <ellipse rx="45" ry="21" fill="#e67e22" stroke="#fff" stroke-width="1.5"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">DTS 12791</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">Bias Management</text>
+            </g>
+
+            <!-- ── CLUSTER C: 품질 모델 (bottom) ── -->
+            <!-- DTS 25058 -->
+            <g class="svg-node cluster-quality" id="node-25058" data-id="25058" onclick="showDetail('25058')" transform="translate(378,548)">
+              <ellipse rx="47" ry="22" fill="#e67e22" stroke="#fff" stroke-width="1.5"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">DTS 25058</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">Quality Evaluation</text>
+            </g>
+            <!-- IS 25059 -->
+            <g class="svg-node cluster-quality" id="node-25059" data-id="25059" onclick="showDetail('25059')" transform="translate(453,565)">
+              <ellipse rx="45" ry="22" fill="#1a4480" stroke="#fff" stroke-width="1.5"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">IS 25059</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">Quality Model</text>
+            </g>
+            <!-- TR 24029-1 -->
+            <g class="svg-node cluster-quality" id="node-24029-1" data-id="24029-1" onclick="showDetail('24029-1')" transform="translate(528,548)">
+              <ellipse rx="44" ry="21" fill="#9b59b6" stroke="#fff" stroke-width="1.5"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">TR 24029-1</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">NN Robustness 1</text>
+            </g>
+            <!-- IS 24029-2 -->
+            <g class="svg-node cluster-quality" id="node-24029-2" data-id="24029-2" onclick="showDetail('24029-2')" transform="translate(600,522)">
+              <ellipse rx="44" ry="21" fill="#1a4480" stroke="#fff" stroke-width="1.5"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">IS 24029-2</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">NN Robustness 2</text>
+            </g>
+            <!-- FDIS 23053 -->
+            <g class="svg-node cluster-quality" id="node-23053" data-id="23053" onclick="showDetail('23053')" transform="translate(658,487)">
+              <ellipse rx="44" ry="21" fill="#27ae60" stroke="#fff" stroke-width="1.5"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">FDIS 23053</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">ML Framework</text>
+            </g>
+
+            <!-- ── CLUSTER D: 프로세스/테스팅 (top) ── -->
+            <!-- IS 5338 -->
+            <g class="svg-node cluster-process" id="node-5338" data-id="5338" onclick="showDetail('5338')" transform="translate(306,80)">
+              <ellipse rx="46" ry="22" fill="#1a4480" stroke="#fff" stroke-width="2"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">IS 5338</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">AI Lifecycle</text>
+            </g>
+            <!-- FDIS 42005 -->
+            <g class="svg-node cluster-process" id="node-42005" data-id="42005" onclick="showDetail('42005')" transform="translate(390,60)">
+              <ellipse rx="46" ry="22" fill="#27ae60" stroke="#fff" stroke-width="1.5"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">FDIS 42005</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">AI Impact Assess.</text>
+            </g>
+            <!-- FDIS 42006 -->
+            <g class="svg-node cluster-process" id="node-42006" data-id="42006" onclick="showDetail('42006')" transform="translate(474,50)">
+              <ellipse rx="44" ry="21" fill="#27ae60" stroke="#fff" stroke-width="1.5"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">FDIS 42006</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">AI Auditing</text>
+            </g>
+            <!-- TR 29119-11 -->
+            <g class="svg-node cluster-process" id="node-29119" data-id="29119" onclick="showDetail('29119')" transform="translate(555,60)">
+              <ellipse rx="46" ry="22" fill="#9b59b6" stroke="#fff" stroke-width="1.5"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">TR 29119-11</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">AI Testing</text>
+            </g>
+            <!-- IS FDIS 42001 -->
+            <g class="svg-node cluster-process" id="node-42001" data-id="42001" onclick="showDetail('42001')" transform="translate(618,88)">
+              <ellipse rx="46" ry="22" fill="#27ae60" stroke="#fff" stroke-width="2"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">IS 42001</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">AI Mgmt System</text>
+            </g>
+            <!-- TR 24368 -->
+            <g class="svg-node cluster-process" id="node-24368" data-id="24368" onclick="showDetail('24368')" transform="translate(338,138)">
+              <ellipse rx="44" ry="20" fill="#9b59b6" stroke="#fff" stroke-width="1.5"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">TR 24368</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">AI Ethics Overview</text>
+            </g>
+            <!-- IS 23894 -->
+            <g class="svg-node cluster-process" id="node-23894" data-id="23894" onclick="showDetail('23894')" transform="translate(572,138)">
+              <ellipse rx="44" ry="20" fill="#1a4480" stroke="#fff" stroke-width="1.5"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">IS 23894</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">Risk Management</text>
+            </g>
+            <!-- TS 42119-2 -->
+            <g class="svg-node cluster-process" id="node-42119" data-id="42119" onclick="showDetail('42119')" transform="translate(365,175)">
+              <ellipse rx="46" ry="21" fill="#2980b9" stroke="#fff" stroke-width="1.5"/>
+              <text text-anchor="middle" dy="-4" fill="#fff" font-size="9.5" font-weight="700">TS 42119-2</text>
+              <text text-anchor="middle" dy="8" fill="#fff" font-size="8">AI Sys Testing</text>
+            </g>
+
+            <!-- ── LEGEND area ── -->
+            <g transform="translate(10, 594)">
+              <rect width="530" height="44" rx="4" fill="rgba(248,249,250,0.96)" stroke="#dee2e6" stroke-width="1"/>
+              <text x="8" y="13" font-size="8.5" font-weight="700" fill="#555">노드:</text>
+              <circle cx="40" cy="9" r="4.5" fill="#1a4480"/><text x="48" y="13" font-size="8.5" fill="#444">IS</text>
+              <circle cx="66" cy="9" r="4.5" fill="#27ae60"/><text x="74" y="13" font-size="8.5" fill="#444">FDIS</text>
+              <circle cx="98" cy="9" r="4.5" fill="#e67e22"/><text x="106" y="13" font-size="8.5" fill="#444">DTS/DTR</text>
+              <circle cx="148" cy="9" r="4.5" fill="#e74c3c"/><text x="156" y="13" font-size="8.5" fill="#444">AWI</text>
+              <circle cx="176" cy="9" r="4.5" fill="#9b59b6"/><text x="184" y="13" font-size="8.5" fill="#444">TR/TS</text>
+              <line x1="8" y1="21" x2="524" y2="21" stroke="#e8e8e8" stroke-width="0.8"/>
+              <text x="8" y="33" font-size="8.5" font-weight="700" fill="#555">연결선:</text>
+              <line x1="44" y1="29" x2="62" y2="29" stroke="#1a4480" stroke-width="2.5"/><text x="65" y="33" font-size="8.5" fill="#444">→TFL 규범</text>
+              <line x1="128" y1="29" x2="146" y2="29" stroke="#9b59b6" stroke-width="1.5" stroke-dasharray="4,2"/><text x="149" y="33" font-size="8.5" fill="#444">→TFL 참조</text>
+              <line x1="212" y1="29" x2="230" y2="29" stroke="#c0392b" stroke-width="2"/><text x="233" y="33" font-size="8.5" fill="#444">표준간 규범참조</text>
+              <line x1="336" y1="29" x2="354" y2="29" stroke="#7f8c8d" stroke-width="1.2" stroke-dasharray="4,2"/><text x="357" y="33" font-size="8.5" fill="#444">표준간 정보참조</text>
+              <text x="8" y="42" font-size="7.5" fill="#bbb">※ 화살표 방향: 참조하는 표준 → 참조되는 표준</text>
+            </g>
+          </svg>
+
+          <!-- Detail Panel -->
+          <div class="detail-panel" id="detail-panel">
+            <button class="close-btn" onclick="closeDetail()">✕</button>
+            <div id="dp-content"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Standard Status Table -->
+      <div class="content-section" style="margin-top:20px;">
+        <h2>S08.1 — 표준 현황 요약</h2>
+        <table>
+          <thead>
+            <tr><th>클러스터</th><th>표준 ID</th><th>상태</th><th>TC 요건 수</th><th>역할</th></tr>
+          </thead>
+          <tbody>
+            <tr style="background:#e8f5e9">
+              <td rowspan="5"><span class="badge" style="background:#27ae60;color:#fff">CA 인증</span></td>
+              <td><code>ISO/IEC DIS 17067:2025</code></td>
+              <td><span class="badge badge-dis">DIS</span></td>
+              <td>—</td>
+              <td>CA Framework (Type I TFL 인증체계 기반)</td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td><code>ISO/IEC 17065:2012</code></td>
+              <td><span class="badge badge-is">IS</span></td>
+              <td>—</td>
+              <td>제3자 인증기관(CAB) 요건</td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td><code>ISO/IEC 17050-1:2004</code></td>
+              <td><span class="badge badge-is">IS</span></td>
+              <td>—</td>
+              <td>공급자 적합성 선언(SDoC) 기반 (Type II)</td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td><code>ISO/IEC 17029:2019</code></td>
+              <td><span class="badge badge-is">IS</span></td>
+              <td>—</td>
+              <td>검증/확인(V&V) 기반 (Type III)</td>
+            </tr>
+            <tr style="background:#e8f5e9">
+              <td><code>ISO/IEC AWI 42007</code></td>
+              <td><span class="badge badge-awi">AWI</span></td>
+              <td>—</td>
+              <td>AI 시스템 평가 (개발 중)</td>
+            </tr>
+            <tr style="background:#f3e5f5">
+              <td rowspan="8"><span class="badge" style="background:#9b59b6;color:#fff">TC/어휘</span></td>
+              <td><code>ISO/IEC TS 5723:2022</code></td>
+              <td><span class="badge badge-ts">TS</span></td>
+              <td>10</td>
+              <td>신뢰성 특성 공식 어휘 (15개 정의)</td>
+            </tr>
+            <tr style="background:#f3e5f5">
+              <td><code>ISO/IEC TR 24028:2020</code></td>
+              <td><span class="badge badge-tr">TR</span></td>
+              <td>4</td>
+              <td>AI 신뢰성 개요 (4개 SHOULD)</td>
+            </tr>
+            <tr style="background:#f3e5f5">
+              <td><code>ISO/IEC TR 24027:2021</code></td>
+              <td><span class="badge badge-tr">TR</span></td>
+              <td>3</td>
+              <td>AI 편향 개요</td>
+            </tr>
+            <tr style="background:#f3e5f5">
+              <td><code>ISO/IEC 22989:2023</code></td>
+              <td><span class="badge badge-is">IS</span></td>
+              <td>—</td>
+              <td>AI 개념 및 용어 기준</td>
+            </tr>
+            <tr style="background:#f3e5f5">
+              <td><code>ISO/IEC DTR 5469</code></td>
+              <td><span class="badge badge-dts">DTR</span></td>
+              <td>7</td>
+              <td>AI 기능 안전성 (7개 SHOULD)</td>
+            </tr>
+            <tr style="background:#f3e5f5">
+              <td><code>ISO/IEC DTS 8200</code></td>
+              <td><span class="badge badge-dts">DTS</span></td>
+              <td>8</td>
+              <td>AI 거버넌스 (4S/4Sh)</td>
+            </tr>
+            <tr style="background:#f3e5f5">
+              <td><code>ISO/IEC DTS 6254</code></td>
+              <td><span class="badge badge-dts">DTS</span></td>
+              <td>7</td>
+              <td>AI 투명성 (2S/5Sh)</td>
+            </tr>
+            <tr style="background:#f3e5f5">
+              <td><code>ISO/IEC DTS 12791</code></td>
+              <td><span class="badge badge-dts">DTS</span></td>
+              <td>13</td>
+              <td>AI 편향 관리 (13 SHALL)</td>
+            </tr>
+            <tr style="background:#fff3e0">
+              <td rowspan="5"><span class="badge" style="background:#e67e22;color:#fff">품질 모델</span></td>
+              <td><code>ISO/IEC DTS 25058</code></td>
+              <td><span class="badge badge-dts">DTS</span></td>
+              <td>7</td>
+              <td>AI 품질 평가 가이드</td>
+            </tr>
+            <tr style="background:#fff3e0">
+              <td><code>ISO/IEC 25059:2023</code></td>
+              <td><span class="badge badge-is">IS</span></td>
+              <td>10</td>
+              <td>AI 시스템 품질 모델 (SQuaRE 확장)</td>
+            </tr>
+            <tr style="background:#fff3e0">
+              <td><code>ISO/IEC TR 24029-1:2021</code></td>
+              <td><span class="badge badge-tr">TR</span></td>
+              <td>3</td>
+              <td>NN 강건성 평가 Part 1</td>
+            </tr>
+            <tr style="background:#fff3e0">
+              <td><code>ISO/IEC 24029-2:2023</code></td>
+              <td><span class="badge badge-is">IS</span></td>
+              <td>5</td>
+              <td>NN 강건성 평가 Part 2</td>
+            </tr>
+            <tr style="background:#fff3e0">
+              <td><code>ISO/IEC FDIS 23053</code></td>
+              <td><span class="badge badge-fdis">FDIS</span></td>
+              <td>3</td>
+              <td>ML 프레임워크 개요</td>
+            </tr>
+            <tr style="background:#e3f2fd">
+              <td rowspan="8"><span class="badge" style="background:#2980b9;color:#fff">프로세스</span></td>
+              <td><code>ISO/IEC 5338:2024</code></td>
+              <td><span class="badge badge-is">IS</span></td>
+              <td>13</td>
+              <td>AI 수명주기 프로세스</td>
+            </tr>
+            <tr style="background:#e3f2fd">
+              <td><code>ISO/IEC FDIS 42005</code></td>
+              <td><span class="badge badge-fdis">FDIS</span></td>
+              <td>8</td>
+              <td>AI 영향 평가</td>
+            </tr>
+            <tr style="background:#e3f2fd">
+              <td><code>ISO/IEC FDIS 42006</code></td>
+              <td><span class="badge badge-fdis">FDIS</span></td>
+              <td>7</td>
+              <td>AI 감사</td>
+            </tr>
+            <tr style="background:#e3f2fd">
+              <td><code>ISO/IEC TR 29119-11:2020</code></td>
+              <td><span class="badge badge-tr">TR</span></td>
+              <td>3</td>
+              <td>AI 기반 시스템 테스팅</td>
+            </tr>
+            <tr style="background:#e3f2fd">
+              <td><code>ISO/IEC TR 24368:2022</code></td>
+              <td><span class="badge badge-tr">TR</span></td>
+              <td>3</td>
+              <td>AI 윤리 거버넌스 개요</td>
+            </tr>
+            <tr style="background:#e3f2fd">
+              <td><code>ISO/IEC 23894:2023</code></td>
+              <td><span class="badge badge-is">IS</span></td>
+              <td>5</td>
+              <td>AI 리스크 관리</td>
+            </tr>
+            <tr style="background:#e3f2fd">
+              <td><code>ISO/IEC 42001:2023</code></td>
+              <td><span class="badge badge-is">IS</span></td>
+              <td>—</td>
+              <td>AI 경영 시스템</td>
+            </tr>
+            <tr style="background:#e3f2fd">
+              <td><code>ISO/IEC TS 42119-2:2025</code></td>
+              <td><span class="badge badge-ts">TS</span></td>
+              <td>9</td>
+              <td>AI 시스템 테스팅 개요</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <div class="page-footer">
+      <span><a href="s07-references.html">← S07 참조 표준</a></span>
+      <span>S08 표준 연관도 | ISO/IEC 42117-X TFL 운영 가이드 v1.0</span>
+      <span><a href="s09-vocabulary.html">S09 Vocabulary →</a></span>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── Node data ───────────────────────────────────────────────────────────────
+const nodeData = {
+  tfl: {
+    id: 'ISO/IEC 42117-X (PWI)',
+    title: 'AI Trustworthiness Fact Label',
+    status: 'PWI (Preliminary Work Item)',
+    cluster: 'center',
+    desc: 'AI 시스템 신뢰성 사실 선언을 위한 국제표준. TFL 유형 I~IV 정의, 15개 신뢰성 특성 기반 Simple Claim 체계 제공. 2025-10-02 PWI 초안 기준.',
+    relations: [
+      'Normative ref. → ISO/IEC DIS 17067 (CA 프레임워크)',
+      'Normative ref. → ISO/IEC 17065 (인증기관 요건)',
+      'Normative ref. → ISO/IEC TS 5723 (신뢰성 어휘)',
+      'Normative ref. → ISO/IEC 25059 (품질 모델)',
+      'Normative ref. → ISO/IEC 5338 (수명주기)',
+      'Informative ref. → 모든 TC 참조 표준 (19개)'
+    ],
+    s07link: 's07-references.html'
+  },
+  '17067': {
+    id: 'ISO/IEC DIS 17067:2025',
+    title: 'Fundamentals of product certification and guidelines for product certification schemes',
+    status: 'DIS (Draft International Standard)',
+    cluster: 'ca',
+    desc: 'Type I TFL (제3자 인증)의 CA 프레임워크 기반 표준. CA 스킴 유형 1a~7 정의. 이전 버전(2013) 대비 디지털/AI 인증 스킴 요건 추가.',
+    relations: ['Referenced by → ISO/IEC 42117-X (TFL Type I)', 'Paired with → ISO/IEC 17065 (CAB 요건)']
+  },
+  '17065': {
+    id: 'ISO/IEC 17065:2012',
+    title: 'Conformity assessment — Requirements for bodies certifying products, processes and services',
+    status: 'IS (International Standard)',
+    cluster: 'ca',
+    desc: 'Type I TFL 발행 기관(CAB)의 요건 표준. 인증기관의 구조적 요건, 자원, 프로세스, 관리 시스템 요건 규정.',
+    relations: ['Referenced by → ISO/IEC 42117-X (Type I CA)', 'Referenced with → ISO/IEC DIS 17067', 'Referenced by → FDIS 42006 (AIMS 감사인증기관 요건)']
+  },
+  '17050': {
+    id: 'ISO/IEC 17050-1:2004',
+    title: 'Conformity assessment — Supplier\'s declaration of conformity',
+    status: 'IS (International Standard)',
+    cluster: 'ca',
+    desc: 'Type II TFL (공급자 적합성 선언, SDoC)의 기반 표준. 공급자 자기선언 요건, 지원 문서화 요건 규정.',
+    relations: ['Referenced by → ISO/IEC 42117-X (Type II SDoC)']
+  },
+  '17029': {
+    id: 'ISO/IEC 17029:2019',
+    title: 'Conformity assessment — General principles and requirements for validation and verification bodies',
+    status: 'IS (International Standard)',
+    cluster: 'ca',
+    desc: 'Type III TFL (검증/확인 기관 기반)의 기반 표준. V&V 기관의 구조, 공정성, 역량 요건 규정.',
+    relations: ['Referenced by → ISO/IEC 42117-X (Type III V&V)']
+  },
+  '42007': {
+    id: 'ISO/IEC AWI 42007',
+    title: 'AI Assessment — Requirements for AI system assessment bodies',
+    status: 'AWI (Approved Work Item) — 개발 중',
+    cluster: 'ca',
+    desc: 'AI 시스템 평가 기관 요건 개발 중. ISO/IEC 42117-X의 Type I CA와 연계될 예정. SC42 WG3 소관.',
+    relations: ['Informative reference → ISO/IEC 42117-X (향후 연계)']
+  },
+  '5723': {
+    id: 'ISO/IEC TS 5723:2022',
+    title: 'Trustworthiness — Vocabulary',
+    status: 'TS (Technical Specification)',
+    cluster: 'vocab',
+    desc: 'AI 신뢰성 15개 특성의 공식 어휘 정의. TCM(신뢰성 특성 매트릭스)의 용어 기준 역할. 10개 SHALL 요건 포함.',
+    relations: ['Normative ref. from → ISO/IEC 42117-X', 'Vocabulary base → TCM 15개 특성', 'Vocabulary based on → IS 22989 (AI 개념·용어)', 'Referenced by → IS 5338, TR 24028']
+  },
+  '24028': {
+    id: 'ISO/IEC TR 24028:2020',
+    title: 'Overview of trustworthiness in artificial intelligence',
+    status: 'TR (Technical Report)',
+    cluster: 'vocab',
+    desc: 'AI 신뢰성 전반 개요 TR. 신뢰성 개념, 위협, 접근법 서술. 4개 SHOULD 요건. SC-Trustworthiness 계열 Claim의 주요 출처.',
+    relations: ['Informative ref. from → ISO/IEC 42117-X', 'Source for → SC-Trustworthiness-001/002/003', 'References vocabulary → TS 5723', 'Uses terminology → IS 22989']
+  },
+  '24027': {
+    id: 'ISO/IEC TR 24027:2021',
+    title: 'Bias in AI systems and AI aided decision making',
+    status: 'TR (Technical Report)',
+    cluster: 'vocab',
+    desc: 'AI 시스템의 편향 유형, 원인, 대응 방법론 개요. 3개 SHOULD 요건. DTS 12791(편향 관리)의 기반 문서.',
+    relations: ['Informative ref. from → ISO/IEC 42117-X', 'Foundation → DTS 12791', 'Source → SC-Bias-Fairness-001']
+  },
+  '22989': {
+    id: 'ISO/IEC 22989:2023',
+    title: 'Artificial intelligence — Concepts and terminology',
+    status: 'IS (International Standard)',
+    cluster: 'vocab',
+    desc: 'AI 핵심 개념 및 용어 정의 표준. 본 가이드 전체 용어의 기반. SC42 전체 표준의 용어 참조 기준.',
+    relations: ['Referenced by → 모든 SC42 표준', 'Referenced by → ISO/IEC 42117-X', 'Terminology basis for → TS 5723', 'Referenced by → IS 42001, IS 23894, IS 5338, TR 24028']
+  },
+  '5469': {
+    id: 'ISO/IEC DTR 5469',
+    title: 'Artificial intelligence — Functional safety and AI systems',
+    status: 'DTR (Draft Technical Report) — 개발 중',
+    cluster: 'vocab',
+    desc: 'AI 시스템의 기능 안전성(IEC 61508/ISO 26262 연계) 개요. 7개 SHOULD 요건. SC-Safety/SC-Availability 계열 Claim 출처.',
+    relations: ['Informative ref. from → ISO/IEC 42117-X', 'Source → SC-Safety-001/002, SC-Availability-001/002']
+  },
+  '8200': {
+    id: 'ISO/IEC DTS 8200',
+    title: 'Artificial intelligence — Controllability of automated artificial intelligence systems',
+    status: 'DTS (Draft Technical Specification) — 개발 중',
+    cluster: 'vocab',
+    desc: 'AI 시스템 제어가능성(Controllability) 및 인간 개입 요건. 4 SHALL + 4 SHOULD. SC-Controllability/Intervenability 계열 주요 출처.',
+    relations: ['Informative ref. from → ISO/IEC 42117-X', 'Source → SC-Controllability-001~003, SC-Intervenability-001/003']
+  },
+  '6254': {
+    id: 'ISO/IEC DTS 6254',
+    title: 'Artificial intelligence — Objectives and approaches for explainability of ML models and AI systems',
+    status: 'DTS (Draft Technical Specification) — 개발 중',
+    cluster: 'vocab',
+    desc: 'AI 투명성·설명가능성 목적 및 접근법. 2 SHALL + 5 SHOULD. SC-Transparency/Explainability 계열 전체(6개) Claim 주요 출처.',
+    relations: ['Informative ref. from → ISO/IEC 42117-X', 'Source → SC-Transparency-001~003, SC-Explainability-001~003']
+  },
+  '12791': {
+    id: 'ISO/IEC DTS 12791',
+    title: 'Artificial intelligence — Treatment of unwanted bias in classification and regression ML',
+    status: 'DTS (Draft Technical Specification) — 개발 중',
+    cluster: 'vocab',
+    desc: 'AI 편향 관리 요건. 13개 SHALL (가장 강력한 규범적 요건). SC-Bias-Fairness 계열 3개 Claim 모두의 출처.',
+    relations: ['Informative ref. from → ISO/IEC 42117-X', 'Source → SC-Bias-Fairness-001/002/003', 'Builds on → TR 24027 (편향 개요)']
+  },
+  '25058': {
+    id: 'ISO/IEC DTS 25058',
+    title: 'Software and systems engineering — AI system quality evaluation guidance',
+    status: 'DTS (Draft Technical Specification)',
+    cluster: 'quality',
+    desc: 'SQuaRE 기반 AI 시스템 품질 평가 가이드. 6 SHALL + 1 SHOULD. SC-Reliability/Transparency/Functional_Correctness/Efficiency/Availability/Resilience 출처.',
+    relations: ['Normative ref. from → ISO/IEC 42117-X', 'Extension of → ISO/IEC 25059', 'Source → 9개 Claim', 'Extends → IS 25059 (SQuaRE 품질 모델)']
+  },
+  '25059': {
+    id: 'ISO/IEC 25059:2023',
+    title: 'Software engineering — SQuaRE — Quality model for AI systems',
+    status: 'IS (International Standard)',
+    cluster: 'quality',
+    desc: 'SQuaRE AI 품질 모델. 10개 SHALL (가장 많은 SHALL 요건). 품질 특성 체계 전반 기반. SC-Reliability/Transparency 출처.',
+    relations: ['Normative ref. from → ISO/IEC 42117-X', 'Source → SC-Reliability-001, SC-Transparency-002']
+  },
+  '24029-1': {
+    id: 'ISO/IEC TR 24029-1:2021',
+    title: 'Assessment of the robustness of neural networks — Part 1: Overview',
+    status: 'TR (Technical Report)',
+    cluster: 'quality',
+    desc: 'NN 강건성 평가 개요. 3개 SHOULD 요건. SC-Robustness 계열 Claim의 보조 출처.',
+    relations: ['Informative ref. from → ISO/IEC 42117-X', 'Informative → IS 42001 (AIMS 범위 내)', 'Normative ref. → IS 23894 (리스크 방법론 활용)', 'Informed by → TR 24368 (윤리·사회적 우려)']
+  },
+  '24029-2': {
+    id: 'ISO/IEC 24029-2:2023',
+    title: 'Assessment of the robustness of neural networks — Part 2: Methodology for the use of formal methods',
+    status: 'IS (International Standard)',
+    cluster: 'quality',
+    desc: 'NN 강건성 형식 방법론. 5개 SHALL 요건. SC-Robustness 계열 3개 Claim 모두의 주요 출처.',
+    relations: ['Normative ref. from → ISO/IEC 42117-X', 'Source → SC-Robustness-001/002/003']
+  },
+  '23053': {
+    id: 'ISO/IEC FDIS 23053',
+    title: 'Framework for artificial intelligence (AI) systems using machine learning (ML)',
+    status: 'FDIS (Final Draft International Standard)',
+    cluster: 'quality',
+    desc: 'ML 기반 AI 시스템 프레임워크. 3개 SHALL 요건. SC-Functional_Correctness-003 출처.',
+    relations: ['Normative ref. from → ISO/IEC 42117-X', 'Source → SC-Functional_Correctness-003']
+  },
+  '5338': {
+    id: 'ISO/IEC 5338:2024',
+    title: 'Information technology — Artificial intelligence — AI system life cycle processes',
+    status: 'IS (International Standard)',
+    cluster: 'process',
+    desc: 'AI 수명주기 프로세스 표준. 7 SHALL + 6 SHOULD. SC-Reliability/Efficiency/Availability 계열 출처.',
+    relations: ['Normative ref. from → ISO/IEC 42117-X', 'Source → SC-Reliability-002, SC-Efficiency-003, SC-Availability-003', 'Referenced by → IS 42001 (수명주기 프로세스 기반)', 'Referenced by → TS 42119-2 (테스팅 기반)']
+  },
+  '42005': {
+    id: 'ISO/IEC FDIS 42005',
+    title: 'Artificial intelligence — AI system impact assessment',
+    status: 'FDIS (Final Draft International Standard)',
+    cluster: 'process',
+    desc: 'AI 영향 평가 프로세스. 8개 SHOULD 요건. Type I/II TFL의 영향 평가 요건 충족에 활용.',
+    relations: ['Informative ref. from → ISO/IEC 42117-X']
+  },
+  '42006': {
+    id: 'ISO/IEC FDIS 42006',
+    title: 'Information technology — Artificial intelligence — Requirements for bodies providing audit and certification of AI management systems',
+    status: 'FDIS (Final Draft International Standard)',
+    cluster: 'process',
+    desc: 'AI 경영 시스템 감사·인증기관 요건. 7개 SHALL. SC-Accountability-002/003, SC-Security-002 출처.',
+    relations: ['Normative ref. from → ISO/IEC 42117-X', 'Source → SC-Accountability-002/003, SC-Security-002', 'Normative ref. → IS 42001 (AIMS 하에 운영)', 'References → IS 17065 (인증기관 요건)']
+  },
+  '29119': {
+    id: 'ISO/IEC TR 29119-11:2020',
+    title: 'Software and systems engineering — Software testing — Part 11: Guidelines for testing of AI-based systems',
+    status: 'TR (Technical Report)',
+    cluster: 'process',
+    desc: 'AI 시스템 테스팅 가이드라인. 3개 SHOULD 요건. SC-Functional_Correctness-001, SC-Resilience-003 출처.',
+    relations: ['Informative ref. from → ISO/IEC 42117-X', 'Source → SC-Functional_Correctness-001, SC-Resilience-003']
+  },
+  '24368': {
+    id: 'ISO/IEC TR 24368:2022',
+    title: 'Artificial intelligence — Overview of ethical and societal concerns',
+    status: 'TR (Technical Report)',
+    cluster: 'process',
+    desc: 'AI 윤리·사회적 우려 개요. 3개 SHOULD 요건. SC-Accountability/Intervenability 계열 출처.',
+    relations: ['Informative ref. from → ISO/IEC 42117-X', 'Source → SC-Accountability-001/002, SC-Intervenability-001/002', 'Informs → FDIS 42005 (AI 영향 평가)']
+  },
+  '23894': {
+    id: 'ISO/IEC 23894:2023',
+    title: 'Information technology — Artificial intelligence — Guidance on risk management',
+    status: 'IS (International Standard)',
+    cluster: 'process',
+    desc: 'AI 리스크 관리 가이던스. 5개 요건(3S/2Sh). SC-Accountability-001, SC-Safety-001/003, SC-Security-001 출처.',
+    relations: ['Normative ref. from → ISO/IEC 42117-X', 'Source → SC-Accountability-001, SC-Safety-001/003', 'Referenced by → IS 42001 (리스크 관리 활용)', 'Referenced by → FDIS 42005 (영향 평가 방법론)']
+  },
+  '42001': {
+    id: 'ISO/IEC 42001:2023',
+    title: 'Information technology — Artificial intelligence — Management system',
+    status: 'IS (International Standard)',
+    cluster: 'process',
+    desc: 'AI 경영 시스템 요건. 인증 가능한 AI MS 표준. Type I TFL CA 스킴의 배경 경영 시스템 요건으로 활용.',
+    relations: ['Informative ref. from → ISO/IEC 42117-X', 'Companion to → FDIS 42006', 'Normative ref. → IS 23894 (리스크 관리 지침)', 'Normative ref. → IS 5338 (AI 수명주기 프로세스)', 'Referenced by → FDIS 42006 (감사인증기관 요건)']
+  },
+  '42119': {
+    id: 'ISO/IEC TS 42119-2:2025',
+    title: 'Artificial intelligence — Testing of AI systems — Part 2: Overview of AI system testing',
+    status: 'TS (Technical Specification)',
+    cluster: 'process',
+    desc: 'AI 시스템 테스팅 개요 TS. 9개 SHALL 요건. TC 148개 요건 추출 문서 중 일부.',
+    relations: ['Normative ref. from → ISO/IEC 42117-X']
+  }
+};
+
+// ─── Detail Panel ──────────────────────────────────────────────────────────
+function showDetail(id) {
+  const d = nodeData[id];
+  if (!d) return;
+  const clusterNames = { ca:'CA 인증 표준', vocab:'TC/어휘 표준', quality:'품질 모델', process:'프로세스/테스팅', center:'TFL 중심' };
+  const statusColors = { 'IS':'#1a4480', 'TS':'#2980b9', 'FDIS':'#27ae60', 'DTR':'#e67e22', 'DTS':'#e67e22', 'AWI':'#e74c3c', 'TR':'#9b59b6', 'PWI':'#e74c3c' };
+  const statusKey = d.status.split(' ')[0];
+  const sColor = statusColors[statusKey] || '#888';
+
+  let relHtml = (d.relations||[]).map(r =>
+    `<div class="rel-item"><span class="rel-arrow">→</span>${r}</div>`
+  ).join('');
+
+  document.getElementById('dp-content').innerHTML = `
+    <h3>${d.id}</h3>
+    <div class="dp-id">${d.title || ''}</div>
+    <div class="dp-row"><span class="dp-label">상태</span><span class="dp-val" style="color:${sColor}">${d.status}</span></div>
+    <div class="dp-row"><span class="dp-label">클러스터</span><span class="dp-val">${clusterNames[d.cluster]||d.cluster}</span></div>
+    <div class="dp-desc">${d.desc || ''}</div>
+    ${relHtml ? `<div class="dp-relations"><h4>연관 표준</h4>${relHtml}</div>` : ''}
+    ${d.s07link ? `<div style="margin-top:12px;"><a href="${d.s07link}" style="font-size:12px;color:#1a4480;">→ S07 참조 표준 상세</a></div>` : ''}
+  `;
+  document.getElementById('detail-panel').classList.add('open');
+
+  // Highlight node
+  document.querySelectorAll('.svg-node').forEach(n => n.style.opacity = '0.35');
+  const el = document.getElementById('node-' + id);
+  if (el) el.style.opacity = '1';
+}
+
+function closeDetail() {
+  document.getElementById('detail-panel').classList.remove('open');
+  document.querySelectorAll('.svg-node').forEach(n => n.style.opacity = '1');
+}
+
+// ─── Filter ────────────────────────────────────────────────────────────────
+function filterCluster(cluster) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + (cluster==='all' ? 'all' : cluster)).classList.add('active');
+
+  if (cluster === 'all') {
+    document.querySelectorAll('.svg-node, .edge, .inter-edge').forEach(n => n.style.opacity = '1');
+  } else {
+    document.querySelectorAll('.svg-node').forEach(n => {
+      const nc = n.classList;
+      if (n.id === 'node-tfl' || nc.contains('cluster-' + cluster)) {
+        n.style.opacity = '1';
+      } else {
+        n.style.opacity = '0.15';
+      }
+    });
+    document.querySelectorAll('.edge').forEach(e => {
+      const classMap = { ca:'norm', vocab:'info', quality:'norm', process:'info' };
+      // Show edges related to cluster
+      e.style.opacity = e.classList.contains(classMap[cluster]) ? '0.6' : '0.08';
+    });
+    document.querySelectorAll('.inter-edge').forEach(e => {
+      e.style.opacity = '0.12'; // dim inter-edges when cluster filter active
+    });
+  }
+}
+
+// ─── Pan & Zoom ────────────────────────────────────────────────────────────
+(function() {
+  const svg = document.getElementById('svg-diagram');
+  let isPanning = false, startX, startY, vbX=0, vbY=0, vbW=900, vbH=620;
+
+  svg.addEventListener('mousedown', e => {
+    if (e.target.closest('.svg-node')) return;
+    isPanning = true;
+    startX = e.clientX; startY = e.clientY;
+    svg.style.cursor = 'grabbing';
+  });
+  window.addEventListener('mousemove', e => {
+    if (!isPanning) return;
+    const scale = vbW / svg.clientWidth;
+    vbX -= (e.clientX - startX) * scale;
+    vbY -= (e.clientY - startY) * scale;
+    startX = e.clientX; startY = e.clientY;
+    svg.setAttribute('viewBox', `${vbX} ${vbY} ${vbW} ${vbH}`);
+  });
+  window.addEventListener('mouseup', () => { isPanning = false; svg.style.cursor = 'grab'; });
+  svg.addEventListener('wheel', e => {
+    e.preventDefault();
+    const factor = e.deltaY > 0 ? 1.12 : 0.9;
+    const cx = vbX + vbW/2, cy = vbY + vbH/2;
+    vbW *= factor; vbH *= factor;
+    vbX = cx - vbW/2; vbY = cy - vbH/2;
+    svg.setAttribute('viewBox', `${vbX} ${vbY} ${vbW} ${vbH}`);
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S12 표준 발행 현황 추적기 — ISO/IEC 42117-X TFL 가이드</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .tracker-table { width:100%;border-collapse:collapse;font-size:0.84em }
+    .tracker-table th { background:#1a4480;color:white;padding:8px 10px;text-align:left;font-size:0.8em }
+    .tracker-table td { padding:8px 10px;border-bottom:1px solid #e8edf4;vertical-align:top }
+    .tracker-table tr:hover { background:#f0f4ff }
+    .impact-card { background:#f8f9fa;border-radius:8px;padding:16px;margin-bottom:16px;border-left:4px solid #1a4480 }
+    .impact-card.critical { border-left-color:#e74c3c }
+    .impact-card.high { border-left-color:#f39c12 }
+    .impact-card.done { border-left-color:#27ae60 }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">ISO/IEC 42117-X</div>
+      <div class="title">TFL 운영 가이드</div>
+      <div class="version">v1.0 · 2026-02-20</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-label">메인</div>
+        <a href="index.html" class="nav-item">📋 가이드 홈</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">섹션</div>
+        <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
+        <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>28개 TCM 신뢰성 특성</a>
+        <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
+        <a href="s04-tc-mapping.html" class="nav-item"><span class="section-id">S04</span>TCM-TC 요구사항 매핑</a>
+        <a href="s05-ca-guide.html" class="nav-item"><span class="section-id">S05</span>CA 이행 가이드</a>
+        <a href="s06-gaps.html" class="nav-item"><span class="section-id">S06</span>커버리지 갭 및 권고사항</a>
+        <a href="s07-references.html" class="nav-item"><span class="section-id">S07</span>참조 표준 및 용어 사전</a>
+        <a href="s08-standards-diagram.html" class="nav-item"><span class="section-id">S08</span>표준 연관도</a>
+        <a href="s09-vocabulary.html" class="nav-item"><span class="section-id">S09</span>특성 Vocabulary 비교</a>
+        <a href="s10-requirements-list.html" class="nav-item"><span class="section-id">S10</span>요구사항 전체 목록</a>
+        <a href="s11-tc-claim-mapping.html" class="nav-item"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
+        <a href="s12-standards-tracker.html" class="nav-item active"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
+      </div>
+    </div>
+  </nav>
+
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div class="page-header">
+      <div>
+        <h1>S12 — 표준 발행 현황 추적기</h1>
+        <div class="breadcrumb"><a href="index.html">홈</a> › S12</div>
+      </div>
+      <div class="badge-group">
+        <span class="badge" style="background:#fde8e8;color:#c0392b;border-color:#f5b7b1">🔴 긴급: 3개</span>
+        <span class="badge" style="background:#fff3cd;color:#856404;border-color:#ffc107">🟡 높음: 5개</span>
+        <span class="badge badge-level1">✅ 완료: 5개</span>
+        <span class="badge" style="background:#e2e3e5;color:#383d41;border-color:#d6d8db">👁 모니터링: 4개</span>
+      </div>
+    </div>
+
+    <div class="main-content">
+
+      <div class="note-box info">
+        <span class="icon">ℹ️</span>
+        <div>
+          <strong>S12 목적 — 표준 발행 진행 상황 모니터링</strong><br>
+          현재 DTS/DTR/FDIS/AWI 단계인 표준들이 IS로 발행될 때 TFL 가이드의 TC 요구사항, Simple Claim, 커버리지 갭에 미치는 영향을 추적합니다.
+          특히 <span style="color:#c0392b">🔴 긴급</span> 표준들은 갭 특성(#21 Functional Safety, #23 Hazard) 해소 또는 신규 특성 normative 강도 상승에 직결됩니다.
+          최종 수정일: 2026-02-20
+        </div>
+      </div>
+
+      <!-- 긴급 갭 해소 현황 -->
+      <div class="content-section">
+        <h2>S12.1 — 갭 해소 우선 과제</h2>
+
+        <div class="impact-card critical">
+          <h3 style="margin:0 0 8px;color:#c0392b">🔴 #21 Functional Safety + #23 Hazard 갭 — AI 기능안전 IS 필요</h3>
+          <p style="font-size:0.87em;margin:0 0 8px">현재 ISO/IEC DTR 5469는 Technical Report 성격으로 normative SHALL/SHOULD 없음. IEC 61508·ISO 26262 AI 특화 부분이 tc_text에 미포함. 갭 해소를 위해 다음이 필요:</p>
+          <ol style="font-size:0.87em;margin:0;padding-left:20px">
+            <li>ISO/IEC DTR 5469 → TS 또는 IS 전환 여부 SC42 확인</li>
+            <li>IEC/TC 65 (산업 공정 제어) + SC42 협력으로 AI 기능안전 IS 개발</li>
+            <li>또는 IEC 61508 Part 10 (AI 적용 가이드) 단계 추진</li>
+          </ol>
+        </div>
+
+        <div class="impact-card critical">
+          <h3 style="margin:0 0 8px;color:#c0392b">🔴 ISO/IEC DTS 25058 IS 전환 — 최대 영향 표준</h3>
+          <p style="font-size:0.87em;margin:0 0 8px">9개 신규 특성(Privacy, Integrity, Authenticity, Effectiveness, Quality, Usability, Risk + 기존 FC/Efficiency)의 TC-REQ가 DTS 25058 기반. IS 발행 시:</p>
+          <ul style="font-size:0.87em;margin:0;padding-left:20px">
+            <li>TC-PRIV-002/003, TC-INTG-001~003, TC-AUTH-003, TC-EFFE-001~003, TC-QUAL-001~003, TC-USEAB-001~004, TC-RISK-009~010이 모두 normative IS로 확정</li>
+            <li>SHOULD → SHALL 등급 상승 가능성 있는 조항 재검토 필요</li>
+          </ul>
+        </div>
+
+        <div class="impact-card high">
+          <h3 style="margin:0 0 8px;color:#856404">🟡 ISO/IEC DTS 6254 IS 전환 — Interpretability PROXY 해소</h3>
+          <p style="font-size:0.87em;margin:0">TC-INTR-001~003은 DTS 6254 Explainability를 PROXY로 사용 중. DTS 6254 IS 발행 시 Interpretability 특성의 PROXY 상태 → 공식 대리 표준으로 등록 가능. 단, Interpretability 전용 표준 별도 개발이 최선.</p>
+        </div>
+
+        <div class="impact-card done">
+          <h3 style="margin:0 0 8px;color:#155724">✅ 이미 완료된 IS 기반 TC</h3>
+          <p style="font-size:0.87em;margin:0">ISO/IEC 42001:2023 (AIMS), ISO/IEC 25059:2023 (AI Quality), ISO/IEC TS 42119-2:2025 — 이미 IS/TS로 발행 완료. 기반 TC 안정적. FDIS 42005/42006도 발행 임박.</p>
+        </div>
+      </div>
+
+      <!-- 전체 추적 표 -->
+      <div class="content-section" style="margin-top:24px">
+        <h2>S12.2 — 전체 관련 표준 발행 현황 (2026-02-20 기준)</h2>
+        <p style="font-size:0.87em;color:#555;margin-bottom:12px">
+          ⬆ 표시 배지 = 신규 식별 특성(#16~#28)에 직접 관련. 일반 배지 = 기존 특성(#1~#15)에 관련.
+        </p>
+        <div style="overflow-x:auto">
+          <table class="tracker-table">
+            <thead>
+              <tr>
+                <th style="width:55px">ID</th>
+                <th style="width:140px">표준 ID</th>
+                <th style="min-width:200px">제목</th>
+                <th style="width:70px">현재</th>
+                <th style="width:70px">목표</th>
+                <th style="width:80px">예상 발행</th>
+                <th style="min-width:220px">영향 특성</th>
+                <th style="min-width:200px">갭 해소 영향</th>
+                <th style="width:70px">우선순위</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="vertical-align:top">
+              <td style="font-size:0.8em;color:#888;white-space:nowrap">S12-01</td>
+              <td style="font-family:monospace;font-weight:600;font-size:0.82em">ISO/IEC DTS 8200</td>
+              <td style="font-size:0.83em">Controllability of AI Systems</td>
+              <td style="text-align:center"><span style="background:#e67e22;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">DTS</span></td>
+              <td style="text-align:center">→ <span style="background:#1a4480;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">IS</span></td>
+              <td style="text-align:center;font-size:0.83em;white-space:nowrap">2025~2026</td>
+              <td><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Controllability</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Intervenability</span><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Autonomy ⬆</span><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Authenticity ⬆</span><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Threat ⬆</span></td>
+              <td style="font-size:0.8em;color:#444">Autonomy (#19) 갭 → 완전 해소. TC-AUTO-001~005 IS 확정 시 SHALL 등급 상승.</td>
+              <td style="text-align:center"><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;padding:2px 8px;font-size:0.75em;font-weight:700">🟡 높음</span></td>
+            </tr>
+            <tr style="vertical-align:top">
+              <td style="font-size:0.8em;color:#888;white-space:nowrap">S12-02</td>
+              <td style="font-family:monospace;font-weight:600;font-size:0.82em">ISO/IEC FDIS 42005</td>
+              <td style="font-size:0.83em">AI Risk Impact Assessment Process</td>
+              <td style="text-align:center"><span style="background:#27ae60;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">FDIS</span></td>
+              <td style="text-align:center">→ <span style="background:#1a4480;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">IS</span></td>
+              <td style="text-align:center;font-size:0.83em;white-space:nowrap">2025</td>
+              <td><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Accountability</span><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Harm ⬆</span><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Privacy ⬆</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Risk</span></td>
+              <td style="font-size:0.8em;color:#444">Harm (#22) TC-HARM-001~003 IS 확정. Privacy TC-PRIV-005 IS 확정.</td>
+              <td style="text-align:center"><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;padding:2px 8px;font-size:0.75em;font-weight:700">🟡 높음</span></td>
+            </tr>
+            <tr style="vertical-align:top">
+              <td style="font-size:0.8em;color:#888;white-space:nowrap">S12-03</td>
+              <td style="font-family:monospace;font-weight:600;font-size:0.82em">ISO/IEC FDIS 42006</td>
+              <td style="font-size:0.83em">AI Risk Management</td>
+              <td style="text-align:center"><span style="background:#27ae60;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">FDIS</span></td>
+              <td style="text-align:center">→ <span style="background:#1a4480;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">IS</span></td>
+              <td style="text-align:center;font-size:0.83em;white-space:nowrap">2025</td>
+              <td><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Accountability</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Risk</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Security</span></td>
+              <td style="font-size:0.8em;color:#444">Risk 특성 추가 normative 요구사항 확보 가능. 거버넌스 관련 TC 강화.</td>
+              <td style="text-align:center"><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;padding:2px 8px;font-size:0.75em;font-weight:700">🟡 높음</span></td>
+            </tr>
+            <tr style="vertical-align:top">
+              <td style="font-size:0.8em;color:#888;white-space:nowrap">S12-04</td>
+              <td style="font-family:monospace;font-weight:600;font-size:0.82em">ISO/IEC AWI 42007</td>
+              <td style="font-size:0.83em">Requirements for Bodies Certifying AI Systems</td>
+              <td style="text-align:center"><span style="background:#e74c3c;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">AWI</span></td>
+              <td style="text-align:center">→ <span style="background:#95a5a6;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">DIS</span></td>
+              <td style="text-align:center;font-size:0.83em;white-space:nowrap">2026~2027</td>
+              <td><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Intervenability</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Controllability</span></td>
+              <td style="font-size:0.8em;color:#444">CA 요구사항 normative화 시 TC 직접 추출 가능. 현재 Intervenability 갭 해소.</td>
+              <td style="text-align:center"><span style="background:#d1ecf1;color:#0c5460;border:1px solid #bee5eb;border-radius:8px;padding:2px 8px;font-size:0.75em;font-weight:700">🔵 보통</span></td>
+            </tr>
+            <tr style="vertical-align:top">
+              <td style="font-size:0.8em;color:#888;white-space:nowrap">S12-05</td>
+              <td style="font-family:monospace;font-weight:600;font-size:0.82em">ISO/IEC DTR 5469</td>
+              <td style="font-size:0.83em">AI Functional Safety</td>
+              <td style="text-align:center"><span style="background:#9b59b6;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">DTR</span></td>
+              <td style="text-align:center">→ <span style="background:#95a5a6;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">TR→IS</span></td>
+              <td style="text-align:center;font-size:0.83em;white-space:nowrap">미정</td>
+              <td><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Functional Safety ⬆</span><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Hazard ⬆</span></td>
+              <td style="font-size:0.8em;color:#444">갭 해소 핵심 표준. IS 전환 시 TC-FSAF/HAZD 신규 추출 가능.</td>
+              <td style="text-align:center"><span style="background:#f8d7da;color:#721c24;border:1px solid #f5c6cb;border-radius:8px;padding:2px 8px;font-size:0.75em;font-weight:700">🔴 긴급</span></td>
+            </tr>
+            <tr style="vertical-align:top">
+              <td style="font-size:0.8em;color:#888;white-space:nowrap">S12-06</td>
+              <td style="font-family:monospace;font-weight:600;font-size:0.82em">ISO/IEC DTS 6254</td>
+              <td style="font-size:0.83em">Explainability of AI</td>
+              <td style="text-align:center"><span style="background:#e67e22;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">DTS</span></td>
+              <td style="text-align:center">→ <span style="background:#1a4480;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">IS</span></td>
+              <td style="text-align:center;font-size:0.83em;white-space:nowrap">2025~2026</td>
+              <td><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Explainability</span><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Interpretability ⬆ (PROXY)</span></td>
+              <td style="font-size:0.8em;color:#444">Interpretability PROXY 상태 → DTS 6254 Explainability IS 확정 시 PROXY 표준화.</td>
+              <td style="text-align:center"><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;padding:2px 8px;font-size:0.75em;font-weight:700">🟡 높음</span></td>
+            </tr>
+            <tr style="vertical-align:top">
+              <td style="font-size:0.8em;color:#888;white-space:nowrap">S12-07</td>
+              <td style="font-family:monospace;font-weight:600;font-size:0.82em">ISO/IEC DTS 25058</td>
+              <td style="font-size:0.83em">AI Quality Evaluation Methodology</td>
+              <td style="text-align:center"><span style="background:#e67e22;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">DTS</span></td>
+              <td style="text-align:center">→ <span style="background:#1a4480;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">IS</span></td>
+              <td style="text-align:center;font-size:0.83em;white-space:nowrap">2025~2026</td>
+              <td><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Functional Correctness</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Efficiency</span><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Privacy ⬆</span><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Integrity ⬆</span><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Authenticity ⬆</span><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Effectiveness ⬆</span><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Quality ⬆</span><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Usability ⬆</span><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Risk ⬆</span></td>
+              <td style="font-size:0.8em;color:#444">DTS→IS 전환 시 9개 신규 특성 TC normative 등급 확정. 최대 영향 표준.</td>
+              <td style="text-align:center"><span style="background:#f8d7da;color:#721c24;border:1px solid #f5c6cb;border-radius:8px;padding:2px 8px;font-size:0.75em;font-weight:700">🔴 긴급</span></td>
+            </tr>
+            <tr style="vertical-align:top">
+              <td style="font-size:0.8em;color:#888;white-space:nowrap">S12-08</td>
+              <td style="font-family:monospace;font-weight:600;font-size:0.82em">ISO/IEC 25059:2023</td>
+              <td style="font-size:0.83em">Quality Model for AI Systems</td>
+              <td style="text-align:center"><span style="background:#1a4480;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">IS</span></td>
+              <td style="text-align:center">→ <span style="background:#95a5a6;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">—</span></td>
+              <td style="text-align:center;font-size:0.83em;white-space:nowrap">발행 완료</td>
+              <td><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Quality ⬆</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Functional Correctness</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Reliability</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Efficiency</span></td>
+              <td style="font-size:0.8em;color:#444">이미 IS. TC-QUAL-004 (SHALL §6.1) 완전 확정. 추가 갭 없음.</td>
+              <td style="text-align:center"><span style="background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:8px;padding:2px 8px;font-size:0.75em;font-weight:700">✅ 완료</span></td>
+            </tr>
+            <tr style="vertical-align:top">
+              <td style="font-size:0.8em;color:#888;white-space:nowrap">S12-09</td>
+              <td style="font-family:monospace;font-weight:600;font-size:0.82em">ISO/IEC TS 42119-2:2025</td>
+              <td style="font-size:0.83em">AI System Testing — Part 2: Verification</td>
+              <td style="text-align:center"><span style="background:#2980b9;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">TS</span></td>
+              <td style="text-align:center">→ <span style="background:#95a5a6;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">—</span></td>
+              <td style="text-align:center;font-size:0.83em;white-space:nowrap">발행 완료</td>
+              <td><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Privacy ⬆</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Risk</span></td>
+              <td style="font-size:0.8em;color:#444">TC-PRIV-004, TC-RISK-XXX TS 확정. TS는 normative 성격.</td>
+              <td style="text-align:center"><span style="background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:8px;padding:2px 8px;font-size:0.75em;font-weight:700">✅ 완료</span></td>
+            </tr>
+            <tr style="vertical-align:top">
+              <td style="font-size:0.8em;color:#888;white-space:nowrap">S12-10</td>
+              <td style="font-family:monospace;font-weight:600;font-size:0.82em">ISO/IEC FDIS 42001:2023</td>
+              <td style="font-size:0.83em">AI Management System</td>
+              <td style="text-align:center"><span style="background:#1a4480;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">IS</span></td>
+              <td style="text-align:center">→ <span style="background:#95a5a6;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">—</span></td>
+              <td style="text-align:center;font-size:0.83em;white-space:nowrap">발행 완료</td>
+              <td><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Risk</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Accountability</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Safety</span></td>
+              <td style="font-size:0.8em;color:#444">IS 확정. AIMS 기반 TC 안정적. TC-REQ 기존 128개 포함.</td>
+              <td style="text-align:center"><span style="background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:8px;padding:2px 8px;font-size:0.75em;font-weight:700">✅ 완료</span></td>
+            </tr>
+            <tr style="vertical-align:top">
+              <td style="font-size:0.8em;color:#888;white-space:nowrap">S12-11</td>
+              <td style="font-family:monospace;font-weight:600;font-size:0.82em">ISO/IEC TR 24028:2020</td>
+              <td style="font-size:0.83em">Overview of Trustworthiness in AI</td>
+              <td style="text-align:center"><span style="background:#7f8c8d;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">TR</span></td>
+              <td style="text-align:center">→ <span style="background:#7f8c8d;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">TR</span></td>
+              <td style="text-align:center;font-size:0.83em;white-space:nowrap">발행 완료</td>
+              <td><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Security</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Reliability</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Robustness</span><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Threat ⬆</span><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Risk ⬆</span></td>
+              <td style="font-size:0.8em;color:#444">TR 성격. TC-THRT-001(SHALL §5.1) 포함. 개정 검토 중.</td>
+              <td style="text-align:center"><span style="background:#e2e3e5;color:#383d41;border:1px solid #d6d8db;border-radius:8px;padding:2px 8px;font-size:0.75em;font-weight:700">👁 모니터링</span></td>
+            </tr>
+            <tr style="vertical-align:top">
+              <td style="font-size:0.8em;color:#888;white-space:nowrap">S12-12</td>
+              <td style="font-family:monospace;font-weight:600;font-size:0.82em">ISO/IEC TR 24368:2022</td>
+              <td style="font-size:0.83em">AI Ethics — Oversight and Governance</td>
+              <td style="text-align:center"><span style="background:#7f8c8d;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">TR</span></td>
+              <td style="text-align:center">→ <span style="background:#7f8c8d;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">TR</span></td>
+              <td style="text-align:center;font-size:0.83em;white-space:nowrap">발행 완료</td>
+              <td><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Accountability</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Intervenability</span></td>
+              <td style="font-size:0.8em;color:#444">TR 성격. 기존 TC 포함. SC42 AGI 논의에 따라 개정 가능.</td>
+              <td style="text-align:center"><span style="background:#e2e3e5;color:#383d41;border:1px solid #d6d8db;border-radius:8px;padding:2px 8px;font-size:0.75em;font-weight:700">👁 모니터링</span></td>
+            </tr>
+            <tr style="vertical-align:top">
+              <td style="font-size:0.8em;color:#888;white-space:nowrap">S12-13</td>
+              <td style="font-family:monospace;font-weight:600;font-size:0.82em">AI-특화 기능안전 IS<br>(신규 표준 개발 필요)</td>
+              <td style="font-size:0.83em">미발행</td>
+              <td style="text-align:center"><span style="background:#e74c3c;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">개발 중</span></td>
+              <td style="text-align:center">→ <span style="background:#1a4480;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">IS</span></td>
+              <td style="text-align:center;font-size:0.83em;white-space:nowrap">미정</td>
+              <td><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Functional Safety ⬆</span><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Hazard ⬆</span></td>
+              <td style="font-size:0.8em;color:#444">갭 #21/#23 해소를 위한 핵심 신규 표준. SC42 + IEC/TC 65 협력 필요.</td>
+              <td style="text-align:center"><span style="background:#f8d7da;color:#721c24;border:1px solid #f5c6cb;border-radius:8px;padding:2px 8px;font-size:0.75em;font-weight:700">🔴 긴급</span></td>
+            </tr>
+            <!-- 2026-02-20 신규 추가: tc/ 폴더 신규 PDF 4개 -->
+            <tr style="vertical-align:top;background:#f0f7ff">
+              <td style="font-size:0.8em;color:#888;white-space:nowrap">S12-14</td>
+              <td style="font-family:monospace;font-weight:600;font-size:0.82em">ISO/IEC FDIS 12792</td>
+              <td style="font-size:0.83em">Transparency Taxonomy of AI Systems<br><span style="color:#888;font-size:0.9em">2026-02-20 신규 분석</span></td>
+              <td style="text-align:center"><span style="background:#27ae60;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">FDIS</span></td>
+              <td style="text-align:center">→ <span style="background:#1a4480;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">IS</span></td>
+              <td style="text-align:center;font-size:0.83em;white-space:nowrap">2025~2026</td>
+              <td><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Transparency</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Explainability</span><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Interpretability ⬆ (PROXY)</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Accountability</span></td>
+              <td style="font-size:0.8em;color:#444"><strong>Taxonomy 문서 — normative SHALL 없음.</strong> 4레벨 분류 체계(Context/System/Model/Dataset) 제공. 투명성 요구사항 정의의 참조 표준. IS 발행 시 S07 참조 표준으로 공식 등재 예정.</td>
+              <td style="text-align:center"><span style="background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;padding:2px 8px;font-size:0.75em;font-weight:700">🟡 높음</span></td>
+            </tr>
+            <tr style="vertical-align:top;background:#f0f7ff">
+              <td style="font-size:0.8em;color:#888;white-space:nowrap">S12-15</td>
+              <td style="font-family:monospace;font-weight:600;font-size:0.82em">ISO/IEC TS 4213:2021</td>
+              <td style="font-size:0.83em">Assessment of ML Classification Performance<br><span style="color:#888;font-size:0.9em">2026-02-20 신규 분석</span></td>
+              <td style="text-align:center"><span style="background:#2980b9;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">TS</span></td>
+              <td style="text-align:center">→ <span style="background:#95a5a6;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">—</span></td>
+              <td style="text-align:center;font-size:0.83em;white-space:nowrap">발행 완료</td>
+              <td><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Quality ⬆</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Functional Correctness</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Fairness</span></td>
+              <td style="font-size:0.8em;color:#444"><strong>TS (normative) — SHALL 10개 + SHOULD 31개.</strong> TC-QUAL-005(§5.3.5 테스트 데이터 독립성), TC-QUAL-006(§5.3.10 정보 누출 방지) 신규 추출. 분류 성능 평가 방법론 표준화.</td>
+              <td style="text-align:center"><span style="background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:8px;padding:2px 8px;font-size:0.75em;font-weight:700">✅ 완료</span></td>
+            </tr>
+            <tr style="vertical-align:top;background:#f0f7ff">
+              <td style="font-size:0.8em;color:#888;white-space:nowrap">S12-16</td>
+              <td style="font-family:monospace;font-weight:600;font-size:0.82em">ISO/IEC 38507:2022</td>
+              <td style="font-size:0.83em">Governance Implications of the Use of AI<br><span style="color:#888;font-size:0.9em">2026-02-20 신규 분석 (FDIS→IS 발행 완료)</span></td>
+              <td style="text-align:center"><span style="background:#1a4480;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">IS</span></td>
+              <td style="text-align:center">→ <span style="background:#95a5a6;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">—</span></td>
+              <td style="text-align:center;font-size:0.83em;white-space:nowrap">발행 완료</td>
+              <td><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Accountability</span><span style="display:inline-block;background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Risk ⬆</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Transparency</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Human Oversight</span></td>
+              <td style="font-size:0.8em;color:#444"><strong>IS (normative) — SHOULD 94개 + SHALL 1개.</strong> 거버넌스 책임(§4.3), 인간 책임(§6.3), 이해관계자 고려(§6.7.3 SHALL). S10 DOC-20으로 추가. Accountability/Risk TC 보강 참조 표준.</td>
+              <td style="text-align:center"><span style="background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:8px;padding:2px 8px;font-size:0.75em;font-weight:700">✅ 완료</span></td>
+            </tr>
+            <tr style="vertical-align:top;background:#f0f7ff">
+              <td style="font-size:0.8em;color:#888;white-space:nowrap">S12-17</td>
+              <td style="font-family:monospace;font-weight:600;font-size:0.82em">ISO/IEC DTR 20226:2025</td>
+              <td style="font-size:0.83em">Environmental Sustainability Aspects of AI Systems<br><span style="color:#888;font-size:0.9em">2026-02-20 신규 분석</span></td>
+              <td style="text-align:center"><span style="background:#9b59b6;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">DTR</span></td>
+              <td style="text-align:center">→ <span style="background:#7f8c8d;color:white;border-radius:8px;padding:2px 8px;font-size:0.78em;font-weight:600">TR</span></td>
+              <td style="text-align:center;font-size:0.83em;white-space:nowrap">2025 예정</td>
+              <td><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Efficiency (#13)</span><span style="display:inline-block;background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:10px;padding:1px 6px;margin:2px;font-size:0.75em">Environmental Sustainability</span></td>
+              <td style="font-size:0.8em;color:#444"><strong>TR (순수 informative) — normative SHALL 없음.</strong> AI 시스템 생애주기 환경 영향 분석. PUE, SCI, WUE, 탄소 집약도 메트릭 정의. TC-REQ 추출 불가. 향후 Efficiency 특성 메트릭 참조 표준으로 활용 가능.</td>
+              <td style="text-align:center"><span style="background:#e2e3e5;color:#383d41;border:1px solid #d6d8db;border-radius:8px;padding:2px 8px;font-size:0.75em;font-weight:700">👁 모니터링</span></td>
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 모니터링 일정 -->
+      <div class="content-section" style="margin-top:24px">
+        <h2>S12.3 — 권고 모니터링 일정</h2>
+        <table>
+          <thead><tr><th>주기</th><th>확인 대상</th><th>확인 방법</th><th>후속 조치</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>즉시</strong></td>
+              <td>FDIS 42005/42006 IS 발행 여부</td>
+              <td>ISO Online Browsing Platform (OBP) 조회</td>
+              <td>TC-HARM, TC-PRIV-005 normative 등급 확정 기록, S04/S10 업데이트</td>
+            </tr>
+            <tr>
+              <td><strong>분기 (3개월)</strong></td>
+              <td>DTS 25058/DTS 6254/DTS 8200 IS 전환 진행상황</td>
+              <td>ISO/IEC SC42 WG3 의장 문의 또는 ISO 프로젝트 포털</td>
+              <td>진행 시 해당 TC normative 강도 업데이트 계획 수립</td>
+            </tr>
+            <tr>
+              <td><strong>반기 (6개월)</strong></td>
+              <td>DTR 5469 → IS 전환 가능성, IEC/TC 65 AI 기능안전 표준 개발 현황</td>
+              <td>IEC TC 65/SC 65A 의장 문의, IEC 표준 로드맵 확인</td>
+              <td>#21 Functional Safety, #23 Hazard 갭 해소 추진 여부 결정</td>
+            </tr>
+            <tr>
+              <td><strong>연간</strong></td>
+              <td>AWI 42007 DIS 진입 여부, 신규 SC42 PWI 표준 발굴</td>
+              <td>ISO/IEC SC42 플리너리 회의 결과 검토</td>
+              <td>S12 전체 갱신, 신규 표준 모니터링 목록 추가</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <div class="page-footer">
+      <span><a href="s11-tc-claim-mapping.html">← S11 TC-Claim 매핑</a></span>
+      <span><a href="index.html">홈으로 →</a></span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

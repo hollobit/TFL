@@ -48,12 +48,18 @@
       <div class="nav-section">
         <div class="nav-label">섹션</div>
         <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
-        <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>15개 TCM 신뢰성 특성</a>
+        <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>28개 TCM 신뢰성 특성</a>
         <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
         <a href="s04-tc-mapping.html" class="nav-item"><span class="section-id">S04</span>TCM-TC 요구사항 매핑</a>
         <a href="s05-ca-guide.html" class="nav-item"><span class="section-id">S05</span>CA 이행 가이드</a>
         <a href="s06-gaps.html" class="nav-item"><span class="section-id">S06</span>커버리지 갭 및 권고사항</a>
         <a href="s07-references.html" class="nav-item active"><span class="section-id">S07</span>참조 표준 및 용어 사전</a>
+        <a href="s08-standards-diagram.html" class="nav-item"><span class="section-id">S08</span>표준 연관도</a>
+        <a href="s09-vocabulary.html" class="nav-item"><span class="section-id">S09</span>특성 Vocabulary 비교</a>
+        <a href="s10-requirements-list.html" class="nav-item"><span class="section-id">S10</span>요구사항 전체 목록</a>
+        <a href="s11-tc-claim-mapping.html" class="nav-item"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
+        <a href="s12-standards-tracker.html" class="nav-item"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
+        <a href="s13-dtc-card.html" class="nav-item"><span class="section-id">S13</span>AI Developer Technical Card</a>
       </div>
     </div>
   </nav>
@@ -140,7 +146,7 @@
           </div>
           <div class="glossary-entry">
             <dt>Trustworthiness Characteristic <span class="term-id">§3.1.2</span></dt>
-            <dd>AI 시스템/모델의 운영 환경과 상호작용하는 활동 요소. 예: robustness, fairness, transparency, data handling. TCM의 15개 특성이 해당.</dd>
+            <dd>AI 시스템/모델의 운영 환경과 상호작용하는 활동 요소. 예: robustness, fairness, transparency, data handling. TCM의 28개 특성이 해당.</dd>
           </div>
           <div class="glossary-entry">
             <dt>Area of Trustworthiness Concern <span class="term-id">§3.1.1</span></dt>
@@ -156,7 +162,7 @@
           </div>
           <div class="glossary-entry">
             <dt>TCM (Trustworthiness Characteristics Matrix)</dt>
-            <dd>ISO/IEC JTC 1/SC 42가 관리하는 AI 신뢰성 특성 매트릭스. 15개 특성과 각 특성에 연계된 표준 및 TC 요구사항의 매핑 체계. 본 파이프라인의 핵심 입력 자료.</dd>
+            <dd>ISO/IEC JTC 1/SC 42가 관리하는 AI 신뢰성 특성 매트릭스. 28개 특성과 각 특성에 연계된 표준 및 TC 요구사항의 매핑 체계. 본 파이프라인의 핵심 입력 자료.</dd>
           </div>
           <div class="glossary-entry">
             <dt>Level 1 / Level 2 / Level 3 <span class="term-id">임시 운영 분류</span></dt>
@@ -244,7 +250,7 @@
         <div class="id-scheme-box">
           <h4>TC 요구사항 정규 형식 (tc_structured.json)</h4>
           <div class="id-example">TC-REQ-001 ~ TC-REQ-128</div>
-          <p style="font-size:13px;margin-top:6px;">공식 ID 형식. 19개 SC42 표준에서 추출된 128개 TC 요구사항. <code>tc_structured.json</code>에서 <code>req_id</code> 필드로 사용.</p>
+          <p style="font-size:13px;margin-top:6px;">공식 ID 형식. 23개 SC42 표준에서 추출된 128개 TC 요구사항. <code>tc_structured.json</code>에서 <code>req_id</code> 필드로 사용.</p>
         </div>
 
         <div class="id-scheme-box">
@@ -262,7 +268,7 @@
         <div class="id-scheme-box">
           <h4>Simple Claim 공식 ID</h4>
           <div class="id-example">SC-[Characteristic]-[NNN]<br>예: SC-Trustworthiness-001, SC-Bias-Fairness-003</div>
-          <p style="font-size:13px;margin-top:6px;">45개 Simple Claim의 고유 식별자. <code>[Characteristic]</code>은 15개 TCM 특성명, <code>[NNN]</code>은 001~003.</p>
+          <p style="font-size:13px;margin-top:6px;">45개 Simple Claim의 고유 식별자. <code>[Characteristic]</code>은 28개 TCM 특성명, <code>[NNN]</code>은 001~003.</p>
         </div>
 
         <div class="id-scheme-box">
@@ -434,10 +440,212 @@
         </div>
       </div>
 
+
+      <!-- S07.8 SHALL/SHOULD 정의 -->
+      <div class="content-section">
+        <h2>S07.8 — SHALL / SHOULD 정의 (ISO/IEC Directives Part 2:2021 §7.3)</h2>
+        <p style="font-size:13px;color:#555;margin-bottom:16px">
+          ISO/IEC 표준 문서에서 사용하는 조동사(modal verb)의 규범적 의미는
+          <strong>ISO/IEC Directives Part 2:2021 §7.3</strong>에 명확히 정의됩니다.
+          TFL 파이프라인에서 TC 요건을 SHALL/SHOULD로 분류하는 기준은 원문에 사용된 조동사를 따릅니다.
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>조동사 (Modal verb)</th>
+              <th>유형</th>
+              <th>한국어</th>
+              <th>ISO/IEC 정의 (Directives Part 2:2021 §7.3)</th>
+              <th>TFL 파이프라인 적용</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:#fff5f5">
+              <td>
+                <code style="color:#c0392b;font-weight:700;font-size:13px">shall</code><br>
+                <code style="color:#c0392b;font-size:11px">shall not</code>
+              </td>
+              <td><span class="badge" style="background:#c0392b;color:#fff">Requirement</span></td>
+              <td>요구사항<br><span style="font-size:11px;color:#888">(의무)</span></td>
+              <td style="font-size:12px">
+                "shall" is used to indicate requirements strictly to be followed in order to conform to the document and from which no deviation is permitted.<br>
+                <em style="color:#888">(적합성을 위해 반드시 준수해야 하며 일탈이 허용되지 않는 요건)</em>
+              </td>
+              <td style="font-size:12px">
+                TC 요건 분류: <strong>TC-REQ (SHALL)</strong><br>
+                연관 Claim Level: Level 2/3 우선 생성<br>
+                <span class="badge" style="background:#c0392b;color:#fff;font-size:10px">90개 SHALL</span> (23개 문서 기준)
+              </td>
+            </tr>
+            <tr style="background:#fff8f0">
+              <td>
+                <code style="color:#e67e22;font-weight:700;font-size:13px">should</code><br>
+                <code style="color:#e67e22;font-size:11px">should not</code>
+              </td>
+              <td><span class="badge" style="background:#e67e22;color:#fff">Recommendation</span></td>
+              <td>권고사항<br><span style="font-size:11px;color:#888">(권장)</span></td>
+              <td style="font-size:12px">
+                "should" is used to indicate that among several possibilities one is recommended as particularly suitable, without mentioning or excluding others, or that a certain course of action is preferred but not necessarily required.<br>
+                <em style="color:#888">(특히 적합하거나 선호되는 방법이지만 다른 대안도 허용됨)</em>
+              </td>
+              <td style="font-size:12px">
+                TC 요건 분류: <strong>TC-REQ (SHOULD)</strong><br>
+                연관 Claim Level: Level 1 우선 생성<br>
+                <span class="badge" style="background:#e67e22;color:#fff;font-size:10px">174개 SHOULD</span> (23개 문서 기준)
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code style="color:#27ae60;font-weight:700;font-size:13px">may</code><br>
+                <code style="color:#27ae60;font-size:11px">need not</code>
+              </td>
+              <td><span class="badge" style="background:#27ae60;color:#fff">Permission</span></td>
+              <td>허용<br><span style="font-size:11px;color:#888">(선택)</span></td>
+              <td style="font-size:12px">
+                "may" is used to indicate a course of action permissible within the limits of the document.<br>
+                <em style="color:#888">(문서 한도 내에서 허용 가능한 행동 방침)</em>
+              </td>
+              <td style="font-size:12px">
+                TC 분류 제외<br>
+                선택적 구현 항목으로 처리<br>
+                <span style="font-size:11px;color:#888">TFL Claim 대상 아님</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code style="color:#2980b9;font-weight:700;font-size:13px">can</code><br>
+                <code style="color:#2980b9;font-size:11px">cannot</code>
+              </td>
+              <td><span class="badge" style="background:#2980b9;color:#fff">Possibility</span></td>
+              <td>가능성<br><span style="font-size:11px;color:#888">(능력)</span></td>
+              <td style="font-size:12px">
+                "can" is used to indicate that something is possible, for example, for a machine, a system, or a person to do something.<br>
+                <em style="color:#888">(물리적·논리적 가능성이나 능력을 진술)</em>
+              </td>
+              <td style="font-size:12px">
+                TC 분류 제외<br>
+                시스템 능력 기술 문장<br>
+                <span style="font-size:11px;color:#888">기술적 설명 컨텍스트</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note-box info" style="margin-top:16px">
+          <span class="icon">📌</span>
+          <div>
+            <strong>SHALL vs SHOULD와 Simple Claim Level의 연관성</strong>
+            <ul style="margin-top:6px;font-size:13px;line-height:1.7">
+              <li><strong>SHALL 기반 TC</strong> → 의무적 요구사항으로, 측정 가능한 지표가 존재하는 경우 <strong>Level 2/3 Claim</strong> 생성 (예: "≥ X% 달성", "제3자 인증 완료")</li>
+              <li><strong>SHOULD 기반 TC</strong> → 권고사항으로, 문서화·프로세스 수준의 <strong>Level 1 Claim</strong> 생성 경향 (예: "위험 관리 문서화", "이해관계자 참여 절차 수립")</li>
+              <li><strong>혼합 소스</strong> → 동일 특성에 SHALL과 SHOULD 출처가 모두 존재하면, 더 강한 SHALL 기준을 Level 기준으로 채택</li>
+              <li><strong>TR 문서</strong> → 기술 보고서(TR)는 규범적 요건 미포함이 원칙이나, 본 가이드 TC 분류에서는 "should" 표현 추출하여 권고 수준 TC로 처리</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top:16px">
+          <h3 style="font-size:14px;color:#1a4480;margin-bottom:10px">문서 유형별 SHALL/SHOULD 분포</h3>
+          <table>
+            <thead>
+              <tr><th>표준 ID</th><th>유형</th><th>SHALL</th><th>SHOULD</th><th>합계</th><th>특이사항</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>ISO/IEC 25059</code></td><td><span class="badge badge-is">IS</span></td><td style="color:#c0392b;font-weight:700">10</td><td>0</td><td>10</td><td>SQuaRE 품질 모델 — 전체 SHALL</td></tr>
+              <tr><td><code>ISO/IEC DTS 12791</code></td><td><span class="badge badge-dts">DTS</span></td><td style="color:#c0392b;font-weight:700">13</td><td>0</td><td>13</td><td>편향 관리 — 가장 강한 규범성</td></tr>
+              <tr><td><code>ISO/IEC 5338</code></td><td><span class="badge badge-is">IS</span></td><td style="color:#c0392b;font-weight:700">7</td><td style="color:#e67e22;font-weight:700">6</td><td>13</td><td>수명주기 — SHALL+SHOULD 혼합</td></tr>
+              <tr><td><code>ISO/IEC TS 42119-2</code></td><td><span class="badge badge-ts">TS</span></td><td style="color:#c0392b;font-weight:700">9</td><td>0</td><td>9</td><td>테스팅 — 전체 SHALL</td></tr>
+              <tr><td><code>ISO/IEC TS 5723</code></td><td><span class="badge badge-ts">TS</span></td><td style="color:#c0392b;font-weight:700">10</td><td>0</td><td>10</td><td>어휘 — 정의 기반 SHALL</td></tr>
+              <tr><td><code>ISO/IEC DTR 5469</code></td><td><span class="badge badge-dts">DTR</span></td><td>0</td><td style="color:#e67e22;font-weight:700">7</td><td>7</td><td>기능 안전성 — 전체 SHOULD (TR 성격)</td></tr>
+              <tr><td><code>ISO/IEC FDIS 42005</code></td><td><span class="badge badge-fdis">FDIS</span></td><td>0</td><td style="color:#e67e22;font-weight:700">8</td><td>8</td><td>영향 평가 — 전체 SHOULD</td></tr>
+              <tr><td><code>ISO/IEC TR 24028</code></td><td><span class="badge badge-tr">TR</span></td><td>0</td><td style="color:#e67e22;font-weight:700">4</td><td>4</td><td>신뢰성 개요 TR — SHOULD 기반</td></tr>
+              <tr><td><code>ISO/IEC TR 24027</code></td><td><span class="badge badge-tr">TR</span></td><td>0</td><td style="color:#e67e22;font-weight:700">3</td><td>3</td><td>편향 개요 TR</td></tr>
+              <tr><td><code>ISO/IEC TR 24368</code></td><td><span class="badge badge-tr">TR</span></td><td>0</td><td style="color:#e67e22;font-weight:700">3</td><td>3</td><td>AI 윤리 TR</td></tr>
+              <tr><td><code>ISO/IEC TR 29119-11</code></td><td><span class="badge badge-tr">TR</span></td><td>0</td><td style="color:#e67e22;font-weight:700">3</td><td>3</td><td>AI 테스팅 TR</td></tr>
+              <tr><td><code>ISO/IEC TR 24029-1</code></td><td><span class="badge badge-tr">TR</span></td><td>0</td><td style="color:#e67e22;font-weight:700">3</td><td>3</td><td>NN 강건성 TR Part 1</td></tr>
+              <tr><td><code>ISO/IEC DTS 25058</code></td><td><span class="badge badge-dts">DTS</span></td><td style="color:#c0392b;font-weight:700">6</td><td>1</td><td>7</td><td>품질 평가</td></tr>
+              <tr><td><code>ISO/IEC DTS 8200</code></td><td><span class="badge badge-dts">DTS</span></td><td style="color:#c0392b;font-weight:700">4</td><td style="color:#e67e22;font-weight:700">4</td><td>8</td><td>제어가능성 혼합</td></tr>
+              <tr><td><code>ISO/IEC DTS 6254</code></td><td><span class="badge badge-dts">DTS</span></td><td style="color:#c0392b;font-weight:700">2</td><td style="color:#e67e22;font-weight:700">5</td><td>7</td><td>투명성/설명가능성</td></tr>
+              <tr><td><code>ISO/IEC FDIS 42006</code></td><td><span class="badge badge-fdis">FDIS</span></td><td style="color:#c0392b;font-weight:700">7</td><td>0</td><td>7</td><td>AI 감사 기관 요건</td></tr>
+              <tr><td><code>ISO/IEC FDIS 23053</code></td><td><span class="badge badge-fdis">FDIS</span></td><td style="color:#c0392b;font-weight:700">3</td><td>0</td><td>3</td><td>ML 프레임워크</td></tr>
+              <tr><td><code>ISO/IEC 23894</code></td><td><span class="badge badge-is">IS</span></td><td style="color:#c0392b;font-weight:700">3</td><td style="color:#e67e22;font-weight:700">2</td><td>5</td><td>리스크 관리</td></tr>
+              <tr><td><code>ISO/IEC 24029-2</code></td><td><span class="badge badge-is">IS</span></td><td style="color:#c0392b;font-weight:700">5</td><td>0</td><td>5</td><td>NN 강건성 형식 방법</td></tr>
+              <!-- 신규 추가 4개 문서 -->
+              <tr style="background:#e8f4fd">
+                <td colspan="6" style="font-size:11px;color:#1a4480;font-weight:600;padding:5px 10px;">⬆ 신규 추가 문서 (2026-02-20 분석 완료 — 원문 tc_text 추출 기준)</td>
+              </tr>
+              <tr><td><code>ISO/IEC 38507:2022</code></td><td><span class="badge badge-is">IS</span></td><td style="color:#c0392b;font-weight:700">1</td><td style="color:#e67e22;font-weight:700">94</td><td>95</td><td>AI 거버넌스 — Accountability/Risk TC 보강 참조 (§6.7.3 SHALL)</td></tr>
+              <tr><td><code>ISO/IEC TS 4213:2021</code></td><td><span class="badge badge-ts">TS</span></td><td style="color:#c0392b;font-weight:700">10</td><td style="color:#e67e22;font-weight:700">31</td><td>41</td><td>ML 분류 성능 평가 — TC-QUAL-005/006(SHALL 2개) 파이프라인 추출</td></tr>
+              <tr><td><code>ISO/IEC DTR 20226:2025</code></td><td><span class="badge badge-dts">DTR</span></td><td>0</td><td>0</td><td>0</td><td>환경 지속가능성 TR — informative, 규범 요건 없음</td></tr>
+              <tr><td><code>ISO/IEC FDIS 12792</code></td><td><span class="badge badge-fdis">FDIS</span></td><td>0</td><td>0</td><td>0</td><td>투명성 분류 체계 — taxonomy 표준, 규범 요건 없음</td></tr>
+              <tr style="background:#f8f9fa;font-weight:700">
+                <td>합계</td><td>23개 문서</td>
+                <td style="color:#c0392b">90</td>
+                <td style="color:#e67e22">174</td>
+                <td>284</td>
+                <td>기존 19개 문서(148 TC-REQ) + 신규 4개 원문 추출 포함</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note-box" style="background:#f0f4ff;border-color:#c5d5f8;margin-top:16px">
+          <span class="icon">📖</span>
+          <div>
+            <strong>참고: ISO/IEC Directives Part 2:2021 원문 위치</strong><br>
+            <ul style="font-size:13px;line-height:1.7;margin-top:4px">
+              <li>§7.3 "Verbal forms for the expression of provisions" — 조동사 규범적 의미 전체 정의</li>
+              <li>§7.3.1 "Requirement" — shall, shall not</li>
+              <li>§7.3.2 "Recommendation" — should, should not</li>
+              <li>§7.3.3 "Permission" — may, need not</li>
+              <li>§7.3.4 "Possibility and capability" — can, cannot</li>
+            </ul>
+            전체 목록: <a href="s10-requirements-list.html" style="color:#1a4480">S10 요구사항 전체 목록</a>에서 문서별 원문 확인 가능
+          </div>
+        </div>
+      </div>
+
+<!-- 2026-02-20 신규 추가 표준 4개 -->
+      <div class="content-section" style="margin-top:24px">
+        <h2>S07.9 — 2026-02-20 신규 분석 표준 (4개)</h2>
+        <div class="note-box info">
+          <span class="icon">ℹ️</span>
+          <div><strong>신규 분석 완료</strong>: tc/ 폴더에 추가된 4개 PDF를 분석하였습니다. DTR 20226과 FDIS 12792는 순수 informative 문서이므로 TC-REQ 추출 불가. FDIS 38507(IS 발행 완료)은 S10 DOC-20, TS 4213은 S10 DOC-21 및 TC-QUAL-005/006으로 반영되었습니다.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:16px">
+          <div class="std-card">
+            <div class="std-id">ISO/IEC FDIS 12792 <span class="badge" style="background:#27ae60;color:white">FDIS→IS</span></div>
+            <div class="std-title">Transparency Taxonomy of AI Systems</div>
+            <div class="std-meta"><span style="background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:6px;padding:1px 6px;font-size:0.78em">Transparency</span> <span style="background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:6px;padding:1px 6px;font-size:0.78em">Explainability</span> <span style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:6px;padding:1px 6px;font-size:0.78em">Interpretability ⬆</span></div>
+            <div style="font-size:0.83em;color:#555;margin-top:8px">4레벨 분류 체계(Context/System/Model/Dataset) 및 3개 투명성 목표(Right to Know/Proper Usage/Traceability) 정의. <strong>순수 taxonomy 문서 — normative SHALL 없음.</strong> TC-REQ 추출 불가. 투명성 공시 요건 설계의 참조 표준.</div>
+          </div>
+          <div class="std-card">
+            <div class="std-id">ISO/IEC TS 4213:2021 <span class="badge badge-ts">TS</span></div>
+            <div class="std-title">Assessment of ML Classification Performance</div>
+            <div class="std-meta"><span style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:6px;padding:1px 6px;font-size:0.78em">Quality ⬆</span> <span style="background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:6px;padding:1px 6px;font-size:0.78em">Functional Correctness</span> <span style="background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:6px;padding:1px 6px;font-size:0.78em">Fairness</span></div>
+            <div style="font-size:0.83em;color:#555;margin-top:8px"><strong>TS (normative) — SHALL 10개 + SHOULD 31개.</strong> TC-QUAL-005(§5.3.5 테스트 데이터 독립성 SHALL), TC-QUAL-006(§5.3.10 하이퍼파라미터 정보누출 금지 SHALL) 신규 추출. S10 DOC-21로 등재.</div>
+          </div>
+          <div class="std-card">
+            <div class="std-id">ISO/IEC 38507:2022 <span class="badge badge-is">IS</span></div>
+            <div class="std-title">Governance Implications of the Use of AI</div>
+            <div class="std-meta"><span style="background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:6px;padding:1px 6px;font-size:0.78em">Accountability</span> <span style="background:#e8f5e9;color:#2d6a4f;border:1px solid #a5d6a7;border-radius:6px;padding:1px 6px;font-size:0.78em">Risk ⬆</span> <span style="background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:6px;padding:1px 6px;font-size:0.78em">Human Oversight</span></div>
+            <div style="font-size:0.83em;color:#555;margin-top:8px"><strong>IS — SHOULD 94개 + SHALL 1개(§6.7.3).</strong> 거버넌스 책임, 인간 책임, 리스크 appetite 관련 조항. Accountability 및 Risk TC 보강 참조 표준. S10 DOC-20으로 등재.</div>
+          </div>
+          <div class="std-card">
+            <div class="std-id">ISO/IEC DTR 20226:2025 <span class="badge" style="background:#9b59b6;color:white">DTR</span></div>
+            <div class="std-title">Environmental Sustainability Aspects of AI Systems</div>
+            <div class="std-meta"><span style="background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:6px;padding:1px 6px;font-size:0.78em">Efficiency (#13)</span> <span style="background:#e8f4fd;color:#2471a3;border:1px solid #aed6f1;border-radius:6px;padding:1px 6px;font-size:0.78em">Environmental Sustainability</span></div>
+            <div style="font-size:0.83em;color:#555;margin-top:8px"><strong>순수 informative TR — normative SHALL 없음.</strong> PUE, SCI(ISO/IEC 21031), WUE, 탄소 집약도 메트릭 정의. AI 생애주기 환경 영향 분석(에너지/탄소/물/e-waste/공급망). Efficiency 특성 메트릭 참조로 활용 가능.</div>
+          </div>
+        </div>
+      </div>
+
     </div>
     <div class="page-footer">
       <span><a href="s06-gaps.html">← S06 커버리지 갭</a></span>
-      <span>ISO/IEC 42117-X TFL 운영 가이드 v1.0 완료 | 생성: 2026-02-19</span>
+      <span>ISO/IEC 42117-X TFL 운영 가이드 v1.0 | 생성: 2026-02-19</span>
+      <span><a href="s08-standards-diagram.html">S08 표준 연관도 →</a></span>
     </div>
   </div>
 </div>
