@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S16 Type II 자기선언 신뢰성 사실 클레임 규격 — ISO/IEC 42117-X TFL 가이드</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* S16 Color Theme: Type II blue */
+    .s16-accent { color: #1d4ed8; }
+    .s16-badge {
+      display: inline-block; background: #1d4ed8; color: #fff;
+      border-radius: 6px; padding: 4px 14px; font-size: 12px;
+      font-weight: 700; letter-spacing: 0.5px; font-family: monospace;
+    }
+    /* Req table */
+    .req-matrix { width: 100%; border-collapse: collapse; font-size: 0.82em; }
+    .req-matrix th { background: #1d4ed8; color: #fff; padding: 8px 10px; text-align: left; font-size: 0.8em; }
+    .req-matrix td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+    .req-matrix tr:nth-child(even) { background: #eff6ff; }
+    .req-matrix tr:hover { background: #dbeafe; }
+    .req-matrix .item-id { font-family: monospace; font-weight: 700; color: #1d4ed8; white-space: nowrap; }
+    .req-apply { display: inline-block; border-radius: 4px; padding: 2px 7px; font-size: 11px; font-weight: 700; }
+    .req-mand { background: #fee2e2; color: #991b1b; }
+    .req-cond { background: #fef9c3; color: #713f12; }
+    .req-na   { background: #f1f5f9; color: #94a3b8; }
+    /* YAML block */
+    .yaml-block {
+      background: #0f172a; color: #e2e8f0; border-radius: 8px;
+      padding: 18px 20px; font-family: 'Courier New', monospace; font-size: 12px;
+      line-height: 1.6; overflow-x: auto; margin: 12px 0;
+    }
+    .yaml-block .y-comment { color: #94a3b8; }
+    .yaml-block .y-key    { color: #93c5fd; }
+    .yaml-block .y-val    { color: #86efac; }
+    .yaml-block .y-str    { color: #fde68a; }
+    .yaml-block .y-tag    { color: #f9a8d4; font-style: italic; }
+    /* Process flow */
+    .process-flow {
+      display: flex; gap: 0; align-items: stretch; margin: 16px 0; overflow-x: auto;
+    }
+    .proc-step {
+      flex: 1; min-width: 120px; background: #eff6ff; border: 1.5px solid #bfdbfe;
+      padding: 14px 12px; text-align: center; position: relative;
+    }
+    .proc-step:first-child { border-radius: 8px 0 0 8px; }
+    .proc-step:last-child  { border-radius: 0 8px 8px 0; }
+    .proc-step .step-num  { font-size: 11px; font-weight: 700; color: #1d4ed8; text-transform: uppercase; }
+    .proc-step .step-name { font-size: 12.5px; font-weight: 700; color: #1e40af; margin: 4px 0; }
+    .proc-step .step-desc { font-size: 11px; color: #4b5563; line-height: 1.4; }
+    .proc-arrow { display: flex; align-items: center; color: #1d4ed8; font-size: 18px; padding: 0 2px; }
+    /* Example card */
+    .example-card {
+      border: 2px solid #bfdbfe; border-radius: 10px; overflow: hidden; margin-bottom: 20px;
+    }
+    .example-header {
+      background: #1d4ed8; color: #fff; padding: 10px 16px;
+      font-size: 13px; font-weight: 700; display: flex; justify-content: space-between; align-items: center;
+    }
+    .example-body { padding: 14px 16px; }
+    /* Claim catalog badge row */
+    .catalog-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+    .cat-badge {
+      display: inline-block; border-radius: 6px; padding: 3px 10px; font-size: 11px;
+      font-weight: 700; border: 1px solid; font-family: monospace; cursor: default;
+    }
+    /* Prohibited */
+    .prohibited {
+      display: inline-block; background: #fee2e2; color: #991b1b;
+      border: 1px solid #fca5a5; border-radius: 4px; padding: 2px 8px;
+      font-family: monospace; font-size: 12px; margin: 2px;
+    }
+    /* Stat grid */
+    .stat-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 16px 0;
+    }
+    .stat-card {
+      background: #fff; border: 1px solid #dee2e6; border-radius: 8px;
+      padding: 14px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .stat-card .stat-num { font-size: 28px; font-weight: 800; color: #1d4ed8; font-family: monospace; display: block; }
+    .stat-card .stat-label { font-size: 11px; color: #666; margin-top: 4px; }
+    /* TFL type position */
+    .tfl-type-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 16px 0;
+    }
+    .tfl-type-box {
+      border: 2px solid #dee2e6; border-radius: 8px; padding: 14px; text-align: center;
+    }
+    .tfl-type-box.t1 { background: #f5f0ff; border-color: #7c3aed; }
+    .tfl-type-box.t2 { background: #eff6ff; border-color: #1d4ed8; box-shadow: 0 0 0 3px #bfdbfe; }
+    .tfl-type-box.t3 { background: #fff0f5; border-color: #be185d; }
+    .tfl-type-box.t4 { background: #f0fdf4; border-color: #15803d; }
+    .tfl-type-box .type-num { font-size: 22px; font-weight: 800; display: block; margin-bottom: 3px; }
+    .tfl-type-box.t1 .type-num { color: #7c3aed; }
+    .tfl-type-box.t2 .type-num { color: #1d4ed8; }
+    .tfl-type-box.t3 .type-num { color: #be185d; }
+    .tfl-type-box.t4 .type-num { color: #15803d; }
+    .tfl-type-box .type-name { font-size: 11.5px; font-weight: 700; margin-bottom: 4px; }
+    .tfl-type-box .type-desc { font-size: 10.5px; color: #666; line-height: 1.4; }
+    /* Clause header */
+    .clause-header {
+      background: #1d4ed8; color: #fff; padding: 8px 14px;
+      font-size: 12.5px; font-weight: 700; border-radius: 6px 6px 0 0;
+    }
+    .clause-body {
+      border: 1px solid #bfdbfe; border-top: none;
+      border-radius: 0 0 6px 6px; overflow: hidden;
+    }
+    /* Ordered alpha list */
+    .req-alpha-list {
+      list-style: lower-alpha; margin: 0; padding: 10px 12px 10px 30px;
+    }
+    .req-alpha-list li {
+      padding: 5px 4px; font-size: 13px; line-height: 1.55;
+      border-bottom: 1px solid #f0f4ff;
+    }
+    .req-alpha-list li:last-child { border-bottom: none; }
+    .req-alpha-list li.mand { background: #fff5f5; }
+    .req-alpha-list li.cond { background: #fffbeb; }
+  </style>
+</head>
+<body>
+<div style="display:flex;min-height:100vh">
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">TFL Guide</div>
+      <div class="version">v1.0 · 2026-02-20</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-label">메인</div>
+        <a href="index.html" class="nav-item">📋 가이드 홈</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">섹션</div>
+        <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
+        <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>28개 TCM 신뢰성 특성</a>
+        <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
+        <a href="s04-tc-mapping.html" class="nav-item"><span class="section-id">S04</span>TCM-TC 요구사항 매핑</a>
+        <a href="s05-ca-guide.html" class="nav-item"><span class="section-id">S05</span>CA 이행 가이드</a>
+        <a href="s06-gaps.html" class="nav-item"><span class="section-id">S06</span>커버리지 갭 및 권고사항</a>
+        <a href="s07-references.html" class="nav-item"><span class="section-id">S07</span>참조 표준 및 용어 사전</a>
+        <a href="s08-standards-diagram.html" class="nav-item"><span class="section-id">S08</span>표준 연관도</a>
+        <a href="s09-vocabulary.html" class="nav-item"><span class="section-id">S09</span>특성 Vocabulary 비교</a>
+        <a href="s10-requirements-list.html" class="nav-item"><span class="section-id">S10</span>요구사항 전체 목록</a>
+        <a href="s11-tc-claim-mapping.html" class="nav-item"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
+        <a href="s12-standards-tracker.html" class="nav-item"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
+        <a href="s13-dtc-card.html" class="nav-item"><span class="section-id">S13</span>AI Developer Technical Card</a>
+        <a href="s14-atfs-qfd.html" class="nav-item"><span class="section-id">S14</span>ATFS / QFD (Type III)</a>
+        <a href="s15-42117-part1.html" class="nav-item"><span class="section-id">S15</span>42117-1 원칙 및 일반 요건</a>
+        <a href="s16-type2-claim.html" class="nav-item active"><span class="section-id">S16</span>Type II 자기선언 클레임 규격</a>
+        <a href="s17-type1-tfl.html" class="nav-item"><span class="section-id">S17</span>Type I TFL 인증 라벨 규격</a>
+      </div>
+    </div>
+  </nav>
+
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div class="page-header">
+      <div>
+        <h1>S16 — Type II: 자기선언 신뢰성 사실 클레임 규격 초안</h1>
+        <div class="breadcrumb"><a href="index.html">홈</a> › S16</div>
+      </div>
+      <span class="s16-badge">Self-declared · ISO/IEC 42117-1 §5.2</span>
+    </div>
+
+    <div class="content-area">
+
+      <!-- S16.0 개요 -->
+      <div class="content-section">
+        <h2>S16.0 — Type II 개요 및 TFL 유형 체계 내 위치</h2>
+        <p><strong>Type II 자기선언 신뢰성 사실 클레임</strong>은 AI 제품(시스템·모델·서비스)의
+          개발자 또는 공급자가 특정 신뢰성 특성에 대해 스스로 측정·검증하고,
+          그 결과를 사실(fact) 형태로 공개 선언하는 문서입니다. 제3자 인증 없이 가능하나,
+          모든 진술은 측정 가능하고 검증 가능한 구체적 사실에 근거해야 합니다.
+        </p>
+
+        <div class="tfl-type-grid">
+          <div class="tfl-type-box t1">
+            <span class="type-num">I</span>
+            <div class="type-name">TFL 인증 라벨</div>
+            <div class="type-desc">제3자 인증기관 심사<br>ISO/IEC 17065 기반</div>
+            <div style="font-size:10px;color:#7c3aed;margin-top:6px">→ S17</div>
+          </div>
+          <div class="tfl-type-box t2">
+            <span class="type-num">II</span>
+            <div class="type-name">자기선언 클레임</div>
+            <div class="type-desc"><strong>본 규격</strong><br>개발자·공급자 자체 선언<br>제3자 검증 불필요</div>
+            <div style="font-size:10px;color:#1d4ed8;margin-top:6px;font-weight:700">★ 현재 섹션</div>
+          </div>
+          <div class="tfl-type-box t3">
+            <span class="type-num">III</span>
+            <div class="type-name">ATFS/QFD</div>
+            <div class="type-desc">정량 V&amp;V 검증<br>ISO/IEC 17029 기반</div>
+            <div style="font-size:10px;color:#be185d;margin-top:6px">→ S14</div>
+          </div>
+          <div class="tfl-type-box t4">
+            <span class="type-num">IV</span>
+            <div class="type-name">DTC</div>
+            <div class="type-desc">개발자 기술 카드<br>선언+기술 상세</div>
+            <div style="font-size:10px;color:#15803d;margin-top:6px">→ S13</div>
+          </div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <span class="stat-num">17</span>
+            <div class="stat-label">§7.1.2 진술 요건<br>(a~q 전체 적용)</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">5</span>
+            <div class="stat-label">§7.2 금지 표현<br>(사용 절대 불가)</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">2</span>
+            <div class="stat-label">권장 적용 Level<br>(Level 1 · Level 2)</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">77</span>
+            <div class="stat-label">S03 Simple Claim<br>(Type II 기반 카탈로그)</div>
+          </div>
+        </div>
+
+        <table class="req-matrix" style="margin-top:8px">
+          <thead>
+            <tr><th>구분</th><th>Type I (S17)</th><th style="background:#1836a3">Type II (본 규격)</th><th>Type III (S14)</th><th>Type IV (S13)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>근거</td><td>ISO/IEC 42117-1 §5.3</td><td><strong>ISO/IEC 42117-1 §5.2</strong></td><td>ISO/IEC 42117-1 §5.4</td><td>ISO/IEC 42117-1 §5.5</td></tr>
+            <tr><td>선언 주체</td><td>인증기관 (CA)</td><td><strong>개발자·공급자</strong></td><td>개발자+독립 검증</td><td>개발자</td></tr>
+            <tr><td>제3자 검증</td><td>필수 (ISO/IEC 17065)</td><td><strong>불필요</strong></td><td>필수 (ISO/IEC 17029)</td><td>선택</td></tr>
+            <tr><td>공신력</td><td>최고</td><td><strong>중</strong></td><td>높음 (정량)</td><td>중 (기술 투명성)</td></tr>
+            <tr><td>진입 장벽</td><td>높음</td><td><strong>낮음</strong></td><td>중간</td><td>낮음</td></tr>
+            <tr><td>권장 Level</td><td>Level 1~3</td><td><strong>Level 1~2</strong></td><td>Level 2~3</td><td>Level 1~3</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note-box info" style="margin-top:12px">
+          <span class="icon">ℹ️</span>
+          <div>
+            <strong>Type II와 S03 Simple Claim의 관계</strong><br>
+            본 가이드의 S03 Simple Claim 카탈로그 77개는 모두 ISO/IEC 42117-1 §5.2의
+            <strong>Type II 자기선언 클레임 형식</strong>을 따릅니다.
+            본 규격(S16)은 그 기반 표준 요건과 YAML 템플릿을 체계적으로 정리한 구현 가이드입니다.
+          </div>
+        </div>
+      </div>
+
+      <!-- S16.1 적용 범위 및 선언 주체 요건 -->
+      <div class="content-section">
+        <h2>S16.1 — 적용 범위 및 선언 주체 요건</h2>
+
+        <h3 style="font-size:14px;color:#1d4ed8;margin-bottom:10px">S16.1.1 적용 대상</h3>
+        <p>Type II 클레임은 다음 AI 제품 유형에 적용됩니다:</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:12px 0">
+          <div style="border:2px solid #1d4ed8;border-radius:8px;padding:14px;background:#eff6ff">
+            <div style="font-weight:700;color:#1d4ed8;margin-bottom:6px">🖥️ AI 시스템</div>
+            <div style="font-size:12px;color:#374151">AI 기능 포함 소프트웨어·하드웨어 시스템<br>예: 의료 진단 AI, 자율주행 시스템</div>
+          </div>
+          <div style="border:2px solid #1d4ed8;border-radius:8px;padding:14px;background:#eff6ff">
+            <div style="font-weight:700;color:#1d4ed8;margin-bottom:6px">🧠 AI 모델</div>
+            <div style="font-size:12px;color:#374151">독립 배포 학습 모델<br>예: GPT-4, LLaMA, BERT, ResNet</div>
+          </div>
+          <div style="border:2px solid #1d4ed8;border-radius:8px;padding:14px;background:#eff6ff">
+            <div style="font-weight:700;color:#1d4ed8;margin-bottom:6px">☁️ AI 서비스</div>
+            <div style="font-size:12px;color:#374151">AI 기능 제공 API·플랫폼<br>예: 번역 API, 챗봇, 추천 엔진</div>
+          </div>
+        </div>
+
+        <h3 style="font-size:14px;color:#1d4ed8;margin:16px 0 10px">S16.1.2 선언 주체 자격</h3>
+        <table class="req-matrix">
+          <thead><tr><th>주체</th><th>자격 조건</th><th>비고</th></tr></thead>
+          <tbody>
+            <tr><td><strong>AI 개발자</strong></td><td>해당 AI 제품의 설계·개발 담당 조직</td><td>가장 일반적</td></tr>
+            <tr><td><strong>AI 공급자</strong></td><td>AI 제품을 배포·출시하는 조직</td><td>모델 공급사 포함</td></tr>
+            <tr><td><strong>시스템 통합업체</strong></td><td>AI 기능을 통합하여 시스템으로 제공하는 조직</td><td>AI 시스템 적용</td></tr>
+            <tr><td><strong>서비스 운영자</strong></td><td>AI 서비스를 운영하고 API를 제공하는 조직</td><td>AI 서비스 적용</td></tr>
+          </tbody>
+        </table>
+
+        <h3 style="font-size:14px;color:#1d4ed8;margin:16px 0 10px">S16.1.3 Level별 적용 지침</h3>
+        <table class="req-matrix">
+          <thead><tr><th>Level</th><th>정의</th><th>Type II 적용</th><th>권장 CA 유형</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Level 1</strong></td>
+              <td>단일 신뢰성 특성 · 단일 지표</td>
+              <td><span class="req-apply req-mand">✅ 권장</span></td>
+              <td>Type II (자기선언)</td>
+            </tr>
+            <tr>
+              <td><strong>Level 2</strong></td>
+              <td>단일 특성 · 복수 지표 또는 심층 측정</td>
+              <td><span class="req-apply req-mand">✅ 적용 가능</span></td>
+              <td>Type II 또는 Type III</td>
+            </tr>
+            <tr>
+              <td><strong>Level 3</strong></td>
+              <td>복수 특성 통합 · 독립 검증 필요</td>
+              <td><span class="req-apply req-na">⚠️ 제한적</span></td>
+              <td>Type I 또는 Type III 권고</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- S16.2 클레임 필수 요건 -->
+      <div class="content-section">
+        <h2>S16.2 — 클레임 필수 요건 (ISO/IEC 42117-1 §7.1.2 기반)</h2>
+        <p>§7.1.1에 따라 아래 17개 항목은 <strong>모든 신뢰성 사실 진술에 적용(SHALL)</strong>됩니다.
+          Type II 클레임 작성 시 각 항목의 충족 여부를 체크해야 합니다.</p>
+
+        <div style="margin-bottom:16px">
+          <div class="clause-header">§7.1.2 — 17개 진술 요건 체크리스트 (a~q)</div>
+          <div class="clause-body">
+            <table class="req-matrix" style="border:none">
+              <thead>
+                <tr>
+                  <th style="width:5%">#</th>
+                  <th style="width:7%">항목</th>
+                  <th style="width:55%">요건 내용 (SHALL)</th>
+                  <th style="width:18%">Type II 적용</th>
+                  <th style="width:15%">S03 연계</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td class="item-id">a)</td><td>정확하고, 오해를 유발하지 않으며, 잘못된 해석을 초래할 가능성이 없어야 합니다</td><td><span class="req-apply req-mand">필수</span></td><td>모든 클레임</td></tr>
+                <tr><td>2</td><td class="item-id">b)</td><td><strong>입증 가능하고 검증 가능</strong>해야 합니다</td><td><span class="req-apply req-mand">필수</span></td><td>metric + actual_result 필드</td></tr>
+                <tr><td>3</td><td class="item-id">c)</td><td>해당 특정 AI 시스템 또는 모델에 <strong>관련</strong>이 있어야 합니다</td><td><span class="req-apply req-mand">필수</span></td><td>product 필드</td></tr>
+                <tr><td>4</td><td class="item-id">d)</td><td>진술이 전체 AI 시스템에 적용되는지 특정 모델·컴포넌트·데이터셋에만 적용되는지 <strong>명확히 표시</strong>해야 합니다</td><td><span class="req-apply req-mand">필수</span></td><td>applicable_to 필드</td></tr>
+                <tr><td>5</td><td class="item-id">e)</td><td>진술된 신뢰성 특성 또는 신뢰성 개선에 대해 <strong>구체적</strong>이어야 합니다</td><td><span class="req-apply req-mand">필수</span></td><td>claim_text + threshold</td></tr>
+                <tr><td>6</td><td class="item-id">f)</td><td>진술 개발 방법론(기준, 파라미터, 계산·테스트 방법, 벤치마크 데이터셋)에 대해 <strong>투명</strong>해야 합니다</td><td><span class="req-apply req-mand">필수</span></td><td>evidence.standard_ref</td></tr>
+                <tr><td>7</td><td class="item-id">g)</td><td>단일 신뢰성 변화에 대해 다중 이익을 암시하기 위해 <strong>다른 용어로 재진술</strong>해서는 안 됩니다</td><td><span class="req-apply req-mand">필수 (준수)</span></td><td>특성 1개 = 클레임 1개</td></tr>
+                <tr><td>8</td><td class="item-id">h)</td><td>AI <strong>라이프사이클의 모든 관련 단계</strong>를 고려해야 합니다 (NOTE: 자기선언은 종종 한 단계만 다룸)</td><td><span class="req-apply req-cond">적용·문서화</span></td><td>lifecycle 필드</td></tr>
+                <tr><td>9</td><td class="item-id">i)</td><td>실제 제3자 인증이 없을 때 <strong>제3자 인증으로 오인될 방식으로 표현</strong>해서는 안 됩니다</td><td><span class="req-apply req-mand">필수</span></td><td>claim_type: "Type II"</td></tr>
+                <tr><td>10</td><td class="item-id">j)</td><td>존재하지 않는 신뢰성 개선을 암시하거나 신뢰성 특성을 <strong>과장</strong>해서는 안 됩니다</td><td><span class="req-apply req-mand">필수</span></td><td>actual_result 정확 기재</td></tr>
+                <tr><td>11</td><td class="item-id">k)</td><td>문자적으로 사실이라도 <strong>오해될 가능성이 있거나 관련 사실의 누락으로 오도</strong>되는 경우 진술 금지</td><td><span class="req-apply req-mand">필수</span></td><td>limitations 필드</td></tr>
+                <tr><td>12</td><td class="item-id">l)</td><td>존재하거나 실현될 가능성이 있는 <strong>AI 시스템·모델의 신뢰성 특성에만</strong> 관련되어야 합니다</td><td><span class="req-apply req-mand">필수</span></td><td>characteristic 선택 시 확인</td></tr>
+                <tr><td>13</td><td class="item-id">m)</td><td>지원 정보가 있는 경우 이를 명확히 표시하고 <strong>쉽게 이용 가능한 위치를 안내</strong>해야 합니다</td><td><span class="req-apply req-cond">해당 시 필수</span></td><td>supporting_info.location</td></tr>
+                <tr><td>14</td><td class="item-id">n)</td><td>비교 진술의 경우, 구체적이고 <strong>비교 근거를 명확히</strong> 해야 합니다 (§7.4 참조)</td><td><span class="req-apply req-cond">비교 시 필수</span></td><td>comparative 필드</td></tr>
+                <tr><td>15</td><td class="item-id">o)</td><td>기존의 미공개 측면에 기반한 경우, 최근 수정이나 혁신으로 <strong>오인하게 하는 방식으로 표현 금지</strong></td><td><span class="req-apply req-mand">필수</span></td><td>—</td></tr>
+                <tr><td>16</td><td class="item-id">p)</td><td>해당 AI 시스템·모델 카테고리와 <strong>무관한 특성의 부재에 기반한 진술 금지</strong> (예: 이미지 분류기에 "텍스트 편향 없음")</td><td><span class="req-apply req-mand">필수</span></td><td>characteristic 적합성 확인</td></tr>
+                <tr><td>17</td><td class="item-id">q)</td><td>기술 변화, 경쟁 시스템, 기타 상황 변화를 반영하여 <strong>필요 시 재평가 및 업데이트</strong>해야 합니다</td><td><span class="req-apply req-cond">유지관리 필수</span></td><td>valid_until + 재심사 주기</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="note-box warning">
+          <span class="icon">⚠️</span>
+          <div>
+            <strong>§7.3 일반적 신뢰성 진술 제한</strong><br>
+            "sustainability" 또는 "ethicality"와 연계하는 광범위한 신뢰성 진술은
+            §6 요건을 충족한 프로그램 또는 <em>공개적으로 이용 가능한 합의 기반 문서</em> 내에 포함된 경우에만 허용됩니다.
+            ISO/IEC TS 42117-1은 현재 PWI 준비 단계이므로 "모든 신뢰성 요건을 충족한다"는 광범위한 주장은 불가합니다.
+          </div>
+        </div>
+      </div>
+
+      <!-- S16.3 YAML 클레임 템플릿 -->
+      <div class="content-section">
+        <h2>S16.3 — Type II 클레임 YAML 템플릿</h2>
+        <p>아래 YAML 템플릿은 ISO/IEC 42117-1 §7.1.2 a–q 요건을 모두 충족하도록 설계된
+          Type II 자기선언 클레임의 공식 구조입니다. <strong>굵게 표시된 필드는 필수(SHALL)</strong>입니다.</p>
+
+        <div class="yaml-block">
+<span class="y-comment"># ISO/IEC 42117-X Type II Self-declared Trustworthiness Fact Claim</span>
+<span class="y-comment"># Reference: ISO/IEC TS 42117-1 §5.2, §7.1.2 (a-q), §7.5</span>
+<span class="y-comment"># Template version: 1.0 | Guide: TFL S16</span>
+<span class="y-comment"># ================================================================</span>
+
+<span class="y-key">metadata</span>:
+  <span class="y-key">claim_id</span>:      <span class="y-str">"SC-[CHAR]-[NNN]"</span>     <span class="y-comment"># e.g. SC-Accuracy-001</span>
+  <span class="y-key">claim_type</span>:    <span class="y-str">"Type II"</span>              <span class="y-comment"># §5.2 Self-declared</span>
+  <span class="y-key">issued_by</span>:     <span class="y-str">"[Organization Name]"</span>  <span class="y-comment"># 선언 주체 조직명</span>
+  <span class="y-key">issue_date</span>:    <span class="y-str">"YYYY-MM-DD"</span>
+  <span class="y-key">valid_until</span>:   <span class="y-str">"YYYY-MM-DD"</span>           <span class="y-comment"># §7.1.2.q 재평가 일정</span>
+  <span class="y-key">version</span>:       <span class="y-str">"v[X.Y]"</span>
+
+<span class="y-key">product</span>:                                     <span class="y-comment"># §7.1.2.c,d — 제품 식별 및 범위</span>
+  <span class="y-key">name</span>:          <span class="y-str">"[AI Product Name]"</span>
+  <span class="y-key">version</span>:       <span class="y-str">"[semantic version]"</span>
+  <span class="y-key">type</span>:          <span class="y-str">"system | model | service"</span>
+  <span class="y-key">scope</span>:         <span class="y-str">"[intended use context and deployment domain]"</span>
+
+<span class="y-key">claim</span>:                                       <span class="y-comment"># §7.1.2.e,f — 구체적·투명한 진술</span>
+  <span class="y-key">characteristic</span>:  <span class="y-str">"[TCM Characteristic]"</span> <span class="y-comment"># 28개 TCM 특성 중 하나</span>
+  <span class="y-key">level</span>:           <span class="y-tag">1 | 2</span>                  <span class="y-comment"># Level 3은 Type I/III 권고</span>
+  <span class="y-key">claim_text</span>:      <span class="y-str">"[specific, measurable fact statement]"</span>
+  <span class="y-key">metric</span>:          <span class="y-str">"[measurement metric name]"</span>
+  <span class="y-key">threshold</span>:       <span class="y-str">"[target value or range]"</span>
+  <span class="y-key">actual_result</span>:   <span class="y-str">"[measured result value]"</span>  <span class="y-comment"># §7.1.2.b — 검증 가능</span>
+  <span class="y-key">applicable_to</span>:   <span class="y-str">"whole_system | component | dataset"</span> <span class="y-comment"># §7.1.2.d</span>
+
+<span class="y-key">evidence</span>:                                   <span class="y-comment"># §7.1.2.f, §7.5.2.f — 방법론 투명성</span>
+  <span class="y-key">standard_ref</span>:
+    <span class="y-tag">-</span> <span class="y-str">"[ISO/IEC standard:year, clause]"</span>
+  <span class="y-key">evaluation_method</span>: <span class="y-str">"[test method description]"</span>
+  <span class="y-key">evaluation_date</span>:   <span class="y-str">"YYYY-MM-DD"</span>
+  <span class="y-key">dataset_description</span>: <span class="y-str">"[test dataset spec — if data-dependent]"</span> <span class="y-comment"># §7.5.2.f</span>
+  <span class="y-key">tool_or_framework</span>: <span class="y-str">"[evaluation tool/framework]"</span>
+
+<span class="y-key">lifecycle</span>:                                  <span class="y-comment"># §7.1.2.h, §7.5.2.e</span>
+  <span class="y-key">stages_covered</span>:
+    <span class="y-tag">-</span> <span class="y-str">"design | development | testing | deployment | operation"</span>
+  <span class="y-key">uncovered_stages</span>: <span class="y-str">"[미포함 단계 + 이유]"</span>    <span class="y-comment"># §7.5.2.e — 필수 명시</span>
+
+<span class="y-key">limitations</span>:                               <span class="y-comment"># §7.1.2.a,k,l — 정확성 보증</span>
+  <span class="y-key">known_exclusions</span>:    <span class="y-str">"[클레임이 포함하지 않는 범위]"</span>
+  <span class="y-key">contextual_constraints</span>: <span class="y-str">"[지역·언어·도메인 제약]"</span>
+  <span class="y-key">validity_conditions</span>: <span class="y-str">"[클레임이 유효한 조건]"</span>
+
+<span class="y-key">supporting_info</span>:                           <span class="y-comment"># §7.5.2</span>
+  <span class="y-key">location</span>:          <span class="y-str">"[URL or QR code — 무료 공개 접근]"</span>  <span class="y-comment"># §7.5.2.a</span>
+  <span class="y-key">programme_operator</span>: <span class="y-str">"[TFL programme operator, if any]"</span>  <span class="y-comment"># §7.5.2.c</span>
+  <span class="y-key">communication_type</span>: <span class="y-str">"D2D | B2B | B2C"</span>               <span class="y-comment"># §7.5.2.d</span>
+        </div>
+
+        <div class="note-box info">
+          <span class="icon">📌</span>
+          <div>
+            <strong>필드 작성 우선순위</strong><br>
+            최소 필수 필드: <code>metadata</code> (claim_id, claim_type, issued_by, issue_date) +
+            <code>product</code> (name, version, type) +
+            <code>claim</code> (characteristic, claim_text, metric, threshold, actual_result) +
+            <code>evidence</code> (standard_ref, evaluation_date)<br>
+            권장 추가: <code>lifecycle</code> + <code>limitations</code> + <code>supporting_info.location</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- S16.4 클레임 작성 프로세스 -->
+      <div class="content-section">
+        <h2>S16.4 — Type II 클레임 작성 프로세스 (6단계)</h2>
+
+        <div class="process-flow">
+          <div class="proc-step">
+            <div class="step-num">STEP 1</div>
+            <div class="step-name">대상 정의</div>
+            <div class="step-desc">AI 제품 유형·버전·배포 범위 명확화</div>
+          </div>
+          <div class="proc-arrow">›</div>
+          <div class="proc-step">
+            <div class="step-num">STEP 2</div>
+            <div class="step-name">특성 선택</div>
+            <div class="step-desc">28개 TCM 특성 중 해당 특성 식별 (§7.1.2.l 확인)</div>
+          </div>
+          <div class="proc-arrow">›</div>
+          <div class="proc-step">
+            <div class="step-num">STEP 3</div>
+            <div class="step-name">방법론 선택</div>
+            <div class="step-desc">표준 참조 + 측정 방법 + 임계값 설정</div>
+          </div>
+          <div class="proc-arrow">›</div>
+          <div class="proc-step">
+            <div class="step-num">STEP 4</div>
+            <div class="step-name">측정 수행</div>
+            <div class="step-desc">테스트 실행 · 결과 기록 · 데이터셋 문서화</div>
+          </div>
+          <div class="proc-arrow">›</div>
+          <div class="proc-step">
+            <div class="step-num">STEP 5</div>
+            <div class="step-name">YAML 작성</div>
+            <div class="step-desc">템플릿 작성 · §7.1.2 a-q 체크리스트 검토</div>
+          </div>
+          <div class="proc-arrow">›</div>
+          <div class="proc-step">
+            <div class="step-num">STEP 6</div>
+            <div class="step-name">공개 선언</div>
+            <div class="step-desc">지원 정보 위치 공개 · 재심사 일정 등록</div>
+          </div>
+        </div>
+
+        <table class="req-matrix" style="margin-top:12px">
+          <thead><tr><th>단계</th><th>주요 활동</th><th>관련 §7.1.2 항목</th><th>산출물</th></tr></thead>
+          <tbody>
+            <tr><td>1. 대상 정의</td><td>AI 제품 식별, 배포 범위 문서화</td><td>c), d)</td><td>product 필드 초안</td></tr>
+            <tr><td>2. 특성 선택</td><td>TCM 특성 매핑, 적합성 확인</td><td>c), l), p)</td><td>characteristic 선택</td></tr>
+            <tr><td>3. 방법론 선택</td><td>관련 표준 검색, 측정 방법 결정, 임계값 설정</td><td>f)</td><td>evidence.standard_ref + method</td></tr>
+            <tr><td>4. 측정 수행</td><td>테스트 실행, 결과 기록, 데이터셋·환경 문서화</td><td>b), f), §7.5.2.f</td><td>actual_result + dataset_description</td></tr>
+            <tr><td>5. YAML 작성</td><td>금지 표현 제거, 라이프사이클 문서화, 한계 명시</td><td>a)~q) 전체</td><td>완성된 YAML 클레임</td></tr>
+            <tr><td>6. 공개 선언</td><td>지원 정보 URL 공개, valid_until 설정, 재심사 등록</td><td>m), q), §7.5.2</td><td>공개된 Type II 클레임</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- S16.5 금지 사항 및 제한 -->
+      <div class="content-section">
+        <h2>S16.5 — 금지 사항 및 제한 (§7.2 · §7.3 · §7.4)</h2>
+
+        <div style="margin-bottom:16px">
+          <div class="clause-header">§7.2 — 금지 표현 (SHALL NOT)</div>
+          <div class="clause-body">
+            <div style="padding:14px;font-size:13px;line-height:1.7">
+              아래 표현은 AI 시스템·모델이 신뢰할 수 있거나 유익하다는 것을
+              광범위하게 암시하므로 <strong>사용 절대 금지</strong>입니다:
+              <div style="margin-top:10px">
+                <span class="prohibited">ethical AI</span>
+                <span class="prohibited">trustworthy AI</span>
+                <span class="prohibited">responsible AI</span>
+                <span class="prohibited">human-centric</span>
+                <span class="prohibited">safe AI</span>
+              </div>
+              <div style="margin-top:10px;font-size:12px;color:#666">
+                ✅ S03 Simple Claim 77개 전체에서 위 5개 표현 미사용 확인됨
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:16px">
+          <div class="clause-header">§7.3 — 일반적 신뢰성 진술 제한 (SHALL)</div>
+          <div class="clause-body">
+            <div style="padding:14px;font-size:13px;line-height:1.7">
+              "ethicality" 또는 "sustainability"와 연계하는 <strong>광범위한 신뢰성 진술</strong>은
+              다음 경우에만 허용됩니다:
+              <ul style="margin-top:8px;font-size:13px">
+                <li>§6 요건을 충족한 <strong>인증된 프로그램</strong> 내에 포함된 경우, 또는</li>
+                <li><strong>공개적으로 이용 가능한 합의 기반 문서</strong> (published international standard)에 포함된 경우</li>
+              </ul>
+              <div style="margin-top:8px;background:#fee2e2;padding:8px;border-radius:4px;font-size:12px">
+                ⚠️ ISO/IEC TS 42117-1은 현재 PWI 준비 단계이므로 "모든 42117-1 신뢰성 요건을 충족한다"는 주장 불가
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:16px">
+          <div class="clause-header">§7.4 — 비교 진술 요건 (비교 클레임 작성 시 적용)</div>
+          <div class="clause-body">
+            <div style="padding:14px;font-size:13px;line-height:1.7">
+              타 시스템·모델과 비교하는 경우 다음을 준수해야 합니다:
+              <ul style="margin:8px 0;font-size:13px">
+                <li><strong>§7.4.1</strong>: 비교 기준선 명확 식별 — (a) 자사 이전 버전, (b) 타사 AI, (c) 업계 평균/벤치마크</li>
+                <li><strong>§7.4.2</strong>: 동일 기능·측정 단위·라이프사이클 단계 기반 비교</li>
+                <li><strong>§7.4.3</strong>: 절대적 차이 또는 상대적 차이를 명확히 구분 표현</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="note-box warning">
+          <span class="icon">🚫</span>
+          <div>
+            <strong>Type II에서 특히 주의할 위반 패턴</strong><br>
+            ① 제3자 인증 표현 금지 — "ISO 인증", "독립 검증 완료" 등 Type I/III 오인 표현<br>
+            ② 과장 금지 — "100% 안전", "완벽한 개인정보 보호" 등 절대적 표현<br>
+            ③ 범위 미명시 금지 — 전체 시스템 클레임인지 특정 모듈 클레임인지 반드시 명시 (§7.1.2.d)<br>
+            ④ 라이프사이클 누락 금지 — 테스트 단계 결과만으로 운영 단계 클레임 금지 (§7.5.2.e)
+          </div>
+        </div>
+      </div>
+
+      <!-- S16.6 작성 예시 -->
+      <div class="content-section">
+        <h2>S16.6 — Type II 클레임 작성 예시</h2>
+        <p>아래 3개 예시는 각각 AI 시스템·AI 모델·AI 서비스에 대한 Type II 클레임 작성 방법을 보여줍니다.</p>
+
+        <!-- 예시 1 -->
+        <div class="example-card">
+          <div class="example-header">
+            예시 1 — AI 시스템: 의료 진단 AI의 Accuracy 클레임
+            <span style="font-size:11px;background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:4px">SC-Accuracy-001 기반</span>
+          </div>
+          <div class="example-body">
+            <div class="yaml-block" style="font-size:11.5px">
+<span class="y-key">metadata</span>:
+  <span class="y-key">claim_id</span>:      <span class="y-str">"SC-Accuracy-001"</span>
+  <span class="y-key">claim_type</span>:    <span class="y-str">"Type II"</span>
+  <span class="y-key">issued_by</span>:     <span class="y-str">"MedTech Korea Co., Ltd."</span>
+  <span class="y-key">issue_date</span>:    <span class="y-str">"2026-02-01"</span>
+  <span class="y-key">valid_until</span>:   <span class="y-str">"2027-02-01"</span>
+
+<span class="y-key">product</span>:
+  <span class="y-key">name</span>:    <span class="y-str">"MedDiag-AI"</span>
+  <span class="y-key">version</span>: <span class="y-str">"v2.1"</span>
+  <span class="y-key">type</span>:    <span class="y-str">"system"</span>
+  <span class="y-key">scope</span>:   <span class="y-str">"폐 결절 탐지 — 국내 방사선과 병원 환경"</span>
+
+<span class="y-key">claim</span>:
+  <span class="y-key">characteristic</span>: <span class="y-str">"Accuracy"</span>
+  <span class="y-key">level</span>:           <span class="y-tag">2</span>
+  <span class="y-key">claim_text</span>:      <span class="y-str">"MedDiag-AI v2.1은 표준 테스트 데이터셋에서 폐 결절 탐지에 대해 ISO/IEC TS 4213:2023 §6.3 기준 F1-score ≥ 0.92를 달성합니다"</span>
+  <span class="y-key">metric</span>:          <span class="y-str">"F1-score"</span>
+  <span class="y-key">threshold</span>:       <span class="y-str">"≥ 0.92"</span>
+  <span class="y-key">actual_result</span>:   <span class="y-str">"0.943"</span>
+  <span class="y-key">applicable_to</span>:   <span class="y-str">"whole_system"</span>
+
+<span class="y-key">evidence</span>:
+  <span class="y-key">standard_ref</span>:        [<span class="y-str">"ISO/IEC TS 4213:2023 §6.3"</span>]
+  <span class="y-key">evaluation_method</span>:   <span class="y-str">"5-fold cross-validation + hold-out test set"</span>
+  <span class="y-key">evaluation_date</span>:     <span class="y-str">"2026-01-15"</span>
+  <span class="y-key">dataset_description</span>: <span class="y-str">"LUNA16 데이터셋 1,186 CT 스캔 (test split 20%)"</span>
+
+<span class="y-key">lifecycle</span>:
+  <span class="y-key">stages_covered</span>:  [<span class="y-str">"testing"</span>, <span class="y-str">"deployment"</span>]
+  <span class="y-key">uncovered_stages</span>: <span class="y-str">"operation: 실운영 모니터링 데이터 미포함"</span>
+
+<span class="y-key">limitations</span>:
+  <span class="y-key">known_exclusions</span>:    <span class="y-str">"소아 CT 데이터 제외 (별도 모델 필요)"</span>
+  <span class="y-key">contextual_constraints</span>: <span class="y-str">"국내 방사선 장비 설정 기준, LUNA16 외 데이터셋 성능 별도 검증 필요"</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 예시 2 -->
+        <div class="example-card">
+          <div class="example-header">
+            예시 2 — AI 모델: LLM의 Privacy 클레임
+            <span style="font-size:11px;background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:4px">SC-Privacy-001 기반</span>
+          </div>
+          <div class="example-body">
+            <div class="yaml-block" style="font-size:11.5px">
+<span class="y-key">metadata</span>:
+  <span class="y-key">claim_id</span>:      <span class="y-str">"SC-Privacy-001"</span>
+  <span class="y-key">claim_type</span>:    <span class="y-str">"Type II"</span>
+  <span class="y-key">issued_by</span>:     <span class="y-str">"AI Research Institute"</span>
+  <span class="y-key">issue_date</span>:    <span class="y-str">"2026-02-01"</span>
+
+<span class="y-key">product</span>:
+  <span class="y-key">name</span>:    <span class="y-str">"LLM-Ko"</span>
+  <span class="y-key">version</span>: <span class="y-str">"v3.0"</span>
+  <span class="y-key">type</span>:    <span class="y-str">"model"</span>
+  <span class="y-key">scope</span>:   <span class="y-str">"한국어 대화 생성 모델 — API 배포"</span>
+
+<span class="y-key">claim</span>:
+  <span class="y-key">characteristic</span>: <span class="y-str">"Privacy"</span>
+  <span class="y-key">level</span>:           <span class="y-tag">2</span>
+  <span class="y-key">claim_text</span>:      <span class="y-str">"LLM-Ko v3.0은 학습 데이터에서 식별 가능한 개인정보를 포함한 소스를 제거하고, 멤버십 추론 공격(MIA)에서 ISO/IEC TS 5723 §8 기준 97.3%의 거부율을 달성합니다"</span>
+  <span class="y-key">metric</span>:          <span class="y-str">"MIA rejection rate"</span>
+  <span class="y-key">threshold</span>:       <span class="y-str">"≥ 95%"</span>
+  <span class="y-key">actual_result</span>:   <span class="y-str">"97.3%"</span>
+  <span class="y-key">applicable_to</span>:   <span class="y-str">"whole_system"</span>
+
+<span class="y-key">evidence</span>:
+  <span class="y-key">standard_ref</span>:        [<span class="y-str">"ISO/IEC TS 5723:2022 §8"</span>]
+  <span class="y-key">evaluation_method</span>:   <span class="y-str">"ML Privacy Meter 라이브러리 기반 MIA 공격 시뮬레이션"</span>
+  <span class="y-key">evaluation_date</span>:     <span class="y-str">"2026-01-20"</span>
+  <span class="y-key">dataset_description</span>: <span class="y-str">"AI Hub 한국어 대화 데이터셋 일부 (평가용 10만 샘플)"</span>
+
+<span class="y-key">limitations</span>:
+  <span class="y-key">known_exclusions</span>:    <span class="y-str">"파인튜닝 데이터에 대한 MIA 결과 별도 평가 필요"</span>
+  <span class="y-key">contextual_constraints</span>: <span class="y-str">"특정 도메인 파인튜닝 시 재평가 권장"</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 예시 3 -->
+        <div class="example-card">
+          <div class="example-header">
+            예시 3 — AI 서비스: 번역 API의 Transparency 클레임
+            <span style="font-size:11px;background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:4px">SC-Transparency-001 기반</span>
+          </div>
+          <div class="example-body">
+            <div class="yaml-block" style="font-size:11.5px">
+<span class="y-key">metadata</span>:
+  <span class="y-key">claim_id</span>:      <span class="y-str">"SC-Transparency-001"</span>
+  <span class="y-key">claim_type</span>:    <span class="y-str">"Type II"</span>
+  <span class="y-key">issued_by</span>:     <span class="y-str">"TranslateNow Corp."</span>
+  <span class="y-key">issue_date</span>:    <span class="y-str">"2026-01-15"</span>
+  <span class="y-key">valid_until</span>:   <span class="y-str">"2027-01-15"</span>
+
+<span class="y-key">product</span>:
+  <span class="y-key">name</span>:    <span class="y-str">"TranslateNow API"</span>
+  <span class="y-key">version</span>: <span class="y-str">"v3.0"</span>
+  <span class="y-key">type</span>:    <span class="y-str">"service"</span>
+  <span class="y-key">scope</span>:   <span class="y-str">"56개 언어 쌍 번역 B2B API 서비스"</span>
+
+<span class="y-key">claim</span>:
+  <span class="y-key">characteristic</span>: <span class="y-str">"Transparency"</span>
+  <span class="y-key">level</span>:           <span class="y-tag">1</span>
+  <span class="y-key">claim_text</span>:      <span class="y-str">"TranslateNow API v3.0은 API 공개 문서에서 지원 언어 쌍 56개, 학습 데이터 출처 8개, 알려진 성능 한계사항 12개를 FDIS 12792 §5 기준으로 공개합니다"</span>
+  <span class="y-key">metric</span>:          <span class="y-str">"공개 항목 완성도 (FDIS 12792 §5 체크리스트 기준)"</span>
+  <span class="y-key">threshold</span>:       <span class="y-str">"FDIS 12792 §5 필수 항목 100% 공개"</span>
+  <span class="y-key">actual_result</span>:   <span class="y-str">"14/14 필수 항목 공개 완료"</span>
+  <span class="y-key">applicable_to</span>:   <span class="y-str">"whole_system"</span>
+
+<span class="y-key">evidence</span>:
+  <span class="y-key">standard_ref</span>:   [<span class="y-str">"ISO/IEC FDIS 12792:2025 §5"</span>]
+  <span class="y-key">evaluation_date</span>: <span class="y-str">"2026-01-10"</span>
+
+<span class="y-key">supporting_info</span>:
+  <span class="y-key">location</span>:          <span class="y-str">"https://api.translatenow.example/transparency"</span>
+  <span class="y-key">communication_type</span>: <span class="y-str">"B2B"</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S16.7 Simple Claim 카탈로그 연계 -->
+      <div class="content-section">
+        <h2>S16.7 — S03 Simple Claim 카탈로그와의 연계</h2>
+        <p>S03의 77개 Simple Claim은 모두 Type II 자기선언 형식을 기반으로 합니다.
+          아래는 CA 유형별 분류 요약입니다. <a href="s03-claims.html?filter=typeII" style="color:#1d4ed8">→ S03에서 Type II 필터 보기</a></p>
+
+        <table class="req-matrix">
+          <thead><tr><th>CA 유형</th><th>클레임 수</th><th>적용 특성 (예시)</th><th>비고</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Type II (자기선언)</strong></td>
+              <td style="font-size:16px;font-weight:800;color:#1d4ed8">다수</td>
+              <td>Transparency, Accountability, Privacy, Accuracy, Controllability-003, Robustness, Resilience-001, Adaptability...</td>
+              <td>본 규격 직접 적용</td>
+            </tr>
+            <tr>
+              <td><strong>Type I or II</strong></td>
+              <td>일부</td>
+              <td>Trustworthiness, Safety (저위험), Bias/Fairness (저위험)</td>
+              <td>위험 수준에 따라 선택</td>
+            </tr>
+            <tr>
+              <td><strong>Type II or III</strong></td>
+              <td>일부</td>
+              <td>Transparency-003 (로그 시스템), Explainability</td>
+              <td>정량 검증 권장</td>
+            </tr>
+            <tr>
+              <td><strong>Type III (V&amp;V)</strong></td>
+              <td>일부</td>
+              <td>Resilience-002, Interpretability, Fairness (고위험)</td>
+              <td>Type II 단독 불가</td>
+            </tr>
+            <tr>
+              <td><strong>Type I or III</strong></td>
+              <td>일부</td>
+              <td>Bias/Fairness-001 (Level 3), Safety-001 (Level 3)</td>
+              <td>독립 검증 필수</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note-box info" style="margin-top:12px">
+          <span class="icon">🔍</span>
+          <div>
+            <strong>S03 필터 활용 방법</strong><br>
+            S03 Simple Claim 페이지의 <strong>"Type II (자기선언)"</strong> 필터 버튼을 클릭하면
+            Type II 단독 적용 가능한 클레임만 표시됩니다.
+            각 클레임 카드의 CA 유형 배지(파란색 = Type II)를 확인하세요.
+            <a href="s03-claims.html" style="color:#1d4ed8;font-weight:700">→ S03 Simple Claim 카탈로그 바로가기</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- S16.8 교차 참조 -->
+      <div class="content-section">
+        <h2>S16.8 — 교차 참조</h2>
+        <table class="req-matrix">
+          <thead><tr><th>참조 대상</th><th>관련 내용</th><th>링크</th></tr></thead>
+          <tbody>
+            <tr><td>ISO/IEC TS 42117-1 §5.2</td><td>Type II 자기선언 정의</td><td><a href="s15-42117-part1.html#s15-2" style="color:#1d4ed8">S15.2</a></td></tr>
+            <tr><td>ISO/IEC TS 42117-1 §7.1.2</td><td>17개 진술 요건 (a–q) 전문</td><td><a href="s15-42117-part1.html#s15-4" style="color:#1d4ed8">S15.4</a></td></tr>
+            <tr><td>Simple Claim 카탈로그</td><td>Type II 기반 77개 클레임 템플릿</td><td><a href="s03-claims.html" style="color:#1d4ed8">S03</a></td></tr>
+            <tr><td>TCM 28개 특성</td><td>characteristic 필드 선택 기준</td><td><a href="s02-characteristics.html" style="color:#1d4ed8">S02</a></td></tr>
+            <tr><td>CA 이행 가이드</td><td>Type II CA 수행 절차 상세</td><td><a href="s05-ca-guide.html" style="color:#1d4ed8">S05</a></td></tr>
+            <tr><td>TC-Claim 매핑</td><td>특성별 표준 요건과 Claim 연계</td><td><a href="s11-tc-claim-mapping.html" style="color:#1d4ed8">S11</a></td></tr>
+            <tr><td>Type I TFL 규격</td><td>제3자 인증 방식 (더 높은 공신력)</td><td><a href="s17-type1-tfl.html" style="color:#1d4ed8">S17</a></td></tr>
+            <tr><td>Type III ATFS 규격</td><td>정량 V&amp;V 방식 (더 엄격한 검증)</td><td><a href="s14-atfs-qfd.html" style="color:#1d4ed8">S14</a></td></tr>
+            <tr><td>Type IV DTC 규격</td><td>기술 상세 카드 (투명성 보완)</td><td><a href="s13-dtc-card.html" style="color:#1d4ed8">S13</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- content-area -->
+
+    <div class="page-footer">
+      <span>ISO/IEC 42117-X TFL 운영 가이드 v1.0 · S16 Type II 자기선언 클레임 규격 초안</span>
+      <span>기준: ISO/IEC TS 42117-1 PWI Draft (2025-10-02) §5.2, §7.1.2 (a-q) | 2026-02-22</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -33,6 +33,16 @@
       background: #e74c3c; color: #fff; font-size: 10px;
       font-weight: 700; padding: 2px 8px; border-radius: 10px;
     }
+    /* TFL 4-Type 색상 — S14·S15·S16·S17과 통일 */
+    .ca-type-card.t1 { border-color: #ddd6fe; background: #f5f0ff; }
+    .ca-type-card.t2 { border-color: #bfdbfe; background: #eff6ff; }
+    .ca-type-card.t3 { border-color: #fbcfe8; background: #fff0f5; }
+    .ca-type-card.t4 { border-color: #bbf7d0; background: #f0fdf4; }
+    .ca-type-card.t1 .type-num { color: #7c3aed; }
+    .ca-type-card.t2 .type-num { color: #1d4ed8; }
+    .ca-type-card.t3 .type-num { color: #be185d; }
+    .ca-type-card.t4 .type-num { color: #15803d; }
+    .ca-type-card.active.t4 { border-color: #15803d; border-width: 3px; box-shadow: 0 0 0 3px #bbf7d0; }
     /* Source comparison table */
     .source-compare-table { width: 100%; border-collapse: collapse; font-size: 0.83em; }
     .source-compare-table th {
@@ -210,6 +220,8 @@
         <a href="s13-dtc-card.html" class="nav-item active"><span class="section-id">S13</span>AI Developer Technical Card</a>
         <a href="s14-atfs-qfd.html" class="nav-item"><span class="section-id">S14</span>ATFS / QFD (Type III)</a>
         <a href="s15-42117-part1.html" class="nav-item"><span class="section-id">S15</span>42117-1 원칙 및 일반 요건</a>
+        <a href="s16-type2-claim.html" class="nav-item"><span class="section-id">S16</span>Type II 자기선언 클레임 규격</a>
+        <a href="s17-type1-tfl.html" class="nav-item"><span class="section-id">S17</span>Type I TFL 인증 라벨 규격</a>
       </div>
     </div>
   </nav>
@@ -246,32 +258,32 @@
 
         <p style="font-size:0.9em;color:#444;margin-bottom:16px">
           <strong>AI Developer Technical Card (DTC)</strong>는 AI 제품(시스템·모델·서비스)의 개발자·공급자가 자신의 AI 제품에 대해 TFL(Trustworthiness Framework Label) 신뢰성 특성 준수 여부를 체계적으로 기술하는 <strong>표준화된 기술 문서</strong>입니다.
-          ISO/IEC 17067 적합성 인증 유형 체계 내에서 TYPE IV 위치에 해당하며, 개발자 자체 선언(SDoC, TYPE I)의 심화 버전이자 제3자 인증을 위한 기술 근거 문서 역할을 합니다.
+          ISO/IEC 42117-1 §5.5에서 정의된 <strong>Type IV DTC</strong>로서, TFL 4-Type 체계에서 Type II 자기선언보다 심층적인 기술 근거를 제공하고 Type I 제3자 인증의 기술 기반 문서 역할을 합니다.
         </p>
 
-        <!-- CA Type Classification -->
-        <h3>TFL 적합성 평가(CA) 유형 분류</h3>
+        <!-- TFL 4-Type 체계에서 DTC 위치 -->
+        <h3>ISO/IEC 42117-1 TFL 4-Type 체계에서 DTC(Type IV)의 위치</h3>
         <div class="ca-type-grid">
-          <div class="ca-type-card">
+          <div class="ca-type-card t1">
             <span class="type-num">I</span>
-            <div class="type-name">SDoC</div>
-            <div class="type-desc">Supplier's Declaration of Conformity<br>개발자 자체 적합성 선언 (ISO 17050)</div>
+            <div class="type-name">TFL 인증 라벨</div>
+            <div class="type-desc">제3자 인증기관(CA) 발행<br>ISO/IEC 17065 기반 인증<br>→ <a href="s17-type1-tfl.html" style="color:#7c3aed">S17 참조</a></div>
           </div>
-          <div class="ca-type-card">
+          <div class="ca-type-card t2">
             <span class="type-num">II</span>
-            <div class="type-name">2nd-Party Audit</div>
-            <div class="type-desc">구매자/고객 주도 평가<br>사용자 기반 검토 및 계약 기반 감사</div>
+            <div class="type-name">자기선언 클레임</div>
+            <div class="type-desc">개발자·공급자 자기선언<br>ISO/IEC 42117-1 §5.2 기반<br>→ <a href="s16-type2-claim.html" style="color:#1d4ed8">S16 참조</a></div>
           </div>
-          <div class="ca-type-card">
+          <div class="ca-type-card t3">
             <span class="type-num">III</span>
-            <div class="type-name">V&amp;V Testing</div>
-            <div class="type-desc">제3자 V&amp;V (ISO 17029)<br>독립 시험기관의 검증·확인<br>(42119-2 / 29119-11 기반)</div>
+            <div class="type-name">ATFS / QFD</div>
+            <div class="type-desc">제2자·제3자 정량 평가<br>ISO/IEC 17029 기반 검증<br>→ <a href="s14-atfs-qfd.html" style="color:#be185d">S14 참조</a></div>
           </div>
-          <div class="ca-type-card active">
+          <div class="ca-type-card active t4">
             <span class="new-badge">신규</span>
             <span class="type-num">IV</span>
             <div class="type-name">DTC</div>
-            <div class="type-desc">AI Developer Technical Card<br>TFL 특성 기반 개발자 기술 카드<br>(본 S13 정의)</div>
+            <div class="type-desc">AI Developer Technical Card<br>ISO/IEC 42117-1 §5.5 기반<br>(본 S13 정의)</div>
           </div>
         </div>
 
@@ -350,8 +362,8 @@
             <div class="stat-label">TCM 신뢰성 특성<br>(커버 대상)</div>
           </div>
           <div class="stat-card">
-            <span class="stat-num">45</span>
-            <div class="stat-label">Simple Claim<br>(SC 카탈로그)</div>
+            <span class="stat-num">77</span>
+            <div class="stat-label">Simple Claim<br>(SC 카탈로그, v1.1)</div>
           </div>
           <div class="stat-card">
             <span class="stat-num">9</span>

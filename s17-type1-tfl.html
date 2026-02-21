@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S17 Type I AI Trustworthiness Fact Label (TFL) 규격 — ISO/IEC 42117-X TFL 가이드</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* S17 Color Theme: Type I purple */
+    .s17-accent { color: #7c3aed; }
+    .s17-badge {
+      display: inline-block; background: #7c3aed; color: #fff;
+      border-radius: 6px; padding: 4px 14px; font-size: 12px;
+      font-weight: 700; letter-spacing: 0.5px; font-family: monospace;
+    }
+    /* Req table */
+    .req-matrix { width: 100%; border-collapse: collapse; font-size: 0.82em; }
+    .req-matrix th { background: #7c3aed; color: #fff; padding: 8px 10px; text-align: left; font-size: 0.8em; }
+    .req-matrix td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+    .req-matrix tr:nth-child(even) { background: #f5f0ff; }
+    .req-matrix tr:hover { background: #ede9fe; }
+    .req-apply { display: inline-block; border-radius: 4px; padding: 2px 7px; font-size: 11px; font-weight: 700; }
+    .req-mand { background: #fee2e2; color: #991b1b; }
+    .req-cond { background: #fef9c3; color: #713f12; }
+    .req-na   { background: #f1f5f9; color: #94a3b8; }
+    /* YAML block */
+    .yaml-block {
+      background: #0f172a; color: #e2e8f0; border-radius: 8px;
+      padding: 18px 20px; font-family: 'Courier New', monospace; font-size: 12px;
+      line-height: 1.6; overflow-x: auto; margin: 12px 0;
+    }
+    .yaml-block .y-comment { color: #94a3b8; }
+    .yaml-block .y-key    { color: #93c5fd; }
+    .yaml-block .y-val    { color: #86efac; }
+    .yaml-block .y-str    { color: #fde68a; }
+    .yaml-block .y-tag    { color: #f9a8d4; font-style: italic; }
+    /* Process flow */
+    .process-flow {
+      display: flex; gap: 0; align-items: stretch; margin: 16px 0; overflow-x: auto;
+    }
+    .proc-step {
+      flex: 1; min-width: 120px; background: #f5f0ff; border: 1.5px solid #ddd6fe;
+      padding: 14px 12px; text-align: center; position: relative;
+    }
+    .proc-step:first-child { border-radius: 8px 0 0 8px; }
+    .proc-step:last-child  { border-radius: 0 8px 8px 0; }
+    .proc-step .step-num  { font-size: 11px; font-weight: 700; color: #7c3aed; text-transform: uppercase; }
+    .proc-step .step-name { font-size: 12.5px; font-weight: 700; color: #5b21b6; margin: 4px 0; }
+    .proc-step .step-desc { font-size: 11px; color: #4b5563; line-height: 1.4; }
+    .proc-arrow { display: flex; align-items: center; color: #7c3aed; font-size: 18px; padding: 0 2px; }
+    /* Stat grid */
+    .stat-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 16px 0;
+    }
+    .stat-card {
+      background: #fff; border: 1px solid #dee2e6; border-radius: 8px;
+      padding: 14px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .stat-card .stat-num { font-size: 28px; font-weight: 800; color: #7c3aed; font-family: monospace; display: block; }
+    .stat-card .stat-label { font-size: 11px; color: #666; margin-top: 4px; }
+    /* TFL type position */
+    .tfl-type-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 16px 0;
+    }
+    .tfl-type-box {
+      border: 2px solid #dee2e6; border-radius: 8px; padding: 14px; text-align: center;
+    }
+    .tfl-type-box.t1 { background: #f5f0ff; border-color: #7c3aed; box-shadow: 0 0 0 3px #ddd6fe; }
+    .tfl-type-box.t2 { background: #eff6ff; border-color: #1d4ed8; }
+    .tfl-type-box.t3 { background: #fff0f5; border-color: #be185d; }
+    .tfl-type-box.t4 { background: #f0fdf4; border-color: #15803d; }
+    .tfl-type-box .type-num { font-size: 22px; font-weight: 800; display: block; margin-bottom: 3px; }
+    .tfl-type-box.t1 .type-num { color: #7c3aed; }
+    .tfl-type-box.t2 .type-num { color: #1d4ed8; }
+    .tfl-type-box.t3 .type-num { color: #be185d; }
+    .tfl-type-box.t4 .type-num { color: #15803d; }
+    .tfl-type-box .type-name { font-size: 11.5px; font-weight: 700; margin-bottom: 4px; }
+    .tfl-type-box .type-desc { font-size: 10.5px; color: #666; line-height: 1.4; }
+    /* Clause header */
+    .clause-header {
+      background: #7c3aed; color: #fff; padding: 8px 14px;
+      font-size: 12.5px; font-weight: 700; border-radius: 6px 6px 0 0;
+    }
+    .clause-body {
+      border: 1px solid #ddd6fe; border-top: none;
+      border-radius: 0 0 6px 6px; overflow: hidden;
+    }
+    .req-list { list-style: none; padding: 0; margin: 0; }
+    .req-list li {
+      display: flex; gap: 10px; padding: 8px 12px;
+      border-bottom: 1px solid #f1f5f9; font-size: 13px; line-height: 1.5;
+    }
+    .req-list li:last-child { border-bottom: none; }
+    .req-list li.shall { background: #fff5f5; }
+    .req-list li.should { background: #fffbeb; }
+    .ref-tag {
+      flex-shrink: 0; border-radius: 4px; padding: 2px 7px; font-size: 11px;
+      font-weight: 700; font-family: monospace; white-space: nowrap;
+    }
+    .ref-tag.shall-tag { background: #fee2e2; color: #991b1b; }
+    .ref-tag.should-tag { background: #fef3c7; color: #92400e; }
+    /* CA accreditation card */
+    .accred-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 12px 0;
+    }
+    .accred-card {
+      border: 2px solid #ddd6fe; border-radius: 10px; padding: 16px;
+      background: #f9f5ff;
+    }
+    .accred-card h4 { color: #5b21b6; margin: 0 0 8px; font-size: 13.5px; }
+    .accred-card ul { margin: 0; padding-left: 18px; font-size: 12.5px; color: #374151; line-height: 1.6; }
+    /* Label mock-up */
+    .tfl-label-mock {
+      border: 3px solid #7c3aed; border-radius: 12px; padding: 20px 24px;
+      background: linear-gradient(135deg, #f5f0ff 0%, #faf7ff 100%);
+      display: inline-block; max-width: 400px; margin: 16px 0;
+    }
+    .tfl-label-mock .label-title {
+      font-size: 22px; font-weight: 900; color: #7c3aed; letter-spacing: 2px;
+      font-family: monospace; margin-bottom: 4px;
+    }
+    .tfl-label-mock .label-sub {
+      font-size: 11px; color: #5b21b6; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 1px; margin-bottom: 12px;
+    }
+    .tfl-label-mock .label-product { font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 4px; }
+    .tfl-label-mock .label-detail { font-size: 11.5px; color: #475569; line-height: 1.5; }
+    .tfl-label-mock .label-chars {
+      display: flex; flex-wrap: wrap; gap: 5px; margin: 10px 0;
+    }
+    .tfl-label-mock .char-chip {
+      background: #7c3aed; color: #fff; border-radius: 4px;
+      padding: 2px 8px; font-size: 10.5px; font-weight: 700;
+    }
+    .tfl-label-mock .label-footer {
+      font-size: 10px; color: #7c3aed; border-top: 1px solid #ddd6fe;
+      margin-top: 10px; padding-top: 8px;
+    }
+    /* Programme req table */
+    .prog-req-item {
+      border: 1px solid #ddd6fe; border-radius: 8px; overflow: hidden; margin-bottom: 10px;
+    }
+    .prog-req-header {
+      background: #5b21b6; color: #fff; padding: 8px 14px;
+      font-size: 12px; font-weight: 700;
+    }
+    .prog-req-body { padding: 10px 14px; background: #faf7ff; font-size: 12.5px; line-height: 1.6; }
+    /* Audit step */
+    .audit-step {
+      display: flex; gap: 14px; padding: 12px 14px;
+      border-bottom: 1px solid #ede9fe; align-items: flex-start;
+    }
+    .audit-step:last-child { border-bottom: none; }
+    .audit-num {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+      background: #7c3aed; color: #fff; display: flex; align-items: center;
+      justify-content: center; font-size: 13px; font-weight: 800;
+    }
+    .audit-content { flex: 1; }
+    .audit-name { font-weight: 700; font-size: 13px; color: #5b21b6; margin-bottom: 3px; }
+    .audit-desc { font-size: 12px; color: #475569; line-height: 1.5; }
+  </style>
+</head>
+<body>
+<div style="display:flex;min-height:100vh">
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">TFL Guide</div>
+      <div class="version">v1.0 · 2026-02-20</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-label">메인</div>
+        <a href="index.html" class="nav-item">📋 가이드 홈</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">섹션</div>
+        <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
+        <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>28개 TCM 신뢰성 특성</a>
+        <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
+        <a href="s04-tc-mapping.html" class="nav-item"><span class="section-id">S04</span>TCM-TC 요구사항 매핑</a>
+        <a href="s05-ca-guide.html" class="nav-item"><span class="section-id">S05</span>CA 이행 가이드</a>
+        <a href="s06-gaps.html" class="nav-item"><span class="section-id">S06</span>커버리지 갭 및 권고사항</a>
+        <a href="s07-references.html" class="nav-item"><span class="section-id">S07</span>참조 표준 및 용어 사전</a>
+        <a href="s08-standards-diagram.html" class="nav-item"><span class="section-id">S08</span>표준 연관도</a>
+        <a href="s09-vocabulary.html" class="nav-item"><span class="section-id">S09</span>특성 Vocabulary 비교</a>
+        <a href="s10-requirements-list.html" class="nav-item"><span class="section-id">S10</span>요구사항 전체 목록</a>
+        <a href="s11-tc-claim-mapping.html" class="nav-item"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
+        <a href="s12-standards-tracker.html" class="nav-item"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
+        <a href="s13-dtc-card.html" class="nav-item"><span class="section-id">S13</span>AI Developer Technical Card</a>
+        <a href="s14-atfs-qfd.html" class="nav-item"><span class="section-id">S14</span>ATFS / QFD (Type III)</a>
+        <a href="s15-42117-part1.html" class="nav-item"><span class="section-id">S15</span>42117-1 원칙 및 일반 요건</a>
+        <a href="s16-type2-claim.html" class="nav-item"><span class="section-id">S16</span>Type II 자기선언 클레임 규격</a>
+        <a href="s17-type1-tfl.html" class="nav-item active"><span class="section-id">S17</span>Type I TFL 인증 라벨 규격</a>
+      </div>
+    </div>
+  </nav>
+
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div class="page-header">
+      <div>
+        <h1>S17 — Type I: AI Trustworthiness Fact Label (TFL) 인증 규격 초안</h1>
+        <div class="breadcrumb"><a href="index.html">홈</a> › S17</div>
+      </div>
+      <span class="s17-badge">Third-party · ISO/IEC 42117-1 §5.3</span>
+    </div>
+
+    <div class="content-area">
+
+      <!-- S17.0 개요 -->
+      <div class="content-section">
+        <h2>S17.0 — Type I 개요 및 TFL 유형 체계 내 위치</h2>
+        <p><strong>Type I AI Trustworthiness Fact Label(TFL)</strong>은 독립적인 제3자 인증기관(CA)이
+          ISO/IEC 42117-X 표준 체계에 따라 AI 제품(시스템·모델·서비스)의 신뢰성 특성을 심사·검증하고
+          발행하는 <strong>공식 인증 라벨</strong>입니다. TFL 4가지 유형 중 가장 높은 공신력을 제공합니다.</p>
+
+        <div class="tfl-type-grid">
+          <div class="tfl-type-box t1">
+            <span class="type-num">I</span>
+            <div class="type-name">TFL 인증 라벨</div>
+            <div class="type-desc"><strong>본 규격</strong><br>제3자 CA 심사·발행<br>ISO/IEC 17065 기반</div>
+            <div style="font-size:10px;color:#7c3aed;margin-top:6px;font-weight:700">★ 현재 섹션</div>
+          </div>
+          <div class="tfl-type-box t2">
+            <span class="type-num">II</span>
+            <div class="type-name">자기선언 클레임</div>
+            <div class="type-desc">개발자·공급자 자체 선언<br>제3자 검증 불필요</div>
+            <div style="font-size:10px;color:#1d4ed8;margin-top:6px">→ S16</div>
+          </div>
+          <div class="tfl-type-box t3">
+            <span class="type-num">III</span>
+            <div class="type-name">ATFS/QFD</div>
+            <div class="type-desc">정량 V&amp;V 검증<br>ISO/IEC 17029 기반</div>
+            <div style="font-size:10px;color:#be185d;margin-top:6px">→ S14</div>
+          </div>
+          <div class="tfl-type-box t4">
+            <span class="type-num">IV</span>
+            <div class="type-name">DTC</div>
+            <div class="type-desc">개발자 기술 카드<br>선언+기술 상세</div>
+            <div style="font-size:10px;color:#15803d;margin-top:6px">→ S13</div>
+          </div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <span class="stat-num">§6</span>
+            <div class="stat-label">프로그램 요건<br>(9개 핵심 조항)</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">17065</span>
+            <div class="stat-label">CA 인정 기반<br>ISO/IEC 17065</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">7</span>
+            <div class="stat-label">심사 핵심 단계<br>(신청~라벨 유지)</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">28</span>
+            <div class="stat-label">TCM 특성<br>(심사 대상 최대)</div>
+          </div>
+        </div>
+
+        <table class="req-matrix">
+          <thead>
+            <tr><th>구분</th><th style="background:#5b21b6">Type I (본 규격)</th><th>Type II (S16)</th><th>Type III (S14)</th><th>Type IV (S13)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>근거</td><td><strong>ISO/IEC 42117-1 §5.3</strong></td><td>ISO/IEC 42117-1 §5.2</td><td>ISO/IEC 42117-1 §5.4</td><td>ISO/IEC 42117-1 §5.5</td></tr>
+            <tr><td>발행 주체</td><td><strong>인증기관(CA) — 제3자</strong></td><td>개발자·공급자</td><td>개발자+독립 검증</td><td>개발자</td></tr>
+            <tr><td>기반 표준</td><td><strong>ISO/IEC 17065 (제품 인증)</strong></td><td>ISO/IEC 42117-1 §7.1.2</td><td>ISO/IEC 17029</td><td>ISO/IEC 42117-1 §5.5</td></tr>
+            <tr><td>공신력</td><td><strong>최고 (독립 검증)</strong></td><td>중</td><td>높음 (정량)</td><td>중 (기술 투명성)</td></tr>
+            <tr><td>비용·기간</td><td><strong>높음 · 수개월</strong></td><td>낮음 · 수주</td><td>중간 · 수주~수개월</td><td>낮음 · 수주</td></tr>
+            <tr><td>권장 적용</td><td><strong>고위험 AI · 공공 서비스</strong></td><td>일반 AI 제품</td><td>정량 측정 요구</td><td>투명성 요구</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- S17.1 프로그램 요건 -->
+      <div class="content-section">
+        <h2>S17.1 — 인증 프로그램 요건 (ISO/IEC 42117-1 §6)</h2>
+        <p>§6.1.1에 따라 신뢰성 사실 진술은 아래 9개 조항을 충족하는
+          <strong>프로그램 기반</strong>으로 이루어져야 합니다 (SHALL).
+          Type I TFL은 이 §6 요건을 가장 엄격하게 이행하는 유형입니다.
+          각 조항 끝에 <span style="background:#ddd6fe;color:#5b21b6;border-radius:3px;padding:1px 6px;font-size:11px;font-weight:700">Type I 적용</span> 노트를 통해 Type I 인증에 특화된 이행 방식을 안내합니다.
+          전체 §6 조항 원문은 <a href="s15-42117-part1.html" style="color:#7c3aed">S15.3</a>을 참조하십시오.</p>
+
+        <div class="prog-req-item">
+          <div class="prog-req-header">§6.1 — Trustworthiness Fact Statement Programme</div>
+          <div class="prog-req-body">
+            <ul style="margin:0;padding-left:18px;line-height:1.7">
+              <li><strong>§6.1.1 SHALL</strong>: 신뢰성 사실 진술은 §6 Table 1 요건에 부합하는 <strong>프로그램 기반</strong>으로 이루어져야 합니다.</li>
+              <li><strong>§6.1.2 SHALL</strong>: 프로그램은 다음 9개 항목을 명시해야 합니다:
+                (a) 프로그램 소유자·운영자, (b) 진술 유형, (c) 이해관계자 관여 범위, (d) 범위·책임자·의도된 대상, (e) 명시된 요건 및 기준, (f) 데이터·정량화 방법론 및 품질 기준, (g) CA 독립성·역량, (h) 진술 형식 및 보고, (i) 변경 관리 프로세스</li>
+            </ul>
+            <div style="background:#ede9fe;padding:7px 12px;margin-top:8px;border-radius:4px;font-size:12px">
+              <span style="background:#7c3aed;color:#fff;border-radius:3px;padding:1px 6px;font-size:11px;font-weight:700;margin-right:6px">Type I 적용</span>
+              CA(인증기관)를 §6.1.2(g) 기반으로 지정해야 하며, 발행된 TFL 라벨의 공개 등록부(registry)를 운영해야 합니다.
+            </div>
+          </div>
+        </div>
+
+        <div class="prog-req-item">
+          <div class="prog-req-header">§6.2 — Programme Owner and Operator</div>
+          <div class="prog-req-body">
+            <ul style="margin:0;padding-left:18px;line-height:1.7">
+              <li><strong>§6.2.1 SHALL</strong>: 프로그램은 <strong>법적으로 책임질 수 있는 법적 실체(legal entity)</strong> 또는 그 일부가 소유해야 합니다.</li>
+              <li><strong>§6.2.2 SHALL</strong>: 소유자의 7가지 책임: (a) 표준 요건 충족 보장, (b) 프로그램 설계·개발·주기적 검토·변경 관리, (c) 자금 및 비즈니스 모델, (d) 정보 기밀성 관리, (e) 이해관계자 소통, (f) 진술 상태 확인, (g) 프로그램 신뢰성 및 불만 대응</li>
+            </ul>
+            <div style="background:#ede9fe;padding:7px 12px;margin-top:8px;border-radius:4px;font-size:12px">
+              <span style="background:#7c3aed;color:#fff;border-radius:3px;padding:1px 6px;font-size:11px;font-weight:700;margin-right:6px">Type I 적용</span>
+              프로그램 운영자는 CA(인증기관)를 지정·감독하며, CA의 독립성 및 역량을 정기적으로 검토해야 합니다. ISO/IEC 17065 인정 요건이 CA에 적용됩니다.
+            </div>
+          </div>
+        </div>
+
+        <div class="prog-req-item">
+          <div class="prog-req-header">§6.3 — Involvement of Interested Parties</div>
+          <div class="prog-req-body">
+            <ul style="margin:0;padding-left:18px;line-height:1.7">
+              <li><strong>§6.3 SHALL</strong>: 프로그램 소유자는 프로그램 개발 중 해당하는 경우 <strong>이해관계자와 협의</strong>해야 합니다 (§6 Table 1 참조).</li>
+              <li><strong>§6.3 SHOULD</strong>: 전 과정에 걸쳐 합의 달성을 위한 합리적 노력을 기울여야 합니다.</li>
+            </ul>
+            <div style="background:#ede9fe;padding:7px 12px;margin-top:8px;border-radius:4px;font-size:12px">
+              <span style="background:#7c3aed;color:#fff;border-radius:3px;padding:1px 6px;font-size:11px;font-weight:700;margin-right:6px">Type I 적용</span>
+              AI 개발자·배포자·최종 사용자·규제 기관을 이해관계자로 식별하고, 프로그램 기준 개정 시 공개 의견 수렴을 진행하는 것이 권장됩니다.
+            </div>
+          </div>
+        </div>
+
+        <div class="prog-req-item">
+          <div class="prog-req-header">§6.4 — Scope, Responsible Parties and Intended Audiences</div>
+          <div class="prog-req-body">
+            <ul style="margin:0;padding-left:18px;line-height:1.7">
+              <li><strong>§6.4 SHALL</strong>: 프로그램 소유자는 다음을 포함한 프로그램 범위를 명확히 명시해야 합니다:
+                (a) 포함된 신뢰성 특성·영향·성능, (b) 프로그램 목적 및 이해관계자,
+                (c) 대상 AI 시스템·모델·카테고리, (d) 진술 유형(들),
+                (e) 관여 당사자 및 책임, (f) 의도된 대상</li>
+            </ul>
+            <div style="background:#ede9fe;padding:7px 12px;margin-top:8px;border-radius:4px;font-size:12px">
+              <span style="background:#7c3aed;color:#fff;border-radius:3px;padding:1px 6px;font-size:11px;font-weight:700;margin-right:6px">Type I 적용</span>
+              TFL 프로그램 범위 문서에는 심사 대상 TCM 특성 목록, 적용 가능 AI 제품 유형(시스템·모델·서비스), 지역·도메인 적용 범위를 명시해야 합니다.
+            </div>
+          </div>
+        </div>
+
+        <div class="prog-req-item">
+          <div class="prog-req-header">§6.5 — Specified Requirements and Criteria</div>
+          <div class="prog-req-body">
+            <ul style="margin:0;padding-left:18px;line-height:1.7">
+              <li><strong>§6.5.1 SHALL</strong>: 프로그램 소유자는 AI 시스템·모델의 신뢰성 특성에 관련된 <strong>명시된 요건과 기준</strong>을 정의해야 합니다.</li>
+              <li><strong>§6.5.2 SHOULD</strong>: 명시된 요건과 기준은 처방적 설계·서술 방식보다 <strong>성능 기반(performance-based) 용어</strong>로 표현되어야 하며 정량화 가능해야 합니다.</li>
+            </ul>
+            <div style="background:#ede9fe;padding:7px 12px;margin-top:8px;border-radius:4px;font-size:12px">
+              <span style="background:#7c3aed;color:#fff;border-radius:3px;padding:1px 6px;font-size:11px;font-weight:700;margin-right:6px">Type I 적용</span>
+              심사 기준은 TCM 특성별 측정 지표(metric)·임계값(threshold)·허용 범위를 명시적으로 정의해야 합니다. S03 Simple Claim의 threshold 필드가 이 요건을 충족합니다.
+            </div>
+          </div>
+        </div>
+
+        <div class="prog-req-item">
+          <div class="prog-req-header">§6.6 — Quantification Methodologies, Data Quality and Reporting</div>
+          <div class="prog-req-body">
+            <ul style="margin:0;padding-left:18px;line-height:1.7">
+              <li><strong>§6.6.1 SHALL</strong>: 프로그램 소유자는 (a) 신뢰성 성능 정량화 규칙, (b) 데이터·정보 보고 활동에 대한 규칙을 명시해야 합니다.</li>
+              <li><strong>§6.6.2 SHALL</strong>: 데이터 품질 및 보고 요건은 다음을 포함해야 합니다: (a) 데이터 형식, (b) 보고 형식 및 의무, (c) 데이터 품질 평가·검증 활동, (d) <strong>데이터 및 테스트 로그·데이터셋 보존 기간</strong></li>
+            </ul>
+            <div style="background:#ede9fe;padding:7px 12px;margin-top:8px;border-radius:4px;font-size:12px">
+              <span style="background:#7c3aed;color:#fff;border-radius:3px;padding:1px 6px;font-size:11px;font-weight:700;margin-right:6px">Type I 적용</span>
+              CA는 심사 시 테스트 데이터셋·평가 환경·측정 도구를 현장 확인해야 합니다 (§7.5.2.f). 심사 보고서 및 증거 자료는 최소 5년 보존이 권장됩니다.
+            </div>
+          </div>
+        </div>
+
+        <div class="prog-req-item">
+          <div class="prog-req-header">§6.7 — Conformity Assessment</div>
+          <div class="prog-req-body">
+            <ul style="margin:0;padding-left:18px;line-height:1.7">
+              <li><strong>§6.7 SHALL</strong>: 프로그램 소유자는 ISO/IEC 42117 패밀리 요건을 고려하여 관련 <strong>CA 요건</strong>(테스팅, 검사, 검증, 확인, 인증)을 규정해야 합니다.</li>
+              <li><strong>§6.7 NOTE</strong>: CA 접근법 순서 — 선택(selection) → 결정(determination) → 검토·증명(review and attestation) → 감시(surveillance). 결정 방법: 감사, 평가, 검사, 테스팅, 검증(validation), 확인(verification)</li>
+            </ul>
+            <div style="background:#ede9fe;padding:7px 12px;margin-top:8px;border-radius:4px;font-size:12px">
+              <span style="background:#7c3aed;color:#fff;border-radius:3px;padding:1px 6px;font-size:11px;font-weight:700;margin-right:6px">Type I 적용</span>
+              Type I CA는 <strong>ISO/IEC 17065</strong>에 따른 제품 인증기관으로 인정받아야 합니다. 심사 방법론(문서 검토, 테스트 재현, 인터뷰, 현장 방문)을 프로그램 문서에 명시해야 합니다.
+            </div>
+          </div>
+        </div>
+
+        <div class="prog-req-item">
+          <div class="prog-req-header">§6.8 — Format, Reporting and Publication</div>
+          <div class="prog-req-body">
+            <ul style="margin:0;padding-left:18px;line-height:1.7">
+              <li><strong>§6.8.1 SHALL</strong>: 프로그램 소유자는 다음을 명시해야 합니다: (a) 진술 형식(§7 요건 충족), (b) 디렉토리 등재 범위, (c) 책임 당사자로부터의 보고 유형·주기, (d) 공개 또는 요청 시 이용 가능 범위</li>
+              <li><strong>§6.8.2 SHALL</strong>: 의도된 대상에게 제공되어야 할 <strong>지원 정보(§7.5)의 필요성과 형식</strong>을 명시해야 합니다.</li>
+            </ul>
+            <div style="background:#ede9fe;padding:7px 12px;margin-top:8px;border-radius:4px;font-size:12px">
+              <span style="background:#7c3aed;color:#fff;border-radius:3px;padding:1px 6px;font-size:11px;font-weight:700;margin-right:6px">Type I 적용</span>
+              TFL 라벨은 S17.4의 YAML 구조를 따르며, 공개 등록부(registry_url) 게시와 지원 정보 URL 공개(§7.5.2.a)가 필수입니다. 유효 라벨 목록은 상시 공개되어야 합니다.
+            </div>
+          </div>
+        </div>
+
+        <div class="prog-req-item">
+          <div class="prog-req-header">§6.9 — Changes or Revisions</div>
+          <div class="prog-req-body">
+            <ul style="margin:0;padding-left:18px;line-height:1.7">
+              <li><strong>§6.9.1 SHALL</strong>: 프로그램 소유자는 변경 검토 및 시행 프로세스를 갖춰야 합니다.</li>
+              <li><strong>§6.9.2 SHALL</strong>: 변경 시행 시 고려 사항: (a) 법적·규제 요건, (b) 의도치 않은 상업적 이익 방지, (c) 기존 진술 조치, (d) 이해관계자 협의 시간</li>
+              <li><strong>§6.9.3 SHALL</strong>: 진술 정확성에 영향을 줄 수 있는 변경의 소통 및 시정 조치 프로세스를 갖춰야 합니다.</li>
+            </ul>
+            <div style="background:#ede9fe;padding:7px 12px;margin-top:8px;border-radius:4px;font-size:12px">
+              <span style="background:#7c3aed;color:#fff;border-radius:3px;padding:1px 6px;font-size:11px;font-weight:700;margin-right:6px">Type I 적용</span>
+              AI 제품의 주요 업데이트(모델 재학습, 아키텍처 변경 등) 시 변경 심사(Change Review)가 트리거됩니다. 진술 정확성에 영향을 주는 변경은 §7.1.2.q 재평가 의무와 연계됩니다.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S17.2 인증기관 요건 -->
+      <div class="content-section">
+        <h2>S17.2 — 인증기관(CA) 요건 및 자격</h2>
+
+        <div class="accred-grid">
+          <div class="accred-card">
+            <h4>필수 인정(Accreditation) 기반</h4>
+            <ul>
+              <li><strong>ISO/IEC 17065</strong>: 제품·프로세스·서비스 인증기관 요건</li>
+              <li>해당 분야 <strong>국가인정기구(AB)</strong>로부터 인정 취득 필수</li>
+              <li>AI·IT 분야 인증 역량 증명 필요</li>
+              <li>독립성·공정성·이해충돌 관리 체계 수립</li>
+            </ul>
+          </div>
+          <div class="accred-card">
+            <h4>심사원(Auditor) 자격 요건</h4>
+            <ul>
+              <li>AI·머신러닝 기술 전문 지식 (학위 또는 3년+ 경력)</li>
+              <li>해당 도메인 전문성 (의료 AI 심사 시 의료 분야 경험)</li>
+              <li>ISO/IEC 42117-X 및 관련 표준 교육 이수</li>
+              <li>ISO/IEC 17065 심사 방법론 역량</li>
+              <li>독립적 의사결정 능력 및 윤리 강령 준수</li>
+            </ul>
+          </div>
+          <div class="accred-card">
+            <h4>CA 조직 구조 요건</h4>
+            <ul>
+              <li>신청자로부터 독립된 <strong>심사 결정 위원회</strong> 운영</li>
+              <li>전문성 보유 <strong>기술 위원회</strong> 구성</li>
+              <li>불만 처리 및 이의신청 절차 운영</li>
+              <li>심사 기록 최소 5년 보관</li>
+            </ul>
+          </div>
+          <div class="accred-card">
+            <h4>한국 적용 현황</h4>
+            <ul>
+              <li>현재 ISO/IEC 42117-X는 PWI/개발 단계</li>
+              <li>선행 참조: KOLAS (한국인정기구), KAB</li>
+              <li>관련 인정 기반: ISO/IEC 17065, ISO/IEC 17021</li>
+              <li>정부 AI 인증 제도와 연계 가능성 검토 필요</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- S17.3 심사 프로세스 -->
+      <div class="content-section">
+        <h2>S17.3 — Type I TFL 심사 프로세스 (7단계)</h2>
+
+        <div class="process-flow">
+          <div class="proc-step">
+            <div class="step-num">STEP 1</div>
+            <div class="step-name">신청</div>
+            <div class="step-desc">CA에 TFL 심사 신청 · 범위 정의</div>
+          </div>
+          <div class="proc-arrow">›</div>
+          <div class="proc-step">
+            <div class="step-num">STEP 2</div>
+            <div class="step-name">예비 검토</div>
+            <div class="step-desc">신청 적합성 · 심사 범위 확정 · 계약</div>
+          </div>
+          <div class="proc-arrow">›</div>
+          <div class="proc-step">
+            <div class="step-num">STEP 3</div>
+            <div class="step-name">문서 심사</div>
+            <div class="step-desc">기술 문서·클레임·근거 자료 검토</div>
+          </div>
+          <div class="proc-arrow">›</div>
+          <div class="proc-step">
+            <div class="step-num">STEP 4</div>
+            <div class="step-name">현장/원격 심사</div>
+            <div class="step-desc">테스트 재현·환경 확인·인터뷰</div>
+          </div>
+          <div class="proc-arrow">›</div>
+          <div class="proc-step">
+            <div class="step-num">STEP 5</div>
+            <div class="step-name">심사 보고서</div>
+            <div class="step-desc">부적합 사항 정리 · 수정 요청</div>
+          </div>
+          <div class="proc-arrow">›</div>
+          <div class="proc-step">
+            <div class="step-num">STEP 6</div>
+            <div class="step-name">라벨 발행</div>
+            <div class="step-desc">결정 위원회 승인 · TFL 라벨 발행</div>
+          </div>
+          <div class="proc-arrow">›</div>
+          <div class="proc-step">
+            <div class="step-num">STEP 7</div>
+            <div class="step-name">유지·갱신</div>
+            <div class="step-desc">정기 모니터링 · 연간 감시 심사</div>
+          </div>
+        </div>
+
+        <div style="border:1px solid #ddd6fe;border-radius:8px;overflow:hidden;margin-top:14px">
+          <div class="audit-step">
+            <div class="audit-num">1</div>
+            <div class="audit-content">
+              <div class="audit-name">신청 및 범위 정의</div>
+              <div class="audit-desc">
+                AI 제품 식별(명칭·버전·유형) · 심사 대상 신뢰성 특성 선택 (TCM 28개 중) · 적용 범위(배포 환경·사용 케이스) 명확화 · CA 선정 및 심사 계약 체결
+              </div>
+            </div>
+          </div>
+          <div class="audit-step">
+            <div class="audit-num">2</div>
+            <div class="audit-content">
+              <div class="audit-name">예비 검토 (Preliminary Review)</div>
+              <div class="audit-desc">
+                신청서 완결성 확인 · 심사 가능성 판단 · 이해충돌 확인 · 심사팀 구성(선임 심사원 + 기술 전문가) · 심사 계획서 작성
+              </div>
+            </div>
+          </div>
+          <div class="audit-step">
+            <div class="audit-num">3</div>
+            <div class="audit-content">
+              <div class="audit-name">문서 심사 (Document Review)</div>
+              <div class="audit-desc">
+                기술 문서·알고리즘 설명·학습 데이터 설명·테스트 결과 검토 · Type II 클레임 초안(YAML) 검토 · §7.1.2 a-q 준수 여부 확인 · §7.2 금지 표현 확인 · 지원 정보 접근성 확인(§7.5.2)
+              </div>
+            </div>
+          </div>
+          <div class="audit-step">
+            <div class="audit-num">4</div>
+            <div class="audit-content">
+              <div class="audit-name">현장·원격 심사 (On-site/Remote Audit)</div>
+              <div class="audit-desc">
+                측정 방법론 재현 테스트 · 테스트 데이터셋·환경 현장 확인 · 개발팀·운영팀 인터뷰 · 라이프사이클 단계별 증거 수집(§7.1.2.h) · 알려진 한계 및 제약 확인(§7.1.2.k)
+              </div>
+            </div>
+          </div>
+          <div class="audit-step">
+            <div class="audit-num">5</div>
+            <div class="audit-content">
+              <div class="audit-name">심사 보고서 및 부적합 처리</div>
+              <div class="audit-desc">
+                심사 보고서 작성 (적합/부적합/개선 권고 구분) · 부적합(Nonconformity) 시 수정 조치 요청 · 수정 조치 완료 확인 (최대 90일) · 부적합 미해결 시 심사 실패 처리
+              </div>
+            </div>
+          </div>
+          <div class="audit-step">
+            <div class="audit-num">6</div>
+            <div class="audit-content">
+              <div class="audit-name">라벨 발행 결정 (Label Decision)</div>
+              <div class="audit-desc">
+                심사 결정 위원회 최종 승인 · TFL 라벨 발행 (유효 기간: 1~3년, 프로그램별) · 라벨 등록 및 공개 목록에 게시 · 라벨 사용 허가서(License Agreement) 발행
+              </div>
+            </div>
+          </div>
+          <div class="audit-step">
+            <div class="audit-num">7</div>
+            <div class="audit-content">
+              <div class="audit-name">유지 및 갱신 (Maintenance &amp; Renewal)</div>
+              <div class="audit-desc">
+                연간 감시 심사(Surveillance Audit) · AI 제품 주요 업데이트 시 변경 심사(Change Review) · 유효 기간 만료 전 재심사(Re-certification) 신청 · §7.1.2.q 기술 변화 반영 재평가
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S17.4 TFL 라벨 구성 요소 -->
+      <div class="content-section">
+        <h2>S17.4 — TFL 라벨 구성 요소 및 YAML 구조</h2>
+
+        <h3 style="font-size:14px;color:#7c3aed;margin-bottom:12px">S17.4.1 TFL 라벨 모의 예시</h3>
+        <div class="tfl-label-mock">
+          <div class="label-title">TFL</div>
+          <div class="label-sub">Trustworthiness Fact Label · Type I</div>
+          <div class="label-product">MedDiag-AI v2.1</div>
+          <div class="label-detail">AI 시스템 · 폐 결절 탐지 · 국내 병원 환경</div>
+          <div class="label-chars">
+            <span class="char-chip">Accuracy</span>
+            <span class="char-chip">Privacy</span>
+            <span class="char-chip">Safety</span>
+            <span class="char-chip">Transparency</span>
+          </div>
+          <div class="label-footer">
+            발행 CA: KAI Certification Institute · 유효기간: 2026-03-01 ~ 2027-03-01<br>
+            등록번호: TFL-2026-KR-00123 · ISO/IEC 42117-X Type I
+          </div>
+        </div>
+
+        <h3 style="font-size:14px;color:#7c3aed;margin:16px 0 10px">S17.4.2 Type I TFL 라벨 YAML 구조</h3>
+
+        <div class="yaml-block">
+<span class="y-comment"># ISO/IEC 42117-X Type I Trustworthiness Fact Label (TFL)</span>
+<span class="y-comment"># Reference: ISO/IEC TS 42117-1 §5.3, §6, §7</span>
+<span class="y-comment"># Template version: 1.0 | Guide: TFL S17</span>
+<span class="y-comment"># ================================================================</span>
+
+<span class="y-key">label</span>:
+  <span class="y-key">label_id</span>:        <span class="y-str">"TFL-[YYYY]-[CC]-[NNNNN]"</span> <span class="y-comment"># e.g. TFL-2026-KR-00123</span>
+  <span class="y-key">label_type</span>:      <span class="y-str">"Type I"</span>
+  <span class="y-key">programme_id</span>:   <span class="y-str">"[Programme Operator ID]"</span>
+  <span class="y-key">issuing_ca</span>:      <span class="y-str">"[CA Organization Name]"</span>
+  <span class="y-key">issue_date</span>:      <span class="y-str">"YYYY-MM-DD"</span>
+  <span class="y-key">valid_until</span>:     <span class="y-str">"YYYY-MM-DD"</span>               <span class="y-comment"># 통상 1~3년</span>
+  <span class="y-key">registry_url</span>:    <span class="y-str">"[공개 라벨 등록부 URL]"</span>
+
+<span class="y-key">product</span>:                                       <span class="y-comment"># §7.1.2.c,d</span>
+  <span class="y-key">name</span>:            <span class="y-str">"[AI Product Name]"</span>
+  <span class="y-key">version</span>:         <span class="y-str">"[semantic version]"</span>
+  <span class="y-key">type</span>:            <span class="y-str">"system | model | service"</span>
+  <span class="y-key">scope</span>:           <span class="y-str">"[deployment context and use case]"</span>
+  <span class="y-key">developer</span>:       <span class="y-str">"[Developer/Supplier Organization]"</span>
+
+<span class="y-key">claims</span>:                                        <span class="y-comment"># 1개 이상의 신뢰성 사실 클레임</span>
+  <span class="y-tag">- </span>
+    <span class="y-key">claim_id</span>:      <span class="y-str">"TFL-[YYYY]-[CC]-[NNNNN]-001"</span>
+    <span class="y-key">characteristic</span>: <span class="y-str">"[TCM Characteristic]"</span>    <span class="y-comment"># 28개 중 하나</span>
+    <span class="y-key">level</span>:         <span class="y-tag">1 | 2 | 3</span>
+    <span class="y-key">claim_text</span>:    <span class="y-str">"[specific, measurable, verified fact]"</span>
+    <span class="y-key">metric</span>:        <span class="y-str">"[measurement metric]"</span>
+    <span class="y-key">threshold</span>:     <span class="y-str">"[target value]"</span>
+    <span class="y-key">verified_result</span>: <span class="y-str">"[CA-verified result]"</span>    <span class="y-comment"># CA 검증 결과 (≠ 자기선언)</span>
+    <span class="y-key">standard_ref</span>:
+      <span class="y-tag">-</span> <span class="y-str">"[ISO/IEC standard:year, clause]"</span>
+    <span class="y-key">audit_method</span>:  <span class="y-str">"[verification method used by CA]"</span>
+
+<span class="y-key">audit_summary</span>:                               <span class="y-comment"># CA 심사 요약 (공개 버전)</span>
+  <span class="y-key">lead_auditor</span>:  <span class="y-str">"[Auditor name/ID]"</span>
+  <span class="y-key">audit_date</span>:    <span class="y-str">"YYYY-MM-DD"</span>
+  <span class="y-key">audit_type</span>:    <span class="y-str">"initial | surveillance | re-certification"</span>
+  <span class="y-key">scope_covered</span>: <span class="y-str">"[characteristics and lifecycle stages covered]"</span>
+  <span class="y-key">nonconformities</span>: <span class="y-tag">0</span>                          <span class="y-comment"># 미해결 부적합 없어야 함</span>
+
+<span class="y-key">lifecycle</span>:                                   <span class="y-comment"># §7.1.2.h, §7.5.2.e</span>
+  <span class="y-key">stages_covered</span>:
+    <span class="y-tag">-</span> <span class="y-str">"design | development | testing | deployment | operation"</span>
+  <span class="y-key">uncovered_stages</span>: <span class="y-str">"[미포함 단계 + 이유]"</span>
+
+<span class="y-key">label_use</span>:                                   <span class="y-comment"># §6.8 라벨 사용 허가</span>
+  <span class="y-key">permitted_contexts</span>: <span class="y-str">"[허용된 라벨 사용 맥락]"</span>
+  <span class="y-key">prohibited_modifications</span>: <span class="y-str">"라벨 그래픽 수정 금지 (§7.6.6)"</span>
+  <span class="y-key">renewal_due</span>:   <span class="y-str">"YYYY-MM-DD"</span>                <span class="y-comment"># 갱신 신청 마감일</span>
+        </div>
+      </div>
+
+      <!-- S17.5 라벨 사용 규정 -->
+      <div class="content-section">
+        <h2>S17.5 — TFL 라벨 사용 규정 및 심볼 요건 (§7.6–§7.7)</h2>
+
+        <table class="req-matrix">
+          <thead><tr><th>요건</th><th>내용</th><th>출처</th><th>위반 시</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>라벨 그래픽 무결성</strong></td>
+              <td>TFL 라벨·심볼을 특정 브랜드·회사와 연결하기 위해 수정 금지</td>
+              <td>§7.6.6</td>
+              <td>라벨 취소</td>
+            </tr>
+            <tr>
+              <td><strong>AI 관리 시스템 심볼 혼동 방지</strong></td>
+              <td>ISO/IEC 42001 관리 시스템 심볼과 신뢰성 특성 심볼이 혼동되지 않아야 함</td>
+              <td>§7.6.4</td>
+              <td>부적합 처리</td>
+            </tr>
+            <tr>
+              <td><strong>진술 분리 원칙</strong></td>
+              <td>신뢰성 사실 진술은 기능 사양, 라이선스 정보, 위험 경고와 명확히 분리</td>
+              <td>§7.7</td>
+              <td>부적합 처리</td>
+            </tr>
+            <tr>
+              <td><strong>유효 기간 표시</strong></td>
+              <td>라벨의 유효 기간(valid_until)을 명확히 표시</td>
+              <td>§6.8</td>
+              <td>라벨 정지</td>
+            </tr>
+            <tr>
+              <td><strong>등록부 참조</strong></td>
+              <td>공개 라벨 등록부 URL 또는 QR 코드 포함</td>
+              <td>§6.9, §7.5.2.a</td>
+              <td>부적합 처리</td>
+            </tr>
+            <tr>
+              <td><strong>유효 범위 준수</strong></td>
+              <td>심사받은 제품 버전 및 범위에만 라벨 사용 가능</td>
+              <td>§6.8</td>
+              <td>라벨 취소</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note-box warning" style="margin-top:12px">
+          <span class="icon">⚠️</span>
+          <div>
+            <strong>라벨 취소(Revocation) 사유</strong><br>
+            ① AI 제품의 주요 변경으로 클레임 사실 여부가 변경된 경우 (§7.1.2.q)<br>
+            ② 라벨 사용 규정 위반 (그래픽 수정, 범위 초과 사용)<br>
+            ③ CA의 감시 심사 불응 또는 거부<br>
+            ④ 심사 시 허위 정보 제공이 사후 발견된 경우
+          </div>
+        </div>
+      </div>
+
+      <!-- S17.6 금지 사항 -->
+      <div class="content-section">
+        <h2>S17.6 — 금지 사항 (§7.2 · §7.3 · §7.4 — Type I에도 동일 적용)</h2>
+
+        <div style="margin-bottom:14px">
+          <div class="clause-header">§7.2 — 모호한 표현 금지 (Type I에도 적용)</div>
+          <div class="clause-body">
+            <div style="padding:14px;font-size:13px;line-height:1.7">
+              TFL 라벨 발행 이후 마케팅·홍보에도 다음 표현은 금지됩니다:
+              <div style="margin-top:10px">
+                <span style="display:inline-block;background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;border-radius:4px;padding:2px 8px;font-family:monospace;font-size:12px;margin:2px">ethical AI</span>
+                <span style="display:inline-block;background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;border-radius:4px;padding:2px 8px;font-family:monospace;font-size:12px;margin:2px">trustworthy AI</span>
+                <span style="display:inline-block;background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;border-radius:4px;padding:2px 8px;font-family:monospace;font-size:12px;margin:2px">responsible AI</span>
+                <span style="display:inline-block;background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;border-radius:4px;padding:2px 8px;font-family:monospace;font-size:12px;margin:2px">human-centric</span>
+                <span style="display:inline-block;background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;border-radius:4px;padding:2px 8px;font-family:monospace;font-size:12px;margin:2px">safe AI</span>
+              </div>
+              <div style="margin-top:10px;font-size:12px;color:#666">
+                ⚠️ "TFL 인증을 받았으므로 우리 AI는 신뢰할 수 있습니다" 형태의 광범위 주장도 금지됩니다.
+                TFL 라벨은 <strong>특정 특성에 대한 사실 선언</strong>이지 전체 신뢰성 보증이 아닙니다.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="note-box info">
+          <span class="icon">✅</span>
+          <div>
+            <strong>허용되는 TFL 라벨 활용 표현 예시</strong><br>
+            • "[MedDiag-AI v2.1]은 TFL Type I 인증을 통해 폐 결절 탐지 정확도(F1-score ≥ 0.92)를 독립적으로 검증받았습니다."<br>
+            • "TFL-2026-KR-00123 인증서는 [등록부 URL]에서 확인할 수 있습니다."<br>
+            • "[TranslateNow API v3.0]의 투명성 특성은 ISO/IEC 42117-X TFL Type I 심사를 통과하였습니다."
+          </div>
+        </div>
+      </div>
+
+      <!-- S17.7 작성 예시 -->
+      <div class="content-section">
+        <h2>S17.7 — Type I TFL 라벨 예시 (AI 시스템)</h2>
+
+        <div style="border:2px solid #ddd6fe;border-radius:10px;overflow:hidden">
+          <div style="background:#7c3aed;color:#fff;padding:10px 16px;font-size:13px;font-weight:700;display:flex;justify-content:space-between">
+            TFL Type I 인증 라벨 — MedDiag-AI v2.1 (의료 진단 AI 시스템)
+            <span style="font-size:11px;background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:4px">TFL-2026-KR-00123</span>
+          </div>
+          <div style="padding:14px 16px">
+            <div class="yaml-block" style="font-size:11.5px">
+<span class="y-key">label</span>:
+  <span class="y-key">label_id</span>:     <span class="y-str">"TFL-2026-KR-00123"</span>
+  <span class="y-key">label_type</span>:   <span class="y-str">"Type I"</span>
+  <span class="y-key">issuing_ca</span>:   <span class="y-str">"KAI Certification Institute"</span>
+  <span class="y-key">issue_date</span>:   <span class="y-str">"2026-03-01"</span>
+  <span class="y-key">valid_until</span>:  <span class="y-str">"2027-03-01"</span>
+  <span class="y-key">registry_url</span>: <span class="y-str">"https://tfl-registry.example/TFL-2026-KR-00123"</span>
+
+<span class="y-key">product</span>:
+  <span class="y-key">name</span>:      <span class="y-str">"MedDiag-AI"</span>
+  <span class="y-key">version</span>:   <span class="y-str">"v2.1"</span>
+  <span class="y-key">type</span>:      <span class="y-str">"system"</span>
+  <span class="y-key">scope</span>:     <span class="y-str">"폐 결절 탐지 — 국내 방사선과 병원 환경"</span>
+  <span class="y-key">developer</span>: <span class="y-str">"MedTech Korea Co., Ltd."</span>
+
+<span class="y-key">claims</span>:
+  <span class="y-tag">- </span>
+    <span class="y-key">claim_id</span>:       <span class="y-str">"TFL-2026-KR-00123-001"</span>
+    <span class="y-key">characteristic</span>:  <span class="y-str">"Accuracy"</span>
+    <span class="y-key">level</span>:            <span class="y-tag">2</span>
+    <span class="y-key">claim_text</span>:       <span class="y-str">"MedDiag-AI v2.1은 LUNA16 테스트 데이터셋에서 폐 결절 탐지 F1-score ≥ 0.92를 달성합니다"</span>
+    <span class="y-key">verified_result</span>:  <span class="y-str">"F1-score 0.943 (CA 독립 재현)"</span>
+    <span class="y-key">standard_ref</span>:    [<span class="y-str">"ISO/IEC TS 4213:2023 §6.3"</span>]
+  <span class="y-tag">- </span>
+    <span class="y-key">claim_id</span>:       <span class="y-str">"TFL-2026-KR-00123-002"</span>
+    <span class="y-key">characteristic</span>:  <span class="y-str">"Privacy"</span>
+    <span class="y-key">level</span>:            <span class="y-tag">2</span>
+    <span class="y-key">claim_text</span>:       <span class="y-str">"MedDiag-AI v2.1은 환자 데이터 처리 시 개인정보보호법 및 GDPR 요건을 충족하고 MIA rejection rate ≥ 95%를 달성합니다"</span>
+    <span class="y-key">verified_result</span>:  <span class="y-str">"MIA rejection rate 97.3% (CA 독립 검증)"</span>
+    <span class="y-key">standard_ref</span>:    [<span class="y-str">"ISO/IEC TS 5723:2022 §8"</span>]
+
+<span class="y-key">audit_summary</span>:
+  <span class="y-key">audit_date</span>:    <span class="y-str">"2026-02-10 ~ 2026-02-28"</span>
+  <span class="y-key">audit_type</span>:    <span class="y-str">"initial"</span>
+  <span class="y-key">nonconformities</span>: <span class="y-tag">0</span>              <span class="y-comment"># 부적합 없음</span>
+
+<span class="y-key">lifecycle</span>:
+  <span class="y-key">stages_covered</span>:  [<span class="y-str">"development"</span>, <span class="y-str">"testing"</span>, <span class="y-str">"deployment"</span>]
+  <span class="y-key">uncovered_stages</span>: <span class="y-str">"operation: 실운영 모니터링 데이터 수집 예정 (2026 Q3)"</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S17.8 교차 참조 -->
+      <div class="content-section">
+        <h2>S17.8 — 교차 참조</h2>
+        <table class="req-matrix">
+          <thead><tr><th>참조 대상</th><th>관련 내용</th><th>링크</th></tr></thead>
+          <tbody>
+            <tr><td>ISO/IEC TS 42117-1 §5.3</td><td>Type I TFL 정의</td><td><a href="s15-42117-part1.html#s15-2" style="color:#7c3aed">S15.2</a></td></tr>
+            <tr><td>ISO/IEC TS 42117-1 §6</td><td>9개 프로그램 요건 전문</td><td><a href="s15-42117-part1.html#s15-3" style="color:#7c3aed">S15.3</a></td></tr>
+            <tr><td>ISO/IEC TS 42117-1 §7.1.2</td><td>17개 진술 요건 (a–q)</td><td><a href="s15-42117-part1.html#s15-4" style="color:#7c3aed">S15.4</a></td></tr>
+            <tr><td>CA 이행 가이드</td><td>CA 심사 절차 상세 (Type I CA 섹션)</td><td><a href="s05-ca-guide.html" style="color:#7c3aed">S05</a></td></tr>
+            <tr><td>TCM 28개 특성</td><td>심사 대상 characteristic 선택 기준</td><td><a href="s02-characteristics.html" style="color:#7c3aed">S02</a></td></tr>
+            <tr><td>Simple Claim 카탈로그</td><td>Type I 또는 II 해당 클레임 (Level 3 포함)</td><td><a href="s03-claims.html" style="color:#7c3aed">S03</a></td></tr>
+            <tr><td>TC-Claim 매핑</td><td>특성별 표준 요건과 Claim 연계</td><td><a href="s11-tc-claim-mapping.html" style="color:#7c3aed">S11</a></td></tr>
+            <tr><td>Type II 자기선언 규격</td><td>제3자 검증 없는 자기선언 방식</td><td><a href="s16-type2-claim.html" style="color:#7c3aed">S16</a></td></tr>
+            <tr><td>Type III ATFS 규격</td><td>정량 V&amp;V 방식 (Type I 대안)</td><td><a href="s14-atfs-qfd.html" style="color:#7c3aed">S14</a></td></tr>
+            <tr><td>Type IV DTC 규격</td><td>기술 상세 카드 (Type I 보완)</td><td><a href="s13-dtc-card.html" style="color:#7c3aed">S13</a></td></tr>
+            <tr><td>ISO/IEC 17065</td><td>CA 인정 기반 표준 (제품 인증기관 요건)</td><td><a href="s07-references.html" style="color:#7c3aed">S07</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- content-area -->
+
+    <div class="page-footer">
+      <span>ISO/IEC 42117-X TFL 운영 가이드 v1.0 · S17 Type I TFL 인증 라벨 규격 초안</span>
+      <span>기준: ISO/IEC TS 42117-1 PWI Draft (2025-10-02) §5.3, §6, §7 | 2026-02-22</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>
