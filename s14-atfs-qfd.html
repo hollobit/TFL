@@ -126,6 +126,18 @@
       .measure-grid { grid-template-columns: 1fr; }
       .process-flow { flex-direction: column; }
     }
+  /* ── S14 Mobile (768px) ── */
+  @media (max-width: 768px) {
+    .atfs-structure { flex-direction: column !important; }
+    /* ACR 4대 구성 요소 2×2 그리드 */
+    div[style*="1fr 1fr"][style*="gap:12px"] { grid-template-columns: 1fr !important; }
+    /* ATFS 비교 프로토콜 테이블 */
+    div[style*="grid-template-columns"][style*="1fr 1fr"] { grid-template-columns: 1fr !important; }
+    /* claim-table: scroll */
+    .claim-table { display: block; overflow-x: auto; font-size: 0.78em; }
+    /* ACR 거버넌스 2-col */
+    div[style*="1fr 1fr"][style*="f9a8d4"] { grid-template-columns: 1fr !important; }
+  }
   </style>
 </head>
 <body>
@@ -142,7 +154,7 @@
         <a href="index.html" class="nav-item">📋 가이드 홈</a>
       </div>
       <div class="nav-section">
-        <div class="nav-label">섹션</div>
+        <div class="nav-label">기반 분석 (S01–S12)</div>
         <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
         <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>28개 TCM 신뢰성 특성</a>
         <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
@@ -155,12 +167,16 @@
         <a href="s10-requirements-list.html" class="nav-item"><span class="section-id">S10</span>요구사항 전체 목록</a>
         <a href="s11-tc-claim-mapping.html" class="nav-item"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
         <a href="s12-standards-tracker.html" class="nav-item"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">규격 이행 가이드 (S13–S19)</div>
         <a href="s13-dtc-card.html" class="nav-item"><span class="section-id">S13</span>AI Developer Technical Card</a>
         <a href="s14-atfs-qfd.html" class="nav-item active"><span class="section-id">S14</span>ATFS / QFD (Type III)</a>
         <a href="s15-42117-part1.html" class="nav-item"><span class="section-id">S15</span>42117-1 원칙 및 일반 요건</a>
         <a href="s16-type2-claim.html" class="nav-item"><span class="section-id">S16</span>Type II 자기선언 클레임 규격</a>
         <a href="s17-type1-tfl.html" class="nav-item"><span class="section-id">S17</span>Type I TFL 인증 라벨 규격</a>
         <a href="s18-eco-label-comparison.html" class="nav-item"><span class="section-id">S18</span>Eco Label 체계 비교 분석</a>
+        <a href="s19-korea-ai-act.html" class="nav-item"><span class="section-id">S19</span>한국 AI 기본법 × TFL</a>
       </div>
     </div>
   </nav>
@@ -329,6 +345,273 @@
             <div class="step-num">Phase 5</div>
             <div class="step-name">ATFS 발행</div>
             <div class="step-desc">문서 최종화<br>공개 또는 배포<br>유효 기간 관리</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S14.1A: ACR 프레임워크 (H-5 / S18 GAP-01 대응) -->
+      <div class="content-section">
+        <h2>S14.1A — ACR (AI Category Rules) 프레임워크 <span class="atfs-badge" style="font-size:10px;padding:3px 8px;margin-left:6px">S18 GAP-01 대응</span></h2>
+        <p style="font-size:0.9em;color:#444;margin-bottom:12px">
+          ISO 14025:2006의 <strong>PCR (Product Category Rules)</strong>에 대응하는 TFL의
+          <strong>ACR (AI Category Rules)</strong>은 AI 제품 카테고리별로 ATFS/QFD 측정 방법론·
+          기능 단위·데이터 품질 기준을 사전 정의하는 문서입니다. ACR이 없으면 서로 다른 ATFS는
+          비교 불가능하며, Type III 진술의 신뢰성이 저하됩니다.
+        </p>
+
+        <div class="note-box warning" style="margin-bottom:14px">
+          <span class="icon">⚠️</span>
+          <div>
+            <strong>현황 고지: ACR 미발행 상태</strong><br>
+            현재 ISO/IEC JTC 1/SC 42에서 공식 ACR을 발행하지 않았습니다.
+            본 섹션은 S18 GAP-01 해소를 위한 <strong>제안 프레임워크</strong>입니다.
+            공식 ACR 발행 전까지 ATFS 작성 시 이 가이드라인을 참조하되, 측정 방법론과
+            기능 단위를 ATFS 문서 내에 명시적으로 선언해야 합니다.
+          </div>
+        </div>
+
+        <h3 style="font-size:14px;color:#be185d;margin-bottom:10px">S14.1A.1 — ACR의 4대 구성 요소 (ISO 14025 PCR 대응)</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+          <div style="border:2px solid #be185d;border-radius:8px;padding:14px;background:#fff0f5">
+            <div style="font-weight:700;color:#be185d;font-size:13px;margin-bottom:6px">① AI 기능 단위 (Functional Unit)</div>
+            <div style="font-size:12px;color:#555">
+              측정의 기준이 되는 AI 제품의 단일 동작 단위<br>
+              <strong>예시:</strong><br>
+              • 분류 AI: "단일 이미지 입력에 대한 1회 추론"<br>
+              • 언어 모델: "1,000 토큰 생성 작업"<br>
+              • 추천 엔진: "사용자 1인의 세션 추천 1회"<br>
+              <em style="color:#888;font-size:11px">참조: ISO 14025 §3.14 Functional unit</em>
+            </div>
+          </div>
+          <div style="border:2px solid #be185d;border-radius:8px;padding:14px;background:#fff0f5">
+            <div style="font-weight:700;color:#be185d;font-size:13px;margin-bottom:6px">② 운영 경계 (System Boundary)</div>
+            <div style="font-size:12px;color:#555">
+              측정에 포함/제외되는 AI 제품 범위 정의<br>
+              <strong>예시 (포함):</strong><br>
+              • 입력 전처리(pre-processing)<br>
+              • 모델 추론(inference)<br>
+              • 출력 후처리(post-processing)<br>
+              <strong>예시 (제외):</strong><br>
+              • 사용자 인터페이스 레이어<br>
+              <em style="color:#888;font-size:11px">참조: ISO 14025 §5.3 System boundary</em>
+            </div>
+          </div>
+          <div style="border:2px solid #be185d;border-radius:8px;padding:14px;background:#fff0f5">
+            <div style="font-weight:700;color:#be185d;font-size:13px;margin-bottom:6px">③ 측정 파라미터 목록 (Predetermined Parameters)</div>
+            <div style="font-size:12px;color:#555">
+              TCM 특성별 필수 측정 메트릭 사전 정의<br>
+              <strong>예시 (Accuracy):</strong><br>
+              • 정확도(Accuracy), F1-score, AUC-ROC<br>
+              • 기준 데이터셋 명칭 및 버전<br>
+              • 측정 환경(온도, GPU 사양 등)<br>
+              <em style="color:#888;font-size:11px">참조: ISO 14025 §6.7.1(e) predetermined parameters</em>
+            </div>
+          </div>
+          <div style="border:2px solid #be185d;border-radius:8px;padding:14px;background:#fff0f5">
+            <div style="font-weight:700;color:#be185d;font-size:13px;margin-bottom:6px">④ 데이터 품질 요건 (Data Quality)</div>
+            <div style="font-size:12px;color:#555">
+              측정 데이터의 신뢰성 기준<br>
+              <strong>기준 항목:</strong><br>
+              • 커버리지: 측정 케이스의 대표성<br>
+              • 재현성: 동일 조건에서 ±X% 내 재현<br>
+              • 최신성: 데이터 수집일 기준 최대 N개월<br>
+              • 불확실성: 신뢰구간 명시 필수<br>
+              <em style="color:#888;font-size:11px">참조: ISO 14025 §8.1.3(d) data evaluation</em>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="font-size:14px;color:#be185d;margin-bottom:10px">S14.1A.2 — AI 제품 카테고리별 예시 ACR</h3>
+        <div style="overflow-x:auto;margin-bottom:14px">
+          <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <thead>
+              <tr style="background:#9d174d;color:#fff">
+                <th style="padding:8px 10px;text-align:left">AI 카테고리</th>
+                <th style="padding:8px 10px;text-align:left">기능 단위</th>
+                <th style="padding:8px 10px;text-align:left">핵심 TCM 특성</th>
+                <th style="padding:8px 10px;text-align:left">필수 파라미터</th>
+                <th style="padding:8px 10px;text-align:left">비교 ACR</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid #e2e8f0">
+                <td style="padding:7px 10px;font-weight:600">의료 진단 AI</td>
+                <td style="padding:7px 10px">단일 환자 케이스 분석 1회</td>
+                <td style="padding:7px 10px">Accuracy, Safety, Privacy</td>
+                <td style="padding:7px 10px">민감도·특이도, 안전 임계값, PHI 처리 정책</td>
+                <td style="padding:7px 10px"><span style="color:#991b1b;font-style:italic">ACR-MEDAI-001 (미발행)</span></td>
+              </tr>
+              <tr style="background:#fdf2f8;border-bottom:1px solid #e2e8f0">
+                <td style="padding:7px 10px;font-weight:600">언어 모델 (LLM)</td>
+                <td style="padding:7px 10px">1,000 토큰 생성</td>
+                <td style="padding:7px 10px">Accuracy, Transparency, Privacy</td>
+                <td style="padding:7px 10px">할루시네이션율, 독성 점수, 개인정보 노출 비율</td>
+                <td style="padding:7px 10px"><span style="color:#991b1b;font-style:italic">ACR-LLM-001 (미발행)</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid #e2e8f0">
+                <td style="padding:7px 10px;font-weight:600">채용·HR AI</td>
+                <td style="padding:7px 10px">단일 지원서 평가 1회</td>
+                <td style="padding:7px 10px">Fairness, Transparency, Accountability</td>
+                <td style="padding:7px 10px">그룹별 합격률 균등성, 결정 설명 제공 여부</td>
+                <td style="padding:7px 10px"><span style="color:#991b1b;font-style:italic">ACR-HRAI-001 (미발행)</span></td>
+              </tr>
+              <tr style="background:#fdf2f8">
+                <td style="padding:7px 10px;font-weight:600">자율주행 AI</td>
+                <td style="padding:7px 10px">10km 도심 주행 시뮬레이션</td>
+                <td style="padding:7px 10px">Safety, Reliability, Robustness</td>
+                <td style="padding:7px 10px">안전 개입 빈도, 시나리오별 성공률, 엣지 케이스 처리</td>
+                <td style="padding:7px 10px"><span style="color:#991b1b;font-style:italic">ACR-AV-001 (미발행)</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="font-size:14px;color:#be185d;margin-bottom:8px">S14.1A.3 — ACR 도입 시 ATFS 비교가능성 요건</h3>
+        <div class="note-box info">
+          <span class="icon">📌</span>
+          <div>
+            <strong>ACR 기반 ATFS 비교 규칙</strong> (ISO 14025:2006 §6.7.2, §7.2.4(f) 대응)<br>
+            ① 동일 ACR을 따르는 ATFS만 직접 비교 가능합니다.<br>
+            ② 상이한 ACR(또는 ACR 미적용) ATFS를 비교할 때는
+            <strong>"본 선언은 다른 프로그램의 선언과 직접 비교할 수 없습니다"</strong> 문구를 필수 표시해야 합니다.<br>
+            ③ ACR이 공식 발행되기 전까지, 동일 방법론을 사용함을 ATFS 문서 내 명시적으로 기술하는 것으로 대체할 수 있습니다.
+          </div>
+        </div>
+      </div>
+
+      <!-- S14.1B ATFS 상호 비교 프로토콜 (L-2 / S18 GAP-01 연계 / ISO 14025 §7.2.4(f) 대응) -->
+      <div class="content-section">
+        <h2>S14.1B — ATFS 상호 비교 프로토콜
+          <span class="atfs-badge" style="font-size:10px;padding:3px 8px;margin-left:6px">ISO 14025 §7.2.4(f) 대응</span>
+        </h2>
+        <p style="font-size:0.9em;color:#444;margin-bottom:12px">
+          ISO 14025 §7.2.4(f)는 EPD(Environmental Product Declaration) 간 비교가 동일 PCR을 사용할 때만
+          유효하다고 규정합니다. ATFS도 이 원칙을 따르며, <strong>동일 ACR 기반 ATFS 간 비교 프로토콜</strong>을
+          제시하여 AI 제품 간 공정한 신뢰성 비교를 가능하게 합니다.
+        </p>
+
+        <div style="margin-bottom:16px">
+          <div class="clause-header">ATFS 비교 유효성 판단 행렬</div>
+          <div class="clause-body">
+            <table class="req-matrix">
+              <thead>
+                <tr>
+                  <th style="width:30%">비교 상황</th>
+                  <th style="width:20%">비교 허용 여부</th>
+                  <th style="width:35%">필수 표시 문구</th>
+                  <th style="width:15%">근거</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background:#f0fdf4">
+                  <td>동일 ACR + 동일 기능 단위 + 동일 시스템 경계</td>
+                  <td><strong style="color:#15803d">✅ 직접 비교 가능</strong></td>
+                  <td>비교 기준 ACR 번호 명시</td>
+                  <td>ISO 14025 §7.2.4(f)</td>
+                </tr>
+                <tr>
+                  <td>동일 ACR + 다른 기능 단위 또는 시스템 경계</td>
+                  <td><strong style="color:#92400e">⚠️ 조건부 허용</strong></td>
+                  <td>"본 비교는 [차이점]을 감안한 추정치이며 정확한 직접 비교가 아닙니다"</td>
+                  <td>ISO 14025 §6.7.2</td>
+                </tr>
+                <tr>
+                  <td>상이한 ACR 사용 또는 ACR 미적용 ATFS 간 비교</td>
+                  <td><strong style="color:#991b1b">🚫 직접 비교 불가</strong></td>
+                  <td>"본 선언은 다른 프로그램의 선언과 직접 비교할 수 없습니다" (필수 표시)</td>
+                  <td>ISO 14025 §7.2.4(f)</td>
+                </tr>
+                <tr>
+                  <td>타 Type(Type II vs Type III) 비교</td>
+                  <td><strong style="color:#991b1b">🚫 비교 불가</strong></td>
+                  <td>"Type II 자기선언과 Type III 독립검증 ATFS는 검증 수준이 상이하여 직접 비교 불가"</td>
+                  <td>42117-X §5.2</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 비교 보고서 필수 구성 요소 -->
+        <div style="margin-bottom:16px">
+          <div class="clause-header">ATFS 비교 보고서 필수 구성 요소 (ISO 14025 §7.2 대응)</div>
+          <div class="clause-body">
+            <div style="padding:14px;font-size:13px;line-height:1.7">
+              두 개 이상의 ATFS를 비교하는 문서(제3자 비교 보고서, 구매자 평가 문서 등)에는 다음이 포함되어야 합니다:
+              <ol style="margin:8px 0 0 16px;font-size:13px">
+                <li>비교 대상 ATFS의 <strong>ACR 번호·버전·발행일</strong> 명시</li>
+                <li>각 ATFS의 <strong>기능 단위(Functional Unit)</strong> 및 <strong>시스템 경계</strong> 비교 표</li>
+                <li>동일 기준이 아닌 경우 <strong>비교 한계 선언</strong> (§7.2.4(f) 필수 문구 인용)</li>
+                <li>사용된 측정 메트릭의 <strong>동등성 검증</strong> (동일 공식·단위·조건 여부)</li>
+                <li>비교 보고서 작성자의 <strong>이해충돌 여부 선언</strong></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <div class="note-box info">
+          <span class="icon">📊</span>
+          <div>
+            <strong>향후 로드맵</strong>: ACR이 공식 발행되면 동일 ACR 기반 ATFS를 자동으로 비교·시각화하는
+            <strong>ATFS 비교 플랫폼</strong> 구축이 가능합니다. 이는 ISO 14025 EPD 비교 플랫폼(예: EPD Norway 데이터베이스)과
+            유사한 형태로, AI 제품 구매자가 표준화된 신뢰성 지표를 비교하는 공개 저장소 역할을 합니다.
+          </div>
+        </div>
+      </div>
+
+      <!-- S14.1C ACR 거버넌스 및 검토 패널 (L-3 / ISO 14025 §6 대응) -->
+      <div class="content-section">
+        <h2>S14.1C — ACR 거버넌스 및 검토 패널
+          <span class="atfs-badge" style="font-size:10px;padding:3px 8px;margin-left:6px">ISO 14025 §6 대응</span>
+        </h2>
+        <p style="font-size:0.9em;color:#444;margin-bottom:12px">
+          ISO 14025 §6는 PCR을 개발·관리하는 프로그램 운영자의 <strong>이해관계자 참여 및 검토 절차</strong>를
+          규정합니다. ACR도 동일한 거버넌스 원칙을 따라야 하며, 다음 패널 구조를 제안합니다.
+        </p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+          <!-- 패널 구성 -->
+          <div style="border:2px solid #f9a8d4;border-radius:8px;padding:14px;background:#fff0f5">
+            <div style="font-size:13px;font-weight:700;color:#be185d;margin-bottom:10px">ACR 검토 패널 구성</div>
+            <table style="width:100%;border-collapse:collapse;font-size:12px">
+              <tr style="background:#fce7f3"><td style="padding:5px 8px;font-weight:700">역할</td><td style="padding:5px 8px;font-weight:700">위원 수</td><td style="padding:5px 8px;font-weight:700">자격</td></tr>
+              <tr><td style="padding:5px 8px">패널 의장</td><td style="padding:5px 8px">1명</td><td style="padding:5px 8px">ISO/IEC JTC1/SC42 대표</td></tr>
+              <tr style="background:#fce7f3"><td style="padding:5px 8px">기술 전문가</td><td style="padding:5px 8px">3~5명</td><td style="padding:5px 8px">AI 도메인 전문가 (카테고리별)</td></tr>
+              <tr><td style="padding:5px 8px">측정 전문가</td><td style="padding:5px 8px">2명</td><td style="padding:5px 8px">계량·통계 전문가</td></tr>
+              <tr style="background:#fce7f3"><td style="padding:5px 8px">이해관계자 대표</td><td style="padding:5px 8px">3명</td><td style="padding:5px 8px">공급자·구매자·시민사회 각 1명</td></tr>
+              <tr><td style="padding:5px 8px">독립 검토자</td><td style="padding:5px 8px">1~2명</td><td style="padding:5px 8px">이해충돌 없는 제3자 전문가</td></tr>
+            </table>
+          </div>
+          <!-- 패널 절차 -->
+          <div style="border:2px solid #f9a8d4;border-radius:8px;padding:14px;background:#fff0f5">
+            <div style="font-size:13px;font-weight:700;color:#be185d;margin-bottom:10px">ACR 개발·검토 절차</div>
+            <ol style="font-size:12px;margin:0;padding-left:16px;line-height:1.8">
+              <li><strong>제안 접수</strong>: 산업계·연구계·CA가 신규 ACR 필요성 제안</li>
+              <li><strong>타당성 검토</strong>: 패널이 6주 내 채택 여부 결정</li>
+              <li><strong>초안 작성</strong>: 기술 전문가 그룹이 12주 내 ACR 초안 작성</li>
+              <li><strong>공개 협의</strong>: 60일 공개 의견 수렴 (온라인 플랫폼)</li>
+              <li><strong>패널 최종 심의</strong>: 의견 반영 후 패널 투표 (2/3 가결)</li>
+              <li><strong>발행 및 공개</strong>: ACR 번호 부여·공개 저장소 게시</li>
+              <li><strong>주기적 재검토</strong>: 3년 주기 또는 기술 변화 시 조기 검토</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- 이해충돌 방지 원칙 -->
+        <div style="padding:12px 14px;background:#fff8f0;border:1.5px solid #f59e0b;border-radius:6px;font-size:12.5px;margin-bottom:14px">
+          <strong style="color:#92400e">이해충돌 방지 원칙 (ISO 14025 §6 대응)</strong><br>
+          ACR 대상 AI 제품 카테고리의 개발자·공급자는 해당 ACR 검토 패널 의결에서 <strong>의결권을 배제</strong>합니다.
+          패널 위원은 매 회의 전 이해충돌 선언서를 제출해야 하며, 이해충돌이 확인된 경우 해당 논의에서
+          퇴장해야 합니다. 패널 구성 및 표결 결과는 공개됩니다.
+        </div>
+
+        <div class="note-box info">
+          <span class="icon">🏛️</span>
+          <div>
+            <strong>현황 고지</strong>: ACR 검토 패널은 ISO/IEC 42117-X 표준 발행 후 공식 설립됩니다.
+            현재는 ISO/IEC JTC 1/SC 42 WG 내에서 ACR 관련 논의가 진행 중입니다.
+            CA 및 프로그램 운영자는 ACR 발행 전까지 자체 방법론을 ATFS 내에 완전히 명시하고
+            이를 V&amp;V 기관과 합의하여 사용해야 합니다.
           </div>
         </div>
       </div>

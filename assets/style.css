@@ -296,14 +296,142 @@ hr { border: none; border-top: 1px solid #eee; margin: 20px 0; }
   margin-top: 32px;
 }
 
-/* ── Responsive ── */
+/* ── Responsive: Tablet (900px) ── */
 @media (max-width: 900px) {
   .layout { flex-direction: column; }
-  .sidebar { width: 100%; height: auto; position: static; }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+    max-height: 220px;
+    overflow-y: auto;
+    border-bottom: 3px solid #0d2b5e;
+  }
+  .sidebar-header { padding: 12px 16px; }
+  .sidebar-header .logo { font-size: 13px; }
+  .sidebar-header .title { font-size: 11px; }
+  .sidebar-header .version { font-size: 10px; }
+  .sidebar-nav { padding-bottom: 8px; }
+  .nav-label { font-size: 10px; padding: 5px 14px 3px; }
+  .nav-item { padding: 6px 14px; font-size: 12px; }
   .main-content { padding: 20px; }
   .type-cards { grid-template-columns: 1fr; }
   .claim-grid { grid-template-columns: 1fr; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .section-cards { grid-template-columns: repeat(2, 1fr); }
+  /* Collapse common 2-col class-based grids */
+  .type-grid, .principle-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ── Responsive: Mobile (768px) — S16/S17/S18 full coverage ── */
+@media (max-width: 768px) {
+  /* Layout & padding */
+  .main-content { padding: 14px 12px; }
+  .content-section { padding: 16px 14px; overflow-x: hidden; }
+  body { font-size: 14px; }
+
+  /* Section cards: single column */
+  .section-cards { grid-template-columns: 1fr !important; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* ── Tables: horizontal scroll ── */
+  .req-matrix, .claim-table, .matrix-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    font-size: 0.78em;
+    white-space: nowrap;
+  }
+  /* General tables inside content sections */
+  .content-section table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+    font-size: 0.78em;
+  }
+  .content-section table td,
+  .content-section table th { white-space: normal; min-width: 80px; }
+
+  /* ── Process flow: wrap ── */
+  .process-flow { flex-wrap: wrap; gap: 6px; }
+  .proc-arrow { display: none; }
+  .proc-step {
+    flex: 1 1 130px;
+    border-radius: 8px !important;
+    min-width: 130px;
+  }
+
+  /* ── Inline-styled grid containers: collapse to single column ──
+     Targets all divs inside content-section that have inline grid styles */
+  .content-section > div[style*="grid-template-columns"],
+  .content-section .clause-body > div[style*="grid-template-columns"],
+  .content-section > div > div[style*="grid-template-columns"] {
+    display: block !important;
+  }
+  /* Class-based grids */
+  .type-grid, .principle-grid, .atfs-structure,
+  .stat-grid, .gap-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── YAML blocks ── */
+  .yaml-block {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    font-size: 11px;
+    border-radius: 6px;
+  }
+
+  /* ── Note boxes ── */
+  .note-box { flex-direction: column; gap: 8px; }
+  .note-box .icon { font-size: 20px; }
+
+  /* ── Clause body ── */
+  .clause-body { overflow-x: auto; }
+
+  /* ── Gap cards (S18) ── */
+  .gap-card { margin-bottom: 12px; }
+  .gap-header { flex-wrap: wrap; gap: 4px; }
+  .gap-id { font-size: 12px; }
+
+  /* ── Page header breadcrumb ── */
+  .page-header { padding: 14px 16px; flex-direction: column; gap: 6px; }
+
+  /* ── Hero (index) ── */
+  .hero { padding: 20px 16px; }
+  .hero h1 { font-size: 18px; }
+  .meta-tags { flex-wrap: wrap; gap: 4px; }
+
+  /* ── Pipeline banner ── */
+  .pipeline-steps { flex-wrap: wrap; gap: 4px; }
+  .pipeline-arrow { display: none; }
+  .pipeline-step { flex: 1 1 80px; font-size: 11px; padding: 6px 8px; }
+
+  /* ── Prohibited badges ── */
+  .prohibited { font-size: 11px; }
+
+  /* ── Page footer (모든 페이지 하단) ── */
+  .page-footer {
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 16px;
+    text-align: center;
+    font-size: 11px;
+  }
+}
+
+/* ── Responsive: Small Mobile (480px) ── */
+@media (max-width: 480px) {
+  .main-content { padding: 10px 8px; }
+  .content-section { padding: 12px 10px; }
+  .req-matrix, .content-section table { font-size: 0.72em; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  h1 { font-size: 17px; }
+  h2 { font-size: 15px; }
+  h3 { font-size: 14px; }
+  .yaml-block { font-size: 10px; }
+  .proc-step { flex: 1 1 100%; }
 }
 
 /* ── Print ── */

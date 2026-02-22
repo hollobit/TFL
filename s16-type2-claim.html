@@ -118,6 +118,25 @@
     .req-alpha-list li:last-child { border-bottom: none; }
     .req-alpha-list li.mand { background: #fff5f5; }
     .req-alpha-list li.cond { background: #fffbeb; }
+
+  /* ── S16 Mobile ── */
+  @media (max-width: 768px) {
+    .stat-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .example-header { flex-direction: column; gap: 4px; align-items: flex-start; }
+    .example-body { padding: 10px 12px; }
+    .yaml-block { font-size: 11px; }
+    .catalog-row { gap: 4px; }
+    /* 4-col stat grid: force 2 columns */
+    div[style*="repeat(4, 1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
+    /* 3-col grid: force 1 column */
+    div[style*="1fr 1fr 1fr"] { grid-template-columns: 1fr !important; }
+    /* Process flow table */
+    div[style*="repeat(4, 1fr)"] > div { padding: 10px 8px; }
+  }
+  @media (max-width: 480px) {
+    .stat-grid { grid-template-columns: 1fr 1fr !important; }
+    .stat-card .stat-num { font-size: 24px; }
+  }
   </style>
 </head>
 <body>
@@ -133,7 +152,7 @@
         <a href="index.html" class="nav-item">📋 가이드 홈</a>
       </div>
       <div class="nav-section">
-        <div class="nav-label">섹션</div>
+        <div class="nav-label">기반 분석 (S01–S12)</div>
         <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
         <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>28개 TCM 신뢰성 특성</a>
         <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
@@ -146,12 +165,16 @@
         <a href="s10-requirements-list.html" class="nav-item"><span class="section-id">S10</span>요구사항 전체 목록</a>
         <a href="s11-tc-claim-mapping.html" class="nav-item"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
         <a href="s12-standards-tracker.html" class="nav-item"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">규격 이행 가이드 (S13–S19)</div>
         <a href="s13-dtc-card.html" class="nav-item"><span class="section-id">S13</span>AI Developer Technical Card</a>
         <a href="s14-atfs-qfd.html" class="nav-item"><span class="section-id">S14</span>ATFS / QFD (Type III)</a>
         <a href="s15-42117-part1.html" class="nav-item"><span class="section-id">S15</span>42117-1 원칙 및 일반 요건</a>
         <a href="s16-type2-claim.html" class="nav-item active"><span class="section-id">S16</span>Type II 자기선언 클레임 규격</a>
         <a href="s17-type1-tfl.html" class="nav-item"><span class="section-id">S17</span>Type I TFL 인증 라벨 규격</a>
         <a href="s18-eco-label-comparison.html" class="nav-item"><span class="section-id">S18</span>Eco Label 체계 비교 분석</a>
+        <a href="s19-korea-ai-act.html" class="nav-item"><span class="section-id">S19</span>한국 AI 기본법 × TFL</a>
       </div>
     </div>
   </nav>
@@ -367,6 +390,59 @@
             ISO/IEC TS 42117-1은 현재 PWI 준비 단계이므로 "모든 신뢰성 요건을 충족한다"는 광범위한 주장은 불가합니다.
           </div>
         </div>
+
+        <!-- M-5 / REC-S16-02 / ISO 14021 §5.6 대응: 설명 진술 의무화 -->
+        <div style="margin-top:16px;padding:14px 16px;background:#f0f9ff;border:1.5px solid #7dd3fc;border-radius:8px">
+          <div style="font-size:13px;font-weight:700;color:#0369a1;margin-bottom:8px;display:flex;align-items:center;gap:8px">
+            <span>📝 설명 진술(Explanatory Statement) 의무화 강화</span>
+            <span style="font-size:11px;font-weight:600;background:#0369a1;color:#fff;border-radius:4px;padding:2px 7px">REC-S16-02 · ISO 14021 §5.6 대응</span>
+          </div>
+          <p style="font-size:12.5px;color:#1e293b;margin:0 0 10px;line-height:1.6">
+            ISO 14021 §5.6에 따르면, 자기선언 클레임이 <strong>오해를 유발할 가능성</strong>이 있거나
+            주장의 근거가 복잡한 경우 추가 설명 진술을 반드시 첨부해야 합니다.
+            TFL Type II 클레임에서 다음 조건 중 하나라도 해당하면 <code>explanatory_statement</code> 필드 작성이 의무입니다:
+          </p>
+          <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <thead>
+              <tr style="background:#0369a1;color:#fff">
+                <th style="padding:6px 10px;text-align:left;width:35%">설명 진술 의무 조건</th>
+                <th style="padding:6px 10px;text-align:left;width:40%">진술 내용 요건</th>
+                <th style="padding:6px 10px;text-align:left;width:25%">ISO 14021 대응</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background:#e0f2fe">
+                <td style="padding:6px 10px;border-bottom:1px solid #bae6fd">Level 2 이상의 구체적 성능 수치 주장</td>
+                <td style="padding:6px 10px;border-bottom:1px solid #bae6fd">측정 조건·환경·데이터셋 한계 명시</td>
+                <td style="padding:6px 10px;border-bottom:1px solid #bae6fd">§5.6(a) — 오해 방지</td>
+              </tr>
+              <tr>
+                <td style="padding:6px 10px;border-bottom:1px solid #bae6fd">비교 클레임 (§7.4 적용)</td>
+                <td style="padding:6px 10px;border-bottom:1px solid #bae6fd">비교 대상·기준·동일성 조건 명시</td>
+                <td style="padding:6px 10px;border-bottom:1px solid #bae6fd">§5.6(b) — 비교 맥락</td>
+              </tr>
+              <tr style="background:#e0f2fe">
+                <td style="padding:6px 10px;border-bottom:1px solid #bae6fd">기밀 정보에 근거한 주장 (GAP-08)</td>
+                <td style="padding:6px 10px;border-bottom:1px solid #bae6fd">기밀 여부 명시 + 검증 한계 공개</td>
+                <td style="padding:6px 10px;border-bottom:1px solid #bae6fd">§5.6(c) — 검증 한계</td>
+              </tr>
+              <tr>
+                <td style="padding:6px 10px;border-bottom:1px solid #bae6fd">라이프사이클 일부 단계만 적용</td>
+                <td style="padding:6px 10px;border-bottom:1px solid #bae6fd">적용 단계·미적용 단계 및 이유 명시</td>
+                <td style="padding:6px 10px;border-bottom:1px solid #bae6fd">§5.6(d) — 범위 제한</td>
+              </tr>
+              <tr style="background:#e0f2fe">
+                <td style="padding:6px 10px">통계적 불확실성 포함 결과</td>
+                <td style="padding:6px 10px">신뢰 구간·표준 오차·샘플 크기 명시</td>
+                <td style="padding:6px 10px">§5.6(e) — 불확실성</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="margin-top:10px;padding:8px 10px;background:#fff;border-radius:4px;border:1px solid #7dd3fc;font-size:12px;color:#334155">
+            <strong>YAML 추가 필드 예시:</strong><br>
+            <code style="font-size:11px">explanatory_statement: "본 정확도 수치는 MIMIC-IV 검증 데이터셋(n=10,432) 기반 측정값이며, 실 임상 환경에서는 결과가 상이할 수 있음. 95% CI: [0.91, 0.96]."</code>
+          </div>
+        </div>
       </div>
 
       <!-- S16.3 YAML 클레임 템플릿 -->
@@ -494,6 +570,90 @@
             <tr><td>6. 공개 선언</td><td>지원 정보 URL 공개, valid_until 설정, 재심사 등록</td><td>m), q), §7.5.2</td><td>공개된 Type II 클레임</td></tr>
           </tbody>
         </table>
+      </div>
+
+      <!-- S16.4A 평가 방법론 문서화 요건 (M-4 / REC-S16-01 / ISO 14021 §6.2 대응) -->
+      <div class="content-section">
+        <h2>S16.4A — 평가 방법론 문서화 요건
+          <span style="font-size:12px;font-weight:600;background:#dbeafe;color:#1d4ed8;border-radius:4px;padding:2px 8px;margin-left:8px">REC-S16-01 · ISO 14021 §6.2 대응</span>
+        </h2>
+        <p>ISO 14021 §6.2는 자기선언 주장의 근거 자료를 주장 발행 전에 <strong>완전히 마련하여 유지</strong>할 것을 요구합니다.
+          TFL Type II 클레임에서 이를 적용하면, <code>evidence</code> 섹션의 4개 문서화 요소가 모두 구비되어야 합니다.</p>
+
+        <div style="margin-bottom:16px">
+          <div class="clause-header">4개 필수 문서화 요소 (ISO 14021 §6.2 대응)</div>
+          <div class="clause-body">
+            <table class="req-matrix">
+              <thead>
+                <tr>
+                  <th style="width:5%">#</th>
+                  <th style="width:20%">문서화 요소</th>
+                  <th style="width:45%">내용 및 ISO 14021 §6.2 대응</th>
+                  <th style="width:15%">YAML 필드</th>
+                  <th style="width:15%">적용</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>①</td>
+                  <td><strong>평가 방법론 명세</strong></td>
+                  <td>사용한 테스트 방법·프레임워크·도구 명칭, 입력 파라미터, 측정 절차를 재현 가능 수준으로 기술</td>
+                  <td><code>evaluation_method</code><br><code>tool_or_framework</code></td>
+                  <td><span class="req-apply req-mand">필수</span></td>
+                </tr>
+                <tr>
+                  <td>②</td>
+                  <td><strong>데이터셋 및 벤치마크 기술</strong></td>
+                  <td>테스트에 사용한 데이터셋의 출처·규모·다양성·시간 범위·편향 위험 기술 (§7.5.2.f 요건 충족)</td>
+                  <td><code>dataset_description</code></td>
+                  <td><span class="req-apply req-mand">필수 (데이터 의존 클레임)</span></td>
+                </tr>
+                <tr>
+                  <td>③</td>
+                  <td><strong>참조 표준 및 결과</strong></td>
+                  <td>적용된 국제 표준 번호·조항, 평가 수행일, 실측 결과값, 임계값 대비 결과 명시</td>
+                  <td><code>standard_ref</code><br><code>evaluation_date</code><br><code>actual_result</code></td>
+                  <td><span class="req-apply req-mand">필수</span></td>
+                </tr>
+                <tr>
+                  <td>④</td>
+                  <td><strong>지원 정보 접근 경로</strong></td>
+                  <td>문서화된 근거가 공개 접근 가능한 URL 또는 QR 코드를 통해 이용 가능해야 함 (§7.5.2.a)</td>
+                  <td><code>supporting_info.location</code></td>
+                  <td><span class="req-apply req-mand">필수</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 충족 점검표 -->
+        <div style="margin-bottom:16px">
+          <div class="clause-header">평가 방법론 문서화 자가 점검표</div>
+          <div class="clause-body">
+            <div style="padding:14px;font-size:13px;line-height:1.8">
+              클레임 공개 전 아래 항목을 모두 확인하십시오:
+              <ol style="margin:8px 0 0 16px;font-size:13px">
+                <li>☐ <code>evaluation_method</code>에 타인이 동일 절차로 재현할 수 있을 만큼 충분히 기술했는가?</li>
+                <li>☐ <code>dataset_description</code>에 테스트 데이터 출처·규모·전처리 방법을 명시했는가? (데이터 의존 클레임 해당)</li>
+                <li>☐ <code>standard_ref</code>에 적용 표준과 조항 번호를 정확히 기재했는가?</li>
+                <li>☐ <code>actual_result</code>가 실측값이며 임계값(threshold)과 대비 가능하게 기재했는가?</li>
+                <li>☐ <code>supporting_info.location</code>에 공개 접근 가능한 URL을 기재했는가?</li>
+                <li>☐ 근거 문서를 최소 <strong>클레임 유효 기간(valid_until) + 3년</strong> 동안 보존할 계획을 수립했는가?</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <div class="note-box info">
+          <span class="icon">📋</span>
+          <div>
+            <strong>ISO 14021 §6.2 보존 요건</strong><br>
+            ISO 14021은 자기선언 주장의 근거 자료를 <strong>클레임 사용 기간 동안 및 그 이후 합리적인 기간 동안 유지</strong>할 것을 규정합니다.
+            TFL 가이드라인으로는 <code>valid_until</code> 만료 후 <strong>최소 3년</strong> 보존을 권고합니다.
+            기밀 정보가 포함된 근거 자료는 독립 검증 기관에 의뢰하거나, 기밀 사실과 검증 한계를 공개 지원 정보에 명시해야 합니다.
+          </div>
+        </div>
       </div>
 
       <!-- S16.5 금지 사항 및 제한 -->

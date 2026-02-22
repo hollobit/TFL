@@ -104,6 +104,37 @@
     .badge-14025 { background: #be185d; color: #fff; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 700; display: inline-block; }
     .badge-14026 { background: #b45309; color: #fff; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 700; display: inline-block; }
     .badge-tfl { background: #0f766e; color: #fff; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 700; display: inline-block; }
+
+  /* ── S18 Mobile ── */
+  @media (max-width: 768px) {
+    /* 3-col gap-card grids */
+    div[style*="1fr 1fr 1fr"] { grid-template-columns: 1fr !important; }
+    /* 5-col type comparison grids */
+    div[style*="repeat(5, 1fr)"] { grid-template-columns: 1fr !important; }
+    /* 2-col grids */
+    div[style*="1fr 1fr"] { grid-template-columns: 1fr !important; }
+    /* 3-col PCR mapping grid */
+    div[style*="1fr auto 1fr"] { grid-template-columns: 1fr !important; }
+    /* Gap cards */
+    .gap-card { margin-bottom: 14px; }
+    .gap-header { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .gap-id { font-size: 11px; }
+    .gap-body, .gap-action { padding: 10px 12px; font-size: 13px; }
+    /* Matrix table */
+    .matrix-table { font-size: 0.75em; }
+    .matrix-table td, .matrix-table th { padding: 5px 6px; }
+    /* Eco label badges */
+    .gap-eco, .gap-tfl { display: block; margin-bottom: 4px; }
+    /* Rec boxes */
+    .rec-box { padding: 10px 12px; }
+    .rec-tag { font-size: 10px; }
+    /* Summary section */
+    .summary-grid { grid-template-columns: 1fr !important; }
+  }
+  @media (max-width: 480px) {
+    .matrix-table { font-size: 0.68em; }
+    div[style*="repeat(5, 1fr)"] { grid-template-columns: 1fr !important; }
+  }
   </style>
 </head>
 <body>
@@ -119,7 +150,7 @@
         <a href="index.html" class="nav-item">📋 가이드 홈</a>
       </div>
       <div class="nav-section">
-        <div class="nav-label">섹션</div>
+        <div class="nav-label">기반 분석 (S01–S12)</div>
         <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
         <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>28개 TCM 신뢰성 특성</a>
         <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
@@ -132,12 +163,16 @@
         <a href="s10-requirements-list.html" class="nav-item"><span class="section-id">S10</span>요구사항 전체 목록</a>
         <a href="s11-tc-claim-mapping.html" class="nav-item"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
         <a href="s12-standards-tracker.html" class="nav-item"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">규격 이행 가이드 (S13–S19)</div>
         <a href="s13-dtc-card.html" class="nav-item"><span class="section-id">S13</span>AI Developer Technical Card</a>
         <a href="s14-atfs-qfd.html" class="nav-item"><span class="section-id">S14</span>ATFS / QFD (Type III)</a>
         <a href="s15-42117-part1.html" class="nav-item"><span class="section-id">S15</span>42117-1 원칙 및 일반 요건</a>
         <a href="s16-type2-claim.html" class="nav-item"><span class="section-id">S16</span>Type II 자기선언 클레임 규격</a>
         <a href="s17-type1-tfl.html" class="nav-item"><span class="section-id">S17</span>Type I TFL 인증 라벨 규격</a>
         <a href="s18-eco-label-comparison.html" class="nav-item active"><span class="section-id">S18</span>Eco Label 체계 비교 분석</a>
+        <a href="s19-korea-ai-act.html" class="nav-item"><span class="section-id">S19</span>한국 AI 기본법 × TFL</a>
       </div>
     </div>
   </nav>
@@ -554,6 +589,13 @@
           <div class="gap-action">
             🔧 <strong>권고</strong>: ISO/IEC 42117-1 §6.1에 S18.3과 유사한 <strong>TFL 유형별 프로그램 요소 매트릭스(Table 1 대응)</strong>를 추가합니다.
             이는 새 조항 추가 없이 기존 §6 조항들을 표 형식으로 정리하는 편집 작업입니다.
+          </div>
+          <!-- L-4 GAP-02 상태 업데이트 -->
+          <div style="margin-top:8px;padding:8px 12px;background:#f0fdf4;border:1.5px solid #86efac;border-radius:6px;font-size:12px;color:#166534">
+            <strong>✅ 가이드 반영 완료 (2026-02-22)</strong>:
+            S15 §6.2 앞에 <a href="s15-42117-part1.html#programme-element-matrix" style="color:#15803d"><strong>프로그램 요소 매트릭스 (Table 1)</strong></a>를 추가하여
+            Type II/I/III/IV/Single-attr × 9개 프로그램 요소별 필수(●)/선택(○)/부분(◑)/해당없음(—) 구분을 명시하였습니다.
+            ISO/IEC 42117-1 §6.1 개정 시 이 매트릭스를 공식 포함할 것을 권고합니다.
           </div>
         </div>
 

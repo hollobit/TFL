@@ -40,6 +40,45 @@
     }
     .pipeline-step.completed { background: #e8f5e9; border-color: #a5d6a7; color: #2d6a4f; }
     .pipeline-arrow { color: #999; padding: 0 6px; font-size: 14px; }
+
+  /* ── index.html Mobile ── */
+  @media (max-width: 768px) {
+    /* Hero */
+    .hero { padding: 24px 18px; margin-bottom: 18px; border-radius: 8px; }
+    .hero h1 { font-size: 19px; line-height: 1.3; }
+    .hero .subtitle { font-size: 13px; margin-bottom: 14px; line-height: 1.5; }
+    .hero .meta-tags { gap: 6px; }
+    .hero .meta-tag { font-size: 11px; padding: 3px 9px; }
+
+    /* Pipeline 배너 */
+    .pipeline-banner { padding: 12px 14px; }
+    .pipeline-banner h3 { font-size: 13px; margin-bottom: 6px; }
+    .pipeline-steps { gap: 4px; row-gap: 4px; }
+    .pipeline-step { padding: 5px 8px; font-size: 11px; flex: 1 1 70px; text-align: center; }
+    .pipeline-arrow { display: none; }
+
+    /* Stats grid */
+    .stats-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 8px; }
+    .stat-card { padding: 10px 8px; }
+    .stat-card .num { font-size: 24px; }
+    .stat-card .label { font-size: 10px; }
+
+    /* 섹션 그룹 헤더 */
+    .section-cards { gap: 12px; }
+    .section-card { padding: 16px; }
+    .section-card h3 { font-size: 14px; }
+    .section-card p { font-size: 12px; }
+    .section-card .sub-list { font-size: 11px; }
+
+    /* Page footer */
+    .page-footer { flex-direction: column; gap: 4px; font-size: 11px; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .hero h1 { font-size: 17px; }
+    .hero .subtitle { font-size: 12px; }
+    .pipeline-step { flex: 1 1 55px; font-size: 10px; padding: 4px 6px; }
+  }
   </style>
 </head>
 <body>
@@ -57,7 +96,7 @@
         <a href="index.html" class="nav-item active">📋 가이드 홈</a>
       </div>
       <div class="nav-section">
-        <div class="nav-label">섹션</div>
+        <div class="nav-label">기반 분석 (S01–S12)</div>
         <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
         <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>28개 TCM 신뢰성 특성</a>
         <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
@@ -70,12 +109,16 @@
         <a href="s10-requirements-list.html" class="nav-item"><span class="section-id">S10</span>요구사항 전체 목록</a>
         <a href="s11-tc-claim-mapping.html" class="nav-item"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
         <a href="s12-standards-tracker.html" class="nav-item"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">규격 이행 가이드 (S13–S19)</div>
         <a href="s13-dtc-card.html" class="nav-item"><span class="section-id">S13</span>AI Developer Technical Card</a>
         <a href="s14-atfs-qfd.html" class="nav-item"><span class="section-id">S14</span>ATFS / QFD (Type III)</a>
         <a href="s15-42117-part1.html" class="nav-item"><span class="section-id">S15</span>42117-1 원칙 및 일반 요건</a>
         <a href="s16-type2-claim.html" class="nav-item"><span class="section-id">S16</span>Type II 자기선언 클레임 규격</a>
         <a href="s17-type1-tfl.html" class="nav-item"><span class="section-id">S17</span>Type I TFL 인증 라벨 규격</a>
         <a href="s18-eco-label-comparison.html" class="nav-item"><span class="section-id">S18</span>Eco Label 체계 비교 분석</a>
+        <a href="s19-korea-ai-act.html" class="nav-item"><span class="section-id">S19</span>한국 AI 기본법 × TFL</a>
       </div>
     </div>
   </nav>
@@ -149,14 +192,14 @@
         <div class="stat-card green"><div class="num">28</div><div class="label">TCM 신뢰성 특성</div></div>
         <div class="stat-card orange"><div class="num">23</div><div class="label">참조 SC42 표준</div></div>
         <div class="stat-card green"><div class="num">51</div><div class="label">Type III V&amp;V 가능 Claim<br><small style="font-weight:400;font-size:10px">Level 2/3 · ATFS/QFD (→ S14)</small></div></div>
-        <div class="stat-card green"><div class="num">18</div><div class="label">가이드 섹션<br><small style="font-weight:400;font-size:10px">S01–S18 (S15 원칙 · S16 TypeII · S17 TypeI · S18 EcoLabel)</small></div></div>
+        <div class="stat-card green"><div class="num">19</div><div class="label">가이드 섹션<br><small style="font-weight:400;font-size:10px">S01–S19 (S17 TypeI · S18 EcoLabel · S19 AI기본법)</small></div></div>
         <div class="stat-card"><div class="num">10</div><div class="label">완전 커버리지 특성</div></div>
         <div class="stat-card orange"><div class="num">2</div><div class="label">부분 커버리지 특성</div></div>
         <div class="stat-card red"><div class="num">3</div><div class="label">미흡 커버리지 특성</div></div>
       </div>
 
       <!-- Section Cards -->
-      <h2 style="color:#1a4480; font-size:16px; margin-bottom:14px;">📑 가이드 섹션</h2>
+      <h2 style="color:#1a4480; font-size:16px; margin-bottom:14px;">📚 기반 분석 (S01–S12)</h2>
       <div class="section-cards">
         <a href="s01-overview.html" class="section-card">
           <div class="sec-id">S01 — Overview</div>
@@ -279,6 +322,11 @@
             <li>분기별 모니터링 일정 포함</li>
           </ul>
         </a>
+      </div>
+
+      <!-- 규격 이행 가이드 그룹 -->
+      <h2 style="color:#4a0e8f; font-size:16px; margin: 20px 0 14px; padding-top:16px; border-top:2px solid #e2e8f0;">📋 규격 이행 가이드 (S13–S19)</h2>
+      <div class="section-cards">
         <a href="s13-dtc-card.html" class="section-card" style="border-top:3px solid #4a0e8f">
           <div class="sec-id" style="color:#4a0e8f">S13 — TYPE IV DTC</div>
           <h3>AI Developer Technical Card</h3>
@@ -292,51 +340,61 @@
         <a href="s14-atfs-qfd.html" class="section-card" style="border-top:3px solid #be185d">
           <div class="sec-id" style="color:#be185d">S14 — TYPE III ATFS/QFD</div>
           <h3>AI Trustworthiness Fact Sheet</h3>
-          <p>Type III 정량 V&amp;V 검증 기반 ATFS/QFD 가이드. ISO/IEC 17029 기반 독립 검증 프로세스 및 51개 Level 2/3 Claim 측정 방법론</p>
+          <p>Type III 정량 V&amp;V 검증 기반 ATFS/QFD 가이드. ACR 프레임워크·ATFS 상호 비교 프로토콜·ACR 거버넌스 패널 포함 (S18 GAP-01 대응)</p>
           <ul class="sub-list">
+            <li>S14.1A ACR 프레임워크 + S14.1B 비교 프로토콜 + S14.1C 거버넌스 패널</li>
             <li>51개 Level 2/3 정량 측정 Claim 카탈로그</li>
-            <li>특성별 측정 방법론 (메트릭·임계값·표준)</li>
             <li>V&amp;V 5단계 프로세스 + YAML 템플릿</li>
           </ul>
         </a>
         <a href="s15-42117-part1.html" class="section-card" style="border-top:3px solid #1a3a6b">
           <div class="sec-id" style="color:#1a3a6b">S15 — 42117-1 원칙 및 일반 요건</div>
           <h3>ISO/IEC TS 42117-1 표준 요약</h3>
-          <p>TFL 프레임워크의 핵심 표준인 ISO/IEC TS 42117-1 PWI Draft의 10대 원칙, 5가지 사실 선언 유형, 프로그램 요건, 일반 요건 및 예시 정리</p>
+          <p>TFL 프레임워크의 핵심 표준 요약. 10대 원칙, 프로그램 요소 매트릭스, "free" 주장 규제, §7.1.2 a–q 기밀 정보 제한 포함 (S18 GAP 대응)</p>
           <ul class="sub-list">
-            <li>§4 신뢰성 사실 선언 10대 원칙</li>
-            <li>§5~§7 유형·프로그램·일반 요건 (§7.1.2 a–q)</li>
-            <li>Annex A HolloFace 예시 + §3 용어 정의</li>
+            <li>§4 10대 원칙 + 프로그램 요소 매트릭스 (Table 1)</li>
+            <li>§7.2 "free" 주장 금지 규제 (bias-free 등 5종)</li>
+            <li>§7.1.2(b) 기밀 정보 주장 제한 + §7.4.2 ACR 비교 가능성</li>
           </ul>
         </a>
         <a href="s16-type2-claim.html" class="section-card" style="border-top:3px solid #1d4ed8">
           <div class="sec-id" style="color:#1d4ed8">S16 — Type II 자기선언 클레임 규격</div>
           <h3>Self-declared Trustworthiness Fact Claim</h3>
-          <p>ISO/IEC 42117-1 §5.2 기반 Type II 자기선언 클레임 규격 초안. §7.1.2 a-q 17개 요건 적용 지침, YAML 템플릿, 6단계 작성 프로세스 및 3개 예시 제공</p>
+          <p>ISO/IEC 42117-1 §5.2 기반 Type II 자기선언 클레임 규격. 평가 방법론 문서화 요건(S16.4A)·설명 진술 의무화(REC-S16-01/02) 포함</p>
           <ul class="sub-list">
+            <li>S16.4A 평가 방법론 4대 문서화 요건 (ISO 14021 §6.2)</li>
+            <li>설명 진술 의무화 5개 조건 표 (ISO 14021 §5.6)</li>
             <li>§7.1.2 a-q 체크리스트 + YAML 클레임 템플릿</li>
-            <li>AI 시스템·모델·서비스별 작성 예시 3개</li>
-            <li>S03 Simple Claim 77개와 직접 연계</li>
           </ul>
         </a>
         <a href="s17-type1-tfl.html" class="section-card" style="border-top:3px solid #7c3aed">
           <div class="sec-id" style="color:#7c3aed">S17 — Type I TFL 인증 라벨 규격</div>
           <h3>AI Trustworthiness Fact Label (TFL)</h3>
-          <p>ISO/IEC 42117-1 §5.3 기반 Type I 제3자 인증 라벨 규격 초안. §6 프로그램 요건 9개 조항, CA 자격 요건, 7단계 심사 프로세스 및 라벨 YAML 구조 정의</p>
+          <p>ISO/IEC 42117-1 §5.3 기반 Type I 제3자 인증 라벨 규격. 변경 관리(S17.3A)·마크 법적 보호(S17.5A)·카테고리 기준 개발(S17.1A)·국제 상호인정(S17.5B) 포함</p>
           <ul class="sub-list">
-            <li>§6 프로그램 요건 9개 조항 + CA(ISO/IEC 17065) 요건</li>
-            <li>7단계 심사 프로세스 + 라벨 YAML 템플릿</li>
-            <li>TFL 라벨 사용 규정 및 취소 기준</li>
+            <li>S17.1A 카테고리 기준 개발 5단계 + S17.3A 변경 관리 절차</li>
+            <li>S17.5A TFL™ 마크 명세 및 법적 보호 (ISO 14024 §7.6)</li>
+            <li>S17.5B 국제 상호인정(MLA) 3단계 체계 (ISO 14024 §7.5)</li>
           </ul>
         </a>
         <a href="s18-eco-label-comparison.html" class="section-card" style="border-top:3px solid #0f766e">
           <div class="sec-id" style="color:#0f766e">S18 — Eco Label 체계 비교 분석</div>
           <h3>ISO 14020 Family ↔ TFL 갭 분석</h3>
-          <p>ISO 14020/14021/14024/14025/14026(5개 Eco Label 표준) 분석을 통한 TFL 보완 과제. 10개 핵심 갭과 18개 구체적 권고사항 도출</p>
+          <p>ISO 14020/14021/14024/14025/14026(5개 Eco Label 표준) 분석을 통한 TFL 보완 과제. 10개 핵심 갭과 18개 구체적 권고사항 도출 — S14~S17 반영 완료</p>
           <ul class="sub-list">
             <li>ISO 14020 패밀리 ↔ TFL 패밀리 1:1 구조 매핑</li>
-            <li>10개 핵심 갭: ACR 부재·비교 주장 규칙·기밀성 원칙 등</li>
-            <li>18개 권고사항 (REC-42117-1·S17·S14·S16 별 구분)</li>
+            <li>10개 핵심 갭 (GAP-01~10) · 18개 권고사항 (REC)</li>
+            <li>HIGH/MEDIUM/LOW 우선순위 전체 S14~S17 반영 완료</li>
+          </ul>
+        </a>
+        <a href="s19-korea-ai-act.html" class="section-card" style="border-top:3px solid #1e3a5f">
+          <div class="sec-id" style="color:#1e3a5f">S19 — 한국 AI 기본법 × TFL 적용 분석</div>
+          <h3>인공지능기본법 의무 이행 TFL 체계</h3>
+          <p>한국 AI기본법(2026.1.22 시행) 6개 핵심 조항(§31~§36)과 5개 가이드라인에 대한 TFL Type I~IV 적용 매핑. 고영향 AI 사업자 책무, 영향평가, 투명성, 최첨단 AI 안전성 이행 방안 포함.</p>
+          <ul class="sub-list">
+            <li>11개 고영향 AI 분야 × TCM 특성 매핑</li>
+            <li>5대 사업자 책무 ↔ DTC 섹션 1:1 매핑</li>
+            <li>TFL 장점 분석 · 8개 추가 고려사항 (CON-01~08)</li>
           </ul>
         </a>
       </div>

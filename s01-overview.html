@@ -21,6 +21,15 @@
     .phase-box ul { font-size:12px; padding-left:14px; margin-top:4px; }
     .arrow { font-size:20px; color:#999; align-self:center; padding-top:12px; }
     @media(max-width:700px){.tfl-type-diagram{grid-template-columns:1fr}.pipeline-flow{flex-direction:column}.arrow{transform:rotate(90deg)}}
+  @media (max-width: 768px) {
+    /* S01.0 AI 제품 3유형 카드 3열 → 1열 */
+    div[style*="1fr 1fr 1fr"] { grid-template-columns: 1fr !important; }
+    /* 2열 그리드 */
+    div[style*="repeat(2, 1fr)"] { grid-template-columns: 1fr !important; }
+    /* 비교 표 스크롤 */
+    .content-section table { display: block; overflow-x: auto; font-size: 0.8em; }
+    .phase-box { min-width: 120px; }
+  }
   </style>
 </head>
 <body>
@@ -37,7 +46,7 @@
         <a href="index.html" class="nav-item">📋 가이드 홈</a>
       </div>
       <div class="nav-section">
-        <div class="nav-label">섹션</div>
+        <div class="nav-label">기반 분석 (S01–S12)</div>
         <a href="s01-overview.html" class="nav-item active"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
         <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>28개 TCM 신뢰성 특성</a>
         <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
@@ -50,12 +59,16 @@
         <a href="s10-requirements-list.html" class="nav-item"><span class="section-id">S10</span>요구사항 전체 목록</a>
         <a href="s11-tc-claim-mapping.html" class="nav-item"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
         <a href="s12-standards-tracker.html" class="nav-item"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">규격 이행 가이드 (S13–S19)</div>
         <a href="s13-dtc-card.html" class="nav-item"><span class="section-id">S13</span>AI Developer Technical Card</a>
         <a href="s14-atfs-qfd.html" class="nav-item"><span class="section-id">S14</span>ATFS / QFD (Type III)</a>
         <a href="s15-42117-part1.html" class="nav-item"><span class="section-id">S15</span>42117-1 원칙 및 일반 요건</a>
         <a href="s16-type2-claim.html" class="nav-item"><span class="section-id">S16</span>Type II 자기선언 클레임 규격</a>
         <a href="s17-type1-tfl.html" class="nav-item"><span class="section-id">S17</span>Type I TFL 인증 라벨 규격</a>
         <a href="s18-eco-label-comparison.html" class="nav-item"><span class="section-id">S18</span>Eco Label 체계 비교 분석</a>
+        <a href="s19-korea-ai-act.html" class="nav-item"><span class="section-id">S19</span>한국 AI 기본법 × TFL</a>
       </div>
     </div>
   </nav>

@@ -159,6 +159,26 @@
     .audit-content { flex: 1; }
     .audit-name { font-weight: 700; font-size: 13px; color: #5b21b6; margin-bottom: 3px; }
     .audit-desc { font-size: 12px; color: #475569; line-height: 1.5; }
+
+  /* ── S17 Mobile ── */
+  @media (max-width: 768px) {
+    .type-grid, .principle-grid { grid-template-columns: 1fr !important; }
+    /* 2-col grids */
+    div[style*="1fr 1fr"] { grid-template-columns: 1fr !important; }
+    /* 3-col grids (S17.5B 상호인정 카드 등) */
+    div[style*="1fr 1fr 1fr"] { grid-template-columns: 1fr !important; }
+    /* 4-col stat grid */
+    div[style*="repeat(4, 1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
+    /* Audit step */
+    .audit-step { flex-direction: column; }
+    .audit-num { width: 28px; height: 28px; font-size: 13px; }
+    /* Tables */
+    .req-matrix td, .req-matrix th { padding: 5px 7px; font-size: 0.76em; }
+  }
+  @media (max-width: 480px) {
+    div[style*="repeat(4, 1fr)"] { grid-template-columns: 1fr 1fr !important; }
+    .type-card { padding: 12px; }
+  }
   </style>
 </head>
 <body>
@@ -174,7 +194,7 @@
         <a href="index.html" class="nav-item">📋 가이드 홈</a>
       </div>
       <div class="nav-section">
-        <div class="nav-label">섹션</div>
+        <div class="nav-label">기반 분석 (S01–S12)</div>
         <a href="s01-overview.html" class="nav-item"><span class="section-id">S01</span>TFL 개요 및 표준 체계</a>
         <a href="s02-characteristics.html" class="nav-item"><span class="section-id">S02</span>28개 TCM 신뢰성 특성</a>
         <a href="s03-claims.html" class="nav-item"><span class="section-id">S03</span>Simple Claim 카탈로그</a>
@@ -187,12 +207,16 @@
         <a href="s10-requirements-list.html" class="nav-item"><span class="section-id">S10</span>요구사항 전체 목록</a>
         <a href="s11-tc-claim-mapping.html" class="nav-item"><span class="section-id">S11</span>TC-Claim 매핑 표</a>
         <a href="s12-standards-tracker.html" class="nav-item"><span class="section-id">S12</span>표준 발행 현황 추적기</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">규격 이행 가이드 (S13–S19)</div>
         <a href="s13-dtc-card.html" class="nav-item"><span class="section-id">S13</span>AI Developer Technical Card</a>
         <a href="s14-atfs-qfd.html" class="nav-item"><span class="section-id">S14</span>ATFS / QFD (Type III)</a>
         <a href="s15-42117-part1.html" class="nav-item"><span class="section-id">S15</span>42117-1 원칙 및 일반 요건</a>
         <a href="s16-type2-claim.html" class="nav-item"><span class="section-id">S16</span>Type II 자기선언 클레임 규격</a>
         <a href="s17-type1-tfl.html" class="nav-item active"><span class="section-id">S17</span>Type I TFL 인증 라벨 규격</a>
         <a href="s18-eco-label-comparison.html" class="nav-item"><span class="section-id">S18</span>Eco Label 체계 비교 분석</a>
+        <a href="s19-korea-ai-act.html" class="nav-item"><span class="section-id">S19</span>한국 AI 기본법 × TFL</a>
       </div>
     </div>
   </nav>
@@ -427,6 +451,109 @@
         </div>
       </div>
 
+      <!-- S17.1A AI 제품 카테고리 기준 개발 절차 (M-2 / S18 GAP-10 대응) -->
+      <div class="content-section">
+        <h2>S17.1A — AI 제품 카테고리별 인증 기준 개발 절차 <span class="s17-badge" style="font-size:10px;padding:3px 8px;margin-left:6px">S18 GAP-10 대응</span></h2>
+        <p style="font-size:0.9em;color:#444;margin-bottom:12px">
+          ISO 14024:2022 §5.5·§6.3~§6.4는 에코라벨 기관이 <strong>제품 카테고리별 환경 기준</strong>을
+          타당성 조사 → 이해관계자 협의 → 기준 확정 → 주기적 재검토 절차로 개발해야 함을 규정합니다.
+          TFL Type I 인증도 AI 제품 카테고리별로 구체적인 신뢰성 임계값과 측정 방법을 사전 정의해야
+          비교 가능하고 일관된 인증이 가능합니다.
+        </p>
+
+        <div class="note-box warning" style="margin-bottom:14px">
+          <span class="icon">⚠️</span>
+          <div>
+            <strong>현황 고지: AI 제품 카테고리 기준 미발행</strong><br>
+            현재 ISO/IEC SC 42에서 AI 제품 카테고리별 TFL 인증 기준(임계값)이 발행되지 않았습니다.
+            이로 인해 현재 TFL Type I 인증에서 의료 AI와 자율주행 AI가 동일한 Accuracy 임계값을
+            적용받는 문제가 발생할 수 있습니다. 본 섹션은 카테고리 기준 개발을 위한 <strong>절차 프레임워크</strong>를 제시합니다.
+          </div>
+        </div>
+
+        <h3 style="font-size:14px;color:#7c3aed;margin-bottom:10px">S17.1A.1 — 카테고리 기준 개발 5단계 절차</h3>
+        <div class="process-flow" style="margin-bottom:16px">
+          <div class="proc-step">
+            <div class="step-num">STEP 1</div>
+            <div class="step-name">타당성 조사</div>
+            <div class="step-desc">카테고리 필요성·시장 규모·기존 표준 검토</div>
+          </div>
+          <div class="proc-arrow">›</div>
+          <div class="proc-step">
+            <div class="step-num">STEP 2</div>
+            <div class="step-name">기준 제안</div>
+            <div class="step-desc">TCM 특성별 임계값 초안 + 측정 방법 선정</div>
+          </div>
+          <div class="proc-arrow">›</div>
+          <div class="proc-step">
+            <div class="step-num">STEP 3</div>
+            <div class="step-name">이해관계자 협의</div>
+            <div class="step-desc">공개 의견 수렴 (최소 60일)</div>
+          </div>
+          <div class="proc-arrow">›</div>
+          <div class="proc-step">
+            <div class="step-num">STEP 4</div>
+            <div class="step-name">기준 확정·발행</div>
+            <div class="step-desc">SC 42 승인 후 공식 카테고리 기준 발행</div>
+          </div>
+          <div class="proc-arrow">›</div>
+          <div class="proc-step">
+            <div class="step-num">STEP 5</div>
+            <div class="step-name">3년 주기 재검토</div>
+            <div class="step-desc">기술 변화 반영 · 기준 강화 또는 유지</div>
+          </div>
+        </div>
+
+        <h3 style="font-size:14px;color:#7c3aed;margin-bottom:10px">S17.1A.2 — 우선 개발 대상 고위험 AI 카테고리 (ISO 14024 §5.5 대응)</h3>
+        <table class="req-matrix">
+          <thead><tr><th>AI 카테고리</th><th>근거 (고위험 판단)</th><th>핵심 TFL 특성</th><th>기준 개발 우선순위</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>의료 진단 AI</strong></td>
+              <td>EU AI Act Annex III §5, 환자 안전 직결</td>
+              <td>Accuracy, Safety, Privacy, Reliability</td>
+              <td><span style="background:#fee2e2;color:#991b1b;border-radius:3px;padding:1px 6px;font-size:11px;font-weight:700">최우선</span></td>
+            </tr>
+            <tr>
+              <td><strong>채용·인사 평가 AI</strong></td>
+              <td>EU AI Act Annex III §4, 고용 기회 영향</td>
+              <td>Fairness, Transparency, Accountability</td>
+              <td><span style="background:#fee2e2;color:#991b1b;border-radius:3px;padding:1px 6px;font-size:11px;font-weight:700">최우선</span></td>
+            </tr>
+            <tr>
+              <td><strong>금융 신용 평가 AI</strong></td>
+              <td>EU AI Act Annex III §5, 금융 접근 영향</td>
+              <td>Fairness, Accuracy, Transparency</td>
+              <td><span style="background:#fef3c7;color:#713f12;border-radius:3px;padding:1px 6px;font-size:11px;font-weight:700">우선</span></td>
+            </tr>
+            <tr>
+              <td><strong>자율주행 AI</strong></td>
+              <td>공중 안전, IEC 61508 연계</td>
+              <td>Safety, Reliability, Robustness</td>
+              <td><span style="background:#fef3c7;color:#713f12;border-radius:3px;padding:1px 6px;font-size:11px;font-weight:700">우선</span></td>
+            </tr>
+            <tr>
+              <td><strong>범용 언어 모델 (LLM)</strong></td>
+              <td>광범위 사용, 할루시네이션 리스크</td>
+              <td>Accuracy, Transparency, Privacy</td>
+              <td><span style="background:#dcfce7;color:#166534;border-radius:3px;padding:1px 6px;font-size:11px;font-weight:700">일반</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note-box info" style="margin-top:12px">
+          <span class="icon">📌</span>
+          <div>
+            <strong>카테고리 기준 미발행 시 TFL Type I 심사 진행 방법</strong><br>
+            카테고리 기준이 발행되기 전까지, TFL Type I 인증을 위해서는:
+            ① CA가 도메인 전문가와 함께 <strong>맞춤형 심사 기준</strong>을 개발하고 신청 기관과 합의,
+            ② 합의된 기준을 심사 보고서에 명시적으로 기록,
+            ③ 공식 카테고리 기준 발행 시 기존 라이선스에 소급 적용 여부 결정.
+            &nbsp;|&nbsp; <em>참조: ISO 14024:2022 §6.3~§6.4 — 카테고리 기준 선택·개발 절차</em>
+          </div>
+        </div>
+      </div>
+
       <!-- S17.2 인증기관 요건 -->
       <div class="content-section">
         <h2>S17.2 — 인증기관(CA) 요건 및 자격</h2>
@@ -587,6 +714,96 @@
         </div>
       </div>
 
+      <!-- S17.3A 인증 후 변경 관리 (H-4 / S18 GAP-04 대응) -->
+      <div class="content-section">
+        <h2>S17.3A — 인증 후 변경 관리 절차 <span class="s17-badge" style="font-size:10px;padding:3px 8px;margin-left:6px">S18 GAP-04 대응</span></h2>
+        <p style="font-size:0.9em;color:#444">
+          ISO 14024:2022 §7.5에 따라, TFL Type I 라이선스 취득 후 AI 제품의 중요 변경이 발생하면
+          라이선시(개발자·공급자)는 <strong>CA에 즉시 통지</strong>해야 합니다. AI 제품의 특성상 모델 업데이트·재학습·
+          운영 환경 변경이 빈번하므로, 명확한 변경 관리 기준이 필요합니다.
+        </p>
+
+        <h3 style="font-size:14px;color:#7c3aed;margin-bottom:10px">S17.3A.1 — 변경 유형 분류</h3>
+        <table class="req-matrix" style="margin-bottom:16px">
+          <thead>
+            <tr>
+              <th>변경 유형</th>
+              <th>예시</th>
+              <th>조치</th>
+              <th>통지 기한</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="color:#991b1b">중요 변경 (Major)</strong></td>
+              <td>모델 아키텍처 변경, 학습 데이터 대규모 교체, 배포 도메인 변경, 주요 하이퍼파라미터 재설정</td>
+              <td><span class="req-mand">CA 즉시 통지 + 재심사 필수</span></td>
+              <td><strong>변경 확정 후 14일 이내</strong></td>
+            </tr>
+            <tr>
+              <td><strong style="color:#713f12">경미한 변경 (Minor)</strong></td>
+              <td>버그 수정 패치, 인퍼런스 최적화, 운영 환경 마이너 업데이트, 점진적 파인튜닝</td>
+              <td><span class="req-cond">자체 평가 후 CA에 기록 제출</span></td>
+              <td>분기 보고서 형태로 30일 이내</td>
+            </tr>
+            <tr>
+              <td><strong style="color:#374151">행정적 변경 (Admin)</strong></td>
+              <td>조직명 변경, 담당자 교체, 연락처 업데이트</td>
+              <td><span class="req-na">CA 통보 (서면)</span></td>
+              <td>변경 후 60일 이내</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="font-size:14px;color:#7c3aed;margin-bottom:10px">S17.3A.2 — 중요 변경 시 CA 재심사 프로세스</h3>
+        <div class="process-flow" style="margin-bottom:16px">
+          <div class="proc-step">
+            <div class="step-num">STEP 1</div>
+            <div class="step-name">변경 통지</div>
+            <div class="step-desc">14일 내 CA에 변경 내용·범위·영향 평가 제출</div>
+          </div>
+          <div class="proc-arrow">›</div>
+          <div class="proc-step">
+            <div class="step-num">STEP 2</div>
+            <div class="step-name">영향 분석</div>
+            <div class="step-desc">CA가 TFL 클레임 영향 여부·심사 필요 범위 결정</div>
+          </div>
+          <div class="proc-arrow">›</div>
+          <div class="proc-step">
+            <div class="step-num">STEP 3</div>
+            <div class="step-name">변경 심사</div>
+            <div class="step-desc">영향 있는 특성 재심사 (전체 재심사 또는 부분 심사)</div>
+          </div>
+          <div class="proc-arrow">›</div>
+          <div class="proc-step">
+            <div class="step-num">STEP 4</div>
+            <div class="step-name">라벨 유지/수정</div>
+            <div class="step-desc">재심사 합격 → 라벨 유효 · 불합격 → 일시 정지</div>
+          </div>
+        </div>
+
+        <h3 style="font-size:14px;color:#7c3aed;margin-bottom:8px">S17.3A.3 — 라이선스 일시 정지 및 취소 기준</h3>
+        <div class="note-box warning" style="margin-bottom:12px">
+          <span class="icon">⚠️</span>
+          <div>
+            <strong>라이선스 일시 정지 트리거</strong><br>
+            ① 중요 변경 미통지 (14일 초과) &nbsp;②&nbsp; 재심사 요청 후 90일 내 미응답
+            &nbsp;③&nbsp; CA 심사에서 특성 기준 미달 확인 &nbsp;④&nbsp; 허위 정보 제공 의심
+          </div>
+        </div>
+        <div class="note-box info">
+          <span class="icon">📌</span>
+          <div>
+            <strong>AI 제품 특화 고려사항</strong><br>
+            AI 모델은 지속적 학습(continual learning)·배포 후 업데이트(post-deployment update)가 일반적입니다.
+            TFL 프로그램은 <strong>변경 빈도에 따른 유효 기간 조정</strong>을 허용해야 합니다:
+            빈번한 업데이트 모델(예: 월별 재학습) → 유효 기간 6개월 이하 권고 /
+            안정적 모델(예: 연간 업데이트) → 유효 기간 최대 3년.
+            &nbsp;|&nbsp; <em>참조: ISO 14024:2022 §7.5, ISO 14020:2022 §6.9</em>
+          </div>
+        </div>
+      </div>
+
       <!-- S17.4 TFL 라벨 구성 요소 -->
       <div class="content-section">
         <h2>S17.4 — TFL 라벨 구성 요소 및 YAML 구조</h2>
@@ -719,6 +936,192 @@
             ② 라벨 사용 규정 위반 (그래픽 수정, 범위 초과 사용)<br>
             ③ CA의 감시 심사 불응 또는 거부<br>
             ④ 심사 시 허위 정보 제공이 사후 발견된 경우
+          </div>
+        </div>
+      </div>
+
+      <!-- S17.5A 인증 마크 명세 및 법적 보호 (M-1 / S18 GAP-03 대응) -->
+      <div class="content-section">
+        <h2>S17.5A — TFL 인증 마크 명세 및 법적 보호 <span class="s17-badge" style="font-size:10px;padding:3px 8px;margin-left:6px">S18 GAP-03 대응</span></h2>
+        <p style="font-size:0.9em;color:#444;margin-bottom:12px">
+          ISO 14024:2022 §7.6에 따라 에코라벨 기관은 인증 마크를 법적으로 보호해야 합니다.
+          TFL Type I 프로그램도 동일하게 <strong>TFL 인증 마크의 무단 사용을 방지하는 법적·절차적 수단</strong>을 갖추어야 합니다.
+        </p>
+
+        <h3 style="font-size:14px;color:#7c3aed;margin-bottom:10px">S17.5A.1 — TFL 마크 사양 (제안)</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+          <div style="border:2px solid #ddd6fe;border-radius:8px;padding:14px;background:#f5f0ff">
+            <div style="font-weight:700;color:#7c3aed;font-size:13px;margin-bottom:8px">시각적 요소 명세</div>
+            <table style="width:100%;font-size:12px;border-collapse:collapse">
+              <tr style="border-bottom:1px solid #ede9fe"><td style="padding:5px 0;color:#555;width:40%">마크 명칭</td><td style="padding:5px 6px"><strong>TFL™ (Type I)</strong></td></tr>
+              <tr style="border-bottom:1px solid #ede9fe"><td style="padding:5px 0;color:#555">색상 코드</td><td style="padding:5px 6px">#7c3aed (기본) / #fff (반전)</td></tr>
+              <tr style="border-bottom:1px solid #ede9fe"><td style="padding:5px 0;color:#555">최소 크기</td><td style="padding:5px 6px">15mm × 15mm (인쇄) / 48px × 48px (화면)</td></tr>
+              <tr style="border-bottom:1px solid #ede9fe"><td style="padding:5px 0;color:#555">필수 요소</td><td style="padding:5px 6px">라벨 ID + 발행 기관 약칭 + 유효 기간</td></tr>
+              <tr><td style="padding:5px 0;color:#555">파일 형식</td><td style="padding:5px 6px">SVG (벡터) + PNG (비트맵, ≥300 DPI)</td></tr>
+            </table>
+          </div>
+          <div style="border:2px solid #ddd6fe;border-radius:8px;padding:14px;background:#f5f0ff">
+            <div style="font-weight:700;color:#7c3aed;font-size:13px;margin-bottom:8px">라이선스 정책</div>
+            <ul style="font-size:12px;color:#444;padding-left:14px;line-height:1.7">
+              <li>TFL 마크는 <strong>CA가 발행한 라이선스 범위 내에서만</strong> 사용 가능</li>
+              <li>허용 사용처: 제품 문서, 웹사이트, 마케팅 자료 (심사 받은 제품 한정)</li>
+              <li>마크 수정 <strong>절대 금지</strong>: 색상 변경, 확대/왜곡, 다른 로고와 병합 불가</li>
+              <li>라이선스 만료 또는 취소 시 즉시 사용 중단 의무</li>
+              <li>심사 중인 제품에 "TFL 인증 중" 표현 사용 금지</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 style="font-size:14px;color:#7c3aed;margin-bottom:10px">S17.5A.2 — 법적 보호 요건 (ISO 14024 §7.6 대응)</h3>
+        <table class="req-matrix" style="margin-bottom:14px">
+          <thead><tr><th>요건</th><th>내용</th><th>근거</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>상표 등록</strong></td>
+              <td>TFL™ 마크는 프로그램 운영 국가에서 상표 등록하거나 이에 준하는 법적 보호 수단 확보</td>
+              <td>ISO 14024 §7.6 SHALL</td>
+            </tr>
+            <tr>
+              <td><strong>무단 사용 방지 정책</strong></td>
+              <td>CA는 TFL 마크 무단 사용에 대한 명확하고 공개적인 정책을 수립해야 합니다</td>
+              <td>ISO 14024 §7.6 SHALL</td>
+            </tr>
+            <tr>
+              <td><strong>침해 모니터링</strong></td>
+              <td>CA는 분기별 온라인·오프라인 TFL 마크 무단 사용 모니터링 수행</td>
+              <td>ISO 14024 §7.3 (공개 목록 유지)</td>
+            </tr>
+            <tr>
+              <td><strong>제재 절차</strong></td>
+              <td>무단 사용 확인 시: ① 경고장 발송 (14일 내 시정 요청) → ② 법적 조치 (미시정 시) → ③ 공개 목록에 부적합 표시</td>
+              <td>ISO 14024 §7.6</td>
+            </tr>
+            <tr>
+              <td><strong>유효 라벨 공개 목록</strong></td>
+              <td>CA는 현재 유효한 모든 TFL 라이선스의 공개 목록을 상시 관리하며 누구나 접근 가능해야 합니다</td>
+              <td>ISO 14024 §7.3 SHALL</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note-box info">
+          <span class="icon">📌</span>
+          <div>
+            <strong>현황 고지</strong>: ISO/IEC 42117-X는 현재 PWI 단계이므로 공식 TFL 마크 디자인이 미확정 상태입니다.
+            본 섹션의 마크 사양은 <strong>제안 초안</strong>이며, 표준 발행 및 공식 CA 설립 시 확정됩니다.
+            &nbsp;|&nbsp; <em>참조: ISO 14024:2022 §7.6 — ecolabelling body shall ensure its label is legally protected</em>
+          </div>
+        </div>
+      </div>
+
+      <!-- S17.5B 국제 상호인정 (L-1 / S18 GAP-05 대응) -->
+      <div class="content-section">
+        <h2>S17.5B — 국제 상호인정 및 다자간 협약
+          <span class="s17-badge" style="font-size:10px;padding:3px 8px;margin-left:6px">S18 GAP-05 대응</span>
+        </h2>
+        <p style="font-size:0.9em;color:#444;margin-bottom:12px">
+          ISO 14024 §7.5는 에코라벨 기관이 <strong>다른 국가·지역 인증 프로그램과의 상호인정 협약(MLA, Multilateral Recognition Agreement)</strong>을
+          수립할 것을 권장합니다. TFL Type I 인증이 국경을 초월한 신뢰 체계로 발전하려면
+          동등성 평가 기준 및 협약 절차가 필요합니다.
+        </p>
+
+        <div style="margin-bottom:16px">
+          <div class="clause-header">상호인정 체계 3단계 (ISO 14024 §7.5 대응)</div>
+          <div class="clause-body">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;padding:14px">
+              <div style="border:2px solid #7c3aed;border-radius:8px;padding:14px;background:#f5f0ff">
+                <div style="font-size:11px;font-weight:700;color:#7c3aed;margin-bottom:6px">STAGE 1 — 동등성 평가</div>
+                <div style="font-size:12px;color:#374151;line-height:1.5">
+                  두 TFL 프로그램(또는 타국 AI 신뢰성 인증)이 동등한 요건·절차를 가지는지 비교 평가<br><br>
+                  <strong>평가 기준:</strong><br>
+                  • CA 자격 및 독립성<br>
+                  • TC 요구사항 범위<br>
+                  • 심사 방법론<br>
+                  • 라벨 갱신 주기
+                </div>
+              </div>
+              <div style="border:2px solid #7c3aed;border-radius:8px;padding:14px;background:#f5f0ff">
+                <div style="font-size:11px;font-weight:700;color:#7c3aed;margin-bottom:6px">STAGE 2 — MLA 체결</div>
+                <div style="font-size:12px;color:#374151;line-height:1.5">
+                  동등성이 인정되면 다자간 상호인정 협약 체결<br><br>
+                  <strong>협약 내용:</strong><br>
+                  • 인증 결과 상호 수용 범위<br>
+                  • 심사 결과 공유 방식<br>
+                  • 분쟁 해결 절차<br>
+                  • 협약 유효 기간 및 갱신
+                </div>
+              </div>
+              <div style="border:2px solid #7c3aed;border-radius:8px;padding:14px;background:#f5f0ff">
+                <div style="font-size:11px;font-weight:700;color:#7c3aed;margin-bottom:6px">STAGE 3 — 유지 및 모니터링</div>
+                <div style="font-size:12px;color:#374151;line-height:1.5">
+                  협약 이행 상황 주기적 점검<br><br>
+                  <strong>유지 활동:</strong><br>
+                  • 연간 동등성 재확인<br>
+                  • 표준 개정 시 동등성 재평가<br>
+                  • 상호인정 목록 공개 유지<br>
+                  • 부적합 발견 시 협약 일시 정지
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 잠재적 MLA 대상 프로그램 -->
+        <div style="margin-bottom:16px">
+          <div class="clause-header">TFL 상호인정 잠재 대상 프로그램</div>
+          <div class="clause-body">
+            <table class="req-matrix">
+              <thead>
+                <tr>
+                  <th>지역·기관</th>
+                  <th>프로그램</th>
+                  <th>AI 신뢰성 관련 요건</th>
+                  <th>동등성 수준 (예비)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>EU</strong></td>
+                  <td>EU AI Act Conformity Assessment</td>
+                  <td>고위험 AI 시스템 제3자 적합성 평가 의무 (Art. 43)</td>
+                  <td>부분 동등 (위험 분류 기준 상이)</td>
+                </tr>
+                <tr>
+                  <td><strong>미국</strong></td>
+                  <td>NIST AI RMF (GOVERN / MAP / MEASURE / MANAGE)</td>
+                  <td>리스크 관리 프레임워크 — 자발적 적용</td>
+                  <td>방법론 참조 동등 (인증 제도 미확립)</td>
+                </tr>
+                <tr>
+                  <td><strong>ISO/IEC JTC1</strong></td>
+                  <td>ISO/IEC 42001 AI 관리 시스템 인증</td>
+                  <td>AI 거버넌스·리스크·투명성 요구사항</td>
+                  <td>거버넌스 레이어 동등 (TC 레이어 추가 필요)</td>
+                </tr>
+                <tr>
+                  <td><strong>영국</strong></td>
+                  <td>UK DSIT AI Assurance Framework</td>
+                  <td>AI 보증 방법론 및 감사 지침</td>
+                  <td>방법론 참조 동등</td>
+                </tr>
+                <tr>
+                  <td><strong>한국</strong></td>
+                  <td>과기정통부 AI 신뢰성 인증 (준비 중)</td>
+                  <td>ISO/IEC 42001 기반 AI 시스템 신뢰성 평가</td>
+                  <td>높은 동등성 가능 (42117-X 기반 공통 기반)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="note-box info">
+          <span class="icon">🌐</span>
+          <div>
+            <strong>현황 고지</strong>: ISO/IEC 42117-X는 현재 PWI 단계이므로 공식 MLA 체계는 미확립 상태입니다.
+            본 섹션은 <strong>미래 국제 협력을 위한 설계 지침</strong>이며, 표준 발행 후 IAF(International Accreditation Forum)
+            또는 ISO CASCO와 협의하여 구체화해야 합니다.
+            &nbsp;|&nbsp; <em>참조: ISO 14024:2022 §7.5 — Multilateral recognition</em>
           </div>
         </div>
       </div>
