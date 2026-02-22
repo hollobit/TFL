@@ -222,7 +222,7 @@
   <div class="stat-strip">
     <div class="sstat"><span class="sn">43</span><span class="sl">AI기본법 조문</span></div>
     <div class="sstat"><span class="sn">6</span><span class="sl">핵심 의무 조항</span></div>
-    <div class="sstat"><span class="sn">11</span><span class="sl">고영향 AI 분야</span></div>
+    <div class="sstat"><span class="sn">13</span><span class="sl">고영향 AI 분야</span></div>
     <div class="sstat"><span class="sn">5</span><span class="sl">사업자 책무 항목</span></div>
     <div class="sstat"><span class="sn">4</span><span class="sl">TFL 이행 유형</span></div>
     <div class="sstat"><span class="sn">28</span><span class="sl">TCM 신뢰성 특성</span></div>
@@ -1081,7 +1081,7 @@
     <div class="consid-card">
       <span class="c-id">CON-02</span>
       <p><strong>한국형 고영향 AI TCM 특성 확장</strong><br>
-      현재 28개 TCM 특성에서 한국 AI기본법의 <strong>11개 고영향 분야별 특화 요건</strong>을 반영한
+      현재 28개 TCM 특성에서 한국 AI기본법의 <strong>13개 고영향 분야별 특화 요건</strong>을 반영한
       서브-특성(Sub-characteristic)이 필요합니다.
       예: 채용 AI에서의 알고리즘 공정성 (TC-FAIR 확장),
       의료 AI에서의 임상적 효과성 (TC-EFFE 의료 서브),
@@ -1134,14 +1134,150 @@
       국제 AI 서울 정상회의 딥페이크 방지 이니셔티브와도 연계됩니다.</p>
     </div>
 
-    <div class="consid-card">
+    <div class="consid-card" style="padding:20px 24px">
       <span class="c-id">CON-08</span>
-      <p><strong>판단 가이드라인(고영향 AI 확인 기준) 반영</strong><br>
-      2026년 1월 29일 공개된 「고영향 인공지능 판단 가이드라인」은 이미지 기반 PDF로 제공되어
-      현재 상세 분석이 불가합니다.
-      해당 문서의 텍스트 버전 또는 OCR 추출 후, 11개 영역별 세부 판단 기준을
-      DTC의 "고영향 AI 해당 여부 판단 체크리스트"에 통합해야 합니다.
-      향후 가이드라인 업데이트 모니터링이 필요합니다.</p>
+      <p style="margin-bottom:10px"><strong>판단 가이드라인 OCR 분석 결과 반영 (2026-02-22 완료)</strong></p>
+      <p style="margin-bottom:12px">
+        「고영향 인공지능 판단 가이드라인」(2026.1.29 공개, 216p 이미지 기반 PDF)을 macOS Vision OCR로
+        추출하여 분석하였습니다. 핵심 판단 구조는 <strong>2단계 테스트</strong>로 구성됩니다:
+        <strong>1단계 — 13개 분야 해당 여부</strong>, <strong>2단계 — 위험도 비례성(점수제·HITL 기준)</strong>.
+        향후 텍스트 버전 공식 발행 시 재확인이 필요합니다.
+      </p>
+
+      <p style="margin:8px 0 6px;font-weight:700;color:#1e3a5f">▸ 13개 고영향 AI 분야 및 판단 기준 요약</p>
+      <div style="overflow-x:auto;margin-bottom:12px">
+        <table style="width:100%;border-collapse:collapse;font-size:0.8em">
+          <thead>
+            <tr style="background:#1e3a5f;color:#fff">
+              <th style="padding:6px 8px;text-align:left;width:5%">#</th>
+              <th style="padding:6px 8px;text-align:left;width:20%">분야</th>
+              <th style="padding:6px 8px;text-align:left">2단계 판단 기준 (핵심)</th>
+              <th style="padding:6px 8px;text-align:center;width:14%">기준값/임계</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:#f8f9fa">
+              <td style="padding:5px 8px;text-align:center;font-weight:700">1</td>
+              <td style="padding:5px 8px;font-weight:700">에너지 (전기·가스·열)</td>
+              <td style="padding:5px 8px">핵심 인프라 공급 중단 가능성, 50,000가구 이상 영향 규모</td>
+              <td style="padding:5px 8px;text-align:center">규모 임계 기준</td>
+            </tr>
+            <tr>
+              <td style="padding:5px 8px;text-align:center;font-weight:700">2</td>
+              <td style="padding:5px 8px;font-weight:700">먹는물 관리</td>
+              <td style="padding:5px 8px">수질 기준 자동 제어, 화학물질 투여량 결정 자동화 여부</td>
+              <td style="padding:5px 8px;text-align:center">자동제어 여부</td>
+            </tr>
+            <tr style="background:#f8f9fa">
+              <td style="padding:5px 8px;text-align:center;font-weight:700">3</td>
+              <td style="padding:5px 8px;font-weight:700">보건·의료</td>
+              <td style="padding:5px 8px">진단·처방 결정 보조 → HITL(의사 최종 확인) 없으면 고영향</td>
+              <td style="padding:5px 8px;text-align:center">HITL 여부</td>
+            </tr>
+            <tr>
+              <td style="padding:5px 8px;text-align:center;font-weight:700">4</td>
+              <td style="padding:5px 8px;font-weight:700">원자력 시설</td>
+              <td style="padding:5px 8px">운영 제어·안전 시스템 결정 개입 → 원자력안전법 연계</td>
+              <td style="padding:5px 8px;text-align:center">안전시스템 관여도</td>
+            </tr>
+            <tr style="background:#f8f9fa">
+              <td style="padding:5px 8px;text-align:center;font-weight:700">5</td>
+              <td style="padding:5px 8px;font-weight:700">범죄수사·체포</td>
+              <td style="padding:5px 8px">용의자 특정·체포 결정 보조 시 <strong>8점 이상</strong>이면 고영향 (점수제)</td>
+              <td style="padding:5px 8px;text-align:center;color:#b91c1c;font-weight:700">점수 ≥ 8</td>
+            </tr>
+            <tr>
+              <td style="padding:5px 8px;text-align:center;font-weight:700">6</td>
+              <td style="padding:5px 8px;font-weight:700">채용·인사 평가</td>
+              <td style="padding:5px 8px">서류 전형 자동 탈락 결정, 면접 평가 점수 자동 산출</td>
+              <td style="padding:5px 8px;text-align:center">자동 탈락 여부</td>
+            </tr>
+            <tr style="background:#f8f9fa">
+              <td style="padding:5px 8px;text-align:center;font-weight:700">7</td>
+              <td style="padding:5px 8px;font-weight:700">대출심사·신용</td>
+              <td style="padding:5px 8px">대출 승인·거절 결정 보조, <strong>4점 이상</strong>이면 고영향</td>
+              <td style="padding:5px 8px;text-align:center;color:#b91c1c;font-weight:700">점수 ≥ 4</td>
+            </tr>
+            <tr>
+              <td style="padding:5px 8px;text-align:center;font-weight:700">8</td>
+              <td style="padding:5px 8px;font-weight:700">교통 (4종)</td>
+              <td style="padding:5px 8px">자율주행·항공·철도·선박 — 운행 결정 관여 → 각 분야별 세부 기준</td>
+              <td style="padding:5px 8px;text-align:center">운행제어 관여도</td>
+            </tr>
+            <tr style="background:#f8f9fa">
+              <td style="padding:5px 8px;text-align:center;font-weight:700">9</td>
+              <td style="padding:5px 8px;font-weight:700">공공서비스</td>
+              <td style="padding:5px 8px">복지·보조금 수급 결정 자동화 — HITL 없으면 고영향</td>
+              <td style="padding:5px 8px;text-align:center">HITL 여부</td>
+            </tr>
+            <tr>
+              <td style="padding:5px 8px;text-align:center;font-weight:700">10</td>
+              <td style="padding:5px 8px;font-weight:700">교육 (입시·평가)</td>
+              <td style="padding:5px 8px">입학 사정 자동화, 학습 능력 자동 평가 결과 행정 직결</td>
+              <td style="padding:5px 8px;text-align:center">결과 행정 직결</td>
+            </tr>
+            <tr style="background:#f8f9fa">
+              <td style="padding:5px 8px;text-align:center;font-weight:700">11</td>
+              <td style="padding:5px 8px;font-weight:700">이민·출입국</td>
+              <td style="padding:5px 8px">비자·입국 허가 결정 보조, 바이오메트릭 매칭 활용 여부</td>
+              <td style="padding:5px 8px;text-align:center">결정 자동화</td>
+            </tr>
+            <tr>
+              <td style="padding:5px 8px;text-align:center;font-weight:700">12</td>
+              <td style="padding:5px 8px;font-weight:700">사법·행정 처분</td>
+              <td style="padding:5px 8px">재판 양형 보조, 행정처분 자동 산출</td>
+              <td style="padding:5px 8px;text-align:center">처분 직결 여부</td>
+            </tr>
+            <tr style="background:#f8f9fa">
+              <td style="padding:5px 8px;text-align:center;font-weight:700">13</td>
+              <td style="padding:5px 8px;font-weight:700">선거·투표</td>
+              <td style="padding:5px 8px">투·개표 결과 처리 자동화, 유권자 정보 분석 활용</td>
+              <td style="padding:5px 8px;text-align:center">선거법 연계</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+        <div style="background:#fff8e1;border:1px solid #f59e0b;border-radius:6px;padding:12px">
+          <p style="margin:0 0 6px;font-weight:700;color:#92400e">점수제 적용 분야 (CON-08)</p>
+          <p style="margin:0 0 4px;font-size:0.85em">
+            <strong>범죄수사·체포</strong>: 위험도 항목별 가중치 합산 ≥ 8점 → 고영향<br>
+            — 생체인식 활용 +3점, 자동 결정 +3점, 취약계층 대상 +2점 등
+          </p>
+          <p style="margin:0;font-size:0.85em">
+            <strong>대출심사·신용</strong>: 합산 ≥ 4점 → 고영향<br>
+            — 자동 거절 +2점, 개인 맞춤 금리 +1점, 대안 심사 수단 부재 +1점 등
+          </p>
+        </div>
+        <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:6px;padding:12px">
+          <p style="margin:0 0 6px;font-weight:700;color:#15803d">HITL(Human-in-the-Loop) 면제 기준</p>
+          <p style="margin:0;font-size:0.85em">
+            다음 요건 <strong>모두</strong> 충족 시 HITL 없어도 고영향 비해당:<br>
+            ① 결과 이의신청 절차 명문화<br>
+            ② 실시간 모니터링 시스템 운영<br>
+            ③ 오류 발생 시 자동 중단·인계 메커니즘<br>
+            ④ 연 1회 이상 편향 감사 실시
+          </p>
+        </div>
+      </div>
+
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:12px;margin-bottom:10px">
+        <p style="margin:0 0 4px;font-weight:700;color:#1e40af">▸ 고영향 AI 확인 절차 (DTC 체크리스트 통합 방안)</p>
+        <p style="margin:0;font-size:0.85em">
+          ① <strong>사전 자가진단</strong> (30일 전): DTC §2 "intended_use_categories"에서 13개 분야 해당 여부 체크<br>
+          ② <strong>2단계 점수 계산</strong>: 해당 분야의 위험도 항목 점수 산출 → 임계값 초과 시 고영향 판정<br>
+          ③ <strong>확인 신청</strong>: 과기정통부 제출 (법정 30일 처리) — DTC 전체를 첨부 증거로 활용 가능<br>
+          ④ <strong>확인서 보관</strong>: DTC §8 regulatory_compliance에 고영향확인번호 기재<br>
+          ⑤ <strong>갱신</strong>: 시스템 중요 변경 또는 3년 경과 시 재확인 (DTC update_frequency 연동)
+        </p>
+      </div>
+
+      <div class="note-box" style="margin:0;font-size:0.83em">
+        <span class="icon">⚠️</span>
+        <div>OCR 추출 결과 기반 (Vision Framework, 2026-02-22). 일부 점수 임계값·서식 양식은 공식 텍스트 버전 발행 후 재확인 필요합니다.
+        판단 가이드라인 원문 부록 서식에는 ①사업자 정보, ②AI시스템 개요, ③분야별 체크리스트, ④위험도 점수표, ⑤HITL 적용 계획이 포함됩니다.</div>
+      </div>
     </div>
   </div>
 
@@ -1200,7 +1336,7 @@
         </tr>
         <tr>
           <td><strong>§33</strong><br>고영향 확인</td>
-          <td>11개 분야 고영향 여부 확인 신청</td>
+          <td>13개 분야 고영향 여부 확인 신청 (판단가이드라인 기준)</td>
           <td>해당 분야 사업자</td>
           <td><span class="tfl-t2">II</span> <span class="tfl-t1">I</span></td>
           <td>DTC 전체 + 분야별 TC</td>

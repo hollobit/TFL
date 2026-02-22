@@ -967,6 +967,16 @@
                 <span class="field-req req-optional">O</span>
                 <span class="field-desc">적용 규제 준수 현황: EU AI Act, GDPR, NIST AI RMF 등</span>
               </div>
+              <div class="dtc-field-item">
+                <span class="field-name">incident_reporting_timeline</span>
+                <span class="field-req req-optional">O</span>
+                <span class="field-desc">한국 AI기본법 §32 최첨단 AI 사고 보고 타임라인 — {24h: "중대사고 1차 보고", 7d: "원인 분석 보고", 15d: "재발방지 계획 제출"}. CON-05 연계</span>
+              </div>
+              <div class="dtc-field-item">
+                <span class="field-name">domestic_representative</span>
+                <span class="field-req req-optional">O</span>
+                <span class="field-desc">해외 AI 사업자 국내대리인 정보 (AI기본법 §36) — {name, organization, contact_email, appointed_date}. 매출 1조원 이상 등 기준 해당 시 필수 기재. CON-06 연계</span>
+              </div>
             </div>
           </div>
 
@@ -1328,6 +1338,15 @@
     <span class="sk">    outcome:</span> <span class="sv">passed</span>
     <span class="sk">    scope:</span> <span class="sv">TC-FC-001~005, TC-BF-001~003</span>
 <span class="sk">incident_reporting_url:</span> <span class="sv">https://example.ai/report-incident</span>
+<span class="sk">incident_reporting_timeline:</span>   <span class="sc"># AI기본법 §32 CON-05</span>
+  <span class="sk">  24h:</span> <span class="sv">중대사고 1차 보고 (과기정통부)</span>
+  <span class="sk">  7d:</span> <span class="sv">원인 분석 및 중간 보고</span>
+  <span class="sk">  15d:</span> <span class="sv">재발방지 계획 제출</span>
+<span class="sk">domestic_representative:</span>   <span class="sc"># AI기본법 §36 CON-06 (해외 사업자 해당 시)</span>
+  <span class="sk">  name:</span> <span class="sv">김국내</span>
+  <span class="sk">  organization:</span> <span class="sv">Example Korea Ltd.</span>
+  <span class="sk">  contact_email:</span> <span class="sv">kr-rep@example.ai</span>
+  <span class="sk">  appointed_date:</span> <span class="sv">"2026-02-01"</span>
 <span class="sk">update_frequency:</span> <span class="sv">annual + upon_major_update</span>
 
 <span class="sc">## §9 Environmental Impact</span>

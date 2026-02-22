@@ -247,8 +247,8 @@
             <div class="stat-label">§7.2 금지 표현<br>(사용 절대 불가)</div>
           </div>
           <div class="stat-card">
-            <span class="stat-num">2</span>
-            <div class="stat-label">권장 적용 Level<br>(Level 1 · Level 2)</div>
+            <span class="stat-num">17</span>
+            <div class="stat-label">선택 클레임 유형<br>(§7.2~§7.18 카탈로그)</div>
           </div>
           <div class="stat-card">
             <span class="stat-num">77</span>
@@ -855,6 +855,250 @@
   <span class="y-key">location</span>:          <span class="y-str">"https://api.translatenow.example/transparency"</span>
   <span class="y-key">communication_type</span>: <span class="y-str">"B2B"</span>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S16.6A Selected Claims 카탈로그 -->
+      <div class="content-section" id="s16-6a-selected-claims">
+        <h2>S16.6A — 선택 클레임 카탈로그 (Selected Claims §7.2~§7.18)</h2>
+        <p>아래 17개 <strong>선택 클레임(Selected Claims)</strong>은 AI 제품이 Type II 자기선언 방식으로
+          사용할 수 있는 표준화된 클레임 레이블입니다. 각 클레임은 하나 이상의 TCM 특성에 매핑되며,
+          §7.1.2 a–q 진술 요건을 모두 충족하는 방식으로 선언되어야 합니다.</p>
+        <div class="note-box info" style="margin-bottom:16px">
+          <span class="icon">ℹ️</span>
+          <div>
+            <strong>사용 방법</strong>: 아래 클레임 레이블 중 해당 AI 제품에 적용 가능한 항목을 선택하고,
+            S16.3 YAML 템플릿의 <code>selected_claim_label</code> 필드에 입력하십시오.
+            각 클레임의 <strong>핵심 증거 요건</strong>을 반드시 충족해야 하며, 연계된 S03 Simple Claim을
+            근거 템플릿으로 활용할 수 있습니다.
+          </div>
+        </div>
+
+        <!-- 배지 그리드 -->
+        <div class="catalog-row" style="margin-bottom:20px">
+          <span class="cat-badge" style="background:#eff6ff;color:#1d4ed8;border-color:#93c5fd">7.2 HITL enabled</span>
+          <span class="cat-badge" style="background:#eff6ff;color:#1d4ed8;border-color:#93c5fd">7.3 Low demographic bias</span>
+          <span class="cat-badge" style="background:#eff6ff;color:#1d4ed8;border-color:#93c5fd">7.4 Robust against adversarial attacks</span>
+          <span class="cat-badge" style="background:#eff6ff;color:#1d4ed8;border-color:#93c5fd">7.5 Parameter efficiency</span>
+          <span class="cat-badge" style="background:#eff6ff;color:#1d4ed8;border-color:#93c5fd">7.6 Safe-guarded</span>
+          <span class="cat-badge" style="background:#eff6ff;color:#1d4ed8;border-color:#93c5fd">7.7 Benchmark-verified functional correctness</span>
+          <span class="cat-badge" style="background:#eff6ff;color:#1d4ed8;border-color:#93c5fd">7.8 Synthetic data content</span>
+          <span class="cat-badge" style="background:#eff6ff;color:#1d4ed8;border-color:#93c5fd">7.9 Provenance-verified</span>
+          <span class="cat-badge" style="background:#eff6ff;color:#1d4ed8;border-color:#93c5fd">7.10 Opt-in data content</span>
+          <span class="cat-badge" style="background:#eff6ff;color:#1d4ed8;border-color:#93c5fd">7.11 Privacy-preserving</span>
+          <span class="cat-badge" style="background:#eff6ff;color:#1d4ed8;border-color:#93c5fd">7.12 Data minimization</span>
+          <span class="cat-badge" style="background:#eff6ff;color:#1d4ed8;border-color:#93c5fd">7.13 Transparent</span>
+          <span class="cat-badge" style="background:#eff6ff;color:#1d4ed8;border-color:#93c5fd">7.14 Reduced energy consumption</span>
+          <span class="cat-badge" style="background:#eff6ff;color:#1d4ed8;border-color:#93c5fd">7.15 Reduced compute use</span>
+          <span class="cat-badge" style="background:#eff6ff;color:#1d4ed8;border-color:#93c5fd">7.16 Transfer-learning ready</span>
+          <span class="cat-badge" style="background:#eff6ff;color:#1d4ed8;border-color:#93c5fd">7.17 Reusable foundation model</span>
+          <span class="cat-badge" style="background:#eff6ff;color:#1d4ed8;border-color:#93c5fd">7.18 Explainable</span>
+        </div>
+
+        <!-- 카탈로그 상세 테이블 -->
+        <div style="overflow-x:auto">
+        <table class="req-matrix">
+          <thead>
+            <tr>
+              <th style="width:36px">§</th>
+              <th style="min-width:200px">클레임 레이블</th>
+              <th style="min-width:160px">한국어 설명</th>
+              <th style="min-width:180px">TCM 특성 연계</th>
+              <th style="min-width:200px">S03 Simple Claim 참조</th>
+              <th style="min-width:220px">핵심 증거 요건</th>
+              <th style="width:70px">권장 CA</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="item-id">7.2</td>
+              <td><strong>HITL (Human-in-the-loop) enabled</strong></td>
+              <td>인간 개입 루프 지원 — AI 의사결정에 인간이 개입·검토할 수 있는 구조임을 선언</td>
+              <td><code>Controllability (#6)</code><br><code>Intervenability (#11)</code><br><code>Autonomy (#19)</code></td>
+              <td>SC-Controllability-001~003<br>SC-Intervenability-001~003<br>SC-Autonomy-001~003</td>
+              <td>HITL 개입 지점·빈도 문서화; 인간 검토 절차 명시; 자동 처리 비율 수치 포함</td>
+              <td><span class="req-apply req-mand" style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd">Type II</span></td>
+            </tr>
+            <tr>
+              <td class="item-id">7.3</td>
+              <td><strong>Low demographic bias</strong></td>
+              <td>낮은 인구통계학적 편향 — 성별·연령·인종 등 보호 속성 집단 간 성능 격차가 기준치 이하임을 선언</td>
+              <td><code>Bias/Fairness (#4)</code></td>
+              <td>SC-Bias-Fairness-001<br>SC-Bias-Fairness-002<br>SC-Bias-Fairness-003</td>
+              <td>집단별 공정성 지표(Equalized Odds, SPD 등) 수치; 측정 기준 표준(예: ISO/IEC TR 24027) 명시</td>
+              <td><span class="req-apply req-mand" style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd">Type II</span></td>
+            </tr>
+            <tr>
+              <td class="item-id">7.4</td>
+              <td><strong>Robust against adversarial attacks</strong></td>
+              <td>적대적 공격 강건성 — 적대적 입력 또는 조작에 대한 성능 유지 능력을 선언</td>
+              <td><code>Robustness (#3)</code><br><code>Resilience (#15)</code><br><code>Security (#8)</code></td>
+              <td>SC-Robustness-001~003<br>SC-Resilience-001~003<br>SC-Security-001~003</td>
+              <td>적대적 테스트(FGSM, PGD 등) 결과; 성능 저하 임계값; 공격 유형 및 방어 메커니즘 명시</td>
+              <td><span class="req-apply req-mand" style="background:#fce7f3;color:#9d174d;border:1px solid #f9a8d4">Type I/II</span></td>
+            </tr>
+            <tr>
+              <td class="item-id">7.5</td>
+              <td><strong>Parameter efficiency</strong></td>
+              <td>파라미터 효율성 — 유사 성능 대비 모델 파라미터 수가 효율적임을 선언</td>
+              <td><code>Efficiency (#13)</code><br><code>Quality (#25)</code></td>
+              <td>SC-Efficiency-001~003<br>SC-Quality-001~003</td>
+              <td>파라미터 수 명시; 비교 기준 모델 및 성능 대비 파라미터 비율; 추론 비용(FLOPs) 측정치</td>
+              <td><span class="req-apply req-mand" style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd">Type II</span></td>
+            </tr>
+            <tr>
+              <td class="item-id">7.6</td>
+              <td><strong>Safe-guarded</strong></td>
+              <td>안전장치 적용 — 유해 출력·오용 방지를 위한 기술적 안전장치가 구현되었음을 선언</td>
+              <td><code>Safety (#7)</code><br><code>Harm (#22)</code><br><code>Controllability (#6)</code></td>
+              <td>SC-Safety-001~003<br>SC-Harm-001~003</td>
+              <td>안전장치 유형 목록(필터·거부·레드팀 등); 위험 시나리오별 차단율; FDIS 42005 기반 위험 평가 문서</td>
+              <td><span class="req-apply req-mand" style="background:#fce7f3;color:#9d174d;border:1px solid #f9a8d4">Type I/II</span></td>
+            </tr>
+            <tr>
+              <td class="item-id">7.7</td>
+              <td><strong>Benchmark-verified functional correctness</strong></td>
+              <td>벤치마크 검증 기능적 정확성 — 공개 벤치마크에서 측정·검증된 기능 정확성을 선언</td>
+              <td><code>Functional Correctness (#12)</code><br><code>Reliability (#2)</code></td>
+              <td>SC-Functional_Correctness-001~003<br>SC-Reliability-001~003</td>
+              <td>벤치마크 이름·버전·점수 명시; 측정 환경 문서화; 재현 가능한 평가 방법 기술(§7.5.2.f)</td>
+              <td><span class="req-apply req-mand" style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd">Type II</span></td>
+            </tr>
+            <tr>
+              <td class="item-id">7.8</td>
+              <td><strong>Synthetic data content</strong></td>
+              <td>합성 데이터 사용 공개 — 학습 데이터에 합성(생성형) 데이터가 포함됨을 투명하게 선언</td>
+              <td><code>Transparency (#5)</code><br><code>Quality (#25)</code><br><code>Authenticity (#17)</code></td>
+              <td>SC-Transparency-001~003<br>SC-Quality-001~003<br>SC-Authenticity-001</td>
+              <td>합성 데이터 비율(%); 생성 방법·도구·모델 명시; 품질 검증 절차; 실제 데이터 대비 성능 비교</td>
+              <td><span class="req-apply req-mand" style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd">Type II</span></td>
+            </tr>
+            <tr>
+              <td class="item-id">7.9</td>
+              <td><strong>Provenance-verified</strong></td>
+              <td>출처 검증 — 학습 데이터 또는 모델 가중치의 출처가 추적·검증됨을 선언</td>
+              <td><code>Authenticity (#17)</code><br><code>Transparency (#5)</code><br><code>Integrity (#18)</code></td>
+              <td>SC-Authenticity-001~003<br>SC-Transparency-001<br>SC-Integrity-001</td>
+              <td>데이터 출처 추적 체계 설명; C2PA 또는 동등 표준 적용 여부; 라이선스·저작권 검토 결과</td>
+              <td><span class="req-apply req-mand" style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd">Type II</span></td>
+            </tr>
+            <tr>
+              <td class="item-id">7.10</td>
+              <td><strong>Opt-in data content</strong></td>
+              <td>동의 기반 데이터 사용 — 학습 데이터 주체의 명시적 동의(opt-in)를 획득하였음을 선언</td>
+              <td><code>Privacy (#16)</code><br><code>Autonomy (#19)</code></td>
+              <td>SC-Privacy-001~003<br>SC-Autonomy-001~003</td>
+              <td>데이터 동의 기록 비율(%); 동의 수집 절차 문서; 철회 절차 명시; GDPR/개인정보보호법 준수 여부</td>
+              <td><span class="req-apply req-mand" style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd">Type II</span></td>
+            </tr>
+            <tr>
+              <td class="item-id">7.11</td>
+              <td><strong>Privacy-preserving</strong></td>
+              <td>개인정보 보호 — 기술적 방법(차분 프라이버시, 연합학습 등)으로 개인정보가 보호됨을 선언</td>
+              <td><code>Privacy (#16)</code></td>
+              <td>SC-Privacy-001<br>SC-Privacy-002<br>SC-Privacy-003</td>
+              <td>적용 기술 명시(DP ε값, k-anonymity 등); MIA(멤버십 추론 공격) 거부율; ISO/IEC TS 5723 기준 참조</td>
+              <td><span class="req-apply req-mand" style="background:#fce7f3;color:#9d174d;border:1px solid #f9a8d4">Type I/II</span></td>
+            </tr>
+            <tr>
+              <td class="item-id">7.12</td>
+              <td><strong>Data minimization</strong></td>
+              <td>데이터 최소화 — 목적 달성에 필요한 최소한의 데이터만 수집·처리함을 선언</td>
+              <td><code>Privacy (#16)</code></td>
+              <td>SC-Privacy-002<br>SC-Privacy-003</td>
+              <td>수집 데이터 항목 목록 및 각 항목의 필요성 근거; 불필요 데이터 삭제 정책; GDPR §5(1)(c) 준수 문서</td>
+              <td><span class="req-apply req-mand" style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd">Type II</span></td>
+            </tr>
+            <tr>
+              <td class="item-id">7.13</td>
+              <td><strong>Transparent</strong></td>
+              <td>투명성 — AI 시스템의 목적·한계·의사결정 과정이 이해관계자에게 공개됨을 선언</td>
+              <td><code>Transparency (#5)</code><br><code>Accountability (#1)</code></td>
+              <td>SC-Transparency-001<br>SC-Transparency-002<br>SC-Transparency-003</td>
+              <td>공개 문서 목록(모델 카드, 데이터시트 등); 이용자 고지 방법; 의사결정 과정 설명 가능 여부</td>
+              <td><span class="req-apply req-mand" style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd">Type II</span></td>
+            </tr>
+            <tr>
+              <td class="item-id">7.14</td>
+              <td><strong>Reduced energy consumption</strong></td>
+              <td>에너지 소비 감소 — 동등 성능 기준 대비 에너지 소비가 측정 가능하게 감소하였음을 선언</td>
+              <td><code>Efficiency (#13)</code></td>
+              <td>SC-Efficiency-001<br>SC-Efficiency-002<br>SC-Efficiency-003</td>
+              <td>추론·학습 단계별 에너지 소비량(kWh 또는 CO₂eq); 기준 모델 대비 감소율(%); 측정 환경 명시</td>
+              <td><span class="req-apply req-mand" style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd">Type II</span></td>
+            </tr>
+            <tr>
+              <td class="item-id">7.15</td>
+              <td><strong>Reduced compute use</strong></td>
+              <td>컴퓨팅 자원 사용 감소 — 동등 성능 기준 대비 연산량(FLOPs, GPU 시간)이 감소하였음을 선언</td>
+              <td><code>Efficiency (#13)</code><br><code>Quality (#25)</code></td>
+              <td>SC-Efficiency-001~003<br>SC-Quality-001</td>
+              <td>FLOPs 또는 GPU·TPU 시간 측정치; 기준 모델 대비 감소율; 양자화·프루닝 등 최적화 방법 명시</td>
+              <td><span class="req-apply req-mand" style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd">Type II</span></td>
+            </tr>
+            <tr>
+              <td class="item-id">7.16</td>
+              <td><strong>Transfer-learning ready</strong></td>
+              <td>전이학습 준비 완료 — 외부 도메인·태스크로의 파인튜닝이 가능하도록 설계·문서화되었음을 선언</td>
+              <td><code>Quality (#25)</code><br><code>Efficiency (#13)</code></td>
+              <td>SC-Quality-001~003<br>SC-Efficiency-001</td>
+              <td>파인튜닝 가이드라인·API 명세 공개; 지원 프레임워크 목록; 대표 태스크 전이학습 성능 예시</td>
+              <td><span class="req-apply req-mand" style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd">Type II</span></td>
+            </tr>
+            <tr>
+              <td class="item-id">7.17</td>
+              <td><strong>Reusable foundation model</strong></td>
+              <td>재사용 가능 기반 모델 — 다양한 다운스트림 태스크에 재사용 가능하도록 설계·허가된 기반 모델임을 선언</td>
+              <td><code>Quality (#25)</code><br><code>Transparency (#5)</code></td>
+              <td>SC-Quality-001~003<br>SC-Transparency-001</td>
+              <td>허가 범위(라이선스) 명시; 재사용 가능 태스크 유형 목록; 공개 API/허깅페이스 등 접근 경로; 사용 조건</td>
+              <td><span class="req-apply req-mand" style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd">Type II</span></td>
+            </tr>
+            <tr>
+              <td class="item-id">7.18</td>
+              <td><strong>Explainable</strong></td>
+              <td>설명 가능 — AI 출력의 근거·이유를 이해관계자가 이해 가능한 방식으로 제공함을 선언</td>
+              <td><code>Explainability (#9)</code><br><code>Interpretability (#24)</code><br><code>Transparency (#5)</code></td>
+              <td>SC-Explainability-001~003<br>SC-Interpretability-001~003</td>
+              <td>XAI 방법 명시(SHAP, LIME, Attention 등); 설명 출력 예시; 대상 이해관계자별 설명 형식 구분</td>
+              <td><span class="req-apply req-mand" style="background:#fce7f3;color:#9d174d;border:1px solid #f9a8d4">Type I/II</span></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
+        <!-- YAML 필드 추가 안내 -->
+        <div style="margin-top:20px">
+          <h3 style="font-size:14px;color:#1d4ed8;margin-bottom:10px">YAML 템플릿 적용 방법</h3>
+          <p style="font-size:0.87em;color:#555;margin-bottom:8px">
+            S16.3 YAML 템플릿의 <code>claim</code> 블록에 <code>selected_claim_label</code> 필드를 추가하여 선택 클레임을 명시하십시오.
+            복수의 클레임을 동시에 선언할 수 있습니다.
+          </p>
+          <div class="yaml-block" style="font-size:11.5px">
+<span class="y-comment"># Selected Claim 적용 예시 (S16.3 YAML 템플릿 확장)</span>
+<span class="y-key">claim</span>:
+  <span class="y-key">characteristic</span>:        <span class="y-str">"Privacy"</span>
+  <span class="y-key">level</span>:                   <span class="y-tag">2</span>
+  <span class="y-key">selected_claim_labels</span>:  <span class="y-comment"># §7.2~§7.18 중 해당 항목 선택</span>
+    - <span class="y-str">"7.11 Privacy-preserving"</span>
+    - <span class="y-str">"7.12 Data minimization"</span>
+    - <span class="y-str">"7.10 Opt-in data content"</span>
+  <span class="y-key">claim_text</span>:             <span class="y-str">"[System]은 차분 프라이버시(ε=0.5)를 적용하고 수집 데이터를 [X]개 항목으로 최소화하며, 전체 학습 데이터의 [Y]%가 명시적 동의(opt-in) 기반입니다"</span>
+  <span class="y-key">actual_result</span>:          <span class="y-str">"ε=0.5, 데이터 항목 [N]개, opt-in 비율 [Y]%"</span>
+          </div>
+        </div>
+
+        <!-- GA 갭 분석 노트 -->
+        <div class="note-box warning" style="margin-top:16px">
+          <span class="icon">⚠️</span>
+          <div>
+            <strong>GAP-06 대응 — 자기선언 클레임의 공신력 제한</strong><br>
+            §7.2~§7.18 선택 클레임은 Type II 자기선언으로, 독립적 검증이 포함되지 않습니다.
+            <strong>고위험 AI 제품</strong>(고영향 AI 분야 §33, 최첨단 AI §32)에서는
+            <strong>Type I (제3자 인증)</strong> 또는 <strong>Type III (독립 V&amp;V)</strong>와 병행하여
+            공신력을 보완할 것을 권고합니다. → <a href="s17-type1-tfl.html" style="color:#1d4ed8">S17 Type I</a>,
+            <a href="s14-atfs-qfd.html" style="color:#1d4ed8">S14 Type III</a>
           </div>
         </div>
       </div>
