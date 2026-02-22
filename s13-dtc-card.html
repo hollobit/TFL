@@ -648,10 +648,97 @@
       <div class="content-section">
         <h2>S13.3 — DTC 구조 초안 (TYPE IV 문서 설계)</h2>
 
-        <p style="font-size:0.87em;color:#555;margin-bottom:14px">
+        <p style="font-size:0.87em;color:#555;margin-bottom:12px">
           아래 DTC 구조는 TFL 28개 특성 준수 주장을 체계적으로 기술하기 위한 9개 필수 섹션과 4개 선택 섹션으로 구성됩니다.
           <strong>M = Mandatory (필수)</strong>, <strong>R = Recommended (권장)</strong>, <strong>O = Optional (선택)</strong>
         </p>
+
+        <!-- MC/SC 범례 + 섹션 적용 범위 -->
+        <div style="border:1px solid #e2e8f0;border-radius:8px;padding:14px 16px;margin-bottom:16px;background:#fafbfc">
+          <p style="margin:0 0 10px;font-weight:700;font-size:0.87em;color:#1a4480">▸ 섹션 활용 유형 — Model Card(MC) vs System Card(SC)</p>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;font-size:0.82em">
+            <span style="display:inline-flex;align-items:center;gap:6px">
+              <span style="background:#dbeafe;border:1px solid #93c5fd;border-radius:4px;padding:2px 9px;font-weight:700;color:#1d4ed8;font-size:11px">MC</span>
+              <span style="color:#555">모델 구조·성능·학습 데이터 중심 — HuggingFace·Google MCT 형태로 주로 활용</span>
+            </span>
+            <span style="display:inline-flex;align-items:center;gap:6px">
+              <span style="background:#fef3c7;border:1px solid #fcd34d;border-radius:4px;padding:2px 9px;font-weight:700;color:#92400e;font-size:11px">SC</span>
+              <span style="color:#555">시스템 수준 안전·거버넌스 중심 — OpenAI·Anthropic·Google DeepMind 형태로 주로 활용</span>
+            </span>
+            <span style="display:inline-flex;align-items:center;gap:6px">
+              <span style="background:#dcfce7;border:1px solid #86efac;border-radius:4px;padding:2px 9px;font-weight:700;color:#15803d;font-size:11px">공통</span>
+              <span style="color:#555">Model Card / System Card 공통 필수 정보</span>
+            </span>
+          </div>
+          <div style="overflow-x:auto">
+            <table style="width:100%;border-collapse:collapse;font-size:0.8em">
+              <thead>
+                <tr style="background:#1a4480;color:#fff">
+                  <th style="padding:5px 8px;text-align:left;width:7%">섹션</th>
+                  <th style="padding:5px 8px;text-align:left;width:30%">이름</th>
+                  <th style="padding:5px 8px;text-align:center;width:8%">유형</th>
+                  <th style="padding:5px 8px;text-align:left">MC/SC 활용 핵심 이유</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background:#f8f9fa">
+                  <td style="padding:4px 8px;font-family:monospace;font-weight:700">§1</td>
+                  <td style="padding:4px 8px">System Identity &amp; Overview</td>
+                  <td style="padding:4px 8px;text-align:center"><span style="background:#dcfce7;border:1px solid #86efac;border-radius:3px;padding:1px 6px;font-weight:700;color:#15803d;font-size:10px">공통</span></td>
+                  <td style="padding:4px 8px;color:#444">모든 카드의 첫 번째 메타데이터 — 모델명·버전·개발사 식별</td>
+                </tr>
+                <tr>
+                  <td style="padding:4px 8px;font-family:monospace;font-weight:700">§2</td>
+                  <td style="padding:4px 8px">Intended Use &amp; Deployment</td>
+                  <td style="padding:4px 8px;text-align:center"><span style="background:#dcfce7;border:1px solid #86efac;border-radius:3px;padding:1px 6px;font-weight:700;color:#15803d;font-size:10px">공통</span></td>
+                  <td style="padding:4px 8px;color:#444">MC: 적합·부적합 사용 사례 공개 / SC: 사용 제한·금지 정책 기술</td>
+                </tr>
+                <tr style="background:#f8f9fa">
+                  <td style="padding:4px 8px;font-family:monospace;font-weight:700">§3</td>
+                  <td style="padding:4px 8px">TFL Trustworthiness Claims</td>
+                  <td style="padding:4px 8px;text-align:center"><span style="background:#dcfce7;border:1px solid #86efac;border-radius:3px;padding:1px 6px;font-weight:700;color:#15803d;font-size:10px">공통</span></td>
+                  <td style="padding:4px 8px;color:#444">DTC 고유 섹션 — TFL 표준 준수 주장 (MC·SC 모두 적용)</td>
+                </tr>
+                <tr>
+                  <td style="padding:4px 8px;font-family:monospace;font-weight:700">§4</td>
+                  <td style="padding:4px 8px">TC Requirement Verification</td>
+                  <td style="padding:4px 8px;text-align:center"><span style="background:#dcfce7;border:1px solid #86efac;border-radius:3px;padding:1px 6px;font-weight:700;color:#15803d;font-size:10px">공통</span></td>
+                  <td style="padding:4px 8px;color:#444">DTC 고유 섹션 — TC-REQ 충족 증거 (MC·SC 모두 필요)</td>
+                </tr>
+                <tr style="background:#f8f9fa">
+                  <td style="padding:4px 8px;font-family:monospace;font-weight:700">§5</td>
+                  <td style="padding:4px 8px">Performance Evidence</td>
+                  <td style="padding:4px 8px;text-align:center"><span style="background:#dbeafe;border:1px solid #93c5fd;border-radius:3px;padding:1px 6px;font-weight:700;color:#1d4ed8;font-size:10px">MC</span></td>
+                  <td style="padding:4px 8px;color:#444">HF model-index, Google quantitative_analysis 대응 — 벤치마크·슬라이스 성능</td>
+                </tr>
+                <tr>
+                  <td style="padding:4px 8px;font-family:monospace;font-weight:700">§6</td>
+                  <td style="padding:4px 8px">Risk, Safety &amp; Harm</td>
+                  <td style="padding:4px 8px;text-align:center"><span style="background:#fef3c7;border:1px solid #fcd34d;border-radius:3px;padding:1px 6px;font-weight:700;color:#92400e;font-size:10px">SC</span></td>
+                  <td style="padding:4px 8px;color:#444">OpenAI Preparedness·Anthropic RSP·Google FSF 대응 — CBRN·위험 등급·정렬 평가</td>
+                </tr>
+                <tr style="background:#f8f9fa">
+                  <td style="padding:4px 8px;font-family:monospace;font-weight:700">§7</td>
+                  <td style="padding:4px 8px">Transparency &amp; Explainability</td>
+                  <td style="padding:4px 8px;text-align:center"><span style="background:#dbeafe;border:1px solid #93c5fd;border-radius:3px;padding:1px 6px;font-weight:700;color:#1d4ed8;font-size:10px">MC</span></td>
+                  <td style="padding:4px 8px;color:#444">HF Training Data·Architecture 섹션, Google training_data 대응 — 모델 내부 투명성</td>
+                </tr>
+                <tr>
+                  <td style="padding:4px 8px;font-family:monospace;font-weight:700">§8</td>
+                  <td style="padding:4px 8px">Governance &amp; Accountability</td>
+                  <td style="padding:4px 8px;text-align:center"><span style="background:#fef3c7;border:1px solid #fcd34d;border-radius:3px;padding:1px 6px;font-weight:700;color:#92400e;font-size:10px">SC</span></td>
+                  <td style="padding:4px 8px;color:#444">RSP 문서 참조·인시던트 보고·제3자 감사 — 시스템 거버넌스 체계</td>
+                </tr>
+                <tr style="background:#f8f9fa">
+                  <td style="padding:4px 8px;font-family:monospace;font-weight:700">§9</td>
+                  <td style="padding:4px 8px">Environmental &amp; Social Impact</td>
+                  <td style="padding:4px 8px;text-align:center"><span style="background:#dcfce7;border:1px solid #86efac;border-radius:3px;padding:1px 6px;font-weight:700;color:#15803d;font-size:10px">공통</span></td>
+                  <td style="padding:4px 8px;color:#444">HF co2_eq_emissions 대응 (MC); SC에서는 사회적 영향 평가로 활용</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
         <div class="dtc-structure">
           <div class="dtc-header-bar">
@@ -665,6 +752,7 @@
               <span class="dtc-sec-num">§1</span>
               <span class="dtc-sec-title">System Identity &amp; Overview — AI 시스템 식별 정보</span>
               <span class="badge" style="background:#fde8e8;color:#c0392b;border-color:#f5b7b1;font-size:10px">MANDATORY</span>
+              <span style="background:#dcfce7;border:1px solid #86efac;border-radius:3px;padding:1px 7px;font-size:10px;font-weight:700;color:#15803d">공통</span>
               <span class="dtc-sec-origin">← HF model card (model_details) + Google MCT</span>
             </div>
             <div class="dtc-fields">
@@ -717,6 +805,7 @@
               <span class="dtc-sec-num">§2</span>
               <span class="dtc-sec-title">Intended Use &amp; Deployment Context — 사용 목적 및 배포 맥락</span>
               <span class="badge" style="background:#fde8e8;color:#c0392b;border-color:#f5b7b1;font-size:10px">MANDATORY</span>
+              <span style="background:#dcfce7;border:1px solid #86efac;border-radius:3px;padding:1px 7px;font-size:10px;font-weight:700;color:#15803d">공통</span>
               <span class="dtc-sec-origin">← HF (Direct Use / Out-of-Scope) + Google MCT (considerations.use_cases)</span>
             </div>
             <div class="dtc-fields">
@@ -754,6 +843,7 @@
               <span class="dtc-sec-num">§3</span>
               <span class="dtc-sec-title">TFL Trustworthiness Claims — TFL 신뢰성 특성 주장</span>
               <span class="badge" style="background:#fde8e8;color:#c0392b;border-color:#f5b7b1;font-size:10px">MANDATORY</span>
+              <span style="background:#dcfce7;border:1px solid #86efac;border-radius:3px;padding:1px 7px;font-size:10px;font-weight:700;color:#15803d">공통</span>
               <span class="dtc-sec-origin">← TFL S03 Simple Claim 카탈로그 · S04 TCM-TC 매핑</span>
             </div>
             <div class="dtc-fields">
@@ -786,6 +876,7 @@
               <span class="dtc-sec-num">§4</span>
               <span class="dtc-sec-title">TC Requirement Verification — TC 요구사항 검증 결과</span>
               <span class="badge" style="background:#fde8e8;color:#c0392b;border-color:#f5b7b1;font-size:10px">MANDATORY</span>
+              <span style="background:#dcfce7;border:1px solid #86efac;border-radius:3px;padding:1px 7px;font-size:10px;font-weight:700;color:#15803d">공통</span>
               <span class="dtc-sec-origin">← TFL S04 TC-REQ 매핑 · S10 요구사항 전체 목록</span>
             </div>
             <div class="dtc-fields">
@@ -818,6 +909,7 @@
               <span class="dtc-sec-num">§5</span>
               <span class="dtc-sec-title">Performance Evidence — 성능 증거 및 평가 결과</span>
               <span class="badge" style="background:#fde8e8;color:#c0392b;border-color:#f5b7b1;font-size:10px">MANDATORY</span>
+              <span style="background:#dbeafe;border:1px solid #93c5fd;border-radius:3px;padding:1px 7px;font-size:10px;font-weight:700;color:#1d4ed8">MC 주</span>
               <span class="dtc-sec-origin">← HF model-index + Google MCT quantitative_analysis</span>
             </div>
             <div class="dtc-fields">
@@ -855,6 +947,7 @@
               <span class="dtc-sec-num">§6</span>
               <span class="dtc-sec-title">Risk, Safety &amp; Harm Assessment — 위험·안전·피해 평가</span>
               <span class="badge" style="background:#fde8e8;color:#c0392b;border-color:#f5b7b1;font-size:10px">MANDATORY</span>
+              <span style="background:#fef3c7;border:1px solid #fcd34d;border-radius:3px;padding:1px 7px;font-size:10px;font-weight:700;color:#92400e">SC 주</span>
               <span class="dtc-sec-origin">← OpenAI Preparedness + Anthropic RSP + Google DeepMind FSF + FDIS 42005</span>
             </div>
             <div class="dtc-fields">
@@ -897,6 +990,7 @@
               <span class="dtc-sec-num">§7</span>
               <span class="dtc-sec-title">Transparency &amp; Explainability — 투명성 및 설명가능성</span>
               <span class="badge" style="background:#fff3cd;color:#856404;border-color:#ffc107;font-size:10px">RECOMMENDED</span>
+              <span style="background:#dbeafe;border:1px solid #93c5fd;border-radius:3px;padding:1px 7px;font-size:10px;font-weight:700;color:#1d4ed8">MC 주</span>
               <span class="dtc-sec-origin">← TFL #6 Explainability · DTS 6254 · FDIS 12792</span>
             </div>
             <div class="dtc-fields">
@@ -934,6 +1028,7 @@
               <span class="dtc-sec-num">§8</span>
               <span class="dtc-sec-title">Governance &amp; Accountability — 거버넌스 및 책임성</span>
               <span class="badge" style="background:#fde8e8;color:#c0392b;border-color:#f5b7b1;font-size:10px">MANDATORY</span>
+              <span style="background:#fef3c7;border:1px solid #fcd34d;border-radius:3px;padding:1px 7px;font-size:10px;font-weight:700;color:#92400e">SC 주</span>
               <span class="dtc-sec-origin">← TFL #3 Accountability · 42001 AIMS · FDIS 38507</span>
             </div>
             <div class="dtc-fields">
@@ -986,6 +1081,7 @@
               <span class="dtc-sec-num">§9</span>
               <span class="dtc-sec-title">Environmental &amp; Social Impact — 환경·사회적 영향</span>
               <span class="badge" style="background:#fff3cd;color:#856404;border-color:#ffc107;font-size:10px">RECOMMENDED</span>
+              <span style="background:#dcfce7;border:1px solid #86efac;border-radius:3px;padding:1px 7px;font-size:10px;font-weight:700;color:#15803d">공통</span>
               <span class="dtc-sec-origin">← HF co2_eq_emissions + DTR 20226 (Environmental Sustainability)</span>
             </div>
             <div class="dtc-fields">
@@ -1037,6 +1133,265 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <!-- ═══ Model Card 속성명 비교표 ═══ -->
+        <h3 style="margin-top:28px;margin-bottom:10px;color:#1d4ed8">
+          <span style="background:#dbeafe;border:1px solid #93c5fd;border-radius:4px;padding:2px 10px;font-size:13px;font-weight:700;color:#1d4ed8;margin-right:8px">MC</span>
+          Model Card 주요 속성명 비교 — HuggingFace · Google MCT · DTC
+        </h3>
+        <p style="font-size:0.84em;color:#555;margin-bottom:10px">
+          동일 정보를 세 규격에서 어떤 속성 이름으로 기술하는지 비교합니다. HF = YAML Front Matter 또는 MD 섹션, Google = MCT JSON Schema 경로.
+        </p>
+        <div style="overflow-x:auto;margin-bottom:24px">
+          <table style="width:100%;border-collapse:collapse;font-size:0.8em">
+            <thead>
+              <tr style="background:#1d4ed8;color:#fff">
+                <th style="padding:7px 10px;text-align:left;width:18%">속성 (정보 유형)</th>
+                <th style="padding:7px 10px;text-align:left;width:24%">HuggingFace Model Card</th>
+                <th style="padding:7px 10px;text-align:left;width:28%">Google Model Card Toolkit</th>
+                <th style="padding:7px 10px;text-align:left">DTC 필드 (섹션)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background:#f8faff">
+                <td style="padding:6px 10px;font-weight:700">모델/시스템 이름</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>model_id</code> (YAML)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>model_details.name</code></td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>ai_system_name</code> <span style="color:#888">(§1)</span></td>
+              </tr>
+              <tr>
+                <td style="padding:6px 10px;font-weight:700">버전</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>model_id</code> 내 포함 관행</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>model_details.version</code></td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>ai_system_version</code> <span style="color:#888">(§1)</span></td>
+              </tr>
+              <tr style="background:#f8faff">
+                <td style="padding:6px 10px;font-weight:700">개발사/팀</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>co</code> (YAML) / README 헤더</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>model_details.owners[]</code></td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>developer_organization</code> <span style="color:#888">(§1)</span></td>
+              </tr>
+              <tr>
+                <td style="padding:6px 10px;font-weight:700">라이선스</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>license</code> (YAML)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>model_details.licenses[].name</code></td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>regulatory_compliance.license</code> <span style="color:#888">(§8)</span></td>
+              </tr>
+              <tr style="background:#f8faff">
+                <td style="padding:6px 10px;font-weight:700">파이프라인/AI 유형</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>pipeline_tag</code> (YAML)</td>
+                <td style="padding:6px 10px;color:#888;font-size:11px">(공식 필드 없음)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>ai_system_type</code> <span style="color:#888">(§1)</span></td>
+              </tr>
+              <tr>
+                <td style="padding:6px 10px;font-weight:700">사용 목적</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>## Direct Use</code> (MD 섹션)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>considerations.use_cases[]</code></td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>intended_use_cases</code> <span style="color:#888">(§2)</span></td>
+              </tr>
+              <tr style="background:#f8faff">
+                <td style="padding:6px 10px;font-weight:700">제외 사용 사례</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>## Out-of-Scope Use</code> (MD)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>considerations.ethical_considerations[]</code></td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>out_of_scope_uses</code> <span style="color:#888">(§2)</span></td>
+              </tr>
+              <tr>
+                <td style="padding:6px 10px;font-weight:700">대상 사용자</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>## Intended Users</code> (MD)</td>
+                <td style="padding:6px 10px;color:#888;font-size:11px">(공식 필드 없음)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>intended_users</code> <span style="color:#888">(§2)</span></td>
+              </tr>
+              <tr style="background:#f8faff">
+                <td style="padding:6px 10px;font-weight:700">벤치마크·평가</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>model-index[].results[]</code> (YAML)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>quantitative_analysis<br>.performance_metrics[]</code></td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>benchmark_results</code> <span style="color:#888">(§5)</span></td>
+              </tr>
+              <tr>
+                <td style="padding:6px 10px;font-weight:700">슬라이스 성능 분해</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>eval_results[].dataset.split</code></td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>quantitative_analysis.graphics[]</code></td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>disaggregated_metrics</code> <span style="color:#888">(§5)</span></td>
+              </tr>
+              <tr style="background:#f8faff">
+                <td style="padding:6px 10px;font-weight:700">학습 데이터</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>datasets[]</code> (YAML) +<br><code>## Training Data</code> (MD)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>training_data<br>.training_datasets[]</code></td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>training_data_description</code> <span style="color:#888">(§7)</span></td>
+              </tr>
+              <tr>
+                <td style="padding:6px 10px;font-weight:700">모델 아키텍처</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>## Training Procedure</code> (MD)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>model_details.graphics[]</code></td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>model_architecture_description</code> <span style="color:#888">(§7)</span></td>
+              </tr>
+              <tr style="background:#f8faff">
+                <td style="padding:6px 10px;font-weight:700">한계·편향</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>## Bias, Risks, and Limitations</code> (MD)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>considerations.limitations[]</code></td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>limitations_and_known_issues</code> <span style="color:#888">(§7)</span></td>
+              </tr>
+              <tr>
+                <td style="padding:6px 10px;font-weight:700">설명가능성 기법</td>
+                <td style="padding:6px 10px;color:#888;font-size:11px">(공식 필드 없음)</td>
+                <td style="padding:6px 10px;color:#888;font-size:11px">(공식 필드 없음)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>explainability_methods</code> <span style="color:#888">(§7)</span></td>
+              </tr>
+              <tr style="background:#f8faff">
+                <td style="padding:6px 10px;font-weight:700">CO₂ 배출량</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>co2_eq_emissions</code> (YAML)</td>
+                <td style="padding:6px 10px;color:#888;font-size:11px">(공식 필드 없음)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>co2_eq_emissions</code> <span style="color:#888">(§9)</span></td>
+              </tr>
+              <tr>
+                <td style="padding:6px 10px;font-weight:700">책임 연락처</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>## Model Card Contact</code> (MD)</td>
+                <td style="padding:6px 10px;color:#888;font-size:11px">(공식 필드 없음)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>responsible_contact</code> <span style="color:#888">(§8)</span></td>
+              </tr>
+              <tr style="background:#f8faff">
+                <td style="padding:6px 10px;font-weight:700">인용 정보</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>citation</code> / BibTeX (MD)</td>
+                <td style="padding:6px 10px;color:#888;font-size:11px">(공식 필드 없음)</td>
+                <td style="padding:6px 10px;color:#888;font-size:11px">DTC에 없음 (§1 tfl_standard_ref로 대체)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ═══ System Card 속성명 비교표 ═══ -->
+        <h3 style="margin-top:4px;margin-bottom:10px;color:#92400e">
+          <span style="background:#fef3c7;border:1px solid #fcd34d;border-radius:4px;padding:2px 10px;font-size:13px;font-weight:700;color:#92400e;margin-right:8px">SC</span>
+          System Card 주요 속성명 비교 — Google DeepMind · Anthropic · OpenAI · DTC
+        </h3>
+        <p style="font-size:0.84em;color:#555;margin-bottom:10px">
+          시스템 수준 안전·거버넌스 정보를 각 규격에서 어떤 개념/필드로 다루는지 비교합니다.
+          Google = FSF (Frontier Safety Framework) / Gemini System Card 기준, Anthropic = RSP (Responsible Scaling Policy) / Claude System Card 기준.
+        </p>
+        <div style="overflow-x:auto;margin-bottom:8px">
+          <table style="width:100%;border-collapse:collapse;font-size:0.8em">
+            <thead>
+              <tr style="background:#92400e;color:#fff">
+                <th style="padding:7px 10px;text-align:left;width:16%">속성 (정보 유형)</th>
+                <th style="padding:7px 10px;text-align:left;width:20%">Google DeepMind<br><span style="font-weight:400;font-size:10px">FSF / Gemini System Card</span></th>
+                <th style="padding:7px 10px;text-align:left;width:20%">Anthropic<br><span style="font-weight:400;font-size:10px">RSP / Claude System Card</span></th>
+                <th style="padding:7px 10px;text-align:left;width:22%">OpenAI<br><span style="font-weight:400;font-size:10px">Preparedness Framework v2</span></th>
+                <th style="padding:7px 10px;text-align:left">DTC 필드 (섹션)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background:#fffbf0">
+                <td style="padding:6px 10px;font-weight:700">안전 수준 등급</td>
+                <td style="padding:6px 10px;font-size:11px">Gemini Evaluation Framework<br>Level 1–4</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px">ASL-1 ~ ASL-4<br><span style="font-family:sans-serif">(AI Safety Level)</span></td>
+                <td style="padding:6px 10px;font-size:11px">Low / Medium / High / Critical<br>(per domain)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>ai_safety_level</code> <span style="color:#888">(§6)</span></td>
+              </tr>
+              <tr>
+                <td style="padding:6px 10px;font-weight:700">CBRN 위험 평가</td>
+                <td style="padding:6px 10px;font-size:11px">Dangerous Capabilities Eval<br>(Bio·Chem·Nuclear·Rad)</td>
+                <td style="padding:6px 10px;font-size:11px">CBRN Uplift<br>(ASL-3 트리거 기준)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px">CBRN domain score</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>frontier_safety_assessment<br>.domain: CBRN</code> <span style="color:#888">(§6)</span></td>
+              </tr>
+              <tr style="background:#fffbf0">
+                <td style="padding:6px 10px;font-weight:700">사이버 보안 위험</td>
+                <td style="padding:6px 10px;font-size:11px">Cyber Offense Capability Eval</td>
+                <td style="padding:6px 10px;font-size:11px">Cyber (ASL 체계)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px">Cybersecurity domain score</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>frontier_safety_assessment<br>.domain: Cyber</code> <span style="color:#888">(§6)</span></td>
+              </tr>
+              <tr>
+                <td style="padding:6px 10px;font-weight:700">자율성 / AI R&amp;D</td>
+                <td style="padding:6px 10px;font-size:11px">Agent Autonomy (FSF)</td>
+                <td style="padding:6px 10px;font-size:11px">AI Autonomy / Self-replication<br>(ASL-4 트리거)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px">AI Autonomy domain score</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>frontier_safety_assessment<br>.domain: ML_RnD</code> <span style="color:#888">(§6)</span></td>
+              </tr>
+              <tr style="background:#fffbf0">
+                <td style="padding:6px 10px;font-weight:700">조작·영향력 위험</td>
+                <td style="padding:6px 10px;font-size:11px">Influence Operations (FSF)</td>
+                <td style="padding:6px 10px;font-size:11px">Manipulation / Persuasion<br>(ASL 체계)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px">Persuasion domain score</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>frontier_safety_assessment<br>.domain: Manipulation</code> <span style="color:#888">(§6)</span></td>
+              </tr>
+              <tr>
+                <td style="padding:6px 10px;font-weight:700">정렬 평가</td>
+                <td style="padding:6px 10px;font-size:11px">Gemini spec 준수 평가<br>(Constitutional AI)</td>
+                <td style="padding:6px 10px;font-size:11px">Constitutional AI +<br>Claude's Character 평가</td>
+                <td style="padding:6px 10px;font-size:11px">Alignment faking ·<br>Scheming · Deception eval</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>alignment_evaluation</code> <span style="color:#888">(§6)</span></td>
+              </tr>
+              <tr style="background:#fffbf0">
+                <td style="padding:6px 10px;font-weight:700">레드팀·평가</td>
+                <td style="padding:6px 10px;font-size:11px">DeepMind internal red team +<br>external evaluators</td>
+                <td style="padding:6px 10px;font-size:11px">Anthropic internal eval +<br>ARC Evals</td>
+                <td style="padding:6px 10px;font-size:11px">OpenAI red team +<br>METR · Apollo · SecureBio</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>vv_test_results</code> <span style="color:#888">(§5)</span></td>
+              </tr>
+              <tr>
+                <td style="padding:6px 10px;font-weight:700">외부 감사</td>
+                <td style="padding:6px 10px;color:#888;font-size:11px">(공개 공식 필드 없음)</td>
+                <td style="padding:6px 10px;font-size:11px">Apollo Research, ARC</td>
+                <td style="padding:6px 10px;font-size:11px">METR, Apollo Research,<br>SecureBio</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>third_party_audits</code> <span style="color:#888">(§8)</span></td>
+              </tr>
+              <tr style="background:#fffbf0">
+                <td style="padding:6px 10px;font-weight:700">거버넌스 정책 문서</td>
+                <td style="padding:6px 10px;font-size:11px">FSF (Frontier Safety<br>Framework)</td>
+                <td style="padding:6px 10px;font-size:11px">RSP (Responsible<br>Scaling Policy)</td>
+                <td style="padding:6px 10px;font-size:11px">Preparedness Framework v2</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>governance_policy_ref</code> <span style="color:#888">(§8)</span></td>
+              </tr>
+              <tr>
+                <td style="padding:6px 10px;font-weight:700">인시던트 보고 채널</td>
+                <td style="padding:6px 10px;color:#888;font-size:11px">(공식 필드 없음)</td>
+                <td style="padding:6px 10px;color:#888;font-size:11px">(내부 정책 문서)</td>
+                <td style="padding:6px 10px;color:#888;font-size:11px">(공식 필드 없음)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>incident_reporting_url</code> <span style="color:#888">(§8)</span></td>
+              </tr>
+              <tr style="background:#fffbf0">
+                <td style="padding:6px 10px;font-weight:700">사용 금지·정책</td>
+                <td style="padding:6px 10px;font-size:11px">Google DeepMind<br>Terms of Service</td>
+                <td style="padding:6px 10px;font-size:11px">Claude Usage Policy<br>(hardcoded 포함)</td>
+                <td style="padding:6px 10px;font-size:11px">OpenAI Usage Policies<br>+ Preparedness thresholds</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>out_of_scope_uses</code> <span style="color:#888">(§2)</span></td>
+              </tr>
+              <tr>
+                <td style="padding:6px 10px;font-weight:700">위험 항목 구조</td>
+                <td style="padding:6px 10px;font-size:11px">FSF categorical thresholds<br>(레벨별 임계)</td>
+                <td style="padding:6px 10px;font-size:11px">ASL escalation thresholds<br>(특성별 트리거)</td>
+                <td style="padding:6px 10px;font-size:11px">Domain-level score<br>(Low~Critical 4단계)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>risk_items[]</code> <span style="color:#888">(§6)</span></td>
+              </tr>
+              <tr style="background:#fffbf0">
+                <td style="padding:6px 10px;font-weight:700">피해 카테고리</td>
+                <td style="padding:6px 10px;font-size:11px">Gemini Safety Filters<br>(CSAM·Hate·Dangerous)</td>
+                <td style="padding:6px 10px;font-size:11px">Hardcoded + Softcoded<br>behaviors 체계</td>
+                <td style="padding:6px 10px;font-size:11px">Harm categories +<br>Content policies</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>harm_categories[]</code> <span style="color:#888">(§6)</span></td>
+              </tr>
+              <tr>
+                <td style="padding:6px 10px;font-weight:700">책임 연락처</td>
+                <td style="padding:6px 10px;color:#888;font-size:11px">(공식 구조화 필드 없음)</td>
+                <td style="padding:6px 10px;color:#888;font-size:11px">(공식 구조화 필드 없음)</td>
+                <td style="padding:6px 10px;color:#888;font-size:11px">(공식 구조화 필드 없음)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>responsible_contact</code> <span style="color:#888">(§8)</span></td>
+              </tr>
+              <tr style="background:#fffbf0">
+                <td style="padding:6px 10px;font-weight:700">사고 보고 타임라인</td>
+                <td style="padding:6px 10px;color:#888;font-size:11px">(공식 필드 없음)</td>
+                <td style="padding:6px 10px;color:#888;font-size:11px">(공식 필드 없음)</td>
+                <td style="padding:6px 10px;color:#888;font-size:11px">(공식 필드 없음)</td>
+                <td style="padding:6px 10px;font-family:monospace;font-size:11px"><code>incident_reporting_timeline</code> <span style="color:#888">(§8, AI기본법)</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note-box info" style="margin-top:6px;font-size:0.83em">
+          <span class="icon">💡</span>
+          <div>위 두 비교표에서 DTC에만 존재하는 필드 (<code>ai_safety_level</code>, <code>alignment_evaluation</code>, <code>incident_reporting_url</code>, <code>domestic_representative</code> 등)는 기존 규격들의 공식 필드가 없어 구조화 비교가 불가능했던 정보를 DTC가 최초로 표준화한 것입니다. 반대로 인용 정보(<code>citation</code>)는 HF에만 있고 DTC에는 없는 필드입니다.</div>
         </div>
       </div>
 
