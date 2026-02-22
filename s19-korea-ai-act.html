@@ -168,13 +168,13 @@
   </style>
 </head>
 <body>
-
-<!-- Sidebar Navigation -->
-<nav class="sidebar">
+<div style="display:flex;min-height:100vh">
+  <nav class="sidebar">
   <div class="sidebar-header">
-    <div class="sidebar-logo">TFL</div>
-    <div class="sidebar-title">ISO/IEC 42117-X</div>
+    <div class="logo">TFL Guide</div>
+    <div class="version">v1.0 · 2026-02-22</div>
   </div>
+  <div class="sidebar-nav">
   <div class="nav-section">
     <div class="nav-label">메인</div>
     <a href="index.html" class="nav-item">📋 가이드 홈</a>
@@ -204,17 +204,19 @@
     <a href="s18-eco-label-comparison.html" class="nav-item"><span class="section-id">S18</span>Eco Label 체계 비교 분석</a>
     <a href="s19-korea-ai-act.html" class="nav-item active"><span class="section-id">S19</span>한국 AI 기본법 × TFL</a>
   </div>
+  </div>
 </nav>
 
-<!-- Main Content -->
-<main class="main-content">
-  <div class="page-header">
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div class="page-header">
     <span class="s19-badge">S19</span>
     <span style="margin-left:10px;font-size:13px;color:#64748b;">한국 AI 기본법 × TFL 적용 분석</span>
   </div>
   <h1 class="page-title">한국 인공지능기본법 × ISO/IEC 42117-X TFL<br>
     <span style="font-size:0.7em;font-weight:600;color:#64748b;">신뢰·안전·투명성 의무 이행을 위한 TFL 활용 체계</span>
   </h1>
+
+    <div class="content-area">
 
   <!-- 통계 바 -->
   <div class="stat-strip">
@@ -1172,7 +1174,9 @@
     <span>ISO/IEC 42117-X TFL 운영 가이드 · S19 한국 AI기본법 × TFL 적용 분석</span>
     <span>한국 AI기본법 시행: 2026.01.22 · 가이드라인 기준일: 2026.01.22</span>
   </div>
-</main>
+</div><!-- /content-area -->
+  </div><!-- /main flex -->
+</div><!-- /outer flex -->
 
 </body>
 </html>
