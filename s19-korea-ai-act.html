@@ -279,121 +279,200 @@
 
   <!-- S19.1 고영향 AI 확인 -->
   <div class="content-section">
-    <h2>S19.1 — 고영향 인공지능 확인 <span class="law-art">§33 / 시행령 §25</span></h2>
+    <h2>S19.1 — 고영향 인공지능 확인 <span class="law-art">§33 / 시행령 §24~26 / 판단 가이드라인 v4</span></h2>
 
-    <p>AI기본법 제33조는 <strong>11개 영역</strong>에서 기본권 침해·안전·윤리 위험이 큰 AI를
-    "고영향 인공지능"으로 지정하며, 사업자는 자신의 AI가 해당하는지 확인을 신청할 수 있습니다.
-    TFL은 이 확인 절차에서 신뢰성 근거 자료를 제공하는 핵심 수단입니다.</p>
+    <p>AI기본법 제2조제4호는 <strong>"사람의 생명, 신체의 안전 및 기본권에 중대한 영향을 미치거나
+    위험을 초래할 우려가 있는"</strong> AI를 고영향 인공지능으로 정의하며, 과기부 가이드라인(2026.2)은
+    <strong>10개 법적 분야·13개 세부 도메인</strong>에 대한 2단계 판단 기준을 제시합니다.
+    TFL DTC는 이 확인 절차의 핵심 근거 문서 역할을 합니다.</p>
 
-    <h4 style="color:#1e3a5f;margin:12px 0 8px">11개 고영향 AI 분야 및 TFL 연관 특성</h4>
-    <div class="hiarea-grid">
-      <div class="hiarea-card">
-        <div class="hi-num">영역 1</div>
-        <div class="hi-name">에너지·물·금융 인프라</div>
-        <div class="hi-ex">전력망 AI, 수처리 AI, 신용평가 AI</div>
-        <div class="hi-tfl">TC: Safety, Risk, Reliability</div>
+    <!-- 2단계 판단 흐름 -->
+    <h4 style="color:#1e3a5f;margin:14px 0 8px">▶ 고영향 AI 2단계 판단 방법론</h4>
+    <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0;align-items:center;margin-bottom:16px">
+      <div style="background:#1e3a5f;color:#fff;border-radius:8px;padding:14px 16px;text-align:center">
+        <div style="font-size:11px;opacity:0.7;margin-bottom:4px">1단계 조건</div>
+        <div style="font-size:14px;font-weight:700">영역(Domain) 테스트</div>
+        <div style="font-size:12px;margin-top:6px;opacity:0.85">10개 법적 분야 중<br>어느 하나에 해당?</div>
       </div>
-      <div class="hiarea-card">
-        <div class="hi-num">영역 2</div>
-        <div class="hi-name">이동수단 안전</div>
-        <div class="hi-ex">자율주행, 항공 운항 보조</div>
-        <div class="hi-tfl">TC: Functional Safety, Autonomy</div>
+      <div style="text-align:center;font-size:24px;color:#1e3a5f;padding:0 8px">+</div>
+      <div style="background:#1a6b38;color:#fff;border-radius:8px;padding:14px 16px;text-align:center">
+        <div style="font-size:11px;opacity:0.7;margin-bottom:4px">2단계 조건</div>
+        <div style="font-size:14px;font-weight:700">영향(Impact) 테스트</div>
+        <div style="font-size:12px;margin-top:6px;opacity:0.85">생명·신체·기본권에<br>중대한 영향/위험?</div>
       </div>
-      <div class="hiarea-card">
-        <div class="hi-num">영역 3</div>
-        <div class="hi-name">의료·응급·돌봄</div>
-        <div class="hi-ex">의료 진단 AI, 처방 보조, 원격 모니터링</div>
-        <div class="hi-tfl">TC: Safety, Reliability, Effectiveness</div>
-      </div>
-      <div class="hiarea-card">
-        <div class="hi-num">영역 4</div>
-        <div class="hi-name">공공 서비스</div>
-        <div class="hi-ex">민원 처리 AI, 복지 수급 결정</div>
-        <div class="hi-tfl">TC: Fairness, Transparency</div>
-      </div>
-      <div class="hiarea-card">
-        <div class="hi-num">영역 5</div>
-        <div class="hi-name">교육·고용·채용</div>
-        <div class="hi-ex">입학 심사 AI, 이력서 필터링</div>
-        <div class="hi-tfl">TC: Fairness, Explainability, Privacy</div>
-      </div>
-      <div class="hiarea-card">
-        <div class="hi-num">영역 6</div>
-        <div class="hi-name">통신·방송</div>
-        <div class="hi-ex">콘텐츠 추천, 알고리즘 편집</div>
-        <div class="hi-tfl">TC: Fairness, Transparency</div>
-      </div>
-      <div class="hiarea-card">
-        <div class="hi-num">영역 7</div>
-        <div class="hi-name">생명·신체·재산 안전</div>
-        <div class="hi-ex">건물 화재 탐지, 보험 인수심사</div>
-        <div class="hi-tfl">TC: Safety, Reliability, Risk</div>
-      </div>
-      <div class="hiarea-card">
-        <div class="hi-num">영역 8</div>
-        <div class="hi-name">기본권 침해 가능성</div>
-        <div class="hi-ex">얼굴 인식, 감시 시스템</div>
-        <div class="hi-tfl">TC: Privacy, Authenticity, Harm</div>
-      </div>
-      <div class="hiarea-card">
-        <div class="hi-num">영역 9</div>
-        <div class="hi-name">사회 공익</div>
-        <div class="hi-ex">환경 모니터링, 재난 예측</div>
-        <div class="hi-tfl">TC: Reliability, Safety, Risk</div>
-      </div>
-      <div class="hiarea-card">
-        <div class="hi-num">영역 10</div>
-        <div class="hi-name">선거·여론</div>
-        <div class="hi-ex">딥페이크 선거 홍보, 여론 분석</div>
-        <div class="hi-tfl">TC: Authenticity, Transparency, Harm</div>
-      </div>
-      <div class="hiarea-card">
-        <div class="hi-num">영역 11</div>
-        <div class="hi-name">사법·치안·출입국</div>
-        <div class="hi-ex">범죄 예측, 비자 심사, 구금 결정</div>
-        <div class="hi-tfl">TC: Fairness, Explainability, Transparency</div>
+      <div style="text-align:center;font-size:24px;color:#c0392b;padding:0 8px">→</div>
+      <div style="background:#c0392b;color:#fff;border-radius:8px;padding:14px 16px;text-align:center">
+        <div style="font-size:11px;opacity:0.7;margin-bottom:4px">결과</div>
+        <div style="font-size:14px;font-weight:700">고영향 AI 해당</div>
+        <div style="font-size:12px;margin-top:6px;opacity:0.85">§34 사업자 책무<br>5가지 의무 적용</div>
       </div>
     </div>
 
-    <h4 style="color:#1e3a5f;margin:16px 0 8px">TFL과 고영향 AI 확인 절차 연계</h4>
+    <!-- 13개 도메인 표 -->
+    <h4 style="color:#1e3a5f;margin:16px 0 8px">▶ 13개 세부 도메인 및 TFL 연관 특성</h4>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:5%">목</th>
+          <th style="width:16%">분야</th>
+          <th style="width:28%">법적 근거 (1단계 영역)</th>
+          <th style="width:25%">고영향 판단 핵심 기준</th>
+          <th style="width:26%">TFL 핵심 TC 특성</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>가</td>
+          <td><strong>에너지</strong></td>
+          <td>에너지법 §2①<br><small>전력 생산·송전·배전·소비</small></td>
+          <td>기능 중요도·잠재 위험성·자율성 및 의사결정 능력</td>
+          <td>TC-REQ: Safety, Risk, Reliability<br>TC-AUTO: 자율성 제한</td>
+        </tr>
+        <tr>
+          <td>나</td>
+          <td><strong>먹는물</strong></td>
+          <td>먹는물관리법 §3①<br><small>수질 관리·생산 공정</small></td>
+          <td>자율 운영 중 오류 자가 진단 여부, 수질 데이터 오류</td>
+          <td>TC-REQ: Safety, Quality<br>TC-QUAL: 데이터 정확성</td>
+        </tr>
+        <tr>
+          <td>다</td>
+          <td><strong>보건의료</strong></td>
+          <td>보건의료기본법 §3①<br><small>보건의료 제공·이용체계</small></td>
+          <td>의료진 개입 없이 진단·처방 결과 도출 여부</td>
+          <td>TC-REQ: Safety, Effectiveness<br>TC-EFFE: 임상 유효성</td>
+        </tr>
+        <tr>
+          <td>라</td>
+          <td><strong>의료기기</strong></td>
+          <td>의료기기법 §2①<br>디지털의료제품법 §2②<br><small>MLMD·독립형 SaMD</small></td>
+          <td>AI 기반 임상 결정 지원(CDS), CAD 소프트웨어 여부</td>
+          <td>TC-REQ: Safety, Reliability<br>TC-THRT: 사이버보안</td>
+        </tr>
+        <tr>
+          <td>마</td>
+          <td><strong>원자력</strong></td>
+          <td>원자력시설방호법 §2①<br><small>핵물질·원자력시설 관리·운영</small></td>
+          <td>안전등급 1~3 설비 제어 또는 비안전등급 중 §8②각호</td>
+          <td>TC-REQ: Safety, Integrity<br>TC-INTG: 시스템 무결성</td>
+        </tr>
+        <tr style="background:#fff3cd">
+          <td>바</td>
+          <td><strong>범죄수사·체포</strong></td>
+          <td>생체인식정보 분석·활용<br><small>얼굴·지문·홍채·정맥</small></td>
+          <td><strong>점수제: A그룹(각 4점)+B그룹(각 3점) → 8점 이상</strong><br>또는 불특정 다수 감시·설명불가 AI 등 즉시해당 4가지</td>
+          <td>TC-PRIV: 생체정보 보호<br>TC-REQ: Fairness, Transparency<br>TC-THRT: 해킹·보안</td>
+        </tr>
+        <tr style="background:#fff3cd">
+          <td>사</td>
+          <td><strong>채용</strong></td>
+          <td>개인의 권리·의무에 중대 영향<br><small>§34제1항사목</small></td>
+          <td>이력서 프로파일링·점수화, 사람 개입 없는 최종 결정,<br>생체정보 면접 활용, 인간 검수 없는 문제 출제</td>
+          <td>TC-REQ: Fairness, Explainability<br>TC-PRIV: 구직자 정보 보호</td>
+        </tr>
+        <tr style="background:#fff3cd">
+          <td>사</td>
+          <td><strong>대출심사</strong></td>
+          <td>개인의 권리·의무에 중대 영향<br><small>§34제1항사목</small></td>
+          <td><strong>점수제: A그룹(각 2점)+B그룹(각 1점) → 4점 이상</strong><br>A: 복잡도↑신규모델·1만명↑대상·사람개입불가자동화</td>
+          <td>TC-REQ: Fairness, Transparency<br>TC-QUAL: 모델 품질 문서화</td>
+        </tr>
+        <tr>
+          <td>아</td>
+          <td><strong>교통: 차</strong></td>
+          <td>교통안전법 §2①~③<br><small>교통수단 주요 작동·운영</small></td>
+          <td>자율주행 중 보행자 오인식, 회피기동 실패</td>
+          <td>TC-REQ: Functional Safety<br>TC-AUTO: 자율 제어 안전</td>
+        </tr>
+        <tr>
+          <td>아</td>
+          <td><strong>교통: 선박</strong></td>
+          <td>교통안전법 §2①~③<br><small>교통시설 주요 작동·운영</small></td>
+          <td>자율운항 중 충돌 회피·항로 설정 오판</td>
+          <td>TC-REQ: Functional Safety<br>TC-RISK: 운항 위험 관리</td>
+        </tr>
+        <tr>
+          <td>아</td>
+          <td><strong>교통: 항공</strong></td>
+          <td>교통안전법 §2①~③<br><small>교통체계 주요 작동·운영</small></td>
+          <td>운항·ATC·정비 AI의 의도하지 않은 동작</td>
+          <td>TC-REQ: Functional Safety<br>TC-RISK: 항공 안전 위험</td>
+        </tr>
+        <tr>
+          <td>아</td>
+          <td><strong>교통: 철도</strong></td>
+          <td>교통안전법 §2①~③</td>
+          <td>신호체계 오해석 → 동일 선로 진입 사고</td>
+          <td>TC-REQ: Functional Safety<br>TC-INTG: 신호 무결성</td>
+        </tr>
+        <tr>
+          <td>자</td>
+          <td><strong>공공서비스</strong></td>
+          <td>국가기관등 의사결정<br><small>자격확인·결정·비용징수</small></td>
+          <td>적격자 부당 배제, 적격자 미선정 등 평등권 침해</td>
+          <td>TC-REQ: Fairness, Transparency<br>TC-HARM: 사회적 해악</td>
+        </tr>
+        <tr>
+          <td>차</td>
+          <td><strong>교육</strong></td>
+          <td>교육기본법 §9①<br><small>유아·초·중등 학생 평가</small></td>
+          <td>편향된 기준으로 학습 기회 박탈, 공정 평가권 침해</td>
+          <td>TC-REQ: Fairness, Explainability<br>TC-EFFE: 교육 효과성</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note-box" style="background:#fff3cd;border-color:#f0ad4e;margin-top:4px">
+      <span class="icon">⚠️</span>
+      <div>
+        <strong>점수제 적용 분야</strong> (음영 표시):
+        <strong>범죄수사·체포</strong>는 즉시해당 4가지 외에 A그룹(각 4점)·B그룹(각 3점) 점수 합 <strong>8점 이상</strong>이면 고영향 해당.
+        <strong>대출심사</strong>는 A그룹 2개↑ 또는 A 1개+B 2개 이상으로 <strong>4점 이상</strong>이면 고영향 해당.
+        <strong>채용</strong>은 플로우차트 방식 (프로파일링·점수화·생체정보 면접·사람 미개입 최종결정 여부).
+      </div>
+    </div>
+
+    <!-- 확인 절차 5단계 -->
+    <h4 style="color:#1e3a5f;margin:16px 0 8px">▶ 고영향 AI 확인 절차 (시행령 §24) 및 TFL 연계</h4>
     <div class="flow-row">
       <div class="flow-step">
-        <div class="fs-num">STEP 1</div>
-        <div class="fs-text">해당 여부 자가 판단</div>
-        <div class="fs-sub">사업자가 11개 영역 검토</div>
-      </div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step" style="background:#dbeafe;border-color:#1d4ed8">
-        <div class="fs-num" style="color:#1d4ed8">TFL 연계</div>
-        <div class="fs-text" style="color:#1d4ed8">DTC 제출</div>
-        <div class="fs-sub">Type II 자기선언 = 확인 근거 문서</div>
+        <div class="fs-num">01</div>
+        <div class="fs-text">확인 요청서 제출</div>
+        <div class="fs-sub">사업자 → 과기부<br><em style="color:#1d4ed8">TFL DTC 첨부</em></div>
       </div>
       <div class="flow-arrow">→</div>
       <div class="flow-step">
-        <div class="fs-num">STEP 2</div>
-        <div class="fs-text">확인 신청</div>
-        <div class="fs-sub">위원회 전문위 심의</div>
-      </div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step" style="background:#dbeafe;border-color:#1d4ed8">
-        <div class="fs-num" style="color:#1d4ed8">TFL 연계</div>
-        <div class="fs-text" style="color:#1d4ed8">Type I 인증서</div>
-        <div class="fs-sub">제3자 검증 = 심의 신뢰성 향상</div>
+        <div class="fs-num">02</div>
+        <div class="fs-text">과기부 검토</div>
+        <div class="fs-sub">영역·영향·사전검토결과<br>종합 고려</div>
       </div>
       <div class="flow-arrow">→</div>
       <div class="flow-step">
-        <div class="fs-num">STEP 3</div>
-        <div class="fs-text">확인 결정</div>
-        <div class="fs-sub">고영향 AI 지정 통보</div>
+        <div class="fs-num">03</div>
+        <div class="fs-text">전문위원회 자문</div>
+        <div class="fs-sub">50인+ 풀 中 5인<br><em style="color:#1d4ed8">TFL Type I = 신뢰성↑</em></div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="fs-num">04</div>
+        <div class="fs-text">판단 및 회신</div>
+        <div class="fs-sub">30일 이내<br>(1회 연장 가능)</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="fs-num">05</div>
+        <div class="fs-text">재확인 요청</div>
+        <div class="fs-sub">회신 후 10일 이내<br>반대 증빙 제출 가능</div>
       </div>
     </div>
 
     <div class="note-box info" style="margin-top:12px">
       <span class="icon">💡</span>
       <div>
-        <strong>TFL 적용 포인트</strong>: 시행령 별표 1(이행조치 인정 기준)에 따라 국제 인증기관의
-        TFL Type I 인증은 고영향 AI 확인 신청 시 <strong>이행 증거 서류</strong>로 활용 가능합니다.
-        DTC의 고영향 AI 체크리스트(§2.5)를 확인 신청서 첨부 자료로 직접 제출할 수 있습니다.
+        <strong>TFL 적용 포인트</strong>: ① <strong>DTC(Declarations of Technical Conformity)</strong>는
+        고영향 AI 확인 신청서의 이행 증거 서류로 직접 제출 가능 (시행령 §24②③).
+        ② <strong>TFL Type I 제3자 인증</strong>은 전문위원회 심의 신뢰성을 높이는 핵심 근거.
+        ③ <strong>TFL Type II 자기선언</strong>은 과기부 사전검토 결과 서류로 활용 가능.
       </div>
     </div>
   </div>
