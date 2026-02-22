@@ -22,7 +22,7 @@
     <div class="sidebar-header">
       <div class="logo">ISO/IEC 42117-X</div>
       <div class="title">TFL 운영 가이드</div>
-      <div class="version">v1.0 · 2026-02-19</div>
+      <div class="version">v1.0 · 2026-02-22</div>
     </div>
     <div class="sidebar-nav">
       <div class="nav-section">
@@ -64,9 +64,10 @@
         <div class="breadcrumb"><a href="index.html">홈</a> › S04</div>
       </div>
       <div class="badge-group">
-        <span class="badge badge-level3">TC-REQ 128개</span>
+        <span class="badge badge-level3">TC-REQ 128개 (기존 15특성)</span>
         <span class="badge badge-level2">RES 형식 20개</span>
-        <span class="badge badge-level1">총 148개</span>
+        <span class="badge badge-level3">TC-[코드] 48개 (신규 13특성)</span>
+        <span class="badge badge-level1">총 176개+</span>
       </div>
     </div>
 
@@ -92,12 +93,12 @@
 
       <!-- S04.1 TC 요구사항 체계 개요 -->
       <div class="content-section">
-        <h2>S04.1 — TC 요구사항 체계 개요 (148개)</h2>
+        <h2>S04.1 — TC 요구사항 체계 개요 (176개+)</h2>
         <div class="stats-grid">
-          <div class="stat-card green"><div class="num">148</div><div class="label">TC 요구사항 총계</div></div>
-          <div class="stat-card"><div class="num">128</div><div class="label">TC-REQ-XXX 형식</div></div>
-          <div class="stat-card orange"><div class="num">20</div><div class="label">TC-XXXXX-RES 형식</div></div>
-          <div class="stat-card"><div class="num">19</div><div class="label">참조 SC42 표준</div></div>
+          <div class="stat-card green"><div class="num">176+</div><div class="label">TC 요구사항 총계<br><small style="font-weight:400;font-size:10px">128(기존) + 48(신규 13특성)</small></div></div>
+          <div class="stat-card"><div class="num">128</div><div class="label">TC-REQ-NNN 형식<br><small style="font-weight:400;font-size:10px">기존 15특성 (#1~#15)</small></div></div>
+          <div class="stat-card"><div class="num">48</div><div class="label">TC-[코드]-NNN 형식<br><small style="font-weight:400;font-size:10px">신규 13특성 (#16~#28)</small></div></div>
+          <div class="stat-card orange"><div class="num">20</div><div class="label">TC-XXXXX-RES 형식<br><small style="font-weight:400;font-size:10px">결과형 (별도 집계)</small></div></div>
         </div>
 
         <h3>TC 요구사항 추출 프로세스</h3>
@@ -1657,11 +1658,12 @@
 
       <!-- S04.7 SC -> TC-REQ 연계 표 -->
       <div class="content-section" id="s04-7-sc-tcreq">
-        <h2>S04.7 — Simple Claim ↔ TC-REQ 연계 표 (45개 SC)</h2>
+        <h2>S04.7 — Simple Claim ↔ TC-REQ 연계 표 (45개 SC, 기존 15특성)</h2>
         <p style="font-size:0.87em;color:#555;margin-bottom:14px">
-          S03 Simple Claim 카탈로그의 45개 SC 각각이 어떤 TC-REQ 요구사항을 근거로 하는지 보여주는 완전한 연계 표입니다.
+          기존 15특성 대상 45개 SC 각각이 어떤 TC-REQ 요구사항을 근거로 하는지 보여주는 연계 표입니다.
           <a href="s03-claims.html">S03 Simple Claim 카탈로그</a>의 각 claim card에도 TC-REQ ID가 표시됩니다.
           매핑 신뢰도는 <code>mapping_supplement.json</code> 기준 (high = 특성+표준 직접 매핑, medium = 추론 매핑).
+          신규 13특성 32개 SC ↔ TC-[코드]-NNN 연계는 <a href="s11-tc-claim-mapping.html">S11 TC-Claim 매핑 표</a>를 참조하십시오.
         </p>
         <div style="overflow-x:auto">
           <table class="tc-req-full-table">
